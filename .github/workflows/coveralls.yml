@@ -1,0 +1,55 @@
+name: Coveralls
+
+on:
+  push:
+    branches: [ "develop", "main"]
+  pull_request:
+    branches: [ "develop", "main" ]
+
+jobs:
+
+  Coveralls:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Generating backend coverage information
+      working-directory: ./server
+      run: npm i && npm run coverage
+      env:
+        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        flag-name: run-${{ matrix.test_number }}
+        parallel: true
+
+    - name: Generating frontend coverage information
+      run: npm i && npm run coverage
+    - name: Coveralls Parallel
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        flag-name: run-${{ matrix.test_number }}
+        parallel: true
+
+  finish:
+    needs: Coveralls
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.github_token }}
+        parallel-finished: true
