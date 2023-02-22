@@ -22,17 +22,19 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Generating backend coverage information
+
+    - name: Installing dependencies frontend
+      run: npm i
+
+    - name: Installing dependencies backend
       working-directory: ./server
-      run: npm i && npm run coverage
+      run: npm i
+    
+    - name: Generating coverage information
+      run: npm run coverage
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    - name: Generating frontend coverage information
-      run: npm i && npm run coverage
-    - name: Coveralls Scan
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+   
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
       env:

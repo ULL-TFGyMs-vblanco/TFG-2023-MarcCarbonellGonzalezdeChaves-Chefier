@@ -23,33 +23,19 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
-    - name: Generating backend coverage information
+    - name: Installing dependencies frontend
+      run: npm i
+
+    - name: Installing dependencies backend
       working-directory: ./server
-      run: npm i && npm run coverage
+      run: npm i
+    
+    - name: Generating coverage information
+      run: npm run coverage
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    - name: Coveralls Parallel
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.github_token }}
-        flag-name: run-${{ matrix.test_number }}
-        parallel: true
 
-    - name: Generating frontend coverage information
-      run: npm i && npm run coverage
-    - name: Coveralls Parallel
+    - name: Coveralls Scan
       uses: coverallsapp/github-action@master
       with:
-        github-token: ${{ secrets.github_token }}
-        flag-name: run-${{ matrix.test_number }}
-        parallel: true
-
-  finish:
-    needs: Coveralls
-    runs-on: ubuntu-latest
-    steps:
-    - name: Coveralls Finished
-      uses: coverallsapp/github-action@master
-      with:
-        github-token: ${{ secrets.github_token }}
-        parallel-finished: true
+        github-token: ${{ secrets.GITHUB_TOKEN }}

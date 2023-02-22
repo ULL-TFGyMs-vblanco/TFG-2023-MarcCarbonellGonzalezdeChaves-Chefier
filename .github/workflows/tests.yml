@@ -22,10 +22,15 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - name: Testing backend
+
+    - name: Installing dependencies frontend
+      run: npm i
+
+    - name: Installing dependencies backend
       working-directory: ./server
-      run: npm i && npm run coverage
+      run: npm i
+    
+    - name: Executing tests
+      run: npm test
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-    - name: Testing frontend
-      run: npm i && npm run coverage
