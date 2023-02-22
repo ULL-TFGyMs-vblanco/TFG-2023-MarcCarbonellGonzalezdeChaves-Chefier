@@ -9,7 +9,8 @@ export default defineConfig({
       ['server/__tests__/**', 'node']
     ],
     coverage: {
-      provider: 'istanbul'
+      provider: 'istanbul',
+      reporter: 'lcov'
     }
   },
 })
