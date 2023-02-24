@@ -1,0 +1,17 @@
+server/dist
+server/package-lock.json
+server/package.json
+server/tsconfig.json
+.eslintrc.json
+.pretterignore
+.prettierrc.json
+package-lock.json
+package.json
+tsconfig.json
+.coveralls.yml
+.github/**
+coverage/**
+next-env.d.ts
+next.config.js
+vitest.config.ts
+README.md

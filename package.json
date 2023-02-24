@@ -15,7 +15,6 @@
     "@types/node": "18.14.0",
     "@types/react": "18.0.28",
     "@types/react-dom": "18.0.11",
-    "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "next": "13.1.6",
     "react": "18.2.0",
@@ -24,10 +23,16 @@
   },
   "devDependencies": {
     "@testing-library/react": "^14.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.53.0",
+    "@typescript-eslint/parser": "^5.53.0",
     "@vitejs/plugin-react": "^3.1.0",
     "@vitest/coverage-c8": "^0.28.5",
     "@vitest/coverage-istanbul": "^0.28.5",
+    "eslint": "^8.34.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-react": "^7.32.2",
     "happy-dom": "^8.6.0",
+    "prettier": "^2.8.4",
     "standard": "^17.0.0",
     "vitest": "^0.28.5"
   }
