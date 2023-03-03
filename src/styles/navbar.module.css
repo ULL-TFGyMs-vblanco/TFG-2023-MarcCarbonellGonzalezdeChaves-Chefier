@@ -211,6 +211,10 @@
   width: 20vw;
 }
 
+.search__input::placeholder {
+  font-family: var(--font-raleway);
+}
+
 @media screen and (width < 650px) {
   .search__input {
     width: 40vw;

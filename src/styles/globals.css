@@ -7,13 +7,8 @@ body {
 a {
   color: #000;
   text-decoration: none;
-  font-family: 'Roboto', sans-serif;
 }
 
 a:hover {
   color: gray;
-}
-
-p {
-  font-family: 'Roboto', sans-serif;
 }
