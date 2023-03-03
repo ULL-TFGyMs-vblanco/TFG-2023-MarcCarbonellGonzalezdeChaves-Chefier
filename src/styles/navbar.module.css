@@ -1,37 +1,171 @@
 .navbar {
+  display: flex;
+  position: sticky;
+  justify-content: center;
   background-color: #fff;
   border-bottom: 1px solid #eaeaea;
   padding: 0 1rem;
+  height: 4rem;
 }
 
-.navbar__container {
+.container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
 
-.navbar__elements {
+@media screen and (width < 650px) {
+  .container {
+    width: 100%;
+  }
+}
+@media screen and (width >= 650px) {
+  .container {
+    width: 650px;
+  }
+}
+@media screen and (width >= 960px) {
+  .container {
+    width: 960px;
+  }
+}
+@media screen and (width >= 1280px) {
+  .container {
+    width: 1280px;
+  }
+}
+@media screen and (width >= 1400px) {
+  .container {
+    width: 1400px;
+  }
+}
+
+/* 
+    Left elements 
+*/
+
+.left__elements {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  gap: 1rem;
   align-items: center;
 }
 
-.navbar__logo {
+.logo {
   font-size: 1.5rem;
   font-weight: 700;
 }
 
-.navbar__links {
+.toggle {
+  display: flex;
+  align-items: center;
+  border: 0;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+@media screen and (width >= 650px) {
+  .toggle {
+    display: none;
+  }
+}
+
+.toggle__menu {
+  z-index: -1;
+  height: 100vh;
+  width: 30vw;
+  background-color: #5a515a;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  animation: slideInLeft 0.5s ease 0s 1 normal both;
+}
+
+.in__animation {
+  animation: slideInLeft 0.5s ease 0s 1 normal both;
+}
+
+.out__animation {
+  animation: slideOutRight 0.5s ease 0s 1 normal both;
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes slideOutRight {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.toggle__links {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+}
+
+.toggle__link {
+  margin: 0.5rem;
+}
+
+.toggle__link a {
+  color: white;
+}
+
+/* 
+    Right elements 
+*/
+
+.right__elements {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search {
+  padding: 0.5rem 0.75rem;
+  border-radius: 1rem;
+  border: none;
+  background-color: lightgrey;
+}
+
+.search:focus {
+  outline: none;
+}
+
+.links {
   list-style: none;
 }
 
-.navbar__link {
+@media screen and (width <= 650px) {
+  .links {
+    display: none;
+  }
+}
+
+.link {
   float: left;
   padding: 1rem;
 }
 
-.navbar__avatar {
+.avatar {
   display: block;
+  margin-left: 1rem;
+}
+
+@media screen and (width <= 650px) {
+  .avatar {
+    display: none;
+  }
 }
