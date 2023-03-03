@@ -27,13 +27,9 @@ export const Navbar: React.FC = () => {
           </div>
           <div className={styles.right__elements}>
             <div className={styles.search}>
-              <button className={styles.search__icon}>
-                <AiOutlineSearch
-                  className={styles.e}
-                  size={15}
-                  color='darkgrey'
-                />
-              </button>
+              <div className={styles.search__icon}>
+                <AiOutlineSearch size={15} color='darkgrey' />
+              </div>
               <input
                 className={styles.search__input}
                 type='text'
@@ -68,12 +64,15 @@ export const Navbar: React.FC = () => {
         >
           <Link className={styles.toggle__avatar} href='/profile'>
             <Image
+              className={styles.toggle__avatar__image}
               src='/images/avatar_default.jpg'
               alt='Default avatar'
-              width={40}
-              height={40}
+              width={55}
+              height={55}
               style={{ borderRadius: '50%', display: 'block' }}
             />
+            <p className={styles.toggle__user__name}>Usuario</p>
+            <p className={styles.toggle__user__at__sign}>@usuario</p>
           </Link>
           <ul className={styles.toggle__links}>
             <li className={styles.toggle__link}>
