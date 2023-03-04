@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
             Chefier
           </Link>
           <hr className={styles.divider} />
-          <ul className={styles.explore__links}>
+          <ul>
             <label className={styles.links__label}>Explore</label>
             <li>
               <Link className={styles.link} href='/recipes'>
@@ -23,7 +23,7 @@ export const Footer: React.FC = () => {
               </Link>
             </li>
           </ul>
-          <hr className={styles.solid} />
+          <hr className={styles.divider} />
           <ul>
             <label className={styles.links__label}>Info</label>
             <li>
