@@ -1,24 +1,20 @@
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React from 'react';
 import styles from '../styles/Navbar.module.css';
 import Image from 'next/image';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { AiOutlineSearch } from 'react-icons/ai';
+import useToggle from '@/hooks/useToggle';
 
 export const Navbar: React.FC = () => {
-  const [toggle, setToggle] = useState(false);
-  const [animation, setAnimation] = useState(true);
-
-  const handleToggle = () => {
-    toggle ? setAnimation(!animation) : setToggle(true);
-  };
+  const { firstToggle, toggle, handleToggle } = useToggle();
 
   return (
     <div className={styles.navbar}>
       <nav className={styles.bar}>
         <div className={`container ${styles.container}`}>
           <div className={styles.left__elements}>
-            <button className={styles.toggle} onClick={() => handleToggle()}>
+            <button className={styles.toggle} onClick={handleToggle}>
               <RxHamburgerMenu size={25} />
             </button>
             <Link className={styles.logo} href='/'>
@@ -56,10 +52,10 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
       </nav>
-      {toggle && (
+      {!firstToggle && (
         <div
           className={`${styles.toggle__menu} ${
-            animation ? styles.in__animation : styles.out__animation
+            toggle ? styles.in__animation : styles.out__animation
           }`}
         >
           <Link className={styles.toggle__avatar} href='/profile'>
