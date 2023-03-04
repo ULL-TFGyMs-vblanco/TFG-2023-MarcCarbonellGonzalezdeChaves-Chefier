@@ -16,7 +16,7 @@ export const Navbar: React.FC = () => {
   return (
     <>
       <nav className={styles.navbar}>
-        <div className={styles.container}>
+        <div className={`container ${styles.container}`}>
           <div className={styles.left__elements}>
             <button className={styles.toggle} onClick={() => handleToggle()}>
               <RxHamburgerMenu size={25} />
@@ -74,12 +74,22 @@ export const Navbar: React.FC = () => {
             <p className={styles.toggle__user__name}>Usuario</p>
             <p className={styles.toggle__user__at__sign}>@usuario</p>
           </Link>
+          <hr className={styles.divider} />
           <ul className={styles.toggle__links}>
             <li className={styles.toggle__link}>
               <Link href='/recipes'>Recipes</Link>
             </li>
-            <li className={styles.toggle__link}>
+            <li>
               <Link href='/new-recipe'>New Recipe</Link>
+            </li>
+          </ul>
+          <hr className={styles.divider} />
+          <ul className={styles.toggle__links}>
+            <li className={styles.toggle__link}>
+              <Link href='/about'>About</Link>
+            </li>
+            <li>
+              <Link href='/contact'>Contact</Link>
             </li>
           </ul>
         </div>
