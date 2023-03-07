@@ -15,11 +15,11 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <div className={`${raleway.variable} ${raleway.className}`}>
+      <main className={`${raleway.variable} ${raleway.className}`}>
         <Layout>
           <Component {...pageProps} />
         </Layout>
-      </div>
+      </main>
     </>
   );
 }
