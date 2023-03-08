@@ -38,18 +38,18 @@ describe('Navbar', (): void => {
     it('should render logo correctly', (): void => {
       render(<Navbar />);
 
-      screen.getAllByRole('logo');
+      screen.getByTestId('logo');
     });
     it('should render search bar', (): void => {
       render(<Navbar />);
 
-      screen.getAllByRole('search');
-      screen.getAllByPlaceholderText('Search');
+      screen.getByTestId('search');
+      screen.getByPlaceholderText('Search');
     });
     it('should render navigation links', (): void => {
       render(<Navbar />);
 
-      const navLinks = screen.getAllByRole('navigation-link');
+      const navLinks = screen.getAllByTestId('navigation-link');
       expect(navLinks.length).toBe(2);
       screen.getByText('Recipes');
       screen.getByText('New Recipe');
@@ -57,26 +57,26 @@ describe('Navbar', (): void => {
     it('should render avatar', (): void => {
       render(<Navbar />);
 
-      screen.getByRole('avatar');
+      screen.getByTestId('avatar');
     });
     it('should render toggle button', (): void => {
       render(<Navbar />);
 
-      screen.getByRole('toggle-button');
+      screen.getByTestId('toggle-button');
     });
   });
   describe('Toggle menu', (): void => {
     it('should not render toggle menu', (): void => {
       render(<Navbar />);
 
-      expect(screen.queryByRole('toggle-menu')).toBeNull();
+      expect(screen.queryByTestId('toggle-menu')).toBeNull();
     });
     it('should display and collapse toggle menu when clicking toggle button', (): void => {
       render(<Navbar />);
 
-      const toggleButton = screen.getByRole('toggle-button');
+      const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
-      const toggleMenu = screen.getByRole('toggle-menu');
+      const toggleMenu = screen.getByTestId('toggle-menu');
       expect(toggleMenu.className).toBe(
         '_toggle__menu_e091f2 _in__animation_e091f2'
       );
@@ -88,24 +88,24 @@ describe('Navbar', (): void => {
     it('toggle menu should render avatar', (): void => {
       render(<Navbar />);
 
-      const toggleButton = screen.getByRole('toggle-button');
+      const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
-      screen.getByRole('toggle-avatar');
+      screen.getByTestId('toggle-avatar');
     });
     it('toggle menu should render user name and atname', (): void => {
       render(<Navbar />);
 
-      const toggleButton = screen.getByRole('toggle-button');
+      const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
-      screen.getByRole('user-name');
-      screen.getByRole('user-atname');
+      screen.getByTestId('user-name');
+      screen.getByTestId('user-atname');
     });
     it('should render navigation links', (): void => {
       render(<Navbar />);
 
-      const toggleButton = screen.getByRole('toggle-button');
+      const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
-      const navLinks = screen.getAllByRole('toggle-navigation-link');
+      const navLinks = screen.getAllByTestId('toggle-navigation-link');
       expect(navLinks.length).toBe(2);
       expect(screen.getAllByText('Recipes').length).toBe(2);
       expect(screen.getAllByText('New Recipe').length).toBe(2);
@@ -113,9 +113,9 @@ describe('Navbar', (): void => {
     it('should render help navigation links', (): void => {
       render(<Navbar />);
 
-      const toggleButton = screen.getByRole('toggle-button');
+      const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
-      const navLinks = screen.getAllByRole('toggle-help-link');
+      const navLinks = screen.getAllByTestId('toggle-info-link');
       expect(navLinks.length).toBe(2);
       screen.getByText('About');
       screen.getByText('Contact');

@@ -17,16 +17,16 @@ export const Navbar: React.FC = () => {
             <button
               className={styles.toggle}
               onClick={handleToggle}
-              role='toggle-button'
+              data-testid='toggle-button'
             >
               <RxHamburgerMenu size={25} />
             </button>
-            <Link className={styles.logo} href='/' role='logo'>
+            <Link className={styles.logo} href='/' data-testid='logo'>
               Chefier
             </Link>
           </div>
           <div className={styles.right__elements}>
-            <div className={styles.search} role='search'>
+            <div className={styles.search} data-testid='search'>
               <div className={styles.search__icon}>
                 <AiOutlineSearch size={15} color='darkgrey' />
               </div>
@@ -37,14 +37,18 @@ export const Navbar: React.FC = () => {
               />
             </div>
             <ul className={styles.links}>
-              <li className={styles.link} role='navigation-link'>
+              <li className={styles.link} data-testid='navigation-link'>
                 <Link href='/recipes'>Recipes</Link>
               </li>
-              <li className={styles.link} role='navigation-link'>
+              <li className={styles.link} data-testid='navigation-link'>
                 <Link href='/new-recipe'>New Recipe</Link>
               </li>
             </ul>
-            <Link className={styles.avatar} href='/profile' role='avatar'>
+            <Link
+              className={styles.avatar}
+              href='/profile'
+              data-testid='avatar'
+            >
               <Image
                 src='/avatar_default.jpg'
                 alt='Default avatar'
@@ -61,12 +65,12 @@ export const Navbar: React.FC = () => {
           className={`${styles.toggle__menu} ${
             toggle ? styles.in__animation : styles.out__animation
           }`}
-          role='toggle-menu'
+          data-testid='toggle-menu'
         >
           <Link
             className={styles.toggle__avatar}
             href='/profile'
-            role='toggle-avatar'
+            data-testid='toggle-avatar'
           >
             <Image
               className={styles.toggle__avatar__image}
@@ -76,10 +80,13 @@ export const Navbar: React.FC = () => {
               height={55}
               style={{ borderRadius: '50%', display: 'block' }}
             />
-            <p className={styles.toggle__user__name} role='user-name'>
+            <p className={styles.toggle__user__name} data-testid='user-name'>
               Usuario
             </p>
-            <p className={styles.toggle__user__atname} role='user-atname'>
+            <p
+              className={styles.toggle__user__atname}
+              data-testid='user-atname'
+            >
               @usuario
             </p>
           </Link>
@@ -89,7 +96,7 @@ export const Navbar: React.FC = () => {
               <Link
                 className={styles.toggle__link}
                 href='/recipes'
-                role='toggle-navigation-link'
+                data-testid='toggle-navigation-link'
               >
                 Recipes
               </Link>
@@ -98,7 +105,7 @@ export const Navbar: React.FC = () => {
               <Link
                 className={styles.toggle__link}
                 href='/new-recipe'
-                role='toggle-navigation-link'
+                data-testid='toggle-navigation-link'
               >
                 New Recipe
               </Link>
@@ -110,7 +117,7 @@ export const Navbar: React.FC = () => {
               <Link
                 className={styles.toggle__link}
                 href='/about'
-                role='toggle-help-link'
+                data-testid='toggle-info-link'
               >
                 About
               </Link>
@@ -119,7 +126,7 @@ export const Navbar: React.FC = () => {
               <Link
                 className={styles.toggle__link}
                 href='/contact'
-                role='toggle-help-link'
+                data-testid='toggle-info-link'
               >
                 Contact
               </Link>
