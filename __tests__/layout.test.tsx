@@ -25,6 +25,9 @@ describe('Layout', (): void => {
   });
 
   it('should render', (): void => {
+    render(<Layout />);
+  });
+  it('should render children', (): void => {
     render(
       <Layout>
         <p>Components</p>
