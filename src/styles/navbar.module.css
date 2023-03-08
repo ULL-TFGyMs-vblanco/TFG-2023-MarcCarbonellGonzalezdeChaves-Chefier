@@ -167,7 +167,7 @@
 .out__animation {
   animation: slideOutRight 0.3s ease 0s 1 normal both;
 }
-/*
+
 @keyframes slideInLeft {
   0% {
     transform: translateX(-100%);
@@ -184,9 +184,8 @@
   100% {
     transform: translateX(-100%);
   }
-} */
-
-.toggle__links {
+}
+*/ .toggle__links {
   list-style: none;
   margin: 0;
   padding-left: 0;
