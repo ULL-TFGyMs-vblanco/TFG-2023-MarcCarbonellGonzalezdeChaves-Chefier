@@ -6,7 +6,7 @@ import styles from 'src/styles/Layout.module.css';
 export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className={styles.layout}>
-      {/* <Navbar /> */}
+      <Navbar />
       <main className={styles.main}>{children}</main>
       <Footer />
     </div>
