@@ -1,10 +1,9 @@
 import Link from 'next/link';
-import React from 'react';
-import styles from '../styles/Navbar.module.css';
 import Image from 'next/image';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { AiOutlineSearch } from 'react-icons/ai';
 import useToggle from '../hooks/useToggle';
+import styles from '../styles/Navbar.module.css';
 
 export const Navbar: React.FC = () => {
   const { firstToggle, toggle, handleToggle } = useToggle();

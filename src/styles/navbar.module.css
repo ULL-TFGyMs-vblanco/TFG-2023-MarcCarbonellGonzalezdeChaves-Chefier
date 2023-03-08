@@ -4,6 +4,10 @@
   height: 4rem;
 }
 
+/* 
+  BAR 
+*/
+
 .bar {
   display: flex;
   justify-content: center;
@@ -19,6 +23,8 @@
   justify-content: space-between;
   align-items: center;
 }
+
+/* Left elements */
 
 .left__elements {
   display: flex;
@@ -49,6 +55,10 @@
     display: none;
   }
 }
+
+/* 
+    Right elements 
+*/
 
 .right__elements {
   display: flex;
@@ -130,6 +140,10 @@
     display: none;
   }
 }
+
+/* 
+  TOGGLE MENU 
+*/
 
 .toggle__menu {
   height: 100vh;
