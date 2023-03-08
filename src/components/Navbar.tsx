@@ -4,7 +4,7 @@ import styles from '../styles/Navbar.module.css';
 import Image from 'next/image';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { AiOutlineSearch } from 'react-icons/ai';
-import useToggle from '@/hooks/useToggle';
+import useToggle from '../hooks/useToggle';
 
 export const Navbar: React.FC = () => {
   const { firstToggle, toggle, handleToggle } = useToggle();
@@ -14,15 +14,19 @@ export const Navbar: React.FC = () => {
       <nav className={styles.bar}>
         <div className={`container ${styles.container}`}>
           <div className={styles.left__elements}>
-            <button className={styles.toggle} onClick={handleToggle}>
+            <button
+              className={styles.toggle}
+              onClick={handleToggle}
+              role='toggle-button'
+            >
               <RxHamburgerMenu size={25} />
             </button>
-            <Link className={styles.logo} href='/'>
+            <Link className={styles.logo} href='/' role='logo'>
               Chefier
             </Link>
           </div>
           <div className={styles.right__elements}>
-            <div className={styles.search}>
+            <div className={styles.search} role='search'>
               <div className={styles.search__icon}>
                 <AiOutlineSearch size={15} color='darkgrey' />
               </div>
@@ -33,16 +37,16 @@ export const Navbar: React.FC = () => {
               />
             </div>
             <ul className={styles.links}>
-              <li className={styles.link}>
+              <li className={styles.link} role='navigation-link'>
                 <Link href='/recipes'>Recipes</Link>
               </li>
-              <li className={styles.link}>
+              <li className={styles.link} role='navigation-link'>
                 <Link href='/new-recipe'>New Recipe</Link>
               </li>
             </ul>
-            <Link className={styles.avatar} href='/profile'>
+            <Link className={styles.avatar} href='/profile' role='avatar'>
               <Image
-                src='/images/avatar_default.jpg'
+                src='/avatar_default.jpg'
                 alt='Default avatar'
                 width={40}
                 height={40}
@@ -57,28 +61,45 @@ export const Navbar: React.FC = () => {
           className={`${styles.toggle__menu} ${
             toggle ? styles.in__animation : styles.out__animation
           }`}
+          role='toggle-menu'
         >
-          <Link className={styles.toggle__avatar} href='/profile'>
+          <Link
+            className={styles.toggle__avatar}
+            href='/profile'
+            role='toggle-avatar'
+          >
             <Image
               className={styles.toggle__avatar__image}
-              src='/images/avatar_default.jpg'
+              src='/avatar_default.jpg'
               alt='Default avatar'
               width={55}
               height={55}
               style={{ borderRadius: '50%', display: 'block' }}
             />
-            <p className={styles.toggle__user__name}>Usuario</p>
-            <p className={styles.toggle__user__at__sign}>@usuario</p>
+            <p className={styles.toggle__user__name} role='user-name'>
+              Usuario
+            </p>
+            <p className={styles.toggle__user__atname} role='user-atname'>
+              @usuario
+            </p>
           </Link>
           <hr className={styles.divider} />
           <ul className={styles.toggle__links}>
             <li>
-              <Link className={styles.toggle__link} href='/recipes'>
+              <Link
+                className={styles.toggle__link}
+                href='/recipes'
+                role='toggle-navigation-link'
+              >
                 Recipes
               </Link>
             </li>
             <li>
-              <Link className={styles.toggle__link} href='/new-recipe'>
+              <Link
+                className={styles.toggle__link}
+                href='/new-recipe'
+                role='toggle-navigation-link'
+              >
                 New Recipe
               </Link>
             </li>
@@ -86,12 +107,20 @@ export const Navbar: React.FC = () => {
           <hr className={styles.divider} />
           <ul className={styles.toggle__links}>
             <li>
-              <Link className={styles.toggle__link} href='/about'>
+              <Link
+                className={styles.toggle__link}
+                href='/about'
+                role='toggle-help-link'
+              >
                 About
               </Link>
             </li>
             <li>
-              <Link className={styles.toggle__link} href='/contact'>
+              <Link
+                className={styles.toggle__link}
+                href='/contact'
+                role='toggle-help-link'
+              >
                 Contact
               </Link>
             </li>

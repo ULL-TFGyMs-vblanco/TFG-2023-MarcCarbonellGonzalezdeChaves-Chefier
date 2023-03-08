@@ -207,6 +207,8 @@
 }
 
 .toggle__avatar {
+  display: block;
+  border-radius: 50%;
   margin-left: 0;
   margin-bottom: 1rem;
   padding-left: 0;
@@ -233,14 +235,14 @@
   color: gray;
 }
 
-.toggle__user__at__sign {
+.toggle__user__atname {
   font-size: small;
   color: white;
   margin-top: 0;
   margin-bottom: 0;
 }
 
-.toggle__user__at__sign:hover {
+.toggle__user__atname:hover {
   color: gray;
 }
 
