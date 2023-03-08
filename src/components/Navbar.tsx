@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { AiOutlineSearch } from 'react-icons/ai';
 import useToggle from 'src/hooks/useToggle';
-import styles from 'src/styles/Navbar.module.css';
+import styles from 'src/styles/Header.module.css';
 
 export const Navbar: React.FC = () => {
   const { firstToggle, toggle, handleToggle } = useToggle();
