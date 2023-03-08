@@ -1,14 +1,7 @@
 import { describe, it, afterEach, vi, expect } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { Navbar } from '../src/components/Navbar';
-
-interface MockImageProps {
-  src: string;
-  alt: string;
-  width: string;
-  height: string;
-  style: React.CSSProperties;
-}
+import { MockImageProps } from '../src/types/test';
 
 describe('Navbar', (): void => {
   afterEach(cleanup);
