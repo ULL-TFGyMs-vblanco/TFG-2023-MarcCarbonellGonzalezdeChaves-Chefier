@@ -23,8 +23,8 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     required: true,
     trim: true,
     validate: (value: string) => {
-      if (validator.isLength(value, { min: 1, max: 10 })) {
-        throw new Error('Username must be between 1 and 10 characters');
+      if (validator.isLength(value, { max: 10 })) {
+        throw new Error('Username must be less than 10 characters');
       }
     },
   },
@@ -32,8 +32,8 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     type: String,
     trim: true,
     validate: (value: string) => {
-      if (validator.isLength(value, { min: 1, max: 10 })) {
-        throw new Error('Nickname must be between 1 and 10 characters');
+      if (validator.isLength(value, { max: 10 })) {
+        throw new Error('Nickname must be less than 10 characters');
       }
     },
   },
