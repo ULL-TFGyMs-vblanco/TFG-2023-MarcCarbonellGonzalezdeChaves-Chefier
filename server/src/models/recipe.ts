@@ -67,7 +67,8 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     trim: true,
     validate: (value: [string]) => {
       value.forEach((tag) => {
-        if (!RegExp('^#').test(tag)) {
+        const hashtag = RegExp(/^#/);
+        if (!hashtag.test(tag)) {
           throw new Error('Tags must begin with #');
         }
       });
