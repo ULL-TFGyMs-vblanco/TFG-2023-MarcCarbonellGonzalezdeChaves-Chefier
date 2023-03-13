@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from '../styles/ToggleMenu.module.css';
+import { Avatar } from './Avatar';
 
 export const ToggleMenu: React.FC<{ toggleAnimation: boolean }> = ({
   toggleAnimation,
@@ -12,31 +12,29 @@ export const ToggleMenu: React.FC<{ toggleAnimation: boolean }> = ({
       }`}
       data-testid='toggle-menu'
     >
-      <Link
-        className={styles.toggle__avatar}
-        href='/profile'
-        data-testid='toggle-avatar'
-      >
-        <Image
-          className={styles.toggle__avatar__image}
-          src='/avatar_default.jpg'
-          alt='Default avatar'
-          width={55}
-          height={55}
-          style={{ borderRadius: '50%', display: 'block' }}
+      <div className={styles.user__info__container}>
+        <Avatar
+          source='/avatar_default.jpg'
+          size={55}
+          username='Default'
+          style={styles.avatar}
         />
-        <p className={styles.toggle__user__name} data-testid='user-name'>
-          Usuario
-        </p>
-        <p className={styles.toggle__user__atname} data-testid='user-atname'>
-          @usuario
-        </p>
-      </Link>
+        <Link href='/profile' data-testid='toggle-avatar'>
+          <p className={styles.nickname} data-testid='user-name'>
+            Usuario
+          </p>
+        </Link>
+        <Link href='/profile' data-testid='toggle-avatar'>
+          <p className={styles.username} data-testid='user-atname'>
+            @usuario
+          </p>
+        </Link>
+      </div>
       <hr className={styles.divider} />
-      <ul className={styles.toggle__links}>
+      <ul className={styles.links}>
         <li>
           <Link
-            className={styles.toggle__link}
+            className={styles.link}
             href='/recipes'
             data-testid='toggle-navigation-link'
           >
@@ -45,7 +43,7 @@ export const ToggleMenu: React.FC<{ toggleAnimation: boolean }> = ({
         </li>
         <li>
           <Link
-            className={styles.toggle__link}
+            className={styles.link}
             href='/new-recipe'
             data-testid='toggle-navigation-link'
           >
@@ -54,10 +52,10 @@ export const ToggleMenu: React.FC<{ toggleAnimation: boolean }> = ({
         </li>
       </ul>
       <hr className={styles.divider} />
-      <ul className={styles.toggle__links}>
+      <ul className={styles.links}>
         <li>
           <Link
-            className={styles.toggle__link}
+            className={styles.link}
             href='/about'
             data-testid='toggle-info-link'
           >
@@ -66,7 +64,7 @@ export const ToggleMenu: React.FC<{ toggleAnimation: boolean }> = ({
         </li>
         <li>
           <Link
-            className={styles.toggle__link}
+            className={styles.link}
             href='/contact'
             data-testid='toggle-info-link'
           >
