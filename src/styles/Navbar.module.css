@@ -64,42 +64,6 @@
   gap: 1rem;
 }
 
-.search {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: stretch;
-}
-
-.search__icon {
-  height: 2.1rem;
-  display: flex;
-  align-items: center;
-  justify-content: stretch;
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-  border: none;
-  padding: 0 0.6rem;
-  background-color: lightgrey;
-}
-
-.search__input {
-  height: 2rem;
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
-  border: none;
-  background-color: lightgrey;
-  width: 200px;
-}
-
-.search__input::placeholder {
-  font-family: var(--font-raleway);
-}
-
-.search__input:focus {
-  outline: none;
-}
-
 .links {
   list-style: none;
   margin-left: 0;

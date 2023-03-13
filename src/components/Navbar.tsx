@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { AiOutlineSearch } from 'react-icons/ai';
 import useToggle from 'src/hooks/useToggle';
 import styles from 'src/styles/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
+import { Searchbar } from './Searchbar';
 
 export const Navbar: React.FC = () => {
   const { firstToggle, toggle, handleToggle } = useToggle();
@@ -26,16 +26,7 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
           <div className={styles.right__elements}>
-            <div className={styles.search} data-testid='search'>
-              <div className={styles.search__icon}>
-                <AiOutlineSearch size={15} color='darkgrey' />
-              </div>
-              <input
-                className={styles.search__input}
-                type='text'
-                placeholder='Search'
-              />
-            </div>
+            <Searchbar />
             <ul className={styles.links}>
               <li className={styles.link} data-testid='navigation-link'>
                 <Link href='/recipes'>Recipes</Link>
