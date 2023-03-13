@@ -1,10 +1,10 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import useToggle from 'src/hooks/useToggle';
 import styles from 'src/styles/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
 import { Searchbar } from './Searchbar';
+import { Avatar } from './Avatar';
 
 export const Navbar: React.FC = () => {
   const { firstToggle, toggle, handleToggle } = useToggle();
@@ -35,19 +35,14 @@ export const Navbar: React.FC = () => {
                 <Link href='/new-recipe'>New Recipe</Link>
               </li>
             </ul>
-            <Link
-              className={styles.avatar}
-              href='/profile'
-              data-testid='avatar'
-            >
-              <Image
-                src='/avatar_default.jpg'
-                alt='Default avatar'
-                width={40}
-                height={40}
-                style={{ borderRadius: '50%', display: 'block' }}
+            <div className={styles.avatar__container}>
+              <Avatar
+                source='/avatar_default.jpg'
+                size={40}
+                username='Default'
+                style={styles.avatar}
               />
-            </Link>
+            </div>
           </div>
         </div>
       </nav>
