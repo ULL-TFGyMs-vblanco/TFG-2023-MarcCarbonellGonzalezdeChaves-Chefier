@@ -23,7 +23,7 @@
   border-bottom-right-radius: 1rem;
   border: none;
   background-color: lightgrey;
-  width: 200px;
+  width: 25vw;
 }
 
 .search__input::placeholder {
