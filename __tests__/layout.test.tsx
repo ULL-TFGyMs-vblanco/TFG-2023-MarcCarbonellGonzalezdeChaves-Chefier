@@ -1,6 +1,6 @@
 import { describe, it, afterEach, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
-import { Layout } from '../src/components/Layout';
+import { Layout } from '../src/components/layout/Layout';
 import { MockImageProps } from '../src/types/test';
 
 describe('Layout', (): void => {

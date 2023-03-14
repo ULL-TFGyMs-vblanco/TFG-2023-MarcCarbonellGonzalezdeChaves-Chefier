@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import styles from '../styles/ToggleMenu.module.css';
-import { Avatar } from './Avatar';
+import styles from 'src/styles/ToggleMenu.module.css';
+import { Avatar } from '../ui/Avatar';
 
 export const ToggleMenu: React.FC<{ toggleAnimation: boolean }> = ({
   toggleAnimation,

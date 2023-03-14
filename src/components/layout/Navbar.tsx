@@ -3,8 +3,8 @@ import { RxHamburgerMenu } from 'react-icons/rx';
 import useToggle from 'src/hooks/useToggle';
 import styles from 'src/styles/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
-import { Searchbar } from './Searchbar';
-import { Avatar } from './Avatar';
+import { Searchbar } from '../ui/Searchbar';
+import { Avatar } from '../ui/Avatar';
 
 export const Navbar: React.FC = () => {
   const { firstToggle, toggle, handleToggle } = useToggle();
