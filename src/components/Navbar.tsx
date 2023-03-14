@@ -41,6 +41,7 @@ export const Navbar: React.FC = () => {
                 size={40}
                 username='Default'
                 style={styles.avatar}
+                testid='avatar'
               />
             </div>
           </div>
