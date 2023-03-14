@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import validator from 'validator';
-import styles from 'src/styles/RegisterForm.module.css';
+import styles from 'src/styles/register/RegisterForm.module.css';
 
 interface FormInputs {
   username: string;

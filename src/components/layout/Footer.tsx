@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import styles from 'src/styles/Footer.module.css';
+import styles from 'src/styles/layout/Footer.module.css';
 
 export const Footer: React.FC = () => {
   return (

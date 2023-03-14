@@ -1,5 +1,5 @@
 import { AiOutlineSearch } from 'react-icons/ai';
-import styles from 'src/styles/Searchbar.module.css';
+import styles from 'src/styles/ui/Searchbar.module.css';
 
 export const Searchbar: React.FC = () => {
   return (
