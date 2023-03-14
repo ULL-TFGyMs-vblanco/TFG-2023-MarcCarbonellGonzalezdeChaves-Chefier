@@ -70,20 +70,16 @@ describe('Navbar', (): void => {
       const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
       const toggleMenu = screen.getByTestId('toggle-menu');
-      expect(toggleMenu.className).toBe(
-        '_toggle__menu_e091f2 _in__animation_e091f2'
-      );
+      expect(toggleMenu.className).toMatch(/in__animation/);
       fireEvent.click(toggleButton);
-      expect(toggleMenu.className).toBe(
-        '_toggle__menu_e091f2 _out__animation_e091f2'
-      );
+      expect(toggleMenu.className).toMatch(/out__animation/);
     });
     it('toggle menu should render avatar', (): void => {
       render(<Navbar />);
 
       const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
-      screen.getByTestId('toggle-avatar');
+      screen.getByTestId('avatar');
     });
     it('toggle menu should render user name and atname', (): void => {
       render(<Navbar />);
