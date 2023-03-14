@@ -18,6 +18,7 @@ export const ToggleMenu: React.FC<{ toggleAnimation: boolean }> = ({
           size={55}
           username='Default'
           style={styles.avatar}
+          testid='toggle_avatar'
         />
         <Link href='/profile' data-testid='toggle-avatar'>
           <p className={styles.nickname} data-testid='user-name'>
