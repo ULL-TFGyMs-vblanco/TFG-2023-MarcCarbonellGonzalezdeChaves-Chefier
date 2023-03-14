@@ -26,10 +26,10 @@ export const RegisterForm: React.FC = () => {
 
   return (
     <div className={styles.form__container}>
-      <h2>Register</h2>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <p className={styles.title}>Register</p>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
         <div>
-          <label>Username</label>
+          <label style={{ display: 'block' }}>Username</label>
           <input
             type='text'
             {...register('username', {
@@ -43,7 +43,7 @@ export const RegisterForm: React.FC = () => {
           )}
         </div>
         <div>
-          <label>Email</label>
+          <label style={{ display: 'block' }}>Email</label>
           <input
             type='text'
             {...register('email', {
@@ -54,7 +54,7 @@ export const RegisterForm: React.FC = () => {
           {errors.email && <p>Email not valid</p>}
         </div>
         <div>
-          <label>Password</label>
+          <label style={{ display: 'block' }}>Password</label>
           <input
             type={showPassword ? 'type' : 'password'}
             {...register('password', {
@@ -77,7 +77,7 @@ export const RegisterForm: React.FC = () => {
           )}
         </div>
         <div>
-          <label>Confirm password</label>
+          <label style={{ display: 'block' }}>Confirm password</label>
           <input
             type={showPassword ? 'type' : 'password'}
             {...register('confirmPassword', {
