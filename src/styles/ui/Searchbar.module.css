@@ -1,8 +1,7 @@
 .search {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: stretch;
+  width: 100%;
 }
 
 .search__icon {
@@ -23,7 +22,7 @@
   border-bottom-right-radius: 1rem;
   border: none;
   background-color: lightgrey;
-  width: 25vw;
+  width: 100%;
 }
 
 .search__input::placeholder {
