@@ -20,7 +20,7 @@ export const LoginForm: React.FC = () => {
   const showPassword = watch('showPassword');
 
   return (
-    <Card>
+    <Card style={styles.form__card}>
       <div className={styles.form__container}>
         <Title style={styles.title}>Login</Title>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
