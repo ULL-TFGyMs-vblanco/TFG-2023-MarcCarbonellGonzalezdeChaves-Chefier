@@ -32,7 +32,7 @@ export const Navbar: React.FC = () => {
                 <Link href='/recipes'>Recipes</Link>
               </li>
               <li className={styles.link} data-testid='navigation-link'>
-                <Link href='/new-recipe'>New Recipe</Link>
+                <Link href='/new-recipe'>New&nbsp;Recipe</Link>
               </li>
             </ul>
             <div className={styles.avatar__container}>
