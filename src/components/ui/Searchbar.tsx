@@ -1,9 +1,14 @@
 import { AiOutlineSearch } from 'react-icons/ai';
 import styles from 'src/styles/ui/Searchbar.module.css';
 
-export const Searchbar: React.FC = () => {
+interface SearchbarProps {
+  style?: string;
+  testid?: string;
+}
+
+export const Searchbar: React.FC<SearchbarProps> = ({ style, testid }) => {
   return (
-    <div className={styles.search} data-testid='search'>
+    <div className={`${styles.search} ${style}`} data-testid={testid}>
       <div className={styles.search__icon}>
         <AiOutlineSearch size={15} color='darkgrey' />
       </div>
