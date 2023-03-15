@@ -1,5 +1,5 @@
-import { RegisterForm } from 'src/components/register/RegisterForm';
-import styles from 'src/styles/register/Register.module.css';
+import { RegisterForm } from '@/components/auth/RegisterForm';
+import styles from 'src/styles/auth/Auth.module.css';
 
 const Register: React.FC = () => {
   return (
