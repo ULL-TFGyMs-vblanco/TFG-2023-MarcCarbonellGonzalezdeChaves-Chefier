@@ -5,8 +5,8 @@ interface AvatarProps {
   source: string;
   size: number;
   username: string;
-  style: string;
-  testid: string;
+  style?: string;
+  testid?: string;
 }
 
 export const Avatar: React.FC<AvatarProps> = ({
