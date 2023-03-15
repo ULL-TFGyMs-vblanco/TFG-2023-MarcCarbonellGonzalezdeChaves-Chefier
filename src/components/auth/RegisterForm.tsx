@@ -35,7 +35,7 @@ export const RegisterForm: React.FC = () => {
   const showPassword = watch('showPassword');
 
   return (
-    <Card>
+    <Card style={styles.form__card}>
       <div className={styles.form__container}>
         <Title style={styles.title}>Register</Title>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
