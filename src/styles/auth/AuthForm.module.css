@@ -70,11 +70,11 @@
 }
 
 .text__input {
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-family: var(--font-family);
   box-sizing: border-box;
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.7rem;
   border: none;
   border-radius: 0.25rem;
   border: 1px solid #cdcdcd;
@@ -97,6 +97,12 @@
 
 .checkbox {
   vertical-align: middle;
+}
+
+.errors {
+  display: flex;
+  width: 100%;
+  padding-bottom: 0.5rem;
 }
 
 .error__msg {

@@ -107,8 +107,9 @@ export const RegisterForm: React.FC = () => {
                 {showMore ? (
                   <p className={styles.error__msg}>
                     Password must be strong. At least eight characters, one
-                    lowercase, one upercase and one number.&nbsp;
+                    lowercase, one upercase and one number.
                     <a className={styles.show__more} onClick={handleShowMore}>
+                      <br />
                       Show less
                     </a>
                   </p>
