@@ -3,15 +3,21 @@ import styles from 'src/styles/auth/AuthForm.module.css';
 import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
-import Link from 'next/link';
 import { useState } from 'react';
-import { LoginFormInputs } from 'src/types/form';
+import { LoginFormInputs } from '@/types/forms';
 
-export const LoginForm: React.FC<{
-  onSubmit: (data: LoginFormInputs) => void;
-}> = ({ onSubmit }) => {
-  const { register, watch, handleSubmit } = useForm<LoginFormInputs>();
+interface LoginFormProps {
+  submitHandler: (data: LoginFormInputs) => void;
+}
+
+export const LoginForm: React.FC<LoginFormProps> = ({ submitHandler }) => {
+  const { register, watch, handleSubmit, reset } = useForm<LoginFormInputs>();
   const [showPassword, setShowPassword] = useState(false);
+
+  const onSubmit = async (data: LoginFormInputs) => {
+    await submitHandler(data);
+    reset();
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword((showPassword) => !showPassword);
@@ -66,7 +72,7 @@ export const LoginForm: React.FC<{
             </label>
           </div>
           <Button testid='submit-button' submit>
-            <Link href='/'>Log in</Link>
+            Log in
           </Button>
         </form>
       </div>
