@@ -25,20 +25,26 @@ export const LoginForm: React.FC = () => {
         <Title style={styles.title}>Login</Title>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.field}>
-            <label className={styles.field__label}>Email</label>
             <input
+              value={watch('email') ? watch('email') : ''}
               className={styles.text__input}
               type='text'
               {...register('email')}
             />
+            <label className={styles.field__label}>
+              <div className={styles.label__text}>Email</div>
+            </label>
           </div>
           <div className={styles.field}>
-            <label className={styles.field__label}>Password</label>
             <input
+              value={watch('password') ? watch('password') : ''}
               className={styles.text__input}
               type={showPassword ? 'type' : 'password'}
               {...register('password')}
             />
+            <label className={styles.field__label}>
+              <div className={styles.label__text}>Password</div>
+            </label>
           </div>
           <div className={styles.checkbox__container}>
             <label>

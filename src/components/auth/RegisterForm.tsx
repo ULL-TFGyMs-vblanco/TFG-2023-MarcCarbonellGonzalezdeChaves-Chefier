@@ -40,8 +40,8 @@ export const RegisterForm: React.FC = () => {
         <Title style={styles.title}>Register</Title>
         <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
           <div className={styles.field}>
-            <label className={styles.field__label}>Username</label>
             <input
+              value={watch('username') ? watch('username') : ''}
               className={styles.text__input}
               type='text'
               {...register('username', {
@@ -49,6 +49,11 @@ export const RegisterForm: React.FC = () => {
                 maxLength: 10,
               })}
             />
+            <label className={styles.field__label}>
+              <div className={styles.label__text}>Username</div>
+            </label>
+          </div>
+          <div className={styles.errors}>
             {errors.username?.type === 'required' && (
               <p className={styles.error__msg}>Username is required</p>
             )}
@@ -59,21 +64,26 @@ export const RegisterForm: React.FC = () => {
             )}
           </div>
           <div className={styles.field}>
-            <label className={styles.field__label}>Email</label>
             <input
+              value={watch('email') ? watch('email') : ''}
               className={styles.text__input}
               type='text'
               {...register('email', {
                 validate: (value) => validator.isEmail(value),
               })}
             />
+            <label className={styles.field__label}>
+              <div className={styles.label__text}>Email</div>
+            </label>
+          </div>
+          <div className={styles.errors}>
             {errors.email && (
               <p className={styles.error__msg}>Email not valid</p>
             )}
           </div>
           <div className={styles.field}>
-            <label className={styles.field__label}>Password</label>
             <input
+              value={watch('password') ? watch('password') : ''}
               className={styles.text__input}
               type={showPassword ? 'type' : 'password'}
               {...register('password', {
@@ -87,6 +97,11 @@ export const RegisterForm: React.FC = () => {
                   }),
               })}
             />
+            <label className={styles.field__label}>
+              <div className={styles.label__text}>Password</div>
+            </label>
+          </div>
+          <div className={styles.errors}>
             {errors.password && (
               <>
                 {showMore ? (
@@ -109,14 +124,19 @@ export const RegisterForm: React.FC = () => {
             )}
           </div>
           <div className={styles.field}>
-            <label className={styles.field__label}>Confirm password</label>
             <input
+              value={watch('confirmPassword') ? watch('confirmPassword') : ''}
               className={styles.text__input}
               type={showPassword ? 'type' : 'password'}
               {...register('confirmPassword', {
                 validate: (value) => validator.equals(value, watch('password')),
               })}
             />
+            <label className={styles.field__label}>
+              <div className={styles.label__text}>Confirm password</div>
+            </label>
+          </div>
+          <div className={styles.errors}>
             {errors.confirmPassword && (
               <p className={styles.error__msg}>Different passwords</p>
             )}

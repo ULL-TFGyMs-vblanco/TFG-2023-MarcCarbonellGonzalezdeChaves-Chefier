@@ -28,11 +28,14 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  gap: 0.75rem;
   width: 100%;
 }
 
+/* FIELD */
+
 .field {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -40,17 +43,52 @@
 }
 
 .field__label {
-  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 3px solid transparent;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.label__text {
+  transform: translate(0);
+  transition: transform 0.15s ease-out, font-size 0.15s ease-out,
+    background-color 0.2s ease-out, color 0.15s ease-out;
+}
+
+.label__text {
+  font-size: 0.9rem;
+  margin-left: 0.25rem;
+  padding: 0 0.25rem;
+  background-color: transparent;
+  color: #5a515a;
 }
 
 .text__input {
+  font-size: 1rem;
+  font-family: var(--font-family);
   box-sizing: border-box;
   width: 100%;
   padding: 0.5rem;
   border: none;
   border-radius: 0.25rem;
-  background-color: #e8e8e8;
+  border: 1px solid #cdcdcd;
 }
+
+.text__input:focus + .field__label .label__text,
+:not(.text__input[value='']) + .field__label .label__text {
+  background-color: white;
+  font-size: 0.75rem;
+  color: black;
+  transform: translate(0, -140%);
+}
+
+/* CHECKBOX */
 
 .checkbox__container {
   align-self: flex-start;
