@@ -26,7 +26,7 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
           <div className={styles.right__elements}>
-            <Searchbar />
+            <Searchbar testid='search' />
             <ul className={styles.links}>
               <li className={styles.link} data-testid='navigation-link'>
                 <Link href='/recipes'>Recipes</Link>
