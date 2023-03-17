@@ -1,0 +1,98 @@
+.navbar {
+  position: fixed;
+  width: 100vw;
+  height: 4rem;
+}
+
+.bar {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  border-bottom: 1px solid #eaeaea;
+  height: 4rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+/* Left elements */
+
+.left__elements {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.toggle {
+  display: flex;
+  align-items: center;
+  border: 0;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.toggle:hover {
+  color: gray;
+}
+
+@media screen and (width >= 650px) {
+  .toggle {
+    display: none;
+  }
+}
+
+/* 
+    Right elements 
+*/
+
+.right__elements {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 1rem;
+}
+
+.links {
+  display: flex;
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0;
+  width: 100%;
+}
+
+@media screen and (width <= 650px) {
+  .links {
+    display: none;
+  }
+}
+
+.link {
+  padding: 1rem;
+}
+
+.avatar {
+  border: 2.5px solid white;
+}
+
+.avatar:hover {
+  border: 2.5px solid gray;
+}
+
+@media screen and (width < 650px) {
+  .avatar__container {
+    display: none;
+  }
+}
