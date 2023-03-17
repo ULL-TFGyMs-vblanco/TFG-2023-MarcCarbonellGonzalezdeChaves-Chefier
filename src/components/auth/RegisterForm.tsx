@@ -1,49 +1,55 @@
 import { useForm } from 'react-hook-form';
 import validator from 'validator';
 import styles from 'src/styles/auth/AuthForm.module.css';
-import { Card } from 'src/components/ui/Card';
+import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import { useState } from 'react';
+import { RegisterFormInputs } from 'src/types/forms';
 
-interface FormInputs {
-  username: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  showPassword: boolean;
+interface RegisterFormProps {
+  onSubmit: (data: RegisterFormInputs) => void;
 }
 
-export const RegisterForm: React.FC = () => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   const [showMore, setShowMore] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     formState: { errors },
     watch,
     handleSubmit,
-  } = useForm<FormInputs>();
+    reset,
+  } = useForm<RegisterFormInputs>();
 
-  const onSubmit = (data: FormInputs) => {
-    console.log(data);
+  const submitHandler = async (data: RegisterFormInputs) => {
+    await onSubmit(data);
+    reset();
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((showPassword) => !showPassword);
   };
 
   const handleShowMore = () => {
     setShowMore((prev) => !prev);
   };
 
-  const showPassword = watch('showPassword');
-
   return (
-    <Card style={styles.form__card}>
+    <Card style={styles.form__card} testid='form-card'>
       <div className={styles.form__container}>
         <Title style={styles.title}>Register</Title>
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
-          <div className={styles.field}>
+        <form
+          className={styles.form}
+          onSubmit={handleSubmit(submitHandler)}
+          data-testid='register-form'
+        >
+          <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('username') ? watch('username') : ''}
               className={styles.text__input}
               type='text'
+              data-testid='username-input'
               {...register('username', {
                 required: true,
                 maxLength: 10,
@@ -55,19 +61,22 @@ export const RegisterForm: React.FC = () => {
           </div>
           <div className={styles.errors}>
             {errors.username?.type === 'required' && (
-              <p className={styles.error__msg}>Username is required</p>
+              <p className={styles.error__msg} data-testid='alert'>
+                Username is required
+              </p>
             )}
             {errors.username?.type === 'maxLength' && (
-              <p className={styles.error__msg}>
+              <p className={styles.error__msg} data-testid='alert'>
                 Username must have less than 10 characters
               </p>
             )}
           </div>
-          <div className={styles.field}>
+          <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('email') ? watch('email') : ''}
               className={styles.text__input}
               type='text'
+              data-testid='email-input'
               {...register('email', {
                 validate: (value) => validator.isEmail(value),
               })}
@@ -78,14 +87,17 @@ export const RegisterForm: React.FC = () => {
           </div>
           <div className={styles.errors}>
             {errors.email && (
-              <p className={styles.error__msg}>Email not valid</p>
+              <p className={styles.error__msg} data-testid='alert'>
+                Email not valid
+              </p>
             )}
           </div>
-          <div className={styles.field}>
+          <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('password') ? watch('password') : ''}
               className={styles.text__input}
-              type={showPassword ? 'type' : 'password'}
+              type={showPassword ? 'text' : 'password'}
+              data-testid='password-input'
               {...register('password', {
                 validate: (value) =>
                   validator.isStrongPassword(value, {
@@ -105,18 +117,26 @@ export const RegisterForm: React.FC = () => {
             {errors.password && (
               <>
                 {showMore ? (
-                  <p className={styles.error__msg}>
+                  <p className={styles.error__msg} data-testid='alert'>
                     Password must be strong. At least eight characters, one
                     lowercase, one upercase and one number.
-                    <a className={styles.show__more} onClick={handleShowMore}>
+                    <a
+                      className={styles.show__more}
+                      onClick={handleShowMore}
+                      data-testid='show-less'
+                    >
                       <br />
                       Show less
                     </a>
                   </p>
                 ) : (
-                  <p className={styles.error__msg}>
+                  <p className={styles.error__msg} data-testid='alert'>
                     Password must be strong. &nbsp;
-                    <a className={styles.show__more} onClick={handleShowMore}>
+                    <a
+                      className={styles.show__more}
+                      onClick={handleShowMore}
+                      data-testid='show-more'
+                    >
                       Show more
                     </a>
                   </p>
@@ -124,11 +144,12 @@ export const RegisterForm: React.FC = () => {
               </>
             )}
           </div>
-          <div className={styles.field}>
+          <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('confirmPassword') ? watch('confirmPassword') : ''}
               className={styles.text__input}
-              type={showPassword ? 'type' : 'password'}
+              type={showPassword ? 'text' : 'password'}
+              data-testid='confirm-password-input'
               {...register('confirmPassword', {
                 validate: (value) => validator.equals(value, watch('password')),
               })}
@@ -139,20 +160,29 @@ export const RegisterForm: React.FC = () => {
           </div>
           <div className={styles.errors}>
             {errors.confirmPassword && (
-              <p className={styles.error__msg}>Different passwords</p>
+              <p className={styles.error__msg} data-testid='alert'>
+                Different passwords
+              </p>
             )}
           </div>
-          <div className={styles.checkbox__container}>
+          <div
+            className={styles.checkbox__container}
+            data-testid='form-checkbox'
+          >
             <label>
               <input
                 className={styles.checkbox}
                 type='checkbox'
                 {...register('showPassword')}
+                data-testid='checkbox'
+                onClick={togglePasswordVisibility}
               />
               show password
             </label>
           </div>
-          <Button submit>Register</Button>
+          <Button testid='submit-button' submit>
+            register
+          </Button>
         </form>
       </div>
     </Card>

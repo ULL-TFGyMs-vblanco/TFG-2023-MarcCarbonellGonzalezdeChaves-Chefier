@@ -9,7 +9,7 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({ children, style, testid }) => {
   return (
-    <div className={`${style} ${styles.card} `} data-testid={testid}>
+    <div className={`${styles.card} ${style}`} data-testid={testid}>
       {children}
     </div>
   );

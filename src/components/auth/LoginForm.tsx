@@ -7,15 +7,15 @@ import { useState } from 'react';
 import { LoginFormInputs } from '@/types/forms';
 
 interface LoginFormProps {
-  submitHandler: (data: LoginFormInputs) => void;
+  onSubmit: (data: LoginFormInputs) => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ submitHandler }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const { register, watch, handleSubmit, reset } = useForm<LoginFormInputs>();
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = async (data: LoginFormInputs) => {
-    await submitHandler(data);
+  const submitHandler = async (data: LoginFormInputs) => {
+    await onSubmit(data);
     reset();
   };
 
@@ -29,7 +29,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ submitHandler }) => {
         <Title style={styles.title}>Log In</Title>
         <form
           className={styles.form}
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(submitHandler)}
           data-testid='login-form'
         >
           <div className={styles.field} data-testid='form-field'>
