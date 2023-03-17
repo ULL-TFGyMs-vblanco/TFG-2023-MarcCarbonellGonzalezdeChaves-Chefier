@@ -1,6 +1,6 @@
 import { Button } from '../components/ui/Button';
 import Link from 'next/link';
-import styles from 'src/styles/Home/Home.module.css';
+import styles from 'src/styles/home/Home.module.css';
 
 export default function Home() {
   return (
