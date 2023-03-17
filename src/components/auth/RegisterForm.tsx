@@ -22,8 +22,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
     reset,
   } = useForm<RegisterFormInputs>();
 
-  const submitHandler = async (data: RegisterFormInputs) => {
-    await onSubmit(data);
+  const submitHandler = (data: RegisterFormInputs) => {
+    onSubmit(data);
     reset();
   };
 

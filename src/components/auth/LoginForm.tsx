@@ -14,8 +14,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const { register, watch, handleSubmit, reset } = useForm<LoginFormInputs>();
   const [showPassword, setShowPassword] = useState(false);
 
-  const submitHandler = async (data: LoginFormInputs) => {
-    await onSubmit(data);
+  const submitHandler = (data: LoginFormInputs) => {
+    onSubmit(data);
     reset();
   };
 
