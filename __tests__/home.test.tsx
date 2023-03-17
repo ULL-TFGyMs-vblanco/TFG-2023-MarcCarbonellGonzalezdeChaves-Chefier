@@ -8,9 +8,15 @@ describe('Home', (): void => {
   it('should render', (): void => {
     render(<Home />);
   });
-  it('should render title correctly', (): void => {
+  it('should render title', (): void => {
     render(<Home />);
 
     screen.getByText('Chefier');
+  });
+  it('should render register button', (): void => {
+    render(<Home />);
+
+    screen.getByTestId('register-button');
+    screen.getByText('Register');
   });
 });

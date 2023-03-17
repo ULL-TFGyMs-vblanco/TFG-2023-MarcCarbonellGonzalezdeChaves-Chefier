@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import useToggle from 'src/hooks/useToggle';
-import styles from 'src/styles/Navbar.module.css';
+import styles from 'src/styles/layout/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
 import { Searchbar } from '../ui/Searchbar';
 import { Avatar } from '../ui/Avatar';
@@ -26,13 +26,13 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
           <div className={styles.right__elements}>
-            <Searchbar />
+            <Searchbar testid='search' />
             <ul className={styles.links}>
               <li className={styles.link} data-testid='navigation-link'>
                 <Link href='/recipes'>Recipes</Link>
               </li>
               <li className={styles.link} data-testid='navigation-link'>
-                <Link href='/new-recipe'>New Recipe</Link>
+                <Link href='/new-recipe'>New&nbsp;Recipe</Link>
               </li>
             </ul>
             <div className={styles.avatar__container}>
