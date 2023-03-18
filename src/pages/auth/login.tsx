@@ -4,8 +4,13 @@ import AuthService from '../../services/AuthService';
 import { SignInOptions } from 'next-auth/react';
 
 const Login: React.FC = () => {
-  const submitHandler = (data: SignInOptions) => {
-    AuthService.login(data);
+  const submitHandler = async (data: SignInOptions) => {
+    try {
+      const result = await AuthService.login(data);
+      console.log(result);
+    } catch (e) {
+      // error handling
+    }
   };
   return (
     <div className={styles.container}>

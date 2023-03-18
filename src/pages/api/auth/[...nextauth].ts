@@ -16,15 +16,14 @@ export const authOptions: NextAuthOptions = {
           password: string;
         };
 
-        const res = await axios.post('/api/auth/login', {
-          email,
-          password,
-        });
-
-        if (res.status === 401) {
+        try {
+          //   const res = await axios.post('/api/auth/login', {
+          //     email,
+          //     password,
+          //   });
+          return { id: '123', email: email, name: password };
+        } catch (err) {
           throw new Error('Invalid email or password');
-        } else if (res.status === 200) {
-          return res.data.user;
         }
       },
     }),

@@ -7,9 +7,9 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { RegisterForm } from '../src/components/auth/RegisterForm';
-import { RegisterFormInputs } from '@/types/auth';
+import { RegisterOptions } from 'auth-types';
 
-const mockRegister = vi.fn((data: RegisterFormInputs) => {
+const mockRegister = vi.fn((data: RegisterOptions) => {
   return Promise.resolve(data);
 });
 
@@ -176,8 +176,6 @@ describe('Register form', (): void => {
       username: 'user',
       email: 'user@gmail.com',
       password: 'Password1',
-      confirmPassword: 'Password1',
-      showPassword: false,
     });
   });
 });

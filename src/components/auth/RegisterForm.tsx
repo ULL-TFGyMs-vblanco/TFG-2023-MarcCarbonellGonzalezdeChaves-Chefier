@@ -5,10 +5,10 @@ import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import { useState } from 'react';
-import { RegisterFormInputs } from 'auth-types';
+import { RegisterFormInputs, RegisterOptions } from 'auth-types';
 
 interface RegisterFormProps {
-  onSubmit: (data: RegisterFormInputs) => void;
+  onSubmit: (data: RegisterOptions) => void;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
@@ -23,7 +23,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
   } = useForm<RegisterFormInputs>();
 
   const submitHandler = (data: RegisterFormInputs) => {
-    onSubmit(data);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { confirmPassword, showPassword, ...credentials } = data;
+    onSubmit(credentials);
     reset();
   };
 

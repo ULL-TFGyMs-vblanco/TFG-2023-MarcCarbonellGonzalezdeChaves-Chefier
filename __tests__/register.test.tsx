@@ -7,7 +7,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import Register from '../src/pages/auth/register';
-import AuthService from '../src/services/AuthService';
+import axios from 'axios';
 
 describe('Register', (): void => {
   afterEach(cleanup);
@@ -22,8 +22,12 @@ describe('Register', (): void => {
   });
   it('should call register service when clicking submit button', async (): Promise<void> => {
     render(<Register />);
-
-    const spy = vi.spyOn(AuthService, 'register');
+    const spy = vi.spyOn(axios, 'post').mockImplementation(async () => ({
+      status: 200,
+      data: {
+        user: { user: 'Usuario', email: 'email@gmail.com' },
+      },
+    }));
 
     const username = screen.getByTestId('username-input');
     fireEvent.input(username, { target: { value: 'user' } });
@@ -36,12 +40,10 @@ describe('Register', (): void => {
     const submit = screen.getByTestId('submit-button');
     fireEvent.submit(submit);
     await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
-    expect(spy).toBeCalledWith({
+    expect(spy).toBeCalledWith('/api/auth/register', {
       username: 'user',
       email: 'user@gmail.com',
       password: 'Password1',
-      confirmPassword: 'Password1',
-      showPassword: false,
     });
   });
 });

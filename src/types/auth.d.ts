@@ -12,4 +12,10 @@ declare module 'auth-types' {
     confirmPassword: string;
     showPassword: boolean;
   }
+
+  interface RegisterOptions {
+    username: string;
+    email: string;
+    password: string;
+  }
 }
