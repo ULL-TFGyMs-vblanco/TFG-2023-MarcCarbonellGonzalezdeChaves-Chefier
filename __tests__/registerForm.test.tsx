@@ -7,7 +7,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { RegisterForm } from '../src/components/auth/RegisterForm';
-import { RegisterFormInputs } from 'src/types/forms';
+import { RegisterFormInputs } from '@/types/auth';
 
 const mockRegister = vi.fn((data: RegisterFormInputs) => {
   return Promise.resolve(data);

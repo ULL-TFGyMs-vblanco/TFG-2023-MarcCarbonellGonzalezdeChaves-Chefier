@@ -6,8 +6,8 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import Register from '../src/pages/register';
-import auth from 'src/services/auth';
+import Register from '../src/pages/auth/register';
+import AuthService from '../src/services/AuthService';
 
 describe('Register', (): void => {
   afterEach(cleanup);
@@ -23,7 +23,7 @@ describe('Register', (): void => {
   it('should call register service when clicking submit button', async (): Promise<void> => {
     render(<Register />);
 
-    const spy = vi.spyOn(auth, 'register');
+    const spy = vi.spyOn(AuthService, 'register');
 
     const username = screen.getByTestId('username-input');
     fireEvent.input(username, { target: { value: 'user' } });

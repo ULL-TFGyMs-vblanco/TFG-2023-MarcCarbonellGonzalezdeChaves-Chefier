@@ -6,8 +6,8 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import Login from '../src/pages/login';
-import auth from 'src/services/auth';
+import Login from '../src/pages/auth/login';
+import AuthService from '../src/services/AuthService';
 
 describe('Login', (): void => {
   afterEach(cleanup);
@@ -23,7 +23,7 @@ describe('Login', (): void => {
   it('should call login service when clicking submit button', async (): Promise<void> => {
     render(<Login />);
 
-    const spy = vi.spyOn(auth, 'login');
+    const spy = vi.spyOn(AuthService, 'login');
 
     const email = screen.getByTestId('email-input');
     fireEvent.input(email, { target: { value: 'user@gmail.com' } });
@@ -35,7 +35,6 @@ describe('Login', (): void => {
     expect(spy).toBeCalledWith({
       email: 'user@gmail.com',
       password: 'Password1',
-      showPassword: false,
     });
   });
 });

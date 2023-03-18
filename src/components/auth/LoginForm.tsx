@@ -4,10 +4,11 @@ import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import { useState } from 'react';
-import { LoginFormInputs } from '@/types/forms';
+import { LoginFormInputs } from 'auth-types';
+import { SignInOptions } from 'next-auth/react';
 
 interface LoginFormProps {
-  onSubmit: (data: LoginFormInputs) => void;
+  onSubmit: (data: SignInOptions) => void;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
@@ -15,7 +16,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const submitHandler = (data: LoginFormInputs) => {
-    onSubmit(data);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { showPassword, ...credentials } = data;
+    onSubmit(credentials);
     reset();
   };
 
@@ -28,6 +31,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       <div className={styles.form__container}>
         <Title style={styles.title}>Log In</Title>
         <form
+          autoComplete='off'
           className={styles.form}
           onSubmit={handleSubmit(submitHandler)}
           data-testid='login-form'

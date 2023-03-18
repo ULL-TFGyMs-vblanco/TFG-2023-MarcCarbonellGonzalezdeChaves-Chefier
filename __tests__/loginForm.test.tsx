@@ -7,9 +7,9 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { LoginForm } from '../src/components/auth/LoginForm';
-import { LoginFormInputs } from '../src/types/forms';
+import { SignInOptions } from 'next-auth/react';
 
-const mockLogin = vi.fn((data: LoginFormInputs) => {
+const mockLogin = vi.fn((data: SignInOptions) => {
   return Promise.resolve(data);
 });
 
@@ -78,7 +78,6 @@ describe('Login form', (): void => {
     expect(mockLogin).toBeCalledWith({
       email: 'user@gmail.com',
       password: 'Password1',
-      showPassword: false,
     });
   });
 });

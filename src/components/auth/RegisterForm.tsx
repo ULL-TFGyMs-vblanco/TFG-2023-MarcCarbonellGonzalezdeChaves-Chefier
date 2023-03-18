@@ -5,7 +5,7 @@ import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import { useState } from 'react';
-import { RegisterFormInputs } from 'src/types/forms';
+import { RegisterFormInputs } from 'auth-types';
 
 interface RegisterFormProps {
   onSubmit: (data: RegisterFormInputs) => void;
