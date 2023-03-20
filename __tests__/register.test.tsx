@@ -20,7 +20,37 @@ describe('Register', (): void => {
 
     screen.getByText('Register');
   });
-  it('should call register service when clicking submit button', async (): Promise<void> => {
+  it('should render the error message returned by the API', async (): Promise<void> => {
+    render(<Register />);
+    const spy = vi.spyOn(axios, 'post').mockImplementation(async () => ({
+      status: 400,
+      data: {
+        error: 'Username already exists',
+      },
+    }));
+
+    fireEvent.input(screen.getByTestId('username-input'), {
+      target: { value: 'user' },
+    });
+    fireEvent.input(screen.getByTestId('email-input'), {
+      target: { value: 'user@gmail.com' },
+    });
+    fireEvent.input(screen.getByTestId('password-input'), {
+      target: { value: 'Password1' },
+    });
+    fireEvent.input(screen.getByTestId('confirm-password-input'), {
+      target: { value: 'Password1' },
+    });
+    fireEvent.submit(screen.getByTestId('submit-button'));
+    await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
+    expect(spy).toBeCalledWith('/api/auth/register', {
+      username: 'user',
+      email: 'user@gmail.com',
+      password: 'Password1',
+    });
+    expect(screen.getByText('Username already exists'));
+  });
+  it('should send post request to the API when clicking submit button', async (): Promise<void> => {
     render(<Register />);
     const spy = vi.spyOn(axios, 'post').mockImplementation(async () => ({
       status: 200,
@@ -29,16 +59,19 @@ describe('Register', (): void => {
       },
     }));
 
-    const username = screen.getByTestId('username-input');
-    fireEvent.input(username, { target: { value: 'user' } });
-    const email = screen.getByTestId('email-input');
-    fireEvent.input(email, { target: { value: 'user@gmail.com' } });
-    const password = screen.getByTestId('password-input');
-    fireEvent.input(password, { target: { value: 'Password1' } });
-    const confirmPassword = screen.getByTestId('confirm-password-input');
-    fireEvent.input(confirmPassword, { target: { value: 'Password1' } });
-    const submit = screen.getByTestId('submit-button');
-    fireEvent.submit(submit);
+    fireEvent.input(screen.getByTestId('username-input'), {
+      target: { value: 'user' },
+    });
+    fireEvent.input(screen.getByTestId('email-input'), {
+      target: { value: 'user@gmail.com' },
+    });
+    fireEvent.input(screen.getByTestId('password-input'), {
+      target: { value: 'Password1' },
+    });
+    fireEvent.input(screen.getByTestId('confirm-password-input'), {
+      target: { value: 'Password1' },
+    });
+    fireEvent.submit(screen.getByTestId('submit-button'));
     await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
     expect(spy).toBeCalledWith('/api/auth/register', {
       username: 'user',
