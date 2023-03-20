@@ -7,13 +7,12 @@ const AuthService = {
     const res = await axios.post(url, arg);
     if (res.status === 400) {
       throw new Error(res.data.error);
-    } else if (res.status === 200) {
+    } else {
       return res.data.user;
     }
   },
   login: async (data: SignInOptions) => {
-    const res = await signIn('credentials', { ...data, redirect: false });
-    return res;
+    await signIn('credentials', { ...data, redirect: false });
   },
 };
 

@@ -8,10 +8,14 @@ import { useState } from 'react';
 import { RegisterFormInputs, RegisterOptions } from 'auth-types';
 
 interface RegisterFormProps {
+  error: string | null;
   onSubmit: (data: RegisterOptions) => void;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
+export const RegisterForm: React.FC<RegisterFormProps> = ({
+  onSubmit,
+  error,
+}) => {
   const [showMore, setShowMore] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const {
@@ -182,6 +186,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({ onSubmit }) => {
               show password
             </label>
           </div>
+          {error && (
+            <div className={styles.errors}>
+              <p className={styles.error__msg} data-testid='alert'>
+                {error}
+              </p>
+            </div>
+          )}
           <Button testid='submit-button' submit>
             register
           </Button>
