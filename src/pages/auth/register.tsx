@@ -13,7 +13,8 @@ const Register: React.FC = () => {
 
   const submitHandler = async (data: RegisterOptions) => {
     try {
-      await trigger(data);
+      const result = await trigger(data);
+      console.log(result);
     } catch (e) {
       // error handling
     }

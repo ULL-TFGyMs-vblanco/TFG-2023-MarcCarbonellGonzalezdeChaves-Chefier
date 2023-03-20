@@ -17,11 +17,11 @@ export const authOptions: NextAuthOptions = {
         };
 
         try {
-          //   const res = await axios.post('/api/auth/login', {
-          //     email,
-          //     password,
-          //   });
-          return { id: '123', email: email, name: password };
+          const res = await axios.post('/api/auth/login', {
+            email,
+            password,
+          });
+          return res.data.user;
         } catch (err) {
           throw new Error('Invalid email or password');
         }
@@ -31,6 +31,7 @@ export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/auth/login',
   },
+  secret: process.env.SECRET,
 };
 
 export default NextAuth(authOptions);

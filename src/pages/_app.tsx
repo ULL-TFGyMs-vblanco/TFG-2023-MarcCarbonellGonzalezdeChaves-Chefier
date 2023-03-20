@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import { Layout } from '@/components/layout/Layout';
 import Head from 'next/head';
 import { Raleway } from '@next/font/google';
+import { SessionProvider } from 'next-auth/react';
 
 const raleway = Raleway({ subsets: ['latin'], variable: '--font-raleway' });
 
@@ -15,11 +16,13 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className={`${raleway.variable} ${raleway.className}`}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </main>
+      <SessionProvider>
+        <main className={`${raleway.variable} ${raleway.className}`}>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </main>
+      </SessionProvider>
     </>
   );
 }

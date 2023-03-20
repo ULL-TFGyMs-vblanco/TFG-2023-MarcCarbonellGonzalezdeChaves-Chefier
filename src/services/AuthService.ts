@@ -8,13 +8,11 @@ const AuthService = {
     if (res.status === 400) {
       throw new Error(res.data.error);
     } else if (res.status === 200) {
-      console.log(res.data.user);
       return res.data.user;
     }
   },
   login: async (data: SignInOptions) => {
     const res = await signIn('credentials', { ...data, redirect: false });
-    console.log(res);
     return res;
   },
 };
