@@ -4,8 +4,10 @@ import { RegisterForm } from '../../components/auth/RegisterForm';
 import { RegisterOptions } from 'auth-types';
 import styles from 'src/styles/auth/Auth.module.css';
 import AuthService from '../../services/AuthService';
+import { useState } from 'react';
 
 const Register: React.FC = () => {
+  const [serror, setError] = useState<string | null>(null);
   const { trigger } = useSWRMutation(
     '/api/auth/register',
     AuthService.register
@@ -13,15 +15,15 @@ const Register: React.FC = () => {
 
   const submitHandler = async (data: RegisterOptions) => {
     try {
-      const result = await trigger(data);
-      console.log(result);
-    } catch (e) {
-      // error handling
+      await trigger(data);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      setError(error.message);
     }
   };
   return (
     <div className={styles.container}>
-      <RegisterForm onSubmit={submitHandler} />
+      <RegisterForm onSubmit={submitHandler} error={serror} />
     </div>
   );
 };

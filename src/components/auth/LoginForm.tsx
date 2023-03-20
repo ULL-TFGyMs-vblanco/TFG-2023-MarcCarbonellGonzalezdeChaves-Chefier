@@ -8,10 +8,11 @@ import { LoginFormInputs } from 'auth-types';
 import { SignInOptions } from 'next-auth/react';
 
 interface LoginFormProps {
+  error: string | null;
   onSubmit: (data: SignInOptions) => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
   const { register, watch, handleSubmit, reset } = useForm<LoginFormInputs>();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -75,6 +76,13 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
               show password
             </label>
           </div>
+          {error && (
+            <div className={styles.errors}>
+              <p className={styles.error__msg} data-testid='alert'>
+                {error}
+              </p>
+            </div>
+          )}
           <Button testid='submit-button' submit>
             Log in
           </Button>
