@@ -7,7 +7,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import Login from '../src/pages/auth/login';
-import axios from 'axios';
+import AuthService from '../src/services/AuthService';
 
 describe('Login', (): void => {
   afterEach(cleanup);
@@ -23,14 +23,24 @@ describe('Login', (): void => {
   it('should call login service when clicking submit button', async (): Promise<void> => {
     render(<Login />);
 
-    const spy = vi.spyOn(axios, 'post').mockImplementation(async () => ({
+    const spy = vi.spyOn(AuthService, 'login').mockImplementation(async () => ({
+      error: undefined,
       status: 200,
-      data: {
-        user: { user: 'Usuario', email: 'email@gmail.com' },
-      },
+      ok: true,
+      url: 'http://localhost:3000/api/auth/login',
     }));
 
-    //const spy = vi.spyOn(AuthService, 'login');
+    vi.mock('next-auth/react', async () => {
+      const mod: object = await vi.importActual('next-auth/react');
+      return {
+        ...mod,
+        useSession: () => ({
+          data: {
+            user: { user: 'Usuario', email: 'user@gmail.com' },
+          },
+        }),
+      };
+    });
 
     const email = screen.getByTestId('email-input');
     fireEvent.input(email, { target: { value: 'user@gmail.com' } });
@@ -39,7 +49,7 @@ describe('Login', (): void => {
     const submit = screen.getByTestId('submit-button');
     fireEvent.submit(submit);
     await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
-    expect(spy).toBeCalledWith('/api/auth/login', {
+    expect(spy).toBeCalledWith({
       email: 'user@gmail.com',
       password: 'Password1',
     });
