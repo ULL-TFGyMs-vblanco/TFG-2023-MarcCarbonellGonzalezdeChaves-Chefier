@@ -8,7 +8,8 @@ describe('Layout', (): void => {
 
   vi.mock('next/image', async () => {
     return {
-      default: () =>
+      default: () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         function Image({ src, alt, width, height, style }: MockImageProps) {
           return (
             // eslint-disable-next-line @next/next/no-img-element
@@ -20,7 +21,8 @@ describe('Layout', (): void => {
               style={style}
             />
           );
-        },
+        }
+      },
     };
   });
 
