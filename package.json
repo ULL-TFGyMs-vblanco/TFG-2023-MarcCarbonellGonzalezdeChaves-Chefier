@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest",
+    "test": "env-cmd -f ./config/dev.env vitest",
     "testui": "vitest --ui",
     "coverage": "vitest run --coverage"
   },
