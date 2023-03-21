@@ -5,9 +5,11 @@ import styles from 'src/styles/layout/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
 import { Searchbar } from '../ui/Searchbar';
 import { Avatar } from '../ui/Avatar';
+import { useSession } from 'next-auth/react';
 
 export const Navbar: React.FC = () => {
   const { firstToggle, toggle, handleToggle } = useToggle();
+  const { data: session } = useSession();
 
   return (
     <div className={styles.navbar}>
@@ -37,7 +39,12 @@ export const Navbar: React.FC = () => {
             </ul>
             <div className={styles.avatar__container}>
               <Avatar
-                source='/avatar_default.jpg'
+                source={
+                  session?.user?.image
+                    ? session.user.image
+                    : '/avatar_default.jpg'
+                }
+                link={session ? '/profile' : '/auth/login'}
                 size={40}
                 username='Default'
                 style={styles.avatar}
@@ -47,7 +54,9 @@ export const Navbar: React.FC = () => {
           </div>
         </div>
       </nav>
-      {!firstToggle && <ToggleMenu toggleAnimation={toggle} />}
+      {!firstToggle && (
+        <ToggleMenu toggleHandler={handleToggle} toggleAnimation={toggle} />
+      )}
     </div>
   );
 };

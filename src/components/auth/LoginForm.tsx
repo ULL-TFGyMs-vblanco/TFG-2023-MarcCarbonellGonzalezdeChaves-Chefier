@@ -5,7 +5,9 @@ import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import { useState } from 'react';
 import { LoginFormInputs } from 'auth-types';
-import { SignInOptions } from 'next-auth/react';
+import { signIn, SignInOptions } from 'next-auth/react';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
 
 interface LoginFormProps {
   error: string | null;
@@ -83,10 +85,33 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
               </p>
             </div>
           )}
-          <Button testid='submit-button' submit>
-            Log in
+          <Button
+            style={styles.credentials__button}
+            testid='submit-button'
+            submit
+          >
+            <span>Log in</span>
           </Button>
         </form>
+        <div className={styles.separator}>
+          <span className={styles.separator__text}>or</span>
+        </div>
+        <div className={styles.oauth}>
+          <Button
+            style={styles.google__button}
+            onClick={() => signIn('google', { callbackUrl: '/' })}
+          >
+            <FcGoogle />
+            <span>&nbsp; Log in with Google</span>
+          </Button>
+          <Button
+            style={styles.github__button}
+            onClick={() => signIn('github', { callbackUrl: '/' })}
+          >
+            <FaGithub color='white' />
+            <span>&nbsp; Log in with GitHub</span>
+          </Button>
+        </div>
       </div>
     </Card>
   );

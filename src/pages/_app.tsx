@@ -7,7 +7,10 @@ import { SessionProvider } from 'next-auth/react';
 
 const raleway = Raleway({ subsets: ['latin'], variable: '--font-raleway' });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}: AppProps) {
   return (
     <>
       <Head>
@@ -16,7 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <SessionProvider>
+      <SessionProvider session={session}>
         <main className={`${raleway.variable} ${raleway.className}`}>
           <Layout>
             <Component {...pageProps} />

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import GoogleProvider from 'next-auth/providers/google';
+import GitHubProvider from 'next-auth/providers/github';
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -27,11 +29,35 @@ export const authOptions: NextAuthOptions = {
         }
       },
     }),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+    }),
+    GitHubProvider({
+      clientId: process.env.GITHUB_CLIENT_ID || '',
+      clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
+    }),
   ],
   pages: {
     signIn: '/auth/login',
   },
-  secret: process.env.SECRET,
+  secret: process.env.JWT_SECRET,
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider !== 'credentials') {
+        try {
+          const res = await axios.post('/api/auth/register', {
+            name: user.name,
+            email: user.email,
+            avatar: user.image,
+          });
+          return res.data.user;
+        } catch (err) {
+          throw new Error('Error registering user');
+        }
+      }
+    },
+  },
 };
 
 export default NextAuth(authOptions);
