@@ -1,9 +1,21 @@
-import { describe, it, afterEach } from 'vitest';
+import { describe, it, afterEach, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import Home from '../src/pages/index';
 
 describe('Home', (): void => {
   afterEach(cleanup);
+
+  vi.mock('next-auth/react', async () => {
+    const mod: object = await vi.importActual('next-auth/react');
+    return {
+      ...mod,
+      useSession: () => ({
+        data: {
+          user: { user: 'Usuario', email: 'user@gmail.com' },
+        },
+      }),
+    };
+  });
 
   it('should render', (): void => {
     render(<Home />);

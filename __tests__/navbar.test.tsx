@@ -26,6 +26,18 @@ describe('Navbar', (): void => {
     };
   });
 
+  vi.mock('next-auth/react', async () => {
+    const mod: object = await vi.importActual('next-auth/react');
+    return {
+      ...mod,
+      useSession: () => ({
+        data: {
+          user: { user: 'Usuario', email: 'user@gmail.com' },
+        },
+      }),
+    };
+  });
+
   it('should render', (): void => {
     render(<Navbar />);
   });

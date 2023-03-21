@@ -63,11 +63,6 @@ describe('Login', (): void => {
       const mod: object = await vi.importActual('next-auth/react');
       return {
         ...mod,
-        useSession: () => ({
-          data: {
-            user: { user: 'Usuario', email: 'user@gmail.com' },
-          },
-        }),
         signIn: () => ({
           user: { user: 'Usuario', email: 'user@gmail.com' },
         }),
