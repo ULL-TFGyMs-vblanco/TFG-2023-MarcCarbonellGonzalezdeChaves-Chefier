@@ -29,7 +29,6 @@
   justify-content: center;
   gap: 0.75rem;
   width: 100%;
-  margin-bottom: 0.75rem;
 }
 
 .separator {
@@ -39,6 +38,7 @@
   text-align: center;
   margin: 0.75rem auto;
   border-top: 1px solid lightgray;
+  margin: 1rem 0;
 }
 
 .separator__text {
@@ -55,6 +55,18 @@
 .divider {
   border-top: 1px solid lightgray;
   width: 100%;
+}
+
+.session__msg {
+  font-size: 0.75rem;
+  margin: 0;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.session__link {
+  text-decoration: none;
+  font-weight: bold;
 }
 
 /* FIELD */
@@ -141,35 +153,4 @@
 
 .credentials__button {
   width: 100%;
-}
-
-.google__button {
-  width: 100%;
-  background-color: white;
-  color: black;
-  border: 1px solid #cdcdcd;
-}
-
-.google__button:hover {
-  background-color: #efefef;
-}
-
-.github__button {
-  width: 100%;
-  background-color: #24292e;
-  color: white;
-}
-
-.github__button:hover {
-  background-color: #2b3137;
-}
-
-.oauth {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  width: 100%;
-  margin-top: 0.75rem;
 }

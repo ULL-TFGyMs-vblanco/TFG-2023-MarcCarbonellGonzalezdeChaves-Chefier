@@ -1,7 +1,8 @@
 .container {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
-  padding: 4rem 0;
+  /* padding: 4rem 0; */
   width: 100%;
+  min-height: calc(100vh - 4rem);
 }

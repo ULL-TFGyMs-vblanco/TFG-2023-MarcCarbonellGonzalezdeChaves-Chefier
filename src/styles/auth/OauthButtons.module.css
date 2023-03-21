@@ -1,0 +1,29 @@
+.google__button {
+  width: 100%;
+  background-color: white;
+  color: black;
+  border: 1px solid #cdcdcd;
+}
+
+.google__button:hover {
+  background-color: #efefef;
+}
+
+.github__button {
+  width: 100%;
+  background-color: #24292e;
+  color: white;
+}
+
+.github__button:hover {
+  background-color: #2b3137;
+}
+
+.oauth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+}
