@@ -15,6 +15,7 @@ export const ToggleMenu: React.FC<{
       }`}
       data-testid='toggle-menu'
     >
+      {/* REFACTORIZAR CON SWR */}
       {session ? (
         <div className={styles.user__info__container}>
           <Avatar

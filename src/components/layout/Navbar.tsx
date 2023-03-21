@@ -37,6 +37,7 @@ export const Navbar: React.FC = () => {
                 <Link href='/new-recipe'>New&nbsp;Recipe</Link>
               </li>
             </ul>
+            {/* REFACTORIZAR CON SWR */}
             <div className={styles.avatar__container}>
               <Avatar
                 source={
