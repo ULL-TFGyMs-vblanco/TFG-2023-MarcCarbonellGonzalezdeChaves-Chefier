@@ -2,6 +2,7 @@
   position: fixed;
   width: 100vw;
   height: 4rem;
+  z-index: 1;
 }
 
 .bar {
@@ -84,11 +85,11 @@
 }
 
 .avatar {
-  border: 2.5px solid white;
+  border: 2px solid white;
 }
 
 .avatar:hover {
-  border: 2.5px solid gray;
+  border: 2px solid gray;
 }
 
 @media screen and (width < 650px) {
