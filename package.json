@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "env-cmd -f ./config/dev.env next dev -p 3001",
+    "dev": "env-cmd -f ./config/.env next dev -p 3000",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "env-cmd -f ./config/dev.env vitest",
+    "test": "env-cmd -f ./config/.env vitest",
     "testui": "vitest --ui",
     "coverage": "vitest run --coverage"
   },
