@@ -40,6 +40,7 @@ export const authOptions: NextAuthOptions = {
   ],
   pages: {
     signIn: '/auth/login',
+    error: '/auth/error',
   },
   secret: process.env.JWT_SECRET,
   callbacks: {
@@ -52,8 +53,9 @@ export const authOptions: NextAuthOptions = {
             avatar: user.image,
           });
           return res.data.user;
-        } catch (err) {
-          throw new Error('Error registering user');
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (err: any) {
+          throw new Error(err.toString());
         }
       }
     },
