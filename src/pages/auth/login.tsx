@@ -7,9 +7,9 @@ import { useState } from 'react';
 const Login: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
-  const submitHandler = async (data: SignInOptions) => {
+  const loginHandler = async (provider: string, data: SignInOptions) => {
     try {
-      await AuthService.login(data);
+      await AuthService.login(provider, data);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       setError(error.message);
@@ -17,7 +17,7 @@ const Login: React.FC = () => {
   };
   return (
     <div className={styles.container}>
-      <LoginForm onSubmit={submitHandler} error={error} />
+      <LoginForm onLogin={loginHandler} error={error} />
     </div>
   );
 };

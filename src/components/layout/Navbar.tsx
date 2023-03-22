@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import useToggle from 'src/hooks/useToggle';
+import useToggleMenu from 'src/hooks/useToggleMenu';
 import styles from 'src/styles/layout/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
 import { Searchbar } from '../ui/Searchbar';
@@ -8,7 +8,7 @@ import { Avatar } from '../ui/Avatar';
 import { useSession } from 'next-auth/react';
 
 export const Navbar: React.FC = () => {
-  const { firstToggle, toggle, handleToggle } = useToggle();
+  const [firstToggle, toggle, handleToggle] = useToggleMenu();
   const { data: session } = useSession();
 
   return (
@@ -18,7 +18,7 @@ export const Navbar: React.FC = () => {
           <div className={styles.left__elements}>
             <button
               className={styles.toggle}
-              onClick={handleToggle}
+              onClick={() => handleToggle}
               data-testid='toggle-button'
             >
               <RxHamburgerMenu size={25} />

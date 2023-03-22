@@ -1,23 +1,28 @@
-import { useForm } from 'react-hook-form';
 import validator from 'validator';
-import styles from 'src/styles/auth/AuthForm.module.css';
+import Link from 'next/link';
+import { SignInOptions } from 'next-auth/react';
+import { useForm } from 'react-hook-form';
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
+
 import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
-import { useState } from 'react';
-import { RegisterFormInputs, RegisterOptions } from 'auth-types';
+import styles from 'src/styles/auth/AuthForm.module.css';
+import { RegisterFormInputs, RegisterData, LoginData } from 'auth-types';
+import useShow from 'src/hooks/useShow';
 
 interface RegisterFormProps {
   error: string | null;
-  onSubmit: (data: RegisterOptions) => void;
+  onRegister: (data: RegisterData) => void;
+  onLogin: (provider: string, options: SignInOptions) => void;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({
-  onSubmit,
+  onRegister,
+  onLogin,
   error,
 }) => {
-  const [showMore, setShowMore] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     formState: { errors },
@@ -25,20 +30,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     handleSubmit,
     reset,
   } = useForm<RegisterFormInputs>();
+  const [showMore, toggleShowMore] = useShow();
+  const [showPassword, toggleShowPassword] = useShow();
 
-  const submitHandler = (data: RegisterFormInputs) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { confirmPassword, showPassword, ...credentials } = data;
-    onSubmit(credentials);
+  const loginHandler = (provider: string, credentials?: LoginData) => {
+    if (credentials) {
+      onLogin(provider, { ...credentials, callbackUrl: '/' });
+    } else {
+      onLogin(provider, { callbackUrl: '/' });
+    }
     reset();
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword((showPassword) => !showPassword);
-  };
-
-  const handleShowMore = () => {
-    setShowMore((prev) => !prev);
+  const submitHandler = (credentials: RegisterData) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    onRegister(credentials);
+    reset();
   };
 
   return (
@@ -46,8 +53,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
       <div className={styles.form__container}>
         <Title style={styles.title}>Register</Title>
         <form
+          autoComplete='off'
           className={styles.form}
-          onSubmit={handleSubmit(submitHandler)}
+          onSubmit={handleSubmit(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ({ confirmPassword, passwordVisibility, ...credentials }) =>
+              submitHandler(credentials)
+          )}
           data-testid='register-form'
         >
           <div className={styles.field} data-testid='form-field'>
@@ -65,18 +77,20 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               <div className={styles.label__text}>Username</div>
             </label>
           </div>
-          <div className={styles.errors}>
-            {errors.username?.type === 'required' && (
+          {errors.username?.type === 'required' && (
+            <div className={styles.errors}>
               <p className={styles.error__msg} data-testid='alert'>
                 Username is required
               </p>
-            )}
-            {errors.username?.type === 'maxLength' && (
+            </div>
+          )}
+          {errors.username?.type === 'maxLength' && (
+            <div className={styles.errors}>
               <p className={styles.error__msg} data-testid='alert'>
                 Username must have less than 10 characters
               </p>
-            )}
-          </div>
+            </div>
+          )}
           <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('email') ? watch('email') : ''}
@@ -91,13 +105,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               <div className={styles.label__text}>Email</div>
             </label>
           </div>
-          <div className={styles.errors}>
-            {errors.email && (
+          {errors.email && (
+            <div className={styles.errors}>
               <p className={styles.error__msg} data-testid='alert'>
                 Email not valid
               </p>
-            )}
-          </div>
+            </div>
+          )}
           <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('password') ? watch('password') : ''}
@@ -119,37 +133,38 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               <div className={styles.label__text}>Password</div>
             </label>
           </div>
-          <div className={styles.errors}>
-            {errors.password && (
-              <>
-                {showMore ? (
+          {errors.password && (
+            <>
+              {showMore ? (
+                <div className={styles.errors}>
                   <p className={styles.error__msg} data-testid='alert'>
                     Password must be strong. At least eight characters, one
-                    lowercase, one upercase and one number.
+                    lowercase, one upercase and one number.&nbsp;
                     <a
                       className={styles.show__more}
-                      onClick={handleShowMore}
+                      onClick={toggleShowMore}
                       data-testid='show-less'
                     >
-                      <br />
                       Show less
                     </a>
                   </p>
-                ) : (
+                </div>
+              ) : (
+                <div className={styles.errors}>
                   <p className={styles.error__msg} data-testid='alert'>
-                    Password must be strong. &nbsp;
+                    Password must be strong.&nbsp;
                     <a
                       className={styles.show__more}
-                      onClick={handleShowMore}
+                      onClick={toggleShowMore}
                       data-testid='show-more'
                     >
                       Show more
                     </a>
                   </p>
-                )}
-              </>
-            )}
-          </div>
+                </div>
+              )}
+            </>
+          )}
           <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('confirmPassword') ? watch('confirmPassword') : ''}
@@ -164,13 +179,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               <div className={styles.label__text}>Confirm password</div>
             </label>
           </div>
-          <div className={styles.errors}>
-            {errors.confirmPassword && (
+          {errors.confirmPassword && (
+            <div className={styles.errors}>
               <p className={styles.error__msg} data-testid='alert'>
                 Different passwords
               </p>
-            )}
-          </div>
+            </div>
+          )}
           <div
             className={styles.checkbox__container}
             data-testid='form-checkbox'
@@ -179,9 +194,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               <input
                 className={styles.checkbox}
                 type='checkbox'
-                {...register('showPassword')}
+                {...register('passwordVisibility')}
                 data-testid='checkbox'
-                onClick={togglePasswordVisibility}
+                onClick={toggleShowPassword}
               />
               show password
             </label>
@@ -193,10 +208,39 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               </p>
             </div>
           )}
-          <Button testid='submit-button' submit>
+          <Button
+            style={styles.credentials__button}
+            testid='submit-button'
+            submit
+          >
             register
           </Button>
         </form>
+        <div className={styles.separator}>
+          <span className={styles.separator__text}>or</span>
+        </div>
+        <div className={styles.oauth}>
+          <Button
+            style={styles.google__button}
+            onClick={() => loginHandler('google')}
+          >
+            <FcGoogle />
+            <span>&nbsp; Log in with Google</span>
+          </Button>
+          <Button
+            style={styles.github__button}
+            onClick={() => loginHandler('github')}
+          >
+            <FaGithub color='white' />
+            <span>&nbsp; Log in with GitHub</span>
+          </Button>
+        </div>
+        <p className={styles.session__msg}>
+          Already have an account?&nbsp;
+          <Link className={styles.session__link} href='/auth/login'>
+            Log in
+          </Link>
+        </p>
       </div>
     </Card>
   );

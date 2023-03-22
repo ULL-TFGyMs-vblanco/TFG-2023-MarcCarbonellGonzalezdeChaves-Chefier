@@ -2,7 +2,12 @@ declare module 'auth-types' {
   export interface LoginFormInputs {
     email: string;
     password: string;
-    showPassword: boolean;
+    passwordVisibility: boolean;
+  }
+
+  export interface LoginData {
+    email: string;
+    password: string;
   }
 
   interface RegisterFormInputs {
@@ -10,12 +15,13 @@ declare module 'auth-types' {
     email: string;
     password: string;
     confirmPassword: string;
-    showPassword: boolean;
+    passwordVisibility: boolean;
   }
 
-  interface RegisterOptions {
+  interface RegisterData {
     username: string;
     email: string;
-    password: string;
+    password?: string;
+    avatar?: string;
   }
 }

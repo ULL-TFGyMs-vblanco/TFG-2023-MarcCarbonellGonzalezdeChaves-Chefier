@@ -3,30 +3,29 @@ import styles from 'src/styles/auth/AuthForm.module.css';
 import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
-import { useState } from 'react';
-import { LoginFormInputs } from 'auth-types';
-import { signIn, SignInOptions } from 'next-auth/react';
+import { LoginData, LoginFormInputs } from 'auth-types';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
+import { SignInOptions } from 'next-auth/react';
+import useShow from 'src/hooks/useShow';
+import Link from 'next/link';
 
 interface LoginFormProps {
   error: string | null;
-  onSubmit: (data: SignInOptions) => void;
+  onLogin: (provider: string, options: SignInOptions) => void;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, error }) => {
   const { register, watch, handleSubmit, reset } = useForm<LoginFormInputs>();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, toggleShowPassword] = useShow();
 
-  const submitHandler = (data: LoginFormInputs) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { showPassword, ...credentials } = data;
-    onSubmit(credentials);
+  const loginHandler = (provider: string, credentials?: LoginData) => {
+    if (credentials) {
+      onLogin(provider, { ...credentials, callbackUrl: '/' });
+    } else {
+      onLogin(provider, { callbackUrl: '/' });
+    }
     reset();
-  };
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((showPassword) => !showPassword);
   };
 
   return (
@@ -36,7 +35,10 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
         <form
           autoComplete='off'
           className={styles.form}
-          onSubmit={handleSubmit(submitHandler)}
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          onSubmit={handleSubmit(({ passwordVisibility, ...credentials }) =>
+            loginHandler('credentials', credentials)
+          )}
           data-testid='login-form'
         >
           <div className={styles.field} data-testid='form-field'>
@@ -71,9 +73,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
               <input
                 className={styles.checkbox}
                 type='checkbox'
-                {...register('showPassword')}
+                {...register('passwordVisibility')}
                 data-testid='checkbox'
-                onClick={togglePasswordVisibility}
+                onClick={toggleShowPassword}
               />
               show password
             </label>
@@ -99,19 +101,25 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, error }) => {
         <div className={styles.oauth}>
           <Button
             style={styles.google__button}
-            onClick={() => signIn('google', { callbackUrl: '/' })}
+            onClick={() => loginHandler('google')}
           >
             <FcGoogle />
             <span>&nbsp; Log in with Google</span>
           </Button>
           <Button
             style={styles.github__button}
-            onClick={() => signIn('github', { callbackUrl: '/' })}
+            onClick={() => loginHandler('github')}
           >
             <FaGithub color='white' />
             <span>&nbsp; Log in with GitHub</span>
           </Button>
         </div>
+        <p className={styles.session__msg}>
+          Don&apos;t have an account yet?&nbsp;
+          <Link className={styles.session__link} href='/auth/register'>
+            Register
+          </Link>
+        </p>
       </div>
     </Card>
   );
