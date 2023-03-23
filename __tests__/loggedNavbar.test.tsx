@@ -41,6 +41,9 @@ describe('Navbar', (): void => {
           },
         },
       }),
+      signOut: () => {
+        return Promise.resolve(undefined);
+      },
     };
   });
   describe('Bar', (): void => {
@@ -83,6 +86,13 @@ describe('Navbar', (): void => {
       expect(navLinks.length).toBe(2);
       expect(screen.getAllByText('Recipes').length).toBe(2);
       expect(screen.getAllByText('New Recipe').length).toBe(2);
+    });
+    it('should render log out button', (): void => {
+      render(<Navbar />);
+
+      screen.getByTestId('logout-button');
+      screen.getByText('Log out');
+      fireEvent.click(screen.getByTestId('logout-button'));
     });
   });
 });

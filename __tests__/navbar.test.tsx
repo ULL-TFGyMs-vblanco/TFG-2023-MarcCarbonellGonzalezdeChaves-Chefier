@@ -49,7 +49,7 @@ describe('Navbar', (): void => {
       render(<Navbar />);
 
       screen.getByTestId('search');
-      screen.getByPlaceholderText('Search');
+      screen.getByPlaceholderText('Search...');
     });
     it('should render navigation links', (): void => {
       render(<Navbar />);
