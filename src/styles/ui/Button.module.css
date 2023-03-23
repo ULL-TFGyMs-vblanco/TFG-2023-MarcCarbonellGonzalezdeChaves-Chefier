@@ -4,11 +4,9 @@
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
-  font-family: var(--font-raleway);
   display: flex;
   justify-content: center;
   align-items: center;
-  /* width: 12rem; */
 }
 
 .button:hover {
