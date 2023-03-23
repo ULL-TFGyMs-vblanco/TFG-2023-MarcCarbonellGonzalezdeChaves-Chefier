@@ -4,14 +4,13 @@ import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import { LoginData, LoginFormInputs } from 'auth-types';
-import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
 import { SignInOptions } from 'next-auth/react';
 import useShow from 'src/hooks/useShow';
 import Link from 'next/link';
+import OauthLogin from './OauthLogin';
 
 interface LoginFormProps {
-  error: string | null;
+  error?: string | null;
   onLogin: (provider: string, options: SignInOptions) => void;
 }
 
@@ -98,22 +97,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, error }) => {
         <div className={styles.separator}>
           <span className={styles.separator__text}>or</span>
         </div>
-        <div className={styles.oauth}>
-          <Button
-            style={styles.google__button}
-            onClick={() => loginHandler('google')}
-          >
-            <FcGoogle />
-            <span>&nbsp; Log in with Google</span>
-          </Button>
-          <Button
-            style={styles.github__button}
-            onClick={() => loginHandler('github')}
-          >
-            <FaGithub color='white' />
-            <span>&nbsp; Log in with GitHub</span>
-          </Button>
-        </div>
+        <OauthLogin onLogin={loginHandler} />
         <p className={styles.session__msg}>
           Don&apos;t have an account yet?&nbsp;
           <Link className={styles.session__link} href='/auth/register'>

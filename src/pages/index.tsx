@@ -12,7 +12,7 @@ export default function Home() {
         <Link href='/auth/register'>Register</Link>
       </Button>
       {session && (
-        <Button onClick={() => signOut()}>
+        <Button onClick={() => signOut()} testid='logout-button'>
           <span>Log out</span>
         </Button>
       )}

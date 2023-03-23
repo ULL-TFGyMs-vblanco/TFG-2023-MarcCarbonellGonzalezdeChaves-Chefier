@@ -10,11 +10,12 @@ const Login: React.FC = () => {
   const loginHandler = async (provider: string, data: SignInOptions) => {
     try {
       await AuthService.login(provider, data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error) {
+      const errorMessage = (error as Error).toString();
+      setError(errorMessage);
     }
   };
+
   return (
     <div className={styles.container}>
       <LoginForm onLogin={loginHandler} error={error} />

@@ -19,10 +19,8 @@ export const ToggleMenu: React.FC<{
       {session ? (
         <div className={styles.user__info__container}>
           <Avatar
-            source={
-              session?.user?.image ? session.user.image : '/avatar_default.jpg'
-            }
-            link={session ? '/profile' : '/auth/login'}
+            source={session.user.image}
+            link='/profile'
             size={55}
             username='Default'
             style={styles.avatar}

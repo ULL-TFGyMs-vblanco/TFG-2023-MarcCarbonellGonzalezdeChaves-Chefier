@@ -1,19 +1,23 @@
 import { RegisterData } from 'auth-types';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { signIn, SignInOptions } from 'next-auth/react';
 
 const AuthService = {
-  register: async (url: string, { arg }: { arg: RegisterData }) => {
+  register: async (url: string, arg: { arg: RegisterData }) => {
     try {
-      const res = await axios.post(url, arg);
-      return res.data.user;
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (err: any) {
-      throw new Error(err.data.error);
+      await axios.post(url, arg);
+      return true;
+    } catch (err) {
+      const error = err as AxiosError;
+      throw new Error(error.message);
     }
   },
   login: async (provider: string, options: SignInOptions) => {
-    await signIn(provider, { ...options });
+    await signIn(provider, { ...options, redirect: false }).then((res) => {
+      if (res !== undefined) {
+        throw new Error(res?.error);
+      }
+    });
   },
 };
 

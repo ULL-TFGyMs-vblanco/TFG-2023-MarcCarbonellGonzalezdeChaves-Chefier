@@ -3,6 +3,7 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
+import AuthService from '@/services/AuthService';
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -46,17 +47,16 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider !== 'credentials') {
-        try {
-          const res = await axios.post('/api/auth/register', {
-            name: user.name,
-            email: user.email,
-            avatar: user.image,
-          });
-          return res.data.user;
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (err: any) {
-          throw new Error(err.toString());
-        }
+        await AuthService.register('/api/auth/register', {
+          arg: {
+            email: user.email!,
+            username: user.name!,
+            avatar: user.image!,
+          },
+        });
+        return true;
+      } else {
+        return true;
       }
     },
   },

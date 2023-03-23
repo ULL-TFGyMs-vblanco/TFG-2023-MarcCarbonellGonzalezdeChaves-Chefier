@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { SignInOptions } from 'next-auth/react';
 
 const Register: React.FC = () => {
-  const [serror, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
   const { trigger } = useSWRMutation(
     '/api/auth/register',
     AuthService.register
@@ -17,18 +17,18 @@ const Register: React.FC = () => {
   const registerHandler = async (data: RegisterData) => {
     try {
       await trigger(data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error) {
+      const errorMessage = (error as Error).toString();
+      setError(errorMessage);
     }
   };
 
   const loginHandler = async (provider: string, data: SignInOptions) => {
     try {
       await AuthService.login(provider, data);
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      setError(error.message);
+    } catch (error) {
+      const errorMessage = (error as Error).toString();
+      setError(errorMessage);
     }
   };
 
@@ -36,8 +36,8 @@ const Register: React.FC = () => {
     <div className={styles.container}>
       <RegisterForm
         onRegister={registerHandler}
-        onLogin={loginHandler}
-        error={serror}
+        onOauthLogin={loginHandler}
+        error={error}
       />
     </div>
   );

@@ -2,25 +2,24 @@ import validator from 'validator';
 import Link from 'next/link';
 import { SignInOptions } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
 
 import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import styles from 'src/styles/auth/AuthForm.module.css';
-import { RegisterFormInputs, RegisterData, LoginData } from 'auth-types';
+import { RegisterFormInputs, RegisterData } from 'auth-types';
 import useShow from 'src/hooks/useShow';
+import OauthLogin from './OauthLogin';
 
 interface RegisterFormProps {
-  error: string | null;
+  error?: string | null;
   onRegister: (data: RegisterData) => void;
-  onLogin: (provider: string, options: SignInOptions) => void;
+  onOauthLogin: (provider: string, options: SignInOptions) => void;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({
   onRegister,
-  onLogin,
+  onOauthLogin,
   error,
 }) => {
   const {
@@ -33,16 +32,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   const [showMore, toggleShowMore] = useShow();
   const [showPassword, toggleShowPassword] = useShow();
 
-  const loginHandler = (provider: string, credentials?: LoginData) => {
-    if (credentials) {
-      onLogin(provider, { ...credentials, callbackUrl: '/' });
-    } else {
-      onLogin(provider, { callbackUrl: '/' });
-    }
+  const loginHandler = (provider: string) => {
+    onOauthLogin(provider, { callbackUrl: '/' });
     reset();
   };
 
-  const submitHandler = (credentials: RegisterData) => {
+  const registerHandler = (credentials: RegisterData) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     onRegister(credentials);
     reset();
@@ -58,7 +53,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           onSubmit={handleSubmit(
             // eslint-disable-next-line @typescript-eslint/no-unused-vars
             ({ confirmPassword, passwordVisibility, ...credentials }) =>
-              submitHandler(credentials)
+              registerHandler(credentials)
           )}
           data-testid='register-form'
         >
@@ -219,22 +214,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         <div className={styles.separator}>
           <span className={styles.separator__text}>or</span>
         </div>
-        <div className={styles.oauth}>
-          <Button
-            style={styles.google__button}
-            onClick={() => loginHandler('google')}
-          >
-            <FcGoogle />
-            <span>&nbsp; Log in with Google</span>
-          </Button>
-          <Button
-            style={styles.github__button}
-            onClick={() => loginHandler('github')}
-          >
-            <FaGithub color='white' />
-            <span>&nbsp; Log in with GitHub</span>
-          </Button>
-        </div>
+        <OauthLogin onLogin={loginHandler} />
         <p className={styles.session__msg}>
           Already have an account?&nbsp;
           <Link className={styles.session__link} href='/auth/login'>
