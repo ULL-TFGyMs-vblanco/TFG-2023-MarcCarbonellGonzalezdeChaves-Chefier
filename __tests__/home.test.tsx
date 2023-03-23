@@ -1,5 +1,5 @@
 import { describe, it, afterEach, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import Home from '../src/pages/index';
 
 describe('Home', (): void => {
@@ -14,6 +14,9 @@ describe('Home', (): void => {
           user: { user: 'Usuario', email: 'user@gmail.com' },
         },
       }),
+      signOut: () => {
+        return Promise.resolve(undefined);
+      },
     };
   });
 
@@ -30,5 +33,12 @@ describe('Home', (): void => {
 
     screen.getByTestId('register-button');
     screen.getByText('Register');
+  });
+  it('should render log out button', (): void => {
+    render(<Home />);
+
+    screen.getByTestId('logout-button');
+    screen.getByText('Log out');
+    fireEvent.click(screen.getByTestId('logout-button'));
   });
 });

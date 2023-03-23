@@ -29,13 +29,12 @@ describe('Login', (): void => {
       const mod: object = await vi.importActual('next-auth/react');
       return {
         ...mod,
-        useSession: () => ({
-          data: {
-            user: { user: 'Usuario', email: 'user@gmail.com' },
-          },
-        }),
         signIn: () => {
-          throw new Error('Invalid email or password');
+          return Promise.resolve({
+            error: 'Invalid email or password',
+            status: 401,
+            ok: false,
+          });
         },
       };
     });
@@ -48,38 +47,11 @@ describe('Login', (): void => {
     });
     fireEvent.submit(screen.getByTestId('submit-button'));
     await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
-    expect(spy).toBeCalledWith({
+    expect(spy).toBeCalledWith('credentials', {
+      callbackUrl: '/',
       email: 'user@gmail.com',
       password: 'Password1',
     });
-    expect(screen.getByText('Invalid email or password'));
-  });
-  it('should call login service when clicking submit button', async (): Promise<void> => {
-    render(<Login />);
-
-    const spy = vi.spyOn(AuthService, 'login');
-
-    vi.mock('next-auth/react', async () => {
-      const mod: object = await vi.importActual('next-auth/react');
-      return {
-        ...mod,
-        signIn: () => ({
-          user: { user: 'Usuario', email: 'user@gmail.com' },
-        }),
-      };
-    });
-
-    fireEvent.input(screen.getByTestId('email-input'), {
-      target: { value: 'user@gmail.com' },
-    });
-    fireEvent.input(screen.getByTestId('password-input'), {
-      target: { value: 'Password1' },
-    });
-    fireEvent.submit(screen.getByTestId('submit-button'));
-    await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
-    expect(spy).toBeCalledWith({
-      email: 'user@gmail.com',
-      password: 'Password1',
-    });
+    expect(screen.getByText('Error: Invalid email or password'));
   });
 });
