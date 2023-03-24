@@ -1,4 +1,5 @@
 import useSWRMutation from 'swr/mutation';
+import { CustomModal } from '../../components/ui/CustomModal';
 
 import { RegisterForm } from '../../components/auth/RegisterForm';
 import { RegisterData } from 'auth-types';
@@ -6,9 +7,12 @@ import styles from 'src/styles/auth/Auth.module.css';
 import AuthService from '../../services/AuthService';
 import { useState } from 'react';
 import { SignInOptions } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const Register: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
+  const [visible, setVisible] = useState(false);
+  const router = useRouter();
   const { trigger } = useSWRMutation(
     '/api/auth/register',
     AuthService.register
@@ -17,9 +21,11 @@ const Register: React.FC = () => {
   const registerHandler = async (data: RegisterData) => {
     try {
       await trigger(data);
+      return true;
     } catch (error) {
       const errorMessage = (error as Error).toString();
       setError(errorMessage);
+      return false;
     }
   };
 
@@ -32,13 +38,28 @@ const Register: React.FC = () => {
     }
   };
 
+  const closeModalHandler = async () => {
+    console.log('dsf');
+    router.push('/auth/login');
+  };
+
   return (
     <div className={styles.container}>
       <RegisterForm
         onRegister={registerHandler}
         onOauthLogin={loginHandler}
+        toggleModal={setVisible}
         error={error}
       />
+      <CustomModal
+        type='success'
+        title='SUCCESS'
+        visible={visible}
+        handler={setVisible}
+        onClose={closeModalHandler}
+      >
+        Congratulations, your account has been successfully created!
+      </CustomModal>
     </div>
   );
 };

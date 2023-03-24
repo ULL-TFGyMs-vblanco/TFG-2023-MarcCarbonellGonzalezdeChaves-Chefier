@@ -12,14 +12,16 @@ import useShow from 'src/hooks/useShow';
 import OauthLogin from './OauthLogin';
 
 interface RegisterFormProps {
-  error?: string | null;
-  onRegister: (data: RegisterData) => void;
+  onRegister: (data: RegisterData) => Promise<boolean>;
   onOauthLogin: (provider: string, options: SignInOptions) => void;
+  toggleModal: (visible: boolean) => void;
+  error?: string | null;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({
   onRegister,
   onOauthLogin,
+  toggleModal,
   error,
 }) => {
   const {
@@ -27,20 +29,20 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     formState: { errors },
     watch,
     handleSubmit,
-    reset,
   } = useForm<RegisterFormInputs>();
   const [showMore, toggleShowMore] = useShow();
   const [showPassword, toggleShowPassword] = useShow();
 
   const loginHandler = (provider: string) => {
     onOauthLogin(provider, { callbackUrl: '/' });
-    reset();
   };
 
   const registerHandler = (credentials: RegisterData) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    onRegister(credentials);
-    reset();
+    onRegister(credentials).then((res) => {
+      if (res) {
+        toggleModal(true);
+      }
+    });
   };
 
   return (

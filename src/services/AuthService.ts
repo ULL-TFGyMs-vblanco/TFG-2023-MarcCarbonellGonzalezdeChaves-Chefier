@@ -6,7 +6,6 @@ const AuthService = {
   register: async (url: string, arg: { arg: RegisterData }) => {
     try {
       await axios.post(url, arg);
-      return true;
     } catch (err) {
       const error = err as AxiosError;
       throw new Error(error.message);

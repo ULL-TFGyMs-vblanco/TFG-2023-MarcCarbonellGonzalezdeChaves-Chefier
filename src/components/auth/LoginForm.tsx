@@ -10,12 +10,12 @@ import Link from 'next/link';
 import OauthLogin from './OauthLogin';
 
 interface LoginFormProps {
-  error?: string | null;
   onLogin: (provider: string, options: SignInOptions) => void;
+  error?: string | null;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, error }) => {
-  const { register, watch, handleSubmit, reset } = useForm<LoginFormInputs>();
+  const { register, watch, handleSubmit } = useForm<LoginFormInputs>();
   const [showPassword, toggleShowPassword] = useShow();
 
   const loginHandler = (provider: string, credentials?: LoginData) => {
@@ -24,7 +24,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, error }) => {
     } else {
       onLogin(provider, { callbackUrl: '/' });
     }
-    reset();
   };
 
   return (

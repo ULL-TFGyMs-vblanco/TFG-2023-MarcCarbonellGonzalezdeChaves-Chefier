@@ -21,6 +21,12 @@ describe('Register', (): void => {
     };
   });
 
+  vi.mock('next/router', async () => {
+    return {
+      useRouter: () => [],
+    };
+  });
+
   const spy = vi.spyOn(AuthService, 'login');
 
   it('should try to sign in with Google provider from register page', async (): Promise<void> => {
