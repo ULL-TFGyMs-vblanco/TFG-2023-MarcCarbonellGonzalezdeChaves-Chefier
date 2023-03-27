@@ -1,12 +1,11 @@
 import request from 'supertest';
-import { server } from '../src/index';
+import { app } from '../src/app';
 import { describe, it } from '../../node_modules/vitest';
 
-/**
- * Ruta por defecto
- */
-describe('Ruta por defecto', (): void => {
-  it('Should be not implemented', async () => {
+const server = app.listen();
+
+describe('Default router', (): void => {
+  it('should be not implemented', async () => {
     await request(server).get('').send().expect(501);
   });
 });
