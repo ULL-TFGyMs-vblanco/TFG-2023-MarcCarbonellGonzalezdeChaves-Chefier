@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "env-cmd -f ./config/dev.env node dist/index.js",
-    "localtest": "env-cmd -f ./config/test.env vitest",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "start": "tsc && env-cmd -f ./config/.env node dist/index.js",
+    "test": "env-cmd -f ./config/test.env vitest",
+    "coverage": "env-cmd -f ./config/test.env vitest run --coverage"
   },
   "author": "",
   "license": "ISC",
@@ -24,6 +23,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "jsonwebtoken": "^9.0.0",
     "koa": "^2.14.1",
     "koa-bodyparser": "^4.3.0",
     "koa-router": "^12.0.0",
