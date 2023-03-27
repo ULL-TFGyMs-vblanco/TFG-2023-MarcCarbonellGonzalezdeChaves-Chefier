@@ -39,7 +39,6 @@ const Register: React.FC = () => {
   };
 
   const closeModalHandler = async () => {
-    console.log('dsf');
     router.push('/auth/login');
   };
 

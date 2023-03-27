@@ -43,7 +43,6 @@ export const authOptions: NextAuthOptions = {
     signIn: '/auth/login',
     error: '/auth/error',
   },
-  secret: process.env.JWT_SECRET,
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider !== 'credentials') {
@@ -54,10 +53,17 @@ export const authOptions: NextAuthOptions = {
             avatar: user.image!,
           },
         });
-        return true;
-      } else {
-        return true;
       }
+      return true;
+    },
+    async jwt({ token, user, account }) {
+      if (account) {
+        token.account = {
+          ...account,
+          accessToken: user?.accessToken,
+        };
+      }
+      return token;
     },
   },
 };

@@ -23,8 +23,11 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     required: true,
     trim: true,
     validate: (value: string) => {
-      if (validator.isLength(value, { max: 10 })) {
-        throw new Error('Username must be less than 10 characters');
+      if (!validator.isLength(value, { max: 20 })) {
+        throw new Error('Username must have at most 20 characters');
+      }
+      if (!validator.isLowercase(value)) {
+        throw new Error('Username must be in lower case');
       }
     },
   },
@@ -32,8 +35,8 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     type: String,
     trim: true,
     validate: (value: string) => {
-      if (validator.isLength(value, { max: 10 })) {
-        throw new Error('Nickname must be less than 10 characters');
+      if (!validator.isLength(value, { max: 10 })) {
+        throw new Error('Nickname must have at most 20 characters');
       }
     },
   },
@@ -41,7 +44,7 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     type: String,
     trim: true,
     validate: (value: string) => {
-      if (validator.isLength(value, { max: 100 })) {
+      if (!validator.isLength(value, { max: 100 })) {
         throw new Error('Description must be less than 100 characters');
       }
     },
@@ -56,9 +59,10 @@ export const UserSchema = new Schema<UserDocumentInterface>({
   },
   avatar: {
     type: String,
+    default: './images/avatar_default.jpg',
     trim: true,
     validate: (value: string) => {
-      if (!validator.isURL(value)) {
+      if (!validator.isURL(value) && value !== './images/avatar_default.jpg') {
         throw new Error('Avatar must be a valid URL');
       }
     },
@@ -76,7 +80,6 @@ export const UserSchema = new Schema<UserDocumentInterface>({
   },
   password: {
     type: String,
-    required: true,
     trim: true,
     validate: (value: string) => {
       if (
