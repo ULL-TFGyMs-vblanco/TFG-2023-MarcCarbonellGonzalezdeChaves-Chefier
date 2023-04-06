@@ -1,9 +1,5 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# environment
-/config
-/server/config
-
 # dependencies
 /server/node_modules
 /node_modules
@@ -34,6 +30,8 @@ yarn-error.log*
 
 # local env files
 .env*.local
+/config
+/server/config
 
 # vercel
 .vercel
