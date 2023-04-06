@@ -39,6 +39,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET || '',
   pages: {
     signIn: '/auth/login',
     error: '/auth/error',
