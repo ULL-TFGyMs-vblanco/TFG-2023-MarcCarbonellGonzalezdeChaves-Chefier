@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "env-cmd -f ./config/.env next dev -p 3000",
+    "dev": "env-cmd -f ./config/.env next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "env-cmd -f ./config/.env vitest",
-    "testui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "test": "env-cmd -f ./config/test.env vitest",
+    "testui": "env-cmd -f ./config/test.env vitest --ui",
+    "coverage": "env-cmd -f ./config/test.env vitest --coverage"
   },
   "dependencies": {
     "@next/font": "13.1.6",

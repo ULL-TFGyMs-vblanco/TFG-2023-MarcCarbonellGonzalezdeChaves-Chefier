@@ -20,13 +20,13 @@ export const authOptions: NextAuthOptions = {
         };
 
         try {
-          const res = await axios.post('/api/auth/login', {
+          const res = await axios.post('/api/users/login', {
             email,
             password,
           });
           return res.data.user;
-        } catch (err) {
-          throw new Error('Invalid email or password');
+        } catch (err: any) {
+          throw new Error(err);
         }
       },
     }),
