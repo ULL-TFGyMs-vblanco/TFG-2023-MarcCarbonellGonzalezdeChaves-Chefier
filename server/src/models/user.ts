@@ -5,6 +5,7 @@ export interface UserDocumentInterface extends Document {
   username: string;
   nickname: string;
   description: string;
+  registerDate: Date;
   birthdate: Date;
   avatar: string;
   email: string;
@@ -48,6 +49,10 @@ export const UserSchema = new Schema<UserDocumentInterface>({
         throw new Error('Description must be less than 100 characters');
       }
     },
+  },
+  registerDate: {
+    type: Date,
+    default: Date.now,
   },
   birthdate: {
     type: Date,

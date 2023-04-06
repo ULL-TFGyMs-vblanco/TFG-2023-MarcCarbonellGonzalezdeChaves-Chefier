@@ -12,9 +12,14 @@ export default function Home() {
         <Link href='/auth/register'>Register</Link>
       </Button>
       {session && (
-        <Button onClick={() => signOut()} testid='logout-button'>
-          <span>Log out</span>
-        </Button>
+        <>
+          <h1>Logged in as {session.user.username}</h1>
+          <h2>email: {session.user.email}</h2>
+          <h2>id: {session.user.accessToken}</h2>
+          <Button onClick={() => signOut()} testid='logout-button'>
+            <span>Log out</span>
+          </Button>
+        </>
       )}
     </div>
   );

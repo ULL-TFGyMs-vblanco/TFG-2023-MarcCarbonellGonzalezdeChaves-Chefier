@@ -1,13 +1,11 @@
-import { Context } from 'koa';
 import Router from 'koa-router';
-import { register, login } from '../services/user.api';
+import { getUser, register, login } from '../services/user.api';
+import { verifyToken } from '../middlewares/verifyToken';
 
 export const userRouter = new Router();
 
-userRouter.post('/api/auth/register', async (ctx: Context) => {
-  await register(ctx);
-});
+userRouter.get('/api/users/:username', verifyToken, getUser);
 
-userRouter.post('/api/auth/login', async (ctx: Context) => {
-  await login(ctx);
-});
+userRouter.post('/api/users/register', register);
+
+userRouter.post('/api/users/login', login);
