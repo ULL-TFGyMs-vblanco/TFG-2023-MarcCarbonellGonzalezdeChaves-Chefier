@@ -1,20 +1,26 @@
 import { RegisterData } from 'auth-types';
-import axios, { AxiosError } from 'axios';
+import axios from '../../axios_config';
 import { signIn, SignInOptions } from 'next-auth/react';
 
 const AuthService = {
-  register: async (url: string, arg: { arg: RegisterData }) => {
+  register: async (url: string, data: { arg: RegisterData }) => {
     try {
-      await axios.post(url, arg);
-    } catch (err) {
-      const error = err as AxiosError;
-      throw new Error(error.message);
+      await axios.post(url, data.arg);
+    } catch (err: any) {
+      const error = err.response.data.error;
+      let errorMessage = error.message;
+      if (error.errors) {
+        error.errors.forEach((e: any) => {
+          errorMessage = errorMessage.concat('\n', e.message);
+        });
+      }
+      throw new Error(errorMessage);
     }
   },
   login: async (provider: string, options: SignInOptions) => {
-    await signIn(provider, { ...options, redirect: false }).then((res) => {
-      if (res !== undefined) {
-        throw new Error(res?.error);
+    await signIn(provider, options).then((res) => {
+      if (res?.error) {
+        throw new Error(res?.error.toString());
       }
     });
   },

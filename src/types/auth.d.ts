@@ -22,6 +22,6 @@ declare module 'auth-types' {
     username: string;
     email: string;
     password?: string;
-    avatar?: string;
+    image?: string;
   }
 }

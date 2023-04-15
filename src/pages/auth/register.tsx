@@ -13,10 +13,7 @@ const Register: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [visible, setVisible] = useState(false);
   const router = useRouter();
-  const { trigger } = useSWRMutation(
-    '/api/auth/register',
-    AuthService.register
-  );
+  const { trigger } = useSWRMutation('/auth/register', AuthService.register);
 
   const registerHandler = async (data: RegisterData) => {
     try {
