@@ -15,9 +15,12 @@ export const register = async ({ response, request }: Context) => {
   }
   try {
     const email = request.body.email;
-    const username = request.body.username.toLowerCase();
+    const username = request.body.username.toLowerCase().replace(/ /g, '_');
     let user = new User({ username, email });
-    if (request.body.password) {
+    if (request.body.image) {
+      const image = request.body.image;
+      user = new User({ username, email, image });
+    } else if (request.body.password) {
       const password = await bcrypt.hash(request.body.password, 10);
       user = new User({ username, email, password });
     }
@@ -26,7 +29,7 @@ export const register = async ({ response, request }: Context) => {
   } catch (err: any) {
     if (err.name === 'ValidationError') {
       const errors = Object.keys(err.errors).map((key) => {
-        return { error: err.errors[key].message, field: key };
+        return { message: err.errors[key].message, field: key };
       });
       ctx.setResponse(response, 400, {
         error: { message: err._message, errors: errors },
@@ -35,19 +38,21 @@ export const register = async ({ response, request }: Context) => {
     } else if (err.code && err.code === 11000) {
       ctx.setResponse(response, 400, {
         error: {
-          message: 'Duplicated credential',
-          errors: {
-            error: `An account with that ${Object.keys(
-              err.keyValue
-            )} already exists`,
-            field: Object.keys(err.keyValue)[0],
-          },
+          message: 'Duplicated credential.',
+          errors: [
+            {
+              message: `An account with that ${Object.keys(
+                err.keyValue
+              )} already exists.`,
+              field: Object.keys(err.keyValue)[0],
+            },
+          ],
         },
         request: request.body,
       });
     } else {
       ctx.setResponse(response, 500, {
-        error: err,
+        error: { message: err },
         request: request.body,
       });
     }
@@ -71,7 +76,12 @@ export const login = async ({ response, request }: Context) => {
       const token = jwt.sign({ user }, process.env.JWT_SECRET as string, {
         expiresIn: '86400s',
       });
-      ctx.setResponse(response, 200, { user, accessToken: token });
+      ctx.setResponse(response, 200, {
+        name: user.username,
+        email: user.email,
+        image: user.image,
+        accessToken: token,
+      });
     } else {
       ctx.setResponse(response, 404, {
         error: 'Incorrect email or password',

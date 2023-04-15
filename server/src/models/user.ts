@@ -7,7 +7,7 @@ export interface UserDocumentInterface extends Document {
   description: string;
   registerDate: Date;
   birthdate: Date;
-  avatar: string;
+  image: string;
   email: string;
   password: string;
   following: [string];
@@ -62,12 +62,12 @@ export const UserSchema = new Schema<UserDocumentInterface>({
       }
     },
   },
-  avatar: {
+  image: {
     type: String,
-    default: './images/avatar_default.jpg',
+    default: `${process.env.CDN_URL}avatar_default.jpg`,
     trim: true,
     validate: (value: string) => {
-      if (!validator.isURL(value) && value !== './images/avatar_default.jpg') {
+      if (!validator.isURL(value)) {
         throw new Error('Avatar must be a valid URL');
       }
     },

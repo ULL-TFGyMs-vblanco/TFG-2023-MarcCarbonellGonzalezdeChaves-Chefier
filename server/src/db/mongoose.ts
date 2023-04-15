@@ -5,7 +5,7 @@ const databaseUrl = (process.env.DATABASE_URL as string) || remoteUrl;
 console.log(databaseUrl);
 
 // Connection to database
-connect(databaseUrl, {
+connect('mongodb://chefier:chefierapi@172.16.27.2:27017/chefier?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
@@ -14,6 +14,6 @@ connect(databaseUrl, {
   .then(() => {
     console.log('Connection to MongoDB server established');
   })
-  .catch(() => {
-    console.log('Unnable to connect to MongoDB server');
+  .catch((err) => {
+    console.log(err);
   });
