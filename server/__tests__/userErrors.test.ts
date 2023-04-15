@@ -33,7 +33,7 @@ describe('User router server errors', (): void => {
   describe('Register', (): void => {
     it('should return 500 if an error occurs when triying to register a user', async () => {
       await request(server)
-        .post('/api/users/register')
+        .post('/api/auth/register')
         .send({
           username: 'user',
           email: 'user@test.com',
@@ -45,7 +45,7 @@ describe('User router server errors', (): void => {
   describe('Login', (): void => {
     it('should return 500 if an error occurs when the user tries to log in', async () => {
       await request(server)
-        .post('/api/users/login')
+        .post('/api/auth/login')
         .send({
           email: 'user@test.com',
           password: 'Password1',

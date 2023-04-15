@@ -22,13 +22,14 @@ describe('User router', (): void => {
         .expect(400);
     });
     it('should register a new user', async () => {
-      const res = await request(server).post('/api/auth/register').send({
-        username: 'chefier',
-        email: 'chefier@test.com',
-        password: 'Password1',
-      });
-      // .expect(200);
-      console.log(res);
+      await request(server)
+        .post('/api/auth/register')
+        .send({
+          username: 'chefier',
+          email: 'chefier@test.com',
+          password: 'Password1',
+        })
+        .expect(200);
     });
     it('should register a new user without password', async () => {
       await request(server)

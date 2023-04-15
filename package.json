@@ -7,9 +7,11 @@
     "build": "next build",
     "start": "env-cmd -f ./config/.env next start",
     "lint": "next lint",
-    "test": "env-cmd -f ./config/test.env vitest",
+    "localtest": "env-cmd -f ./config/test.env vitest",
     "testui": "env-cmd -f ./config/test.env vitest --ui",
-    "coverage": "env-cmd -f ./config/test.env vitest --coverage"
+    "localcoverage": "env-cmd -f ./config/test.env vitest --coverage",
+    "test": "vitest",
+    "coverage": "vitest --coverage"
   },
   "dependencies": {
     "@next/font": "13.1.6",
