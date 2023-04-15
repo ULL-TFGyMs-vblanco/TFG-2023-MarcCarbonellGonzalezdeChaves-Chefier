@@ -33,3 +33,5 @@ jobs:
       run: npm test
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        CDN_URL: ${{ secrets.CDN_URL }}
