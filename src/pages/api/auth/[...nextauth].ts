@@ -50,9 +50,9 @@ export const authOptions: NextAuthOptions = {
         try {
           await AuthService.register('/auth/register', {
             arg: {
-              email: user.email!,
-              username: user.name!,
-              image: user.image!,
+              email: user.email,
+              username: user.name,
+              image: user.image,
             },
           });
         } catch (err: any) {

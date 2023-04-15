@@ -1,6 +1,5 @@
 import Router from 'koa-router';
 import { getUser, register, login } from '../services/user.api';
-// import { verifyToken } from '../middlewares/verifyToken';
 
 export const userRouter = new Router();
 

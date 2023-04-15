@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
-import { Context, Next } from 'koa';
+import { Context, Next, Request, Response } from 'koa';
 import ctx from '../utils/CtxUtils';
 
 export const verifyToken = async (
@@ -22,50 +22,11 @@ export const verifyToken = async (
     if (bearerHeader) {
       const token = bearerHeader.split(' ')[1];
       if (request.body.provider === 'credentials') {
-        try {
-          jwt.verify(token, process.env.JWT_SECRET as string);
-          return next();
-        } catch (error: any) {
-          ctx.setResponse(response, 401, {
-            error,
-            request: request.body,
-          });
-        }
+        verifyCredentials(token, next, request, response);
       } else if (request.body.provider === 'google') {
-        const client = new OAuth2Client(process.env.CLIENT_ID);
-        try {
-          await client.verifyIdToken({
-            idToken: token,
-            audience: process.env.CLIENT_ID,
-          });
-          return next();
-        } catch (error: any) {
-          ctx.setResponse(response, 401, { error, request: request.body });
-        }
+        verifyGoogle(token, next, request, response);
       } else {
-        try {
-          const res = await axios.post(
-            `https://api.github.com/aplications/${process.env.GITHUB_CLIENT_ID}/token`,
-            {
-              access_token: token,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            }
-          );
-          if (res.status === 200) {
-            return next();
-          } else {
-            ctx.setResponse(response, 500, {
-              error: res,
-              request: request.body,
-            });
-          }
-        } catch (error: any) {
-          ctx.setResponse(response, 401, { error, request: request.body });
-        }
+        verifyGithub(token, next, request, response);
       }
     } else {
       ctx.setResponse(response, 401, {
@@ -75,3 +36,75 @@ export const verifyToken = async (
     }
   }
 };
+
+function verifyCredentials(
+  token: string,
+  next: Next,
+  request: Request,
+  response: Response
+) {
+  try {
+    jwt.verify(token, process.env.JWT_SECRET as string);
+    return next();
+  } catch (error: any) {
+    ctx.setResponse(response, 401, {
+      error,
+      request: request.body,
+    });
+    return;
+  }
+}
+
+async function verifyGoogle(
+  token: string,
+  next: Next,
+  request: Request,
+  response: Response
+) {
+  const client = new OAuth2Client(process.env.CLIENT_ID);
+  await client
+    .verifyIdToken({
+      idToken: token,
+      audience: process.env.CLIENT_ID,
+    })
+    .then(() => {
+      return next();
+    })
+    .catch((error) => {
+      ctx.setResponse(response, 401, { error, request: request.body });
+    });
+}
+
+async function verifyGithub(
+  token: string,
+  next: Next,
+  request: Request,
+  response: Response
+) {
+  await axios
+    .post(
+      `https://api.github.com/aplications/${process.env.GITHUB_CLIENT_ID}/token`,
+      {
+        access_token: token,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    )
+    .then((res) => {
+      if (res.status === 200) {
+        return next();
+      } else {
+        ctx.setResponse(response, 500, {
+          error: res,
+          request: request.body,
+        });
+        return;
+      }
+    })
+    .catch((error) => {
+      ctx.setResponse(response, 401, { error, request: request.body });
+    });
+}
