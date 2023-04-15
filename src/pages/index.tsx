@@ -13,9 +13,9 @@ export default function Home() {
       </Button>
       {session && (
         <>
-          <h1>Logged in as {session.user.username}</h1>
+          <h1>Logged in as {session.user.name}</h1>
           <h2>email: {session.user.email}</h2>
-          <h2>id: {session.user.accessToken}</h2>
+          <h2>image: {session.user.image}</h2>
           <Button onClick={() => signOut()} testid='logout-button'>
             <span>Log out</span>
           </Button>

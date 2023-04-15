@@ -8,6 +8,9 @@ const nextConfig = {
       },
       {
         hostname: 'avatars.githubusercontent.com',
+      },
+      {
+        hostname: 'ik.imagekit.io',
       }
     ],
   },

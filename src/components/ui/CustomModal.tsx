@@ -2,7 +2,7 @@ import { Button, Modal } from '@nextui-org/react';
 import { Dispatch, SetStateAction } from 'react';
 import {
   IoCheckmarkCircleOutline,
-  // IoCloseCircleOutline,
+  IoCloseCircleOutline,
 } from 'react-icons/io5';
 
 interface CustomModalProps {
@@ -38,12 +38,11 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           flexDirection: 'column',
         }}
       >
-        <IoCheckmarkCircleOutline color='green' size={75} />
-        {/* {type === 'success' ? (
+        {type === 'success' ? (
           <IoCheckmarkCircleOutline color='green' size={75} />
         ) : (
           <IoCloseCircleOutline color='red' size={75} />
-        )} */}
+        )}
         <h1 style={{ fontSize: '1.25rem' }}>{title}</h1>
       </Modal.Header>
       <Modal.Body

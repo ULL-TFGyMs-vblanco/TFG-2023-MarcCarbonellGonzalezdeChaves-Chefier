@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../../../axios_config';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
@@ -20,13 +20,13 @@ export const authOptions: NextAuthOptions = {
         };
 
         try {
-          const res = await axios.post('/api/users/login', {
+          const res = await axios.post('/auth/login', {
             email,
             password,
           });
-          return res.data.user;
+          return res.data;
         } catch (err: any) {
-          throw new Error(err);
+          throw new Error(err.response.data.error);
         }
       },
     }),
@@ -42,27 +42,29 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET || '',
   pages: {
     signIn: '/auth/login',
-    error: '/auth/error',
+    error: '/auth/login',
   },
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider !== 'credentials') {
-        await AuthService.register('/api/auth/register', {
-          arg: {
-            email: user.email!,
-            username: user.name!,
-            avatar: user.image!,
-          },
-        });
+        try {
+          await AuthService.register('/auth/register', {
+            arg: {
+              email: user.email!,
+              username: user.name!,
+              image: user.image!,
+            },
+          });
+        } catch (err: any) {
+          const error = err.toString();
+          if (!error.match(/^Error: Duplicated credential/)) return false;
+        }
       }
       return true;
     },
     async jwt({ token, user, account }) {
       if (account) {
-        token.account = {
-          ...account,
-          accessToken: user?.accessToken,
-        };
+        token.accessToken = user?.accessToken;
       }
       return token;
     },

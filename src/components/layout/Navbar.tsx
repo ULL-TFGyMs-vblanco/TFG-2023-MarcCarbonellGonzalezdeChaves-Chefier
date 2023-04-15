@@ -5,10 +5,13 @@ import styles from 'src/styles/layout/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
 import { Avatar } from '../ui/Avatar';
 import { signOut, useSession } from 'next-auth/react';
+import { Loading } from '@nextui-org/react';
+import useUser from '@/hooks/useUser';
 
 export const Navbar: React.FC = () => {
   const [firstToggle, toggle, handleToggle] = useToggleMenu();
   const { data: session } = useSession();
+  const { user, isLoading, isError } = useUser(session?.user.name);
 
   return (
     <div className={styles.navbar}>
@@ -56,7 +59,6 @@ export const Navbar: React.FC = () => {
                 <>
                   <li className={styles.links__row}>
                     <button
-                      // href='/'
                       className={styles.logout__button}
                       data-testid='logout-button'
                       onClick={() => signOut()}
@@ -65,14 +67,20 @@ export const Navbar: React.FC = () => {
                     </button>
                   </li>
                   <li className={styles.links__row}>
-                    <Avatar
-                      source={session.user.image}
-                      link={'/profile'}
-                      size={40}
-                      username='Default'
-                      style={styles.avatar}
-                      testid='avatar'
-                    />
+                    {isLoading ? (
+                      <Loading />
+                    ) : isError ? (
+                      <h1>{isError}</h1>
+                    ) : (
+                      <Avatar
+                        source={user.image}
+                        link={'/profile'}
+                        size={40}
+                        username='Default'
+                        style={styles.avatar}
+                        testid='avatar'
+                      />
+                    )}
                   </li>
                 </>
               ) : (
