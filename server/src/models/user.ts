@@ -5,8 +5,9 @@ export interface UserDocumentInterface extends Document {
   username: string;
   nickname: string;
   description: string;
+  registerDate: Date;
   birthdate: Date;
-  avatar: string;
+  image: string;
   email: string;
   password: string;
   following: [string];
@@ -23,8 +24,11 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     required: true,
     trim: true,
     validate: (value: string) => {
-      if (validator.isLength(value, { max: 10 })) {
-        throw new Error('Username must be less than 10 characters');
+      if (!validator.isLength(value, { max: 20 })) {
+        throw new Error('Username must have at most 20 characters');
+      }
+      if (!validator.isLowercase(value)) {
+        throw new Error('Username must be in lower case');
       }
     },
   },
@@ -32,8 +36,8 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     type: String,
     trim: true,
     validate: (value: string) => {
-      if (validator.isLength(value, { max: 10 })) {
-        throw new Error('Nickname must be less than 10 characters');
+      if (!validator.isLength(value, { max: 10 })) {
+        throw new Error('Nickname must have at most 20 characters');
       }
     },
   },
@@ -41,10 +45,14 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     type: String,
     trim: true,
     validate: (value: string) => {
-      if (validator.isLength(value, { max: 100 })) {
+      if (!validator.isLength(value, { max: 100 })) {
         throw new Error('Description must be less than 100 characters');
       }
     },
+  },
+  registerDate: {
+    type: Date,
+    default: Date.now,
   },
   birthdate: {
     type: Date,
@@ -54,12 +62,13 @@ export const UserSchema = new Schema<UserDocumentInterface>({
       }
     },
   },
-  avatar: {
+  image: {
     type: String,
+    default: `${process.env.CDN_URL}avatar_default.jpg`,
     trim: true,
     validate: (value: string) => {
       if (!validator.isURL(value)) {
-        throw new Error('Avatar must be a valid URL');
+        throw new Error('Image must be a valid URL');
       }
     },
   },
@@ -76,7 +85,6 @@ export const UserSchema = new Schema<UserDocumentInterface>({
   },
   password: {
     type: String,
-    required: true,
     trim: true,
     validate: (value: string) => {
       if (

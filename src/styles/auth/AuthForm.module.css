@@ -1,12 +1,12 @@
 .form__card {
-  width: 50%;
+  width: 400px;
   border-radius: 0;
+  margin: 2rem auto;
 }
 
 @media screen and (width < 650px) {
   .form__card {
     box-shadow: none;
-    width: 100%;
   }
 }
 
@@ -15,7 +15,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 2.5rem;
+  padding: 10% 15%;
 }
 
 .title {
@@ -30,6 +30,43 @@
   justify-content: center;
   gap: 0.75rem;
   width: 100%;
+}
+
+.separator {
+  position: relative;
+  width: 100%;
+  display: block;
+  text-align: center;
+  margin: 0.75rem auto;
+  border-top: 1px solid lightgray;
+}
+
+.separator__text {
+  position: absolute;
+  top: -0.85rem;
+  left: 46.15%;
+  right: 46.15%;
+  z-index: 1;
+  background-color: white;
+  padding: 4px;
+  font-size: 0.85rem;
+}
+
+.divider {
+  border-top: 1px solid lightgray;
+  width: 100%;
+}
+
+.session__msg {
+  font-size: 0.75rem;
+  margin: 0;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.session__link {
+  text-decoration: none;
+  font-weight: bold;
 }
 
 /* FIELD */
@@ -110,4 +147,10 @@
 .show__more {
   color: blue;
   cursor: pointer;
+}
+
+/* BUTTONS */
+
+.credentials__button {
+  width: 100%;
 }

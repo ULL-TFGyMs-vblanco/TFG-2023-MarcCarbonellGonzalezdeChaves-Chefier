@@ -7,6 +7,7 @@ interface AvatarProps {
   username: string;
   style?: string;
   testid?: string;
+  link: string;
 }
 
 export const Avatar: React.FC<AvatarProps> = ({
@@ -15,11 +16,12 @@ export const Avatar: React.FC<AvatarProps> = ({
   username,
   style,
   testid,
+  link,
 }) => {
   return (
     <Link
       className={style}
-      href='/profile'
+      href={link}
       data-testid={testid}
       style={{ borderRadius: '50%', display: 'block' }}
     >

@@ -6,11 +6,28 @@ import {
   screen,
   waitFor,
 } from '@testing-library/react';
-import Register from '../src/pages/register';
-import auth from 'src/services/auth';
+import Register from '../src/pages/auth/register';
+import axios from '../axios_config';
+import { AxiosError } from 'axios';
 
 describe('Register', (): void => {
   afterEach(cleanup);
+
+  vi.mock('next-auth/react', async () => {
+    const mod: object = await vi.importActual('next-auth/react');
+    return {
+      ...mod,
+      signIn: () => {
+        return Promise.resolve(undefined);
+      },
+    };
+  });
+
+  vi.mock('next/router', async () => {
+    return {
+      useRouter: () => [],
+    };
+  });
 
   it('should render', (): void => {
     render(<Register />);
@@ -20,28 +37,31 @@ describe('Register', (): void => {
 
     screen.getByText('Register');
   });
-  it('should call register service when clicking submit button', async (): Promise<void> => {
+  it('should render the error message returned by the API', async (): Promise<void> => {
     render(<Register />);
+    const spy = vi.spyOn(axios, 'post').mockImplementation(async () => {
+      throw { response: { data: { error: { message: 'error' } } } };
+    });
 
-    const spy = vi.spyOn(auth, 'register');
-
-    const username = screen.getByTestId('username-input');
-    fireEvent.input(username, { target: { value: 'user' } });
-    const email = screen.getByTestId('email-input');
-    fireEvent.input(email, { target: { value: 'user@gmail.com' } });
-    const password = screen.getByTestId('password-input');
-    fireEvent.input(password, { target: { value: 'Password1' } });
-    const confirmPassword = screen.getByTestId('confirm-password-input');
-    fireEvent.input(confirmPassword, { target: { value: 'Password1' } });
-    const submit = screen.getByTestId('submit-button');
-    fireEvent.submit(submit);
+    fireEvent.input(screen.getByTestId('username-input'), {
+      target: { value: 'user' },
+    });
+    fireEvent.input(screen.getByTestId('email-input'), {
+      target: { value: 'user@gmail.com' },
+    });
+    fireEvent.input(screen.getByTestId('password-input'), {
+      target: { value: 'Password1' },
+    });
+    fireEvent.input(screen.getByTestId('confirm-password-input'), {
+      target: { value: 'Password1' },
+    });
+    fireEvent.submit(screen.getByTestId('submit-button'));
     await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
-    expect(spy).toBeCalledWith({
+    expect(spy).toBeCalledWith('/auth/register', {
       username: 'user',
       email: 'user@gmail.com',
       password: 'Password1',
-      confirmPassword: 'Password1',
-      showPassword: false,
     });
+    screen.getByText('Error: error');
   });
 });

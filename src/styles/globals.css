@@ -3,14 +3,13 @@ body {
   margin: 0px;
   padding: 0px;
 }
-
-a {
-  color: #000;
-  text-decoration: none;
+* {
+  font-family: var(--font-raleway);
 }
 
-a:hover {
-  color: gray;
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
 @media screen and (width <= 910px) {

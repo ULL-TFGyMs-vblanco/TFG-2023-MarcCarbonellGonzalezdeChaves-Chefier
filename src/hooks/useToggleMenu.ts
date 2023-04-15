@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-export default function useToggle() {
+export default function useToggleMenu(): [boolean, boolean, () => void] {
   const [firstToggle, setFirstToggle] = useState(true);
   const [toggle, setToggle] = useState(true);
 
@@ -8,5 +8,5 @@ export default function useToggle() {
     firstToggle ? setFirstToggle(false) : setToggle(!toggle);
   }, [firstToggle, toggle]);
 
-  return { firstToggle, toggle, handleToggle };
+  return [firstToggle, toggle, handleToggle];
 }

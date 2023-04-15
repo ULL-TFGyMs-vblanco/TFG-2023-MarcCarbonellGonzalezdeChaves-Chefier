@@ -4,11 +4,14 @@ import { Navbar } from '../src/components/layout/Navbar';
 import { MockImageProps } from '../src/types/test';
 
 describe('Navbar', (): void => {
-  afterEach(cleanup);
+  afterEach(() => {
+    cleanup();
+  });
 
   vi.mock('next/image', async () => {
     return {
-      default: () =>
+      default: () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         function Image({ src, alt, width, height, style }: MockImageProps) {
           return (
             // eslint-disable-next-line @next/next/no-img-element
@@ -20,7 +23,16 @@ describe('Navbar', (): void => {
               style={style}
             />
           );
-        },
+        }
+      },
+    };
+  });
+
+  vi.mock('next-auth/react', async () => {
+    const mod: object = await vi.importActual('next-auth/react');
+    return {
+      ...mod,
+      useSession: () => ({}),
     };
   });
 
@@ -37,20 +49,16 @@ describe('Navbar', (): void => {
       render(<Navbar />);
 
       screen.getByTestId('search');
-      screen.getByPlaceholderText('Search');
+      screen.getByPlaceholderText('Search...');
     });
     it('should render navigation links', (): void => {
       render(<Navbar />);
 
       const navLinks = screen.getAllByTestId('navigation-link');
-      expect(navLinks.length).toBe(2);
+      expect(navLinks.length).toBe(3);
+      screen.getByText('Log in');
       screen.getByText('Recipes');
       screen.getByText('New Recipe');
-    });
-    it('should render avatar', (): void => {
-      render(<Navbar />);
-
-      screen.getByTestId('avatar');
     });
     it('should render toggle button', (): void => {
       render(<Navbar />);
@@ -74,28 +82,14 @@ describe('Navbar', (): void => {
       fireEvent.click(toggleButton);
       expect(toggleMenu.className).toMatch(/out__animation/);
     });
-    it('toggle menu should render avatar', (): void => {
-      render(<Navbar />);
-
-      const toggleButton = screen.getByTestId('toggle-button');
-      fireEvent.click(toggleButton);
-      screen.getByTestId('avatar');
-    });
-    it('toggle menu should render user name and atname', (): void => {
-      render(<Navbar />);
-
-      const toggleButton = screen.getByTestId('toggle-button');
-      fireEvent.click(toggleButton);
-      screen.getByTestId('user-name');
-      screen.getByTestId('user-atname');
-    });
     it('should render navigation links', (): void => {
       render(<Navbar />);
 
       const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
       const navLinks = screen.getAllByTestId('toggle-navigation-link');
-      expect(navLinks.length).toBe(2);
+      expect(navLinks.length).toBe(3);
+      expect(screen.getAllByText('Log in').length).toBe(2);
       expect(screen.getAllByText('Recipes').length).toBe(2);
       expect(screen.getAllByText('New Recipe').length).toBe(2);
     });

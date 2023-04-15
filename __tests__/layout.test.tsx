@@ -2,13 +2,15 @@ import { describe, it, afterEach, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { Layout } from '../src/components/layout/Layout';
 import { MockImageProps } from '../src/types/test';
+import useUser from '../src/hooks/useUser';
 
 describe('Layout', (): void => {
   afterEach(cleanup);
 
   vi.mock('next/image', async () => {
     return {
-      default: () =>
+      default: () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         function Image({ src, alt, width, height, style }: MockImageProps) {
           return (
             // eslint-disable-next-line @next/next/no-img-element
@@ -20,7 +22,35 @@ describe('Layout', (): void => {
               style={style}
             />
           );
+        }
+      },
+    };
+  });
+
+  vi.mock('../src/hooks/useUser', async () => {
+    return {
+      default: () => ({
+        user: {
+          name: 'chefier',
+          email: 'chefier@chefier.com',
+          image: 'https://ik.imagekit.io/czvxqgafa/avatar_default.jpg',
+          accessToken: '1234',
         },
+        isLoading: false,
+        isError: undefined,
+      }),
+    };
+  });
+
+  vi.mock('next-auth/react', async () => {
+    const mod: object = await vi.importActual('next-auth/react');
+    return {
+      ...mod,
+      useSession: () => ({
+        data: {
+          user: { user: 'Usuario', email: 'user@gmail.com' },
+        },
+      }),
     };
   });
 

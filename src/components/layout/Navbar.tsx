@@ -1,13 +1,17 @@
 import Link from 'next/link';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import useToggle from 'src/hooks/useToggle';
+import useToggleMenu from 'src/hooks/useToggleMenu';
 import styles from 'src/styles/layout/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
-import { Searchbar } from '../ui/Searchbar';
 import { Avatar } from '../ui/Avatar';
+import { signOut, useSession } from 'next-auth/react';
+import { Loading } from '@nextui-org/react';
+import useUser from '../../hooks/useUser';
 
 export const Navbar: React.FC = () => {
-  const { firstToggle, toggle, handleToggle } = useToggle();
+  const [firstToggle, toggle, handleToggle] = useToggleMenu();
+  const { data: session } = useSession();
+  const { user, isLoading, isError } = useUser(session?.user.name);
 
   return (
     <div className={styles.navbar}>
@@ -26,28 +30,77 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
           <div className={styles.right__elements}>
-            <Searchbar testid='search' />
+            <input
+              className={styles.search}
+              type='text'
+              placeholder='Search...'
+              data-testid='search'
+            />
             <ul className={styles.links}>
-              <li className={styles.link} data-testid='navigation-link'>
-                <Link href='/recipes'>Recipes</Link>
+              <li className={styles.links__row}>
+                <Link
+                  className={styles.link}
+                  href='/recipes'
+                  data-testid='navigation-link'
+                >
+                  Recipes
+                </Link>
               </li>
-              <li className={styles.link} data-testid='navigation-link'>
-                <Link href='/new-recipe'>New&nbsp;Recipe</Link>
+              <li className={styles.links__row}>
+                <Link
+                  className={styles.link}
+                  href='/new-recipe'
+                  data-testid='navigation-link'
+                >
+                  New&nbsp;Recipe
+                </Link>
               </li>
+              {session ? (
+                <>
+                  <li className={styles.links__row}>
+                    <button
+                      className={styles.logout__button}
+                      data-testid='logout-button'
+                      onClick={() => signOut()}
+                    >
+                      Log&nbsp;out
+                    </button>
+                  </li>
+                  <li className={styles.links__row}>
+                    {isLoading ? (
+                      <Loading />
+                    ) : isError ? (
+                      <h1>{isError}</h1>
+                    ) : (
+                      <Avatar
+                        source={user.image}
+                        link={'/profile'}
+                        size={40}
+                        username='Default'
+                        style={styles.avatar}
+                        testid='avatar'
+                      />
+                    )}
+                  </li>
+                </>
+              ) : (
+                <li className={styles.links__row}>
+                  <Link
+                    className={styles.link}
+                    href='/auth/login'
+                    data-testid='navigation-link'
+                  >
+                    Log&nbsp;in
+                  </Link>
+                </li>
+              )}
             </ul>
-            <div className={styles.avatar__container}>
-              <Avatar
-                source='/avatar_default.jpg'
-                size={40}
-                username='Default'
-                style={styles.avatar}
-                testid='avatar'
-              />
-            </div>
           </div>
         </div>
       </nav>
-      {!firstToggle && <ToggleMenu toggleAnimation={toggle} />}
+      {!firstToggle && (
+        <ToggleMenu toggleHandler={handleToggle} toggleAnimation={toggle} />
+      )}
     </div>
   );
 };
