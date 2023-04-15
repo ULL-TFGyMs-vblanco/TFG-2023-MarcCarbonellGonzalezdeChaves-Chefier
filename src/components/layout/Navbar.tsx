@@ -6,7 +6,7 @@ import { ToggleMenu } from './ToggleMenu';
 import { Avatar } from '../ui/Avatar';
 import { signOut, useSession } from 'next-auth/react';
 import { Loading } from '@nextui-org/react';
-import useUser from '@/hooks/useUser';
+import useUser from '../../hooks/useUser';
 
 export const Navbar: React.FC = () => {
   const [firstToggle, toggle, handleToggle] = useToggleMenu();

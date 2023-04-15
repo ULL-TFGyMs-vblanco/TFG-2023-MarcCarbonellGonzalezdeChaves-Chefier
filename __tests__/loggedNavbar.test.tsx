@@ -46,6 +46,22 @@ describe('Navbar', (): void => {
       },
     };
   });
+
+  vi.mock('../src/hooks/useUser', async () => {
+    return {
+      default: () => ({
+        user: {
+          name: 'chefier',
+          email: 'chefier@chefier.com',
+          image: 'https://ik.imagekit.io/czvxqgafa/avatar_default.jpg',
+          accessToken: '1234',
+        },
+        isLoading: false,
+        isError: undefined,
+      }),
+    };
+  });
+
   describe('Bar', (): void => {
     it('should render navigation links', (): void => {
       render(<Navbar />);

@@ -19,7 +19,7 @@ describe('Register', (): void => {
 
   vi.mock('next/router', async () => {
     return {
-      useRouter: () => [],
+      useRouter: () => ({ query: { error: undefined } }),
     };
   });
 

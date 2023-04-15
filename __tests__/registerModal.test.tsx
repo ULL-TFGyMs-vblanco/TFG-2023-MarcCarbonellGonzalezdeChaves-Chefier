@@ -7,7 +7,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import Register from '../src/pages/auth/register';
-import axios from 'axios';
+import axios from '../axios_config';
 
 describe('Register', (): void => {
   afterEach(cleanup);
@@ -39,12 +39,10 @@ describe('Register', (): void => {
     });
     fireEvent.submit(screen.getByTestId('submit-button'));
     await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
-    expect(spy).toBeCalledWith('/api/auth/register', {
-      arg: {
-        username: 'user',
-        email: 'user@gmail.com',
-        password: 'Password1',
-      },
+    expect(spy).toBeCalledWith('/auth/register', {
+      username: 'user',
+      email: 'user@gmail.com',
+      password: 'Password1',
     });
     await waitFor(() => expect(screen.getByTestId('modal')).toBeDefined());
     screen.getByText('SUCCESS');

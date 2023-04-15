@@ -15,7 +15,7 @@ beforeAll(async () => {
     email: 'user2@test.com',
     password: 'Password1',
   });
-  await user.save();
+  await User.create(user);
 });
 
 vi.spyOn(jwt, 'verify').mockImplementation((token: string) => {

@@ -7,7 +7,8 @@ import {
   waitFor,
 } from '@testing-library/react';
 import Register from '../src/pages/auth/register';
-import axios from 'axios';
+import axios from '../axios_config';
+import { AxiosError } from 'axios';
 
 describe('Register', (): void => {
   afterEach(cleanup);
@@ -39,7 +40,7 @@ describe('Register', (): void => {
   it('should render the error message returned by the API', async (): Promise<void> => {
     render(<Register />);
     const spy = vi.spyOn(axios, 'post').mockImplementation(async () => {
-      throw new Error('error');
+      throw { response: { data: { error: { message: 'error' } } } };
     });
 
     fireEvent.input(screen.getByTestId('username-input'), {
@@ -56,12 +57,10 @@ describe('Register', (): void => {
     });
     fireEvent.submit(screen.getByTestId('submit-button'));
     await waitFor(() => expect(screen.queryAllByRole('alert')).toHaveLength(0));
-    expect(spy).toBeCalledWith('/api/auth/register', {
-      arg: {
-        username: 'user',
-        email: 'user@gmail.com',
-        password: 'Password1',
-      },
+    expect(spy).toBeCalledWith('/auth/register', {
+      username: 'user',
+      email: 'user@gmail.com',
+      password: 'Password1',
     });
     screen.getByText('Error: error');
   });

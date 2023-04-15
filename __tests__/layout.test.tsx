@@ -2,6 +2,7 @@ import { describe, it, afterEach, vi } from 'vitest';
 import { cleanup, render, screen } from '@testing-library/react';
 import { Layout } from '../src/components/layout/Layout';
 import { MockImageProps } from '../src/types/test';
+import useUser from '../src/hooks/useUser';
 
 describe('Layout', (): void => {
   afterEach(cleanup);
@@ -23,6 +24,21 @@ describe('Layout', (): void => {
           );
         }
       },
+    };
+  });
+
+  vi.mock('../src/hooks/useUser', async () => {
+    return {
+      default: () => ({
+        user: {
+          name: 'chefier',
+          email: 'chefier@chefier.com',
+          image: 'https://ik.imagekit.io/czvxqgafa/avatar_default.jpg',
+          accessToken: '1234',
+        },
+        isLoading: false,
+        isError: undefined,
+      }),
     };
   });
 

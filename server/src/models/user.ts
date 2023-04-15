@@ -68,7 +68,7 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     trim: true,
     validate: (value: string) => {
       if (!validator.isURL(value)) {
-        throw new Error('Avatar must be a valid URL');
+        throw new Error('Image must be a valid URL');
       }
     },
   },

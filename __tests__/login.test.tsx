@@ -12,6 +12,12 @@ import AuthService from '../src/services/AuthService';
 describe('Login', (): void => {
   afterEach(cleanup);
 
+  vi.mock('next/router', async () => {
+    return {
+      useRouter: () => ({ query: { error: undefined } }),
+    };
+  });
+
   it('should render', (): void => {
     render(<Login />);
   });

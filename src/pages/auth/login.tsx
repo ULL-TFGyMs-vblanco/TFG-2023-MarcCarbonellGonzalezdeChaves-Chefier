@@ -3,7 +3,7 @@ import styles from 'src/styles/auth/Auth.module.css';
 import AuthService from '../../services/AuthService';
 import { SignInOptions } from 'next-auth/react';
 import { useEffect, useState } from 'react';
-import { CustomModal } from '@/components/ui/CustomModal';
+import { CustomModal } from '../../components/ui/CustomModal';
 import { useRouter } from 'next/router';
 
 const Login: React.FC = () => {
