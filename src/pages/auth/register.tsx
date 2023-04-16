@@ -65,7 +65,7 @@ const Register: React.FC = () => {
       </CustomModal>
       <CustomModal
         type='error'
-        title='Error'
+        title='ERROR'
         visible={errorModal}
         handler={setErrorModal}
         onClose={closeErrorModalHandler}

@@ -39,7 +39,7 @@ const Login: React.FC = () => {
       <LoginForm onLogin={loginHandler} />
       <CustomModal
         type='error'
-        title='Error'
+        title='ERROR'
         visible={visible}
         handler={setVisible}
         onClose={closeModalHandler}

@@ -9,7 +9,7 @@ import {
 import Register from '../src/pages/auth/register';
 import axios from '../axios_config';
 
-describe('Register', (): void => {
+describe('Succes modal', (): void => {
   afterEach(cleanup);
 
   vi.mock('next/router', async () => {
@@ -22,7 +22,7 @@ describe('Register', (): void => {
     return Promise.resolve({});
   });
 
-  it('should show the modal when register successfully', async (): Promise<void> => {
+  it('should show the success modal when register successfully', async (): Promise<void> => {
     render(<Register />);
 
     fireEvent.input(screen.getByTestId('username-input'), {
