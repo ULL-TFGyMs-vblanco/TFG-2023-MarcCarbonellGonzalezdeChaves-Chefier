@@ -7,13 +7,18 @@ import { CustomModal } from '../../components/ui/CustomModal';
 import { useRouter } from 'next/router';
 
 const Login: React.FC = () => {
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<string | string[]>();
 
   const router = useRouter();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    setVisible(router.query.error !== undefined);
+    if (router.query.error !== undefined) {
+      setError(router.query.error);
+      setVisible(router.query.error !== undefined);
+    } else {
+      setVisible(false);
+    }
   }, [router.query.error]);
 
   const loginHandler = async (provider: string, data: SignInOptions) => {
@@ -31,7 +36,7 @@ const Login: React.FC = () => {
 
   return (
     <div className={styles.container}>
-      <LoginForm onLogin={loginHandler} error={error} />
+      <LoginForm onLogin={loginHandler} />
       <CustomModal
         type='error'
         title='Error'
@@ -39,7 +44,7 @@ const Login: React.FC = () => {
         handler={setVisible}
         onClose={closeModalHandler}
       >
-        Oops! An error occurred while logging in. Please try again later.
+        {`Error: ${error}`}
       </CustomModal>
     </div>
   );

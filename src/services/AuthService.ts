@@ -18,7 +18,7 @@ const AuthService = {
     }
   },
   login: async (provider: string, options: SignInOptions) => {
-    await signIn(provider, options).then((res) => {
+    await signIn(provider, { ...options }).then((res) => {
       if (res?.error) {
         throw new Error(res?.error.toString());
       }

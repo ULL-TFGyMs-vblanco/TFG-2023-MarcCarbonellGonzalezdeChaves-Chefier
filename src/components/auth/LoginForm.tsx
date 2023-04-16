@@ -11,10 +11,9 @@ import OauthLogin from './OauthLogin';
 
 interface LoginFormProps {
   onLogin: (provider: string, options: SignInOptions) => void;
-  error?: string | null;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, error }) => {
+export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const { register, watch, handleSubmit } = useForm<LoginFormInputs>();
   const [showPassword, toggleShowPassword] = useShow();
 
@@ -78,13 +77,6 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin, error }) => {
               show password
             </label>
           </div>
-          {error && (
-            <div className={styles.errors}>
-              <p className={styles.error__msg} data-testid='alert'>
-                {error}
-              </p>
-            </div>
-          )}
           <Button
             style={styles.credentials__button}
             testid='submit-button'

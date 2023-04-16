@@ -2,7 +2,6 @@ import validator from 'validator';
 import Link from 'next/link';
 import { SignInOptions } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-
 import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
@@ -15,14 +14,12 @@ interface RegisterFormProps {
   onRegister: (data: RegisterData) => Promise<boolean>;
   onOauthLogin: (provider: string, options: SignInOptions) => void;
   toggleModal: (visible: boolean) => void;
-  error?: string | null;
 }
 
 export const RegisterForm: React.FC<RegisterFormProps> = ({
   onRegister,
   onOauthLogin,
   toggleModal,
-  error,
 }) => {
   const {
     register,
@@ -198,13 +195,6 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               show password
             </label>
           </div>
-          {error && (
-            <div className={styles.errors}>
-              <p className={styles.error__msg} data-testid='alert'>
-                {error}
-              </p>
-            </div>
-          )}
           <Button
             style={styles.credentials__button}
             testid='submit-button'

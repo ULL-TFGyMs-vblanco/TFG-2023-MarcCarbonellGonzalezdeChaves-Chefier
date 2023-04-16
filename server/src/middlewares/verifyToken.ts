@@ -101,6 +101,7 @@ async function verifyGithub(
           error: res,
           request: request.body,
         });
+        return;
       }
     })
     .catch((error) => {
