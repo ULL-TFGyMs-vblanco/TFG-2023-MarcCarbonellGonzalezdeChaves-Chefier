@@ -9,8 +9,8 @@ const cors = require('@koa/cors');
 export const app = new Koa();
 
 app
-  .use(bodyParser())
   .use(cors())
+  .use(bodyParser())
   .use(userRouter.routes())
   .use(userRouter.allowedMethods())
   .use(defaultRouter.routes());
