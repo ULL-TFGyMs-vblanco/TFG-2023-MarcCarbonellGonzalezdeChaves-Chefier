@@ -10,7 +10,7 @@ require("./db/mongoose");
 const default_routes_1 = require("./routers/default.routes");
 const user_routes_1 = require("./routers/user.routes");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const cors = require('cors');
+const cors = require('@koa/cors');
 exports.app = new koa_1.default();
 exports.app
     .use((0, koa_bodyparser_1.default)())
