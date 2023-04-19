@@ -1,0 +1,156 @@
+.form__card {
+  width: 400px;
+  border-radius: 0;
+  margin: 2rem auto;
+}
+
+@media screen and (width < 650px) {
+  .form__card {
+    box-shadow: none;
+  }
+}
+
+.form__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10% 15%;
+}
+
+.title {
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.separator {
+  position: relative;
+  width: 100%;
+  display: block;
+  text-align: center;
+  margin: 0.75rem auto;
+  border-top: 1px solid lightgray;
+}
+
+.separator__text {
+  position: absolute;
+  top: -0.85rem;
+  left: 46.15%;
+  right: 46.15%;
+  z-index: 1;
+  background-color: white;
+  padding: 4px;
+  font-size: 0.85rem;
+}
+
+.divider {
+  border-top: 1px solid lightgray;
+  width: 100%;
+}
+
+.session__msg {
+  font-size: 0.75rem;
+  margin: 0;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.session__link {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* FIELD */
+
+.field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.field__label {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 3px solid transparent;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+}
+
+.label__text {
+  transform: translate(0);
+  transition: transform 0.15s ease-out, font-size 0.15s ease-out,
+    background-color 0.2s ease-out, color 0.15s ease-out;
+  font-size: 0.9rem;
+  margin-left: 0.25rem;
+  padding: 0 0.25rem;
+  background-color: transparent;
+  color: #5a515a;
+}
+
+.text__input {
+  font-size: 0.9rem;
+  font-family: var(--font-family);
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.7rem;
+  border-radius: 0.25rem;
+  border: 1px solid #cdcdcd;
+}
+
+.text__input:focus + .field__label .label__text,
+:not(.text__input[value='']) + .field__label .label__text {
+  background-color: white;
+  font-size: 0.75rem;
+  color: black;
+  transform: translate(0, -140%);
+}
+
+/* CHECKBOX */
+
+.checkbox__container {
+  align-self: flex-start;
+  font-size: 0.75rem;
+}
+
+.checkbox {
+  vertical-align: middle;
+}
+
+.errors {
+  display: flex;
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+
+.error__msg {
+  color: red;
+  font-size: 0.75rem;
+  margin: 0;
+}
+
+.show__more {
+  color: blue;
+  cursor: pointer;
+}
+
+/* BUTTONS */
+
+.credentials__button {
+  width: 100%;
+}

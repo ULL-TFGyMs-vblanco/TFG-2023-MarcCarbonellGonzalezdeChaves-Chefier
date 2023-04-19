@@ -1,8 +1,17 @@
+<<<<<<< HEAD
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+=======
+import { Button } from '../components/ui/Button';
+import Link from 'next/link';
+import styles from 'src/styles/home/Home.module.css';
+import { signOut, useSession } from 'next-auth/react';
+>>>>>>> develop
 
 export default function Home() {
+  const { data: session } = useSession();
   return (
+<<<<<<< HEAD
     <>
       <Head>
         <title>Create Next App</title>
@@ -14,5 +23,23 @@ export default function Home() {
         <h1>Chefier</h1>
       </main>
     </>
+=======
+    <div className={styles.container}>
+      <h1>Chefier</h1>
+      <Button testid='register-button'>
+        <Link href='/auth/register'>Register</Link>
+      </Button>
+      {session && (
+        <>
+          <h1>Logged in as {session.user.name}</h1>
+          <h2>email: {session.user.email}</h2>
+          <h2>image: {session.user.image}</h2>
+          <Button onClick={() => signOut()} testid='logout-button'>
+            <span>Log out</span>
+          </Button>
+        </>
+      )}
+    </div>
+>>>>>>> develop
   );
 }

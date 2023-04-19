@@ -94,6 +94,7 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+<<<<<<< HEAD
 
 a {
   color: inherit;
@@ -103,5 +104,24 @@ a {
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
+=======
+* {
+  font-family: var(--font-raleway);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+@media screen and (width <= 910px) {
+  .container {
+    width: 90%;
+  }
+}
+@media screen and (width > 910px) {
+  .container {
+    width: 70%;
+>>>>>>> develop
   }
 }

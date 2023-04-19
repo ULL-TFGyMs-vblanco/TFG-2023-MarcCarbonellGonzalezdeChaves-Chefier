@@ -1,0 +1,219 @@
+import validator from 'validator';
+import Link from 'next/link';
+import { SignInOptions } from 'next-auth/react';
+import { useForm } from 'react-hook-form';
+import { Card } from '../ui/Card';
+import { Title } from '../ui/Title';
+import { Button } from '../ui/Button';
+import styles from 'src/styles/auth/AuthForm.module.css';
+import { RegisterFormInputs, RegisterData } from 'auth-types';
+import useShow from 'src/hooks/useShow';
+import OauthLogin from './OauthLogin';
+
+interface RegisterFormProps {
+  onRegister: (data: RegisterData) => Promise<boolean>;
+  onOauthLogin: (provider: string, options: SignInOptions) => void;
+  toggleModal: (visible: boolean) => void;
+}
+
+export const RegisterForm: React.FC<RegisterFormProps> = ({
+  onRegister,
+  onOauthLogin,
+  toggleModal,
+}) => {
+  const {
+    register,
+    formState: { errors },
+    watch,
+    handleSubmit,
+  } = useForm<RegisterFormInputs>();
+  const [showMore, toggleShowMore] = useShow();
+  const [showPassword, toggleShowPassword] = useShow();
+
+  const loginHandler = (provider: string) => {
+    onOauthLogin(provider, { callbackUrl: '/' });
+  };
+
+  const registerHandler = (credentials: RegisterData) => {
+    onRegister(credentials).then((res) => {
+      if (res) {
+        toggleModal(true);
+      }
+    });
+  };
+
+  return (
+    <Card style={styles.form__card} testid='form-card'>
+      <div className={styles.form__container}>
+        <Title style={styles.title}>Register</Title>
+        <form
+          autoComplete='off'
+          className={styles.form}
+          onSubmit={handleSubmit(
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            ({ confirmPassword, passwordVisibility, ...credentials }) =>
+              registerHandler(credentials)
+          )}
+          data-testid='register-form'
+        >
+          <div className={styles.field} data-testid='form-field'>
+            <input
+              value={watch('username') ? watch('username') : ''}
+              className={styles.text__input}
+              type='text'
+              data-testid='username-input'
+              {...register('username', {
+                required: true,
+                maxLength: 10,
+              })}
+            />
+            <label className={styles.field__label}>
+              <div className={styles.label__text}>Username</div>
+            </label>
+          </div>
+          {errors.username?.type === 'required' && (
+            <div className={styles.errors}>
+              <p className={styles.error__msg} data-testid='alert'>
+                Username is required
+              </p>
+            </div>
+          )}
+          {errors.username?.type === 'maxLength' && (
+            <div className={styles.errors}>
+              <p className={styles.error__msg} data-testid='alert'>
+                Username must have less than 10 characters
+              </p>
+            </div>
+          )}
+          <div className={styles.field} data-testid='form-field'>
+            <input
+              value={watch('email') ? watch('email') : ''}
+              className={styles.text__input}
+              type='text'
+              data-testid='email-input'
+              {...register('email', {
+                validate: (value) => validator.isEmail(value),
+              })}
+            />
+            <label className={styles.field__label}>
+              <div className={styles.label__text}>Email</div>
+            </label>
+          </div>
+          {errors.email && (
+            <div className={styles.errors}>
+              <p className={styles.error__msg} data-testid='alert'>
+                Email not valid
+              </p>
+            </div>
+          )}
+          <div className={styles.field} data-testid='form-field'>
+            <input
+              value={watch('password') ? watch('password') : ''}
+              className={styles.text__input}
+              type={showPassword ? 'text' : 'password'}
+              data-testid='password-input'
+              {...register('password', {
+                validate: (value) =>
+                  validator.isStrongPassword(value, {
+                    minLength: 8,
+                    minLowercase: 1,
+                    minUppercase: 1,
+                    minNumbers: 1,
+                    minSymbols: 0,
+                  }),
+              })}
+            />
+            <label className={styles.field__label}>
+              <div className={styles.label__text}>Password</div>
+            </label>
+          </div>
+          {errors.password && (
+            <>
+              {showMore ? (
+                <div className={styles.errors}>
+                  <p className={styles.error__msg} data-testid='alert'>
+                    Password must be strong. At least eight characters, one
+                    lowercase, one upercase and one number.&nbsp;
+                    <a
+                      className={styles.show__more}
+                      onClick={toggleShowMore}
+                      data-testid='show-less'
+                    >
+                      Show less
+                    </a>
+                  </p>
+                </div>
+              ) : (
+                <div className={styles.errors}>
+                  <p className={styles.error__msg} data-testid='alert'>
+                    Password must be strong.&nbsp;
+                    <a
+                      className={styles.show__more}
+                      onClick={toggleShowMore}
+                      data-testid='show-more'
+                    >
+                      Show more
+                    </a>
+                  </p>
+                </div>
+              )}
+            </>
+          )}
+          <div className={styles.field} data-testid='form-field'>
+            <input
+              value={watch('confirmPassword') ? watch('confirmPassword') : ''}
+              className={styles.text__input}
+              type={showPassword ? 'text' : 'password'}
+              data-testid='confirm-password-input'
+              {...register('confirmPassword', {
+                validate: (value) => validator.equals(value, watch('password')),
+              })}
+            />
+            <label className={styles.field__label}>
+              <div className={styles.label__text}>Confirm password</div>
+            </label>
+          </div>
+          {errors.confirmPassword && (
+            <div className={styles.errors}>
+              <p className={styles.error__msg} data-testid='alert'>
+                Different passwords
+              </p>
+            </div>
+          )}
+          <div
+            className={styles.checkbox__container}
+            data-testid='form-checkbox'
+          >
+            <label>
+              <input
+                className={styles.checkbox}
+                type='checkbox'
+                {...register('passwordVisibility')}
+                data-testid='checkbox'
+                onClick={toggleShowPassword}
+              />
+              show password
+            </label>
+          </div>
+          <Button
+            style={styles.credentials__button}
+            testid='submit-button'
+            submit
+          >
+            register
+          </Button>
+        </form>
+        <div className={styles.separator}>
+          <span className={styles.separator__text}>or</span>
+        </div>
+        <OauthLogin onLogin={loginHandler} />
+        <p className={styles.session__msg}>
+          Already have an account?&nbsp;
+          <Link className={styles.session__link} href='/auth/login'>
+            Log in
+          </Link>
+        </p>
+      </div>
+    </Card>
+  );
+};

@@ -4,16 +4,19 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "env-cmd -f ./config/dev.env node dist/index.js",
-    "localtest": "env-cmd -f ./config/test.env vitest",
-    "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "start": "tsc && env-cmd -f ./config/.env node dist/index.js",
+    "tsc": "tsc",
+    "test": "env-cmd -f ./config/test.env vitest",
+    "coverage": "env-cmd -f ./config/test.env vitest run --coverage"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.13",
     "@types/koa": "^2.13.5",
     "@types/koa-bodyparser": "^4.3.10",
+    "@types/koa-cors": "^0.0.2",
     "@types/koa-router": "^7.4.4",
     "@types/node": "^18.14.0",
     "@types/supertest": "^2.0.12",
@@ -24,8 +27,14 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
+    "axios": "^1.3.4",
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "google-auth-library": "^8.7.0",
+    "jsonwebtoken": "^9.0.0",
     "koa": "^2.14.1",
     "koa-bodyparser": "^4.3.0",
+    "koa-cors": "^0.0.16",
     "koa-router": "^12.0.0",
     "mongoose": "5.13.14",
     "validator": "^13.9.0"
