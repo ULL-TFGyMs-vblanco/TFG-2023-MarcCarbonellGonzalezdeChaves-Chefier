@@ -10,7 +10,7 @@ export const app = new Koa();
 
 app
   .use(bodyParser())
-  .use(cors({ origin: 'https://chefier.vercel.app' }))
+  .use(cors())
   .use(userRouter.routes())
   .use(userRouter.allowedMethods())
   .use(defaultRouter.routes());
