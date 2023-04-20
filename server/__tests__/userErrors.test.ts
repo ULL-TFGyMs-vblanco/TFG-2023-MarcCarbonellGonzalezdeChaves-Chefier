@@ -56,7 +56,7 @@ describe('User router server errors', (): void => {
   describe('Get user', (): void => {
     it('should return the specified user', async () => {
       await request(server)
-        .get('/api/users/user')
+        .get('/api/username/user')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({ provider: 'credentials' })
         .expect(500);

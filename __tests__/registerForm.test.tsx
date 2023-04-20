@@ -145,7 +145,7 @@ describe('Register form', (): void => {
     expect(mockRegister).not.toBeCalled();
     expect(screen.getByText('Username is required'));
   });
-  it('should display an error alert when username has more than 10 characters', async () => {
+  it('should display an error alert when username has more than 20 characters', async () => {
     render(
       <RegisterForm
         onRegister={mockRegister}
@@ -155,7 +155,7 @@ describe('Register form', (): void => {
     );
 
     const username = screen.getByTestId('username-input');
-    fireEvent.change(username, { target: { value: 'user1234567' } });
+    fireEvent.change(username, { target: { value: 'user12345678912345678' } });
     const submit = screen.getByTestId('submit-button');
     fireEvent.submit(submit);
 
@@ -163,7 +163,7 @@ describe('Register form', (): void => {
       expect(screen.queryAllByTestId('alert')).toHaveLength(3)
     );
     expect(mockRegister).not.toBeCalled();
-    expect(screen.getByText('Username must have less than 10 characters'));
+    expect(screen.getByText('Username must have at most 20 characters'));
   });
   it('should display an error alert when email is not provided/valid', async () => {
     render(

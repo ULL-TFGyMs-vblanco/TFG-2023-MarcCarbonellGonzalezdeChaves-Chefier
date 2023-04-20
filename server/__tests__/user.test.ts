@@ -37,6 +37,7 @@ describe('User router', (): void => {
         .send({
           username: 'chefier2',
           email: 'chefier2@test.com',
+          image: 'https://i.imgur.com/4YKtXQ8.jpg',
         })
         .expect(200);
     });
@@ -121,14 +122,14 @@ describe('User router', (): void => {
   describe('Get user', (): void => {
     it('should return 404 if user is not found', async () => {
       await request(server)
-        .get('/api/users/5f7b2c1e3e3c3c1b8c7f8c2f')
+        .get('/api/username/5f7b2c1e3e3c3c1b8c7f8c2f')
         // .set('Authorization', `Bearer ${accessToken}`)
         .send({ provider: 'credentials' })
         .expect(404);
     });
     it('should return the specified user', async () => {
       await request(server)
-        .get('/api/users/chefier')
+        .get('/api/username/chefier')
         // .set('Authorization', `Bearer ${accessToken}`)
         .send({ provider: 'credentials' })
         .expect(200);

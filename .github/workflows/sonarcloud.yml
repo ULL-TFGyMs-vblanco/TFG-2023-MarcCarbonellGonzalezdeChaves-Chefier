@@ -32,7 +32,7 @@ jobs:
     - name: Generating coverage information
       run: npm run coverage
       env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        DATABASE_URL: ${{ secrets.SONARCLOUD_DATABASE_URL }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         CDN_URL: ${{ secrets.CDN_URL }}
    
