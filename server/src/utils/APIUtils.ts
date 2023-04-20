@@ -11,6 +11,9 @@ export default class APIUtils {
     const email = request.body.email;
 
     let username = request.body.username.toLowerCase().replace(/ /g, '_');
+    if (request.body.username.length > 20) {
+      username = request.body.username.substring(0, 20);
+    }
     let existingUser = await User.findOne({
       username: username,
     });
