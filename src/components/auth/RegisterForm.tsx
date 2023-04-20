@@ -64,7 +64,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               data-testid='username-input'
               {...register('username', {
                 required: true,
-                maxLength: 10,
+                maxLength: 20,
               })}
             />
             <label className={styles.field__label}>
@@ -81,7 +81,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           {errors.username?.type === 'maxLength' && (
             <div className={styles.errors}>
               <p className={styles.error__msg} data-testid='alert'>
-                Username must have less than 10 characters
+                Username must have at most 20 characters
               </p>
             </div>
           )}
