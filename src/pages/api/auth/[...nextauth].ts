@@ -3,7 +3,7 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
-// import AuthService from '@/services/AuthService';
+import AuthService from '@/services/AuthService';
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -44,31 +44,31 @@ export const authOptions: NextAuthOptions = {
     signIn: '/auth/login',
     error: '/auth/login',
   },
-  // callbacks: {
-  //   async signIn({ user, account }) {
-  //     if (account?.provider !== 'credentials') {
-  //       try {
-  //         await AuthService.register('/auth/register', {
-  //           arg: {
-  //             email: user.email,
-  //             username: user.name,
-  //             image: user.image,
-  //           },
-  //         });
-  //       } catch (err: any) {
-  //         const error = err.toString();
-  //         if (!error.match(/^Error: Duplicated credential/)) return false;
-  //       }
-  //     }
-  //     return true;
-  //   },
-  //   async jwt({ token, user, account }) {
-  //     if (account) {
-  //       token.accessToken = user?.accessToken;
-  //     }
-  //     return token;
-  //   },
-  // },
+  callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider !== 'credentials') {
+        try {
+          await AuthService.register('/auth/register', {
+            arg: {
+              email: user.email,
+              username: user.name,
+              image: user.image,
+            },
+          });
+        } catch (err: any) {
+          const error = err.toString();
+          if (!error.match(/^Error: Duplicated credential/)) return false;
+        }
+      }
+      return true;
+    },
+    async jwt({ token, user, account }) {
+      if (account) {
+        token.accessToken = user?.accessToken;
+      }
+      return token;
+    },
+  },
 };
 
 export default NextAuth(authOptions);
