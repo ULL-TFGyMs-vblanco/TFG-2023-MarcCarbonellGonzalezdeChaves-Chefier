@@ -58,7 +58,7 @@ export const authOptions: NextAuthOptions = {
         } catch (err: any) {
           const error = err.toString();
           if (!error.match(/^Error: Duplicated credential/))
-            throw new Error(err);
+            throw new Error(error);
         }
       }
       return true;
