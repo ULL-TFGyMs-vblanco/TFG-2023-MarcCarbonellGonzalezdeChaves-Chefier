@@ -13,7 +13,7 @@ export default class APIUtils {
     // Google and Github users have image but don't have passwords
     if (request.body.image) {
       if (request.body.username.length > 20) {
-        request.body.username = request.body.username.substring(0, 20).trim();
+        request.body.username = request.body.username.substring(0, 10).trim();
       }
       let username = request.body.username
         .normalize('NFD')
