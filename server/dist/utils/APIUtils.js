@@ -21,7 +21,11 @@ APIUtils.buildUserDocument = async (request) => {
         if (request.body.username.length > 20) {
             request.body.username = request.body.username.substring(0, 20).trim();
         }
-        let username = request.body.username.toLowerCase().replace(/ /g, '_');
+        let username = request.body.username
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .replace(/ /g, '_');
         let existingUser = await user_1.User.findOne({
             username: username,
         });
@@ -40,7 +44,11 @@ APIUtils.buildUserDocument = async (request) => {
         // Credential users have password but don't have image
     }
     else {
-        const username = request.body.username.toLowerCase().replace(/ /g, '_');
+        const username = request.body.username
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase()
+            .replace(/ /g, '_');
         const password = await bcrypt_1.default.hash(request.body.password, 10);
         const user = new user_1.User({ username, email, password });
         return user;
