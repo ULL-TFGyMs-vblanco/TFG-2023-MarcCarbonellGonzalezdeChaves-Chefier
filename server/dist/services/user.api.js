@@ -29,44 +29,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUser = exports.login = exports.register = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
 const user_1 = require("../models/user");
-const CtxUtils_1 = __importDefault(require("../utils/CtxUtils"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
 // Register a user
 const register = async ({ response, request }) => {
     if (!request.body.username || !request.body.email) {
-        CtxUtils_1.default.setResponse(response, 400, {
+        APIUtils_1.default.setResponse(response, 400, {
             error: 'Email and username are required',
             request: request.body,
         });
         return;
     }
-    const email = request.body.email;
-    const username = request.body.username.toLowerCase().replace(/ /g, '_');
-    let user = new user_1.User({ username, email });
-    if (request.body.image) {
-        const image = request.body.image;
-        user = new user_1.User({ username, email, image });
-    }
-    else if (request.body.password) {
-        const password = await bcrypt_1.default.hash(request.body.password, 10);
-        user = new user_1.User({ username, email, password });
-    }
+    const user = await APIUtils_1.default.buildUserDocument(request);
     await user_1.User.create(user)
         .then((user) => {
-        CtxUtils_1.default.setResponse(response, 200, { user });
+        APIUtils_1.default.setResponse(response, 200, { user });
     })
         .catch((err) => {
         if (err.name === 'ValidationError') {
             const errors = Object.keys(err.errors).map((key) => {
                 return { message: err.errors[key].message, field: key };
             });
-            CtxUtils_1.default.setResponse(response, 400, {
+            APIUtils_1.default.setResponse(response, 400, {
                 error: { message: err._message, errors: errors },
                 request: request.body,
             });
         }
         else if (err.code && err.code === 11000) {
-            CtxUtils_1.default.setResponse(response, 400, {
+            APIUtils_1.default.setResponse(response, 400, {
                 error: {
                     message: 'Duplicated credential.',
                     errors: [
@@ -80,7 +70,7 @@ const register = async ({ response, request }) => {
             });
         }
         else {
-            CtxUtils_1.default.setResponse(response, 500, {
+            APIUtils_1.default.setResponse(response, 500, {
                 error: { message: err },
                 request: request.body,
             });
@@ -91,7 +81,7 @@ exports.register = register;
 // Log in a user
 const login = async ({ response, request }) => {
     if (!request.body.email || !request.body.password) {
-        CtxUtils_1.default.setResponse(response, 400, {
+        APIUtils_1.default.setResponse(response, 400, {
             error: 'Email and password are required',
             request: request.body,
         });
@@ -106,7 +96,7 @@ const login = async ({ response, request }) => {
             const token = jwt.sign({ user }, process.env.JWT_SECRET, {
                 expiresIn: '86400s',
             });
-            CtxUtils_1.default.setResponse(response, 200, {
+            APIUtils_1.default.setResponse(response, 200, {
                 name: user.username,
                 email: user.email,
                 image: user.image,
@@ -114,14 +104,14 @@ const login = async ({ response, request }) => {
             });
         }
         else {
-            CtxUtils_1.default.setResponse(response, 404, {
+            APIUtils_1.default.setResponse(response, 404, {
                 error: 'Incorrect email or password',
                 request: request.body,
             });
         }
     })
         .catch((err) => {
-        CtxUtils_1.default.setResponse(response, 500, {
+        APIUtils_1.default.setResponse(response, 500, {
             error: err,
             request: request.body,
         });
@@ -133,17 +123,17 @@ const getUser = async ({ response, request }, filter) => {
     await user_1.User.findOne(filter, ['-password', '-saved', '-email', '-__v'])
         .then((user) => {
         if (user) {
-            CtxUtils_1.default.setResponse(response, 200, user);
+            APIUtils_1.default.setResponse(response, 200, user);
         }
         else {
-            CtxUtils_1.default.setResponse(response, 404, {
+            APIUtils_1.default.setResponse(response, 404, {
                 error: 'User not found',
                 request: request.body,
             });
         }
     })
         .catch((err) => {
-        CtxUtils_1.default.setResponse(response, 500, {
+        APIUtils_1.default.setResponse(response, 500, {
             error: err,
             requerequest: request.body,
         });

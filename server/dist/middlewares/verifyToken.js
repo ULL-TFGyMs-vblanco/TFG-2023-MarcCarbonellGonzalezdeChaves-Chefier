@@ -7,12 +7,12 @@ exports.verifyToken = void 0;
 const axios_1 = __importDefault(require("axios"));
 const google_auth_library_1 = require("google-auth-library");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const CtxUtils_1 = __importDefault(require("../utils/CtxUtils"));
+const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
 const verifyToken = async ({ response, request }, next) => {
     if (request.body.provider !== 'credentials' &&
         request.body.provider !== 'google' &&
         request.body.provider !== 'github') {
-        CtxUtils_1.default.setResponse(response, 401, {
+        APIUtils_1.default.setResponse(response, 401, {
             error: 'Invalid provider',
             request: request.body,
         });
@@ -32,7 +32,7 @@ const verifyToken = async ({ response, request }, next) => {
             }
         }
         else {
-            CtxUtils_1.default.setResponse(response, 401, {
+            APIUtils_1.default.setResponse(response, 401, {
                 error: 'An access token must be provided',
                 request: request.body,
             });
@@ -46,7 +46,7 @@ function verifyCredentials(token, next, request, response) {
         return next();
     }
     catch (error) {
-        CtxUtils_1.default.setResponse(response, 401, {
+        APIUtils_1.default.setResponse(response, 401, {
             error,
             request: request.body,
         });
@@ -64,7 +64,7 @@ async function verifyGoogle(token, next, request, response) {
         return next();
     })
         .catch((error) => {
-        CtxUtils_1.default.setResponse(response, 401, { error, request: request.body });
+        APIUtils_1.default.setResponse(response, 401, { error, request: request.body });
     });
 }
 async function verifyGithub(token, next, request, response) {
@@ -81,7 +81,7 @@ async function verifyGithub(token, next, request, response) {
             return next();
         }
         else {
-            CtxUtils_1.default.setResponse(response, 500, {
+            APIUtils_1.default.setResponse(response, 500, {
                 error: res,
                 request: request.body,
             });
@@ -89,6 +89,6 @@ async function verifyGithub(token, next, request, response) {
         }
     })
         .catch((error) => {
-        CtxUtils_1.default.setResponse(response, 401, { error, request: request.body });
+        APIUtils_1.default.setResponse(response, 401, { error, request: request.body });
     });
 }
