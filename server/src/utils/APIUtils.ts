@@ -12,7 +12,7 @@ export default class APIUtils {
 
     let username = request.body.username.toLowerCase().replace(/ /g, '_');
     if (request.body.username.length > 20) {
-      username = request.body.username.substring(0, 20);
+      username = username.substring(0, 20);
     }
     let existingUser = await User.findOne({
       username: username,
