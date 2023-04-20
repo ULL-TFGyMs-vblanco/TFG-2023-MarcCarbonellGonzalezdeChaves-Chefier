@@ -15,7 +15,11 @@ export default class APIUtils {
       if (request.body.username.length > 20) {
         request.body.username = request.body.username.substring(0, 20).trim();
       }
-      let username = request.body.username.toLowerCase().replace(/ /g, '_');
+      let username = request.body.username
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/ /g, '_');
       let existingUser = await User.findOne({
         username: username,
       });
@@ -33,7 +37,11 @@ export default class APIUtils {
 
       // Credential users have password but don't have image
     } else {
-      const username = request.body.username.toLowerCase().replace(/ /g, '_');
+      const username = request.body.username
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/ /g, '_');
       const password = await bcrypt.hash(request.body.password, 10);
       const user = new User({ username, email, password });
       return user;
