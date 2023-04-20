@@ -16,25 +16,11 @@ APIUtils.setResponse = (response, status, body) => {
 };
 APIUtils.buildUserDocument = async (request) => {
     const email = request.body.email;
-    let username = request.body.username.toLowerCase().replace(/ /g, '_');
-    if (request.body.username.length > 20) {
-        username = username.substring(0, 20);
-    }
-    let existingUser = await user_1.User.findOne({
-        username: username,
-    });
-    let suffix = 1;
-    while (existingUser) {
-        existingUser = await user_1.User.findOne({
-            username: username + suffix,
-        });
-        suffix++;
-        if (!existingUser)
-            username += suffix - 1;
-    }
-    let user = new user_1.User({ username, email });
     // Google and Github users have image but don't have passwords
     if (request.body.image) {
+        if (request.body.username.length > 20) {
+            request.body.username = request.body.username.substring(0, 20).trim();
+        }
         let username = request.body.username.toLowerCase().replace(/ /g, '_');
         let existingUser = await user_1.User.findOne({
             username: username,
@@ -49,13 +35,14 @@ APIUtils.buildUserDocument = async (request) => {
                 username += suffix - 1;
         }
         const image = request.body.image;
-        user = new user_1.User({ username, email, image });
+        const user = new user_1.User({ username, email, image });
+        return user;
         // Credential users have password but don't have image
     }
-    else if (request.body.password) {
+    else {
         const username = request.body.username.toLowerCase().replace(/ /g, '_');
         const password = await bcrypt_1.default.hash(request.body.password, 10);
-        user = new user_1.User({ username, email, password });
+        const user = new user_1.User({ username, email, password });
+        return user;
     }
-    return user;
 };
