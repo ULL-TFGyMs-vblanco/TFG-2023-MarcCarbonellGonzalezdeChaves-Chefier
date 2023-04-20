@@ -2,7 +2,7 @@ import axios from 'axios';
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import { Context, Next, Request, Response } from 'koa';
-import ctx from '../utils/CtxUtils';
+import utils from '../utils/APIUtils';
 
 export const verifyToken = async (
   { response, request }: Context,
@@ -13,7 +13,7 @@ export const verifyToken = async (
     request.body.provider !== 'google' &&
     request.body.provider !== 'github'
   ) {
-    ctx.setResponse(response, 401, {
+    utils.setResponse(response, 401, {
       error: 'Invalid provider',
       request: request.body,
     });
@@ -29,7 +29,7 @@ export const verifyToken = async (
         verifyGithub(token, next, request, response);
       }
     } else {
-      ctx.setResponse(response, 401, {
+      utils.setResponse(response, 401, {
         error: 'An access token must be provided',
         request: request.body,
       });
@@ -47,7 +47,7 @@ function verifyCredentials(
     jwt.verify(token, process.env.JWT_SECRET as string);
     return next();
   } catch (error: any) {
-    ctx.setResponse(response, 401, {
+    utils.setResponse(response, 401, {
       error,
       request: request.body,
     });
@@ -71,7 +71,7 @@ async function verifyGoogle(
       return next();
     })
     .catch((error) => {
-      ctx.setResponse(response, 401, { error, request: request.body });
+      utils.setResponse(response, 401, { error, request: request.body });
     });
 }
 
@@ -97,7 +97,7 @@ async function verifyGithub(
       if (res.status === 200) {
         return next();
       } else {
-        ctx.setResponse(response, 500, {
+        utils.setResponse(response, 500, {
           error: res,
           request: request.body,
         });
@@ -105,6 +105,6 @@ async function verifyGithub(
       }
     })
     .catch((error) => {
-      ctx.setResponse(response, 401, { error, request: request.body });
+      utils.setResponse(response, 401, { error, request: request.body });
     });
 }

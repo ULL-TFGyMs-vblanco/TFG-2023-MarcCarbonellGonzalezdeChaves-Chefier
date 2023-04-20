@@ -3,7 +3,13 @@ import { getUser, register, login } from '../services/user.api';
 
 export const userRouter = new Router();
 
-userRouter.get('/api/users/:username', getUser);
+userRouter.get('/api/username/:username', async (ctx) => {
+  await getUser(ctx, { username: ctx.params.username });
+});
+
+userRouter.get('/api/email/:email', async (ctx) => {
+  await getUser(ctx, { email: ctx.params.email });
+});
 
 userRouter.post('/api/auth/register', register);
 

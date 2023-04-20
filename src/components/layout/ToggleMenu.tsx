@@ -10,7 +10,7 @@ export const ToggleMenu: React.FC<{
   toggleHandler: () => void;
 }> = ({ toggleAnimation, toggleHandler }) => {
   const { data: session } = useSession();
-  const { user, isLoading, isError } = useUser(session?.user.name);
+  const { user, isLoading, isError } = useUser('email', session?.user.email);
 
   return (
     <div

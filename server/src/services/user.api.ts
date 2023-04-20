@@ -1,43 +1,34 @@
 import * as jwt from 'jsonwebtoken';
 import { Context } from 'koa';
 import { User } from '../models/user';
-import ctx from '../utils/CtxUtils';
 import bcrypt from 'bcrypt';
+import utils from '../utils/APIUtils';
 
 // Register a user
 export const register = async ({ response, request }: Context) => {
   if (!request.body.username || !request.body.email) {
-    ctx.setResponse(response, 400, {
+    utils.setResponse(response, 400, {
       error: 'Email and username are required',
       request: request.body,
     });
     return;
   }
-  const email = request.body.email;
-  const username = request.body.username.toLowerCase().replace(/ /g, '_');
-  let user = new User({ username, email });
-  if (request.body.image) {
-    const image = request.body.image;
-    user = new User({ username, email, image });
-  } else if (request.body.password) {
-    const password = await bcrypt.hash(request.body.password, 10);
-    user = new User({ username, email, password });
-  }
+  const user = await utils.buildUserDocument(request);
   await User.create(user)
     .then((user) => {
-      ctx.setResponse(response, 200, { user });
+      utils.setResponse(response, 200, { user });
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
         const errors = Object.keys(err.errors).map((key) => {
           return { message: err.errors[key].message, field: key };
         });
-        ctx.setResponse(response, 400, {
+        utils.setResponse(response, 400, {
           error: { message: err._message, errors: errors },
           request: request.body,
         });
       } else if (err.code && err.code === 11000) {
-        ctx.setResponse(response, 400, {
+        utils.setResponse(response, 400, {
           error: {
             message: 'Duplicated credential.',
             errors: [
@@ -52,7 +43,7 @@ export const register = async ({ response, request }: Context) => {
           request: request.body,
         });
       } else {
-        ctx.setResponse(response, 500, {
+        utils.setResponse(response, 500, {
           error: { message: err },
           request: request.body,
         });
@@ -63,7 +54,7 @@ export const register = async ({ response, request }: Context) => {
 // Log in a user
 export const login = async ({ response, request }: Context) => {
   if (!request.body.email || !request.body.password) {
-    ctx.setResponse(response, 400, {
+    utils.setResponse(response, 400, {
       error: 'Email and password are required',
       request: request.body,
     });
@@ -80,21 +71,21 @@ export const login = async ({ response, request }: Context) => {
         const token = jwt.sign({ user }, process.env.JWT_SECRET as string, {
           expiresIn: '86400s',
         });
-        ctx.setResponse(response, 200, {
+        utils.setResponse(response, 200, {
           name: user.username,
           email: user.email,
           image: user.image,
           accessToken: token,
         });
       } else {
-        ctx.setResponse(response, 404, {
+        utils.setResponse(response, 404, {
           error: 'Incorrect email or password',
           request: request.body,
         });
       }
     })
     .catch((err) => {
-      ctx.setResponse(response, 500, {
+      utils.setResponse(response, 500, {
         error: err,
         request: request.body,
       });
@@ -102,25 +93,20 @@ export const login = async ({ response, request }: Context) => {
 };
 
 // Get a user's data by username
-export const getUser = async ({ response, request, params }: Context) => {
-  await User.findOne({ username: params.username }, [
-    '-password',
-    '-saved',
-    '-email',
-    '-__v',
-  ])
+export const getUser = async ({ response, request }: Context, filter: any) => {
+  await User.findOne(filter, ['-password', '-saved', '-email', '-__v'])
     .then((user) => {
       if (user) {
-        ctx.setResponse(response, 200, user);
+        utils.setResponse(response, 200, user);
       } else {
-        ctx.setResponse(response, 404, {
+        utils.setResponse(response, 404, {
           error: 'User not found',
           request: request.body,
         });
       }
     })
     .catch((err) => {
-      ctx.setResponse(response, 500, {
+      utils.setResponse(response, 500, {
         error: err,
         requerequest: request.body,
       });

@@ -129,13 +129,8 @@ const login = async ({ response, request }) => {
 };
 exports.login = login;
 // Get a user's data by username
-const getUser = async ({ response, request, params }) => {
-    await user_1.User.findOne({ username: params.username }, [
-        '-password',
-        '-saved',
-        '-email',
-        '-__v',
-    ])
+const getUser = async ({ response, request }, filter) => {
+    await user_1.User.findOne(filter, ['-password', '-saved', '-email', '-__v'])
         .then((user) => {
         if (user) {
             CtxUtils_1.default.setResponse(response, 200, user);

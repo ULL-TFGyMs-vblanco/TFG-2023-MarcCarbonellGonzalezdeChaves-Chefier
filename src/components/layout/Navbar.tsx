@@ -11,7 +11,7 @@ import useUser from '../../hooks/useUser';
 export const Navbar: React.FC = () => {
   const [firstToggle, toggle, handleToggle] = useToggleMenu();
   const { data: session } = useSession();
-  const { user, isLoading, isError } = useUser(session?.user.name);
+  const { user, isLoading, isError } = useUser('email', session?.user.email);
 
   return (
     <div className={styles.navbar}>
