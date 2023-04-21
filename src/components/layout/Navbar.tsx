@@ -1,14 +1,18 @@
 import Link from 'next/link';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
 import useToggleMenu from 'src/hooks/useToggleMenu';
 import styles from 'src/styles/layout/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
 import { Avatar } from '../ui/Avatar';
 import { signOut, useSession } from 'next-auth/react';
-import { Loading } from '@nextui-org/react';
+import { Loading, useTheme } from '@nextui-org/react';
+import { useTheme as useNextTheme } from 'next-themes';
 import useUser from '../../hooks/useUser';
 
 export const Navbar: React.FC = () => {
+  const { isDark } = useTheme();
+  const { setTheme } = useNextTheme();
   const [firstToggle, toggle, handleToggle] = useToggleMenu();
   const { data: session } = useSession();
   const { user, isLoading, isError } = useUser('email', session?.user.email);
@@ -36,28 +40,33 @@ export const Navbar: React.FC = () => {
               placeholder='Search...'
               data-testid='search'
             />
+            <div className={styles.theme__button__container}>
+              <button
+                className={styles.theme__button}
+                onClick={() => {
+                  setTheme(isDark ? 'light' : 'dark');
+                }}
+              >
+                {isDark ? (
+                  <BsFillSunFill className={styles.sun__theme__icon} />
+                ) : (
+                  <BsFillMoonFill className={styles.moon__theme__icon} />
+                )}
+              </button>
+            </div>
             <ul className={styles.links}>
-              <li className={styles.links__row}>
-                <Link
-                  className={styles.link}
-                  href='/recipes'
-                  data-testid='navigation-link'
-                >
-                  Recipes
-                </Link>
-              </li>
-              <li className={styles.links__row}>
+              <li className={styles.links__col}>
                 <Link
                   className={styles.link}
                   href='/new-recipe'
                   data-testid='navigation-link'
                 >
-                  New&nbsp;Recipe
+                  Recipes
                 </Link>
               </li>
               {session ? (
                 <>
-                  <li className={styles.links__row}>
+                  <li className={styles.links__col}>
                     <button
                       className={styles.logout__button}
                       data-testid='logout-button'
@@ -66,7 +75,7 @@ export const Navbar: React.FC = () => {
                       Log&nbsp;out
                     </button>
                   </li>
-                  <li className={styles.links__row}>
+                  <li className={styles.links__col}>
                     {isLoading ? (
                       <Loading />
                     ) : isError ? (
@@ -84,7 +93,7 @@ export const Navbar: React.FC = () => {
                   </li>
                 </>
               ) : (
-                <li className={styles.links__row}>
+                <li className={styles.links__col}>
                   <Link
                     className={styles.link}
                     href='/auth/login'

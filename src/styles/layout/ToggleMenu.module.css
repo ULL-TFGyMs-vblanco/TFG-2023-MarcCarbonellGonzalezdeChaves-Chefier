@@ -1,7 +1,7 @@
 .toggle__menu {
   height: 100vh;
-  width: 55vw;
-  background-color: var(--nextui-colors-primary300);
+  width: 100vw;
+  background-color: var(--nextui-colors-primary100);
   display: flex;
   flex-direction: column;
   padding: var(--nextui-space-15);
@@ -53,6 +53,7 @@
 }
 
 .link {
+  font-size: var(--nextui-fontSizes-lg);
   color: var(--nextui-colors-secondary600);
 }
 

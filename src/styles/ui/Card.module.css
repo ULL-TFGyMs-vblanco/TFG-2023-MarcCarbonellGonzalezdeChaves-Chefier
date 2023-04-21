@@ -1,5 +1,5 @@
 .card {
-  box-shadow: var(--nextui-shadows-myShadow);
+  box-shadow: var(--nextui-shadows-cardShadow);
   border-radius: var(--nextui-radii-sm);
   background-color: var(--nextui-colors-primary100);
 }

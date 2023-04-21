@@ -1,10 +1,10 @@
 import { useForm } from 'react-hook-form';
-import styles from 'src/styles/auth/AuthForm.module.css';
 import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import { LoginData, LoginFormInputs } from 'auth-types';
 import { SignInOptions } from 'next-auth/react';
+import styles from 'src/styles/auth/AuthForm.module.css';
 import useShow from 'src/hooks/useShow';
 import Link from 'next/link';
 import OauthLogin from './OauthLogin';

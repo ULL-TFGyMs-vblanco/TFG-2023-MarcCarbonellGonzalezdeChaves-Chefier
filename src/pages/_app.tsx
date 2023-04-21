@@ -4,7 +4,9 @@ import { Layout } from '@/components/layout/Layout';
 import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
 import { NextUIProvider } from '@nextui-org/react';
-import { theme } from '../theme';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { lightTheme } from '../theme/lightTheme';
+import { darkTheme } from '../theme/darktheme';
 
 export default function App({
   Component,
@@ -19,13 +21,22 @@ export default function App({
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <SessionProvider session={session}>
-        <NextUIProvider theme={theme}>
-          <main>
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          </main>
-        </NextUIProvider>
+        <NextThemesProvider
+          defaultTheme='system'
+          attribute='class'
+          value={{
+            light: lightTheme.className,
+            dark: darkTheme.className,
+          }}
+        >
+          <NextUIProvider theme={darkTheme}>
+            <main>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </main>
+          </NextUIProvider>
+        </NextThemesProvider>
       </SessionProvider>
     </>
   );

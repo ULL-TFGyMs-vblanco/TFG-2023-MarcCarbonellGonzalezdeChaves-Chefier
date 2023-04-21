@@ -112,6 +112,7 @@
   border-radius: var(--nextui-radii-xs);
   border: var(--nextui-borderWeights-light) solid
     var(--nextui-colors-primary400);
+  background-color: var(--nextui-colors-primary100);
 }
 
 .text__input:focus + .field__label .label__text,
@@ -170,5 +171,6 @@
 /* BUTTONS */
 
 .credentials__button {
+  color: white;
   width: 100%;
 }

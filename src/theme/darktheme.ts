@@ -1,22 +1,22 @@
 import { createTheme } from '@nextui-org/react';
 
-export const theme = createTheme({
-  type: 'light',
+export const darkTheme = createTheme({
+  type: 'dark',
   theme: {
     colors: {
-      primary100: '#FFFFFF',
-      primary200: '#FDFCFC',
-      primary300: '#EFF0F6',
-      primary400: '#D9D9D9',
-      primary500: '#978F8A',
-      primary600: '#929191',
+      secondary600: '#FFFFFF',
+      secondary500: '#FDFCFC',
+      secondary400: '#EFF0F6',
+      secondary300: '#D9D9D9',
+      secondary200: '#978F8A',
+      secondary100: '#929191',
 
-      secondary100: '#676767',
-      secondary200: '#545454',
-      secondary300: '#414141',
-      secondary400: '#2F2F2F',
-      secondary500: '#1D1D1D',
-      secondary600: '#0A0A0A',
+      primary600: '#676767',
+      primary500: '#545454',
+      primary400: '#414141',
+      primary300: '#2F2F2F',
+      primary200: '#1D1D1D',
+      primary100: '#0A0A0A',
 
       accent100: '#FC5B45',
       accent200: '#FB280C',
@@ -25,7 +25,7 @@ export const theme = createTheme({
       accent500: '#590C01',
       accent600: '#290501',
 
-      link: '$secondary500',
+      link: '$secondary600',
     },
     fonts: {},
     fontSizes: {
@@ -123,7 +123,7 @@ export const theme = createTheme({
       max: '9999',
     },
     shadows: {
-      myShadow: '0 2px 5px 0px rgb(128 128 128)',
+      cardShadow: 'none',
     },
   },
 });
