@@ -2,24 +2,23 @@
   position: fixed;
   width: 100vw;
   height: 4rem;
-  z-index: 1;
+  z-index: var(--nextui-zIndices-1);
 }
 
 .bar {
   display: flex;
   justify-content: center;
-  background-color: #fff;
-  border-bottom: 1px solid #eaeaea;
   height: 4rem;
+  background-color: var(--nextui-colors-primary100);
 }
 
 .container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 2rem;
+  gap: var(--nextui-space-13);
   align-items: center;
-  padding: 0 1rem;
+  padding: 0 var(--nextui-space-9);
 }
 
 /* Left elements */
@@ -27,25 +26,26 @@
 .left__elements {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: var(--nextui-space-9);
   align-items: center;
 }
 
 .logo {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: var(--nextui-fontSizes-2xl);
+  font-weight: var(--nextui-fontWeights-bold);
 }
 
 .toggle {
   display: flex;
   align-items: center;
   border: 0;
-  background-color: #fff;
+  background-color: var(--nextui-colors-primary100);
+  color: var(--nextui-colors-secondary600);
   cursor: pointer;
 }
 
 .toggle:hover {
-  color: gray;
+  color: var(--nextui-colors-secondary100);
 }
 
 @media screen and (width >= 650px) {
@@ -63,16 +63,18 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
+  gap: var(--nextui-space-9);
 }
 
 .search {
   height: 2rem;
-  border-radius: 1rem;
+  border-radius: var(--nextui-radii-lg);
   border: none;
-  background-color: lightgrey;
+  background-color: var(--nextui-colors-primary300);
   width: 100%;
-  padding-left: 1rem;
+  padding-left: var(--nextui-space-9);
+  font-size: var(--nextui-fontSizes-sm);
+  line-height: var(--nextui-lineHeights-6xl);
 }
 
 .links {
@@ -90,40 +92,43 @@
 }
 
 .links__row {
-  padding: 1rem;
+  padding: var(--nextui-space-9);
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 0;
 }
 
 .link {
-  font-size: 0.9rem;
-  color: #000;
+  font-size: var(--nextui-fontSizes-sm);
+  color: var(--nextui-colors-secondary600);
   text-decoration: none;
 }
 
 .link:hover {
-  color: gray;
+  color: var(--nextui-colors-secondary100);
 }
 
 .logout__button {
-  font-size: 0.9rem;
-  color: #000;
+  font-size: var(--nextui-fontSizes-sm);
+  color: var(--nextui-colors-secondary600);
   text-decoration: none;
   border: 0;
   padding: 0;
-  background-color: white;
+  background-color: var(--nextui-colors-primary100);
   cursor: pointer;
 }
 
 .logout__button:hover {
-  color: gray;
+  color: var(--nextui-colors-secondary100);
 }
 
 .avatar {
-  border: 2px solid white;
+  border: var(--nextui-borderWeights-normal) solid
+    var(--nextui-colors-primary100);
 }
 
 .avatar:hover {
-  border: 2px solid gray;
+  border: var(--nextui-borderWeights-normal) solid
+    var(--nextui-colors-secondary100);
 }

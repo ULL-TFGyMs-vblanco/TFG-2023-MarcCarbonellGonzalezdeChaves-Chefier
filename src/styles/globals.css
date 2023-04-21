@@ -1,15 +1,7 @@
 html,
 body {
-  margin: 0px;
-  padding: 0px;
-}
-* {
-  font-family: var(--font-raleway);
-}
-
-a {
-  text-decoration: none;
-  color: inherit;
+  margin: 0;
+  padding: 0;
 }
 
 @media screen and (width <= 910px) {

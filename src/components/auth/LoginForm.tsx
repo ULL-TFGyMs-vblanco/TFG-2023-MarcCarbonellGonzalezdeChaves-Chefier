@@ -62,11 +62,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               <div className={styles.label__text}>Password</div>
             </label>
           </div>
-          <div
-            className={styles.checkbox__container}
-            data-testid='form-checkbox'
-          >
-            <label>
+          <div className={styles.show__password} data-testid='form-checkbox'>
+            <div className={styles.checkbox__container}>
               <input
                 className={styles.checkbox}
                 type='checkbox'
@@ -74,8 +71,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 data-testid='checkbox'
                 onClick={toggleShowPassword}
               />
-              show password
-            </label>
+            </div>
+            <span className={styles.checkbox__text}>show password</span>
           </div>
           <Button
             style={styles.credentials__button}
@@ -85,8 +82,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             <span>Log in</span>
           </Button>
         </form>
-        <div className={styles.separator}>
-          <span className={styles.separator__text}>or</span>
+        <div className={styles.divider}>
+          <span className={styles.divider__text}>or</span>
         </div>
         <OauthLogin onLogin={loginHandler} />
         <p className={styles.session__msg}>

@@ -1,8 +1,9 @@
 .button {
-  background-color: #e8e8e8;
+  background-color: var(--nextui-colors-accent300);
+  color: var(--nextui-colors-primary100);
   border: none;
-  border-radius: 5px;
-  padding: 10px 20px;
+  border-radius: var(--nextui-radii-xs);
+  padding: var(--nextui-space-6) var(--nextui-space-10);
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -10,5 +11,5 @@
 }
 
 .button:hover {
-  background-color: #d8d8d8;
+  background-color: var(--nextui-colors-accent400);
 }

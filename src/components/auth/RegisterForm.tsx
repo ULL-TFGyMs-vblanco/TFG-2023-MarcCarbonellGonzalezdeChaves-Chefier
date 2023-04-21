@@ -180,11 +180,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               </p>
             </div>
           )}
-          <div
-            className={styles.checkbox__container}
-            data-testid='form-checkbox'
-          >
-            <label>
+          <div className={styles.show__password} data-testid='form-checkbox'>
+            <div className={styles.checkbox__container}>
               <input
                 className={styles.checkbox}
                 type='checkbox'
@@ -192,19 +189,19 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                 data-testid='checkbox'
                 onClick={toggleShowPassword}
               />
-              show password
-            </label>
+            </div>
+            <span className={styles.checkbox__text}>show password</span>
           </div>
           <Button
             style={styles.credentials__button}
             testid='submit-button'
             submit
           >
-            register
+            Register
           </Button>
         </form>
-        <div className={styles.separator}>
-          <span className={styles.separator__text}>or</span>
+        <div className={styles.divider}>
+          <span className={styles.divider__text}>or</span>
         </div>
         <OauthLogin onLogin={loginHandler} />
         <p className={styles.session__msg}>

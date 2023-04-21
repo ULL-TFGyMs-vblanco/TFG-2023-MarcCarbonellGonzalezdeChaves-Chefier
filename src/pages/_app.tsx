@@ -2,10 +2,9 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Layout } from '@/components/layout/Layout';
 import Head from 'next/head';
-import { Raleway } from '@next/font/google';
 import { SessionProvider } from 'next-auth/react';
-
-const raleway = Raleway({ subsets: ['latin'], variable: '--font-raleway' });
+import { NextUIProvider } from '@nextui-org/react';
+import { theme } from '../theme';
 
 export default function App({
   Component,
@@ -20,11 +19,13 @@ export default function App({
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <SessionProvider session={session}>
-        <main className={`${raleway.variable} ${raleway.className}`}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </main>
+        <NextUIProvider theme={theme}>
+          <main>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </main>
+        </NextUIProvider>
       </SessionProvider>
     </>
   );

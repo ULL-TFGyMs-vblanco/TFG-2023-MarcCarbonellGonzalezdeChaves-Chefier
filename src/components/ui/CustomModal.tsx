@@ -29,7 +29,6 @@ export const CustomModal: React.FC<CustomModalProps> = ({
       data-testid='modal'
       open={visible}
       onClose={handler.bind(this, false)}
-      style={{ fontFamily: 'var(--font-raleway)' }}
     >
       <Modal.Header
         color='success'
