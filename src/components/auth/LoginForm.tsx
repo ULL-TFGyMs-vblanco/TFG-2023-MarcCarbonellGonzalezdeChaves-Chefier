@@ -1,12 +1,14 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import { LoginData, LoginFormInputs } from 'auth-types';
 import { SignInOptions } from 'next-auth/react';
+import { useTheme } from '@nextui-org/react';
 import styles from 'src/styles/auth/AuthForm.module.css';
 import useShow from 'src/hooks/useShow';
-import Link from 'next/link';
 import OauthLogin from './OauthLogin';
 
 interface LoginFormProps {
@@ -14,6 +16,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
+  const { isDark } = useTheme();
   const { register, watch, handleSubmit } = useForm<LoginFormInputs>();
   const [showPassword, toggleShowPassword] = useShow();
 
@@ -28,7 +31,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   return (
     <Card style={styles.form__card} testid='form-card'>
       <div className={styles.form__container}>
-        <Title style={styles.title}>Log In</Title>
+        <Image
+          src={`/images/chefier${isDark ? '-dark' : ''}.png`}
+          alt='logo'
+          width={100}
+          height={100}
+          priority
+        />
+        <Title style={styles.title}>Log in to Chefier</Title>
         <form
           autoComplete='off'
           className={styles.form}

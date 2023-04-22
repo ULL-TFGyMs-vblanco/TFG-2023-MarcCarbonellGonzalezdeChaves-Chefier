@@ -7,6 +7,7 @@
 @media screen and (width < 650px) {
   .form__card {
     box-shadow: none;
+    background-color: transparent;
   }
 }
 

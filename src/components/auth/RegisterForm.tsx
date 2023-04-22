@@ -1,5 +1,7 @@
 import validator from 'validator';
 import Link from 'next/link';
+import Image from 'next/image';
+import { useTheme } from '@nextui-org/react';
 import { SignInOptions } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { Card } from '../ui/Card';
@@ -27,6 +29,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     watch,
     handleSubmit,
   } = useForm<RegisterFormInputs>();
+  const { isDark } = useTheme();
   const [showMore, toggleShowMore] = useShow();
   const [showPassword, toggleShowPassword] = useShow();
 
@@ -45,7 +48,14 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   return (
     <Card style={styles.form__card} testid='form-card'>
       <div className={styles.form__container}>
-        <Title style={styles.title}>Register</Title>
+        <Image
+          src={`/images/chefier${isDark ? '-dark' : ''}.png`}
+          alt='logo'
+          width={100}
+          height={100}
+          priority
+        />
+        <Title style={styles.title}>Join Chefier</Title>
         <form
           autoComplete='off'
           className={styles.form}

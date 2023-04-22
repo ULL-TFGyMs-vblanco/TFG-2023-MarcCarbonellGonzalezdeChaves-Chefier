@@ -10,13 +10,14 @@
   justify-content: center;
   height: 4rem;
   background-color: var(--nextui-colors-primary100);
+  overflow: hidden;
 }
 
 .container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: var(--nextui-space-13);
+  gap: var(--nextui-space-9);
   align-items: center;
   padding: 0 var(--nextui-space-9);
 }
@@ -30,9 +31,21 @@
   align-items: center;
 }
 
-.logo {
-  font-size: var(--nextui-fontSizes-2xl);
-  font-weight: var(--nextui-fontWeights-bold);
+.logo__image__big {
+  display: block;
+}
+
+.logo__image__small {
+  display: none;
+}
+
+@media screen and (width < 650px) {
+  .logo__image__big {
+    display: none;
+  }
+  .logo__image__small {
+    display: block;
+  }
 }
 
 .toggle {
@@ -66,6 +79,12 @@
   gap: var(--nextui-space-9);
 }
 
+@media screen and (width < 460px) {
+  .right__elements {
+    gap: 0;
+  }
+}
+
 .search {
   height: 2rem;
   border-radius: var(--nextui-radii-lg);
@@ -75,6 +94,18 @@
   padding-left: var(--nextui-space-9);
   font-size: var(--nextui-fontSizes-sm);
   line-height: var(--nextui-lineHeights-6xl);
+}
+
+@media screen and (width < 425px) {
+  .search {
+    width: 30vw;
+  }
+}
+
+@media screen and (width < 345px) {
+  .search {
+    width: 25vw;
+  }
 }
 
 .search:hover {
@@ -158,7 +189,7 @@
 
 .avatar {
   border: var(--nextui-borderWeights-normal) solid
-    var(--nextui-colors-primary100);
+    var(--nextui-colors-secondary100);
 }
 
 .avatar:hover {

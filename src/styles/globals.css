@@ -1,7 +1,21 @@
 html,
 body {
-  margin: 0;
-  padding: 0;
+  margin: 0px;
+  padding: 0px;
+  background-image: url(../../public/images/background.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
+}
+
+@media screen and (width <= 650px) {
+  html,
+  body {
+    margin: 0px;
+    padding: 0px;
+    background-image: none;
+  }
 }
 
 @media screen and (width <= 910px) {
@@ -9,6 +23,7 @@ body {
     width: 90%;
   }
 }
+
 @media screen and (width > 910px) {
   .container {
     width: 70%;

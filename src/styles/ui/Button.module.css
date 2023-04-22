@@ -1,5 +1,5 @@
 .button {
-  background-color: var(--nextui-colors-accent300);
+  background-color: var(--nextui-colors-accent100);
   color: var(--nextui-colors-primary100);
   border: none;
   border-radius: var(--nextui-radii-xs);
@@ -8,8 +8,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: var(--nextui-fontWeights-bold);
 }
 
 .button:hover {
-  background-color: var(--nextui-colors-accent400);
+  background-color: var(--nextui-colors-accent200);
 }

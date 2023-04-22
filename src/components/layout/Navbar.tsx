@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
 import useToggleMenu from 'src/hooks/useToggleMenu';
@@ -30,7 +31,22 @@ export const Navbar: React.FC = () => {
               <RxHamburgerMenu size={25} />
             </button>
             <Link className={styles.logo} href='/' data-testid='logo'>
-              Chefier
+              <Image
+                src={`/images/chefier-banner${isDark ? '-dark' : ''}.png`}
+                alt='logo'
+                width={155}
+                height={100}
+                priority
+                className={styles.logo__image__big}
+              />
+              <Image
+                src={`/images/chefier${isDark ? '-dark' : ''}.png`}
+                alt='logo'
+                width={60}
+                height={60}
+                priority
+                className={styles.logo__image__small}
+              />
             </Link>
           </div>
           <div className={styles.right__elements}>
