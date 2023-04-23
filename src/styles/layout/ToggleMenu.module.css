@@ -68,14 +68,8 @@
   padding-bottom: var(--nextui-space-9);
 }
 
-.avatar {
-  border: var(--nextui-borderWeights-normal) solid
-    var(--nextui-colors-secondary600);
-}
-
 .avatar:hover {
-  border: var(--nextui-borderWeights-normal) solid
-    var(--nextui-colors-secondary100);
+  opacity: 0.5;
 }
 
 .nickname {
