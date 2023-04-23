@@ -2,14 +2,20 @@ html,
 body {
   margin: 0px;
   padding: 0px;
-}
-* {
-  font-family: var(--font-raleway);
+  background-image: url(../../public/images/background.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center center;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
+@media screen and (width <= 650px) {
+  html,
+  body {
+    margin: 0px;
+    padding: 0px;
+    background-image: none;
+  }
 }
 
 @media screen and (width <= 910px) {
@@ -17,6 +23,7 @@ a {
     width: 90%;
   }
 }
+
 @media screen and (width > 910px) {
   .container {
     width: 70%;

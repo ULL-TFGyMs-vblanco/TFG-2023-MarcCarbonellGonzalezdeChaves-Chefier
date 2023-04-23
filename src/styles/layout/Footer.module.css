@@ -1,5 +1,5 @@
 .footer__container {
-  background-color: #5a515a;
+  background-color: var(--nextui-colors-primary100);
   width: 100%;
   height: auto;
 }
@@ -7,7 +7,7 @@
 .footer {
   display: flex;
   justify-content: center;
-  padding: 1.5rem 0;
+  padding: var(--nextui-space-9) 0;
 }
 
 .container {
@@ -24,9 +24,9 @@
 }
 
 .logo {
-  color: white;
-  font-size: 1.5rem;
-  font-weight: 700;
+  color: var(--nextui-colors-secondary600);
+  font-size: var(--nextui-fontSizes-2xl);
+  font-weight: var(--nextui-fontWeights-bold);
   align-self: center;
   width: 4rem;
 }
@@ -35,15 +35,15 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 5rem;
-  margin-bottom: 1rem;
+  gap: var(--nextui-space-21);
+  margin-bottom: var(--nextui-space-4);
 }
 
 .links__label {
-  color: white;
+  color: var(--nextui-colors-secondary600);
   font-weight: bold;
   display: inline-block;
-  margin-bottom: 1rem;
+  margin-bottom: var(--nextui-space-9);
 }
 
 .links ul {
@@ -54,23 +54,26 @@
 }
 
 .links li:not(:last-child) {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--nextui-space-4);
 }
 
 .link {
-  color: white;
+  color: var(--nextui-colors-secondary600);
   text-decoration: none;
 }
 
 .link:hover {
-  color: gray;
+  color: var(--nextui-colors-secondary100);
 }
 
 .authoring {
-  color: white;
-  font-size: smaller;
+  color: var(--nextui-colors-secondary600);
+  font-size: var(--nextui-fontSizes-sm);
+  font-weight: var(--nextui-fontWeights-normal);
 }
 
 .divider {
-  border-top: 0.5px solid white;
+  border-left: var(--nextui-borderWeights-light) solid
+    var(--nextui-colors-secondary600);
+  height: 100%;
 }

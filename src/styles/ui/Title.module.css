@@ -1,4 +1,4 @@
 .title {
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: var(--nextui-fontSizes-2xl);
+  font-weight: var(--nextui-fontWeights-bold);
 }

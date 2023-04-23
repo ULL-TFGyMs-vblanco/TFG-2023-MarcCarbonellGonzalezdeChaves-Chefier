@@ -1,12 +1,14 @@
+import Image from 'next/image';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
-import styles from 'src/styles/auth/AuthForm.module.css';
 import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import { LoginData, LoginFormInputs } from 'auth-types';
 import { SignInOptions } from 'next-auth/react';
+import { useTheme } from '@nextui-org/react';
+import styles from 'src/styles/auth/AuthForm.module.css';
 import useShow from 'src/hooks/useShow';
-import Link from 'next/link';
 import OauthLogin from './OauthLogin';
 
 interface LoginFormProps {
@@ -14,6 +16,7 @@ interface LoginFormProps {
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
+  const { isDark } = useTheme();
   const { register, watch, handleSubmit } = useForm<LoginFormInputs>();
   const [showPassword, toggleShowPassword] = useShow();
 
@@ -28,7 +31,14 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   return (
     <Card style={styles.form__card} testid='form-card'>
       <div className={styles.form__container}>
-        <Title style={styles.title}>Log In</Title>
+        <Image
+          src={`/images/chefier${isDark ? '-dark' : ''}.png`}
+          alt='logo'
+          width={100}
+          height={100}
+          priority
+        />
+        <Title style={styles.title}>Log in to Chefier</Title>
         <form
           autoComplete='off'
           className={styles.form}
@@ -62,11 +72,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               <div className={styles.label__text}>Password</div>
             </label>
           </div>
-          <div
-            className={styles.checkbox__container}
-            data-testid='form-checkbox'
-          >
-            <label>
+          <div className={styles.show__password} data-testid='form-checkbox'>
+            <div className={styles.checkbox__container}>
               <input
                 className={styles.checkbox}
                 type='checkbox'
@@ -74,8 +81,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 data-testid='checkbox'
                 onClick={toggleShowPassword}
               />
-              show password
-            </label>
+            </div>
+            <span className={styles.checkbox__text}>show password</span>
           </div>
           <Button
             style={styles.credentials__button}
@@ -85,8 +92,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             <span>Log in</span>
           </Button>
         </form>
-        <div className={styles.separator}>
-          <span className={styles.separator__text}>or</span>
+        <div className={styles.divider}>
+          <span className={styles.divider__text}>or</span>
         </div>
         <OauthLogin onLogin={loginHandler} />
         <p className={styles.session__msg}>

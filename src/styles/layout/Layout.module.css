@@ -6,6 +6,6 @@
 }
 
 .main {
-  margin-top: 4rem;
-  min-height: calc(100vh - 4rem);
+  margin-top: var(--nextui-space-19);
+  min-height: calc(100dvh - 4rem);
 }

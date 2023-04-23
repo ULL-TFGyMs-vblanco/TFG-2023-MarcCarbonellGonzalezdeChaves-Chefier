@@ -1,12 +1,11 @@
 .toggle__menu {
   height: 100vh;
-  width: 60vw;
-  background-color: #5a515a;
+  width: 100vw;
+  background-color: var(--nextui-colors-primary100);
   display: flex;
   flex-direction: column;
-  padding: 2.5rem;
+  padding: var(--nextui-space-15);
   position: fixed;
-  z-index: -1;
 }
 
 @media screen and (width >= 650px) {
@@ -45,61 +44,65 @@
   list-style: none;
   margin: 0;
   padding-left: 0;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  padding-top: var(--nextui-space-9);
+  padding-bottom: var(--nextui-space-9);
 }
 
 .links li:not(:last-child) {
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--nextui-space-4);
 }
 
 .link {
-  color: white;
+  font-size: var(--nextui-fontSizes-lg);
+  color: var(--nextui-colors-secondary600);
 }
 
 .link:hover {
-  color: gray;
+  color: var(--nextui-colors-secondary100);
 }
 
 .user__info__container {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-bottom: 1rem;
+  padding-bottom: var(--nextui-space-9);
 }
 
 .avatar {
-  border: 2px solid #5a515a;
+  border: var(--nextui-borderWeights-normal) solid
+    var(--nextui-colors-secondary600);
 }
 
 .avatar:hover {
-  border: 2px solid white;
+  border: var(--nextui-borderWeights-normal) solid
+    var(--nextui-colors-secondary100);
 }
 
 .nickname {
-  font-size: large;
-  font-weight: bold;
-  color: white;
-  margin-top: 0.5rem;
-  margin-bottom: 0.25rem;
+  font-size: var(--nextui-fontSizes-lg);
+  font-weight: var(--nextui-fontWeights-bold);
+  color: var(--nextui-colors-secondary600);
+  margin-top: var(--nextui-space-4);
+  margin-bottom: var(--nextui-space-2);
 }
 
 .nickname:hover {
-  color: gray;
+  color: var(--nextui-colors-secondary100);
 }
 
 .username {
-  font-size: small;
-  color: white;
+  font-size: var(--nextui-fontSizes-xs);
+  color: var(--nextui-colors-secondary600);
   margin-top: 0;
   margin-bottom: 0;
 }
 
 .username:hover {
-  color: gray;
+  color: var(--nextui-colors-secondary100);
 }
 
 .divider {
-  border-top: 1px solid white;
+  border-top: var(--nextui-borderWeights-light) solid
+    var(--nextui-colors-secondary100);
   width: 100%;
 }

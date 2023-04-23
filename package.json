@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "env-cmd -f ./config/.env next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "env-cmd -f ./config/.env next start",
     "lint": "next lint",
@@ -24,6 +24,7 @@
     "jsonwebtoken": "^9.0.0",
     "next": "13.1.6",
     "next-auth": "^4.20.1",
+    "next-themes": "^0.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.43.5",

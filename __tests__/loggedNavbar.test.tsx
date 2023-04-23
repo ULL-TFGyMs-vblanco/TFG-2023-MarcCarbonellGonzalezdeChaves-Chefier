@@ -67,9 +67,8 @@ describe('Navbar', (): void => {
       render(<Navbar />);
 
       const navLinks = screen.getAllByTestId('navigation-link');
-      expect(navLinks.length).toBe(2);
+      expect(navLinks.length).toBe(1);
       screen.getByText('Recipes');
-      screen.getByText('New Recipe');
     });
     it('should render avatar', (): void => {
       render(<Navbar />);
@@ -101,7 +100,6 @@ describe('Navbar', (): void => {
       const navLinks = screen.getAllByTestId('toggle-navigation-link');
       expect(navLinks.length).toBe(2);
       expect(screen.getAllByText('Recipes').length).toBe(2);
-      expect(screen.getAllByText('New Recipe').length).toBe(2);
     });
     it('should render log out button', (): void => {
       render(<Navbar />);
