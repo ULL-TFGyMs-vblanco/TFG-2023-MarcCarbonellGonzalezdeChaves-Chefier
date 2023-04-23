@@ -8,6 +8,7 @@ import {
 } from '@testing-library/react';
 import { LoginForm } from '../src/components/auth/LoginForm';
 import { SignInOptions } from 'next-auth/react';
+import { MockImageProps } from '../src/types/test';
 
 const mockLogin = vi.fn((provider: string, data: SignInOptions) => {
   return Promise.resolve(data);
@@ -15,6 +16,26 @@ const mockLogin = vi.fn((provider: string, data: SignInOptions) => {
 
 describe('Login form', (): void => {
   afterEach(cleanup);
+
+  vi.mock('next/image', async () => {
+    return {
+      default: () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        function Image({ src, alt, width, height, style }: MockImageProps) {
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt}
+              width={width}
+              height={height}
+              style={style}
+            />
+          );
+        }
+      },
+    };
+  });
 
   it('should render', (): void => {
     render(<LoginForm onLogin={mockLogin} />);
@@ -27,7 +48,7 @@ describe('Login form', (): void => {
   it('should render title', (): void => {
     render(<LoginForm onLogin={mockLogin} />);
 
-    screen.getByText('Log In');
+    screen.getByText('Log in to Chefier');
   });
   it('should render form', (): void => {
     render(<LoginForm onLogin={mockLogin} />);

@@ -8,6 +8,7 @@ import {
 } from '@testing-library/react';
 import { RegisterForm } from '../src/components/auth/RegisterForm';
 import { SignInOptions } from 'next-auth/react';
+import { MockImageProps } from '../src/types/test';
 
 const mockRegister = vi.fn(() => {
   return Promise.resolve(true);
@@ -19,6 +20,26 @@ const mockLogin = vi.fn((provider: string, data: SignInOptions) => {
 
 describe('Register form', (): void => {
   afterEach(cleanup);
+
+  vi.mock('next/image', async () => {
+    return {
+      default: () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        function Image({ src, alt, width, height, style }: MockImageProps) {
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt}
+              width={width}
+              height={height}
+              style={style}
+            />
+          );
+        }
+      },
+    };
+  });
 
   it('should render', (): void => {
     render(
@@ -125,7 +146,7 @@ describe('Register form', (): void => {
     );
 
     screen.getByTestId('submit-button');
-    screen.getByText('register');
+    screen.getByText('Register');
   });
   it('should display an error alert when username is not provided', async () => {
     render(
