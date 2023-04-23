@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL:
-    'https://chefier-backend-git-develop-tfg-marccarbonell.vercel.app/api',
+  baseURL: process.env.API_URL as string,
 });
 
 export default instance;
