@@ -64,7 +64,7 @@ export const UserSchema = new Schema<UserDocumentInterface>({
   },
   image: {
     type: String,
-    default: `${process.env.CDN_URL}/images/avatar_default.jpg`,
+    default: `${process.env.CDN_URL}images/avatar_default.jpg`,
     trim: true,
     validate: (value: string) => {
       if (!validator.isURL(value)) {
