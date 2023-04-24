@@ -9,6 +9,7 @@ const koa_bodyparser_1 = __importDefault(require("koa-bodyparser"));
 require("./db/mongoose");
 const default_routes_1 = require("./routers/default.routes");
 const user_routes_1 = require("./routers/user.routes");
+const recipe_routes_1 = require("./routers/recipe.routes");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cors = require('@koa/cors');
 exports.app = new koa_1.default();
@@ -17,4 +18,6 @@ exports.app
     .use(cors())
     .use(user_routes_1.userRouter.routes())
     .use(user_routes_1.userRouter.allowedMethods())
+    .use(recipe_routes_1.recipeRouter.routes())
+    .use(recipe_routes_1.recipeRouter.allowedMethods())
     .use(default_routes_1.defaultRouter.routes());

@@ -53,7 +53,7 @@ exports.UserSchema = new mongoose_1.Schema({
     },
     image: {
         type: String,
-        default: `${process.env.CDN_URL}/images/avatar_default.jpg`,
+        default: `${process.env.CDN_URL}images/avatar_default.jpg`,
         trim: true,
         validate: (value) => {
             if (!validator_1.default.isURL(value)) {

@@ -4,10 +4,11 @@ import validator from 'validator';
 export interface RecipeDocumentInterface extends Document {
   name: string;
   username: string;
+  images: string[];
   description: string;
   date: Date;
   tags: [string];
-  difficulty: string;
+  difficulty: 'Fácil' | 'Media' | 'Difícil';
   cookTime: number;
   ingredients: [{ name: string; quantity: number; unit: string }];
   instructions: [string];
@@ -34,11 +35,8 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     required: true,
     trim: true,
     validate: (value: string) => {
-      if (!validator.isAlphanumeric(value)) {
-        throw new Error('Name must be alphanumeric');
-      }
-      if (!validator.isLength(value, { max: 20 })) {
-        throw new Error('Name must have a maximum of 20 characters');
+      if (!validator.isLength(value, { max: 50 })) {
+        throw new Error('Name must have a maximum of 50 characters');
       }
     },
   },
@@ -46,6 +44,17 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     type: String,
     required: true,
     trim: true,
+  },
+  images: {
+    type: [String],
+    required: true,
+    validate: (value: [string]) => {
+      value.forEach((image) => {
+        if (!validator.isURL(image)) {
+          throw new Error('Image must be a valid URL');
+        }
+      });
+    },
   },
   description: {
     type: String,
@@ -80,7 +89,7 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     required: true,
     trim: true,
     validate: (value: string) => {
-      if (!validator.isIn(value, ['Easy', 'Medium', 'Hard'])) {
+      if (!validator.isIn(value, ['Fácil', 'Media', 'Difícil'])) {
         throw new Error('Difficulty must be Easy, Medium or Hard');
       }
     },
@@ -99,9 +108,6 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     required: true,
     validate: (value: [{ name: string; quantity: number; unit: string }]) => {
       value.forEach((ingredient) => {
-        if (!validator.isAlphanumeric(ingredient.name)) {
-          throw new Error('Name must be alphanumeric');
-        }
         if (ingredient.quantity < 0) {
           throw new Error('Ingredient quantity must be positive');
         }
@@ -113,8 +119,8 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     required: true,
     validate: (value: [string]) => {
       value.forEach((instruction) => {
-        if (!validator.isLength(instruction, { max: 100 })) {
-          throw new Error('Instruction have a maximum of 100 characters');
+        if (!validator.isLength(instruction, { max: 200 })) {
+          throw new Error('Instruction have a maximum of 200 characters');
         }
       });
     },

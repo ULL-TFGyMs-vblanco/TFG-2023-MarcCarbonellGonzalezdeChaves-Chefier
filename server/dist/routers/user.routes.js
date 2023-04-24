@@ -8,7 +8,7 @@ const koa_router_1 = __importDefault(require("koa-router"));
 const user_api_1 = require("../services/user.api");
 exports.userRouter = new koa_router_1.default();
 exports.userRouter.get('/api/username/:username', async (ctx) => {
-    await (0, user_api_1.getUser)(ctx, { username: ctx.params.username });
+    await (0, user_api_1.getUser)(ctx, {});
 });
 exports.userRouter.get('/api/email/:email', async (ctx) => {
     await (0, user_api_1.getUser)(ctx, { email: ctx.params.email });

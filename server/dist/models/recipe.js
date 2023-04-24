@@ -12,11 +12,8 @@ exports.RecipeSchema = new mongoose_1.Schema({
         required: true,
         trim: true,
         validate: (value) => {
-            if (!validator_1.default.isAlphanumeric(value)) {
-                throw new Error('Name must be alphanumeric');
-            }
-            if (!validator_1.default.isLength(value, { max: 20 })) {
-                throw new Error('Name must have a maximum of 20 characters');
+            if (!validator_1.default.isLength(value, { max: 50 })) {
+                throw new Error('Name must have a maximum of 50 characters');
             }
         },
     },
@@ -24,6 +21,17 @@ exports.RecipeSchema = new mongoose_1.Schema({
         type: String,
         required: true,
         trim: true,
+    },
+    images: {
+        type: [String],
+        required: true,
+        validate: (value) => {
+            value.forEach((image) => {
+                if (!validator_1.default.isURL(image)) {
+                    throw new Error('Image must be a valid URL');
+                }
+            });
+        },
     },
     description: {
         type: String,
@@ -58,7 +66,7 @@ exports.RecipeSchema = new mongoose_1.Schema({
         required: true,
         trim: true,
         validate: (value) => {
-            if (!validator_1.default.isIn(value, ['Easy', 'Medium', 'Hard'])) {
+            if (!validator_1.default.isIn(value, ['Fácil', 'Media', 'Difícil'])) {
                 throw new Error('Difficulty must be Easy, Medium or Hard');
             }
         },
@@ -77,9 +85,6 @@ exports.RecipeSchema = new mongoose_1.Schema({
         required: true,
         validate: (value) => {
             value.forEach((ingredient) => {
-                if (!validator_1.default.isAlphanumeric(ingredient.name)) {
-                    throw new Error('Name must be alphanumeric');
-                }
                 if (ingredient.quantity < 0) {
                     throw new Error('Ingredient quantity must be positive');
                 }
@@ -91,8 +96,8 @@ exports.RecipeSchema = new mongoose_1.Schema({
         required: true,
         validate: (value) => {
             value.forEach((instruction) => {
-                if (!validator_1.default.isLength(instruction, { max: 100 })) {
-                    throw new Error('Instruction have a maximum of 100 characters');
+                if (!validator_1.default.isLength(instruction, { max: 200 })) {
+                    throw new Error('Instruction have a maximum of 200 characters');
                 }
             });
         },

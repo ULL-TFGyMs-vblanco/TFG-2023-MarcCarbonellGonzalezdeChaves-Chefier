@@ -2,10 +2,11 @@ import { Document, Schema } from 'mongoose';
 export interface RecipeDocumentInterface extends Document {
     name: string;
     username: string;
+    images: string[];
     description: string;
     date: Date;
     tags: [string];
-    difficulty: string;
+    difficulty: 'Fácil' | 'Media' | 'Difícil';
     cookTime: number;
     ingredients: [{
         name: string;
