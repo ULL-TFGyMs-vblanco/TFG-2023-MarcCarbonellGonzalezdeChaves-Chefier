@@ -5,7 +5,7 @@ export interface Recipe {
   description: string;
   date: Date;
   tags: string[];
-  difficulty: string;
+  difficulty: 'Fácil' | 'Media' | 'Difícil';
   cookTime: number;
   ingredients: { name: string; quantity: number; unit: string }[];
   instructions: string[];

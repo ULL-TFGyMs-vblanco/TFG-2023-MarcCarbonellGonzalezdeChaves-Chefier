@@ -127,7 +127,7 @@ export const recipes: Recipe[] = [
       'Un pastel delicioso y húmedo con el sabor dulce de la zanahoria y la textura crujiente de las nueces.',
     date: new Date('2023-04-24T16:00:00.000Z'),
     tags: ['pastel', 'zanahoria', 'nueces', 'postre'],
-    difficulty: 'Inter',
+    difficulty: 'Media',
     cookTime: 90,
     ingredients: [
       { name: 'zanahoria rallada', quantity: 3, unit: 'tazas' },
@@ -185,7 +185,7 @@ export const recipes: Recipe[] = [
       'Una tarta de queso con un delicioso relleno de queso crema y frutos rojos.',
     date: new Date('2023-04-24T16:00:00.000Z'),
     tags: ['tarta', 'queso', 'frutos rojos', 'postre'],
-    difficulty: 'Inter',
+    difficulty: 'Media',
     cookTime: 90,
     ingredients: [
       { name: 'harina de trigo', quantity: 1, unit: 'taza' },
@@ -236,7 +236,7 @@ export const recipes: Recipe[] = [
       'Un filete de salmón con una deliciosa salsa de limón y un toque de pimienta.',
     date: new Date('2023-04-24T16:00:00.000Z'),
     tags: ['salmón', 'limón', 'pimienta', 'pescado', 'salsa'],
-    difficulty: 'Inter',
+    difficulty: 'Media',
     cookTime: 30,
     ingredients: [
       { name: 'filete de salmón', quantity: 1, unit: 'unidades' },
@@ -333,7 +333,7 @@ export const recipes: Recipe[] = [
       'Una pechuga de pollo rellena con una deliciosa mezcla de queso y jamón.',
     date: new Date('2023-04-24T16:00:00.000Z'),
     tags: ['pollo', 'jamón', 'queso', 'relleno'],
-    difficulty: 'Inter',
+    difficulty: 'Media',
     cookTime: 60,
     ingredients: [
       { name: 'pechuga de pollo', quantity: 1, unit: 'unidades' },
@@ -379,7 +379,7 @@ export const recipes: Recipe[] = [
     description: 'Una pizza perfecta para los amantes de la pasta carbonara.',
     date: new Date('2023-04-24T16:00:00.000Z'),
     tags: ['pizza', 'carbonara', 'queso', 'huevo', 'tocino'],
-    difficulty: 'Inter',
+    difficulty: 'Media',
     cookTime: 30,
     ingredients: [
       { name: 'harina', quantity: 1, unit: 'taza' },
@@ -430,7 +430,7 @@ export const recipes: Recipe[] = [
     description: 'Tacos de carne con una salsa picante.',
     date: new Date('2023-04-24T16:00:00.000Z'),
     tags: ['tacos', 'carne', 'salsa', 'picante'],
-    difficulty: 'Inter',
+    difficulty: 'Media',
     cookTime: 30,
     ingredients: [
       { name: 'carne molida', quantity: 1, unit: 'libra' },
@@ -461,7 +461,7 @@ export const recipes: Recipe[] = [
     description: 'Un coctel de camarones perfecto para una cena especial.',
     date: new Date('2023-04-24T16:00:00.000Z'),
     tags: ['coctel', 'camarones', 'queso', 'tocino'],
-    difficulty: 'Inter',
+    difficulty: 'Media',
     cookTime: 30,
     ingredients: [
       { name: 'camarones', quantity: 1, unit: 'libra' },

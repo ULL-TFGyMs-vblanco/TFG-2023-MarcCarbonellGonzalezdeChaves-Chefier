@@ -90,7 +90,8 @@
   font-size: var(--nextui-fontSizes-md);
   font-weight: var(--nextui-fontWeights-medium);
   color: var(--nextui-colors-secondary600);
-  margin-bottom: var(--nextui-space-3);
+  padding: var(--nextui-space-5);
+  padding-bottom: 0;
 }
 
 .stats {
@@ -105,7 +106,7 @@
   justify-content: center;
   align-items: center;
   gap: var(--nextui-space-3);
-  width: 2.5rem;
+  width: 2.25rem;
   text-align: center;
 }
 
@@ -115,11 +116,11 @@
 }
 
 .time {
-  width: 2.5rem;
+  width: 2.25rem;
   text-align: center;
 }
 
 .difficulty {
-  width: 2.5rem;
+  width: 2.25rem;
   text-align: center;
 }

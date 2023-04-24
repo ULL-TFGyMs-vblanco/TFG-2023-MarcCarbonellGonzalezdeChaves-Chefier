@@ -27,8 +27,8 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
         />
         <div className={styles.image__overlay} />
       </div>
+      <p className={styles.name}>{recipe.name}</p>
       <div className={styles.info}>
-        <p className={styles.name}>{recipe.name}</p>
         <div className={styles.stats}>
           <div className={styles.valoration}>
             <BsFillStarFill className={styles.star} />
