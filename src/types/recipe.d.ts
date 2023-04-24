@@ -9,7 +9,9 @@ export interface Recipe {
   cookTime: number;
   ingredients: { name: string; quantity: number; unit: string }[];
   instructions: string[];
-  valoration: number;
+  saves: string[];
+  likes: string[];
+  valoration: number | 'NR';
   valorations: {
     username: string;
     comment: string;
