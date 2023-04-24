@@ -1,7 +1,7 @@
 html,
 body {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   background-image: url(../../public/images/background.png);
   background-size: cover;
   background-repeat: no-repeat;
@@ -12,8 +12,8 @@ body {
 @media screen and (width <= 650px) {
   html,
   body {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     background-image: none;
   }
 }

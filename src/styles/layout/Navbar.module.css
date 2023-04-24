@@ -2,7 +2,7 @@
   position: fixed;
   width: 100vw;
   height: 4rem;
-  z-index: var(--nextui-zIndices-1);
+  z-index: var(--nextui-zIndices-2);
 }
 
 .bar {
