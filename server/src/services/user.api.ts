@@ -6,13 +6,6 @@ import utils from '../utils/APIUtils';
 
 // Register a user
 export const register = async ({ response, request }: Context) => {
-  if (!request.body.username || !request.body.email) {
-    utils.setResponse(response, 400, {
-      error: 'Email and username are required',
-      request: request.body,
-    });
-    return;
-  }
   const user = await utils.buildUserDocument(request);
   await User.create(user)
     .then((user) => {
@@ -53,13 +46,6 @@ export const register = async ({ response, request }: Context) => {
 
 // Log in a user
 export const login = async ({ response, request }: Context) => {
-  if (!request.body.email || !request.body.password) {
-    utils.setResponse(response, 400, {
-      error: 'Email and password are required',
-      request: request.body,
-    });
-    return;
-  }
   await User.findOne({
     email: request.body.email,
   })
