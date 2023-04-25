@@ -108,7 +108,7 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     required: true,
     validate: (value: [{ name: string; quantity: number; unit: string }]) => {
       value.forEach((ingredient) => {
-        if (ingredient.quantity < 0) {
+        if (ingredient.quantity <= 0) {
           throw new Error('Ingredient quantity must be positive');
         }
       });
