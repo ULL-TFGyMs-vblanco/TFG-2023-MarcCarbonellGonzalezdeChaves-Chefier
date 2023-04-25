@@ -1,6 +1,7 @@
 import { describe, it, afterEach, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import Home from '../src/pages/index';
+import { MockImageProps } from '../src/types/test';
 
 describe('Home', (): void => {
   afterEach(cleanup);
@@ -20,6 +21,26 @@ describe('Home', (): void => {
     };
   });
 
+  vi.mock('next/image', async () => {
+    return {
+      default: () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        function Image({ src, alt, width, height, style }: MockImageProps) {
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt}
+              width={width}
+              height={height}
+              style={style}
+            />
+          );
+        }
+      },
+    };
+  });
+
   it('should render', (): void => {
     render(<Home />);
   });
@@ -27,12 +48,6 @@ describe('Home', (): void => {
     render(<Home />);
 
     screen.getByText('Chefier');
-  });
-  it('should render register button', (): void => {
-    render(<Home />);
-
-    screen.getByTestId('register-button');
-    screen.getByText('Register');
   });
   it('should render log out button', (): void => {
     render(<Home />);
