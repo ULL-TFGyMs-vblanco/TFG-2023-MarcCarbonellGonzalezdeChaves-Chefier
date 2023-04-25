@@ -6,9 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.userRouter = void 0;
 const koa_router_1 = __importDefault(require("koa-router"));
 const user_api_1 = require("../services/user.api");
-const verifyToken_1 = require("../middlewares/verifyToken");
 exports.userRouter = new koa_router_1.default();
-exports.userRouter.get('/api/username/:username', verifyToken_1.verifyToken, async (ctx) => {
+exports.userRouter.get('/api/username/:username', async (ctx) => {
     await (0, user_api_1.getUser)(ctx, { username: ctx.params.username });
 });
 exports.userRouter.get('/api/email/:email', async (ctx) => {
