@@ -38,8 +38,8 @@ exports.RecipeSchema = new mongoose_1.Schema({
         required: true,
         trim: true,
         validate: (value) => {
-            if (!validator_1.default.isLength(value, { max: 100 })) {
-                throw new Error('Description have a maximum of 100 characters');
+            if (!validator_1.default.isLength(value, { max: 200 })) {
+                throw new Error('Description have a maximum of 200 characters');
             }
         },
     },

@@ -61,8 +61,8 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     required: true,
     trim: true,
     validate: (value: string) => {
-      if (!validator.isLength(value, { max: 100 })) {
-        throw new Error('Description have a maximum of 100 characters');
+      if (!validator.isLength(value, { max: 200 })) {
+        throw new Error('Description have a maximum of 200 characters');
       }
     },
   },
