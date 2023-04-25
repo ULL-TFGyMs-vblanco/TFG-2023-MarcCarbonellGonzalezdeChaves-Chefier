@@ -1,5 +1,6 @@
 import Router from 'koa-router';
 import { getRecipes, postRecipe } from '../services/recipe.api';
+import { verifyToken } from '../middlewares/verifyToken';
 
 export const recipeRouter = new Router();
 
@@ -7,4 +8,4 @@ recipeRouter.get('/api/recipes', async (ctx) => {
   await getRecipes(ctx, ctx.query);
 });
 
-recipeRouter.post('/api/recipe', postRecipe);
+recipeRouter.post('/api/recipe', verifyToken, postRecipe);

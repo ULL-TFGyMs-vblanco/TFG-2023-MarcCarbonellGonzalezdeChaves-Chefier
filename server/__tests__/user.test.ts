@@ -100,7 +100,7 @@ describe('User router', (): void => {
         .expect(400);
     });
     it('should log in the new user', async () => {
-      const res = await request(server)
+      await request(server)
         .post('/api/auth/login')
         .send({
           email: 'chefier@test.com',
@@ -127,9 +127,16 @@ describe('User router', (): void => {
         .send({ provider: 'credentials' })
         .expect(404);
     });
-    it('should return the specified user', async () => {
+    it('should return the specified user by username', async () => {
       await request(server)
         .get('/api/username/chefier')
+        // .set('Authorization', `Bearer ${accessToken}`)
+        .send({ provider: 'credentials' })
+        .expect(200);
+    });
+    it('should return the specified user by email', async () => {
+      await request(server)
+        .get('/api/email/chefier@test.com')
         // .set('Authorization', `Bearer ${accessToken}`)
         .send({ provider: 'credentials' })
         .expect(200);

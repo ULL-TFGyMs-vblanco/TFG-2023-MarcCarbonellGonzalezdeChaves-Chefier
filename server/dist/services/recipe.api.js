@@ -22,7 +22,8 @@ const getRecipes = async ({ response, request }, filter) => {
 exports.getRecipes = getRecipes;
 // Post a recipe
 const postRecipe = async ({ response, request }) => {
-    const recipe = new recipe_1.Recipe(request.body);
+    console.log(request.body);
+    const recipe = new recipe_1.Recipe(request.body.recipe);
     await recipe_1.Recipe.create(recipe)
         .then((recipe) => {
         APIUtils_1.default.setResponse(response, 200, { recipe });

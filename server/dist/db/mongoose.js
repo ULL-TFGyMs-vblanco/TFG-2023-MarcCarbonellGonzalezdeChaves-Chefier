@@ -5,7 +5,7 @@ const databaseUrl = process.env.DATABASE_URL ||
     'mongodb://chefier:chefierapi@172.16.27.2:27017/chefier?retryWrites=true&w=majority';
 console.log(databaseUrl);
 // Connection to database
-(0, mongoose_1.connect)('mongodb+srv://chefier:chefierapi@chefiercluster.jfpz3hd.mongodb.net/chefier?retryWrites=true&w=majority', {
+(0, mongoose_1.connect)(databaseUrl, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,

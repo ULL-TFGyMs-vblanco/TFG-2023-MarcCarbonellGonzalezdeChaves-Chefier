@@ -21,7 +21,8 @@ export const getRecipes = async (
 
 // Post a recipe
 export const postRecipe = async ({ response, request }: Context) => {
-  const recipe = new Recipe(request.body);
+  console.log(request.body);
+  const recipe = new Recipe(request.body.recipe);
   await Recipe.create(recipe)
     .then((recipe) => {
       utils.setResponse(response, 200, { recipe });

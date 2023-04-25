@@ -7,7 +7,7 @@
     "start": "tsc && node dist/index.js",
     "localstart": "tsc && env-cmd -f ./config/.env node dist/index.js",
     "tsc": "tsc",
-    "test": "env-cmd -f ./config/.env vitest",
+    "test": "env-cmd -f ./config/test.env vitest",
     "coverage": "env-cmd -f ./config/test.env vitest run --coverage"
   },
   "author": "",

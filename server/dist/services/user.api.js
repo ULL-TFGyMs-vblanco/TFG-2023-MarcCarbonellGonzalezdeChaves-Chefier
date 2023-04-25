@@ -33,6 +33,13 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
 // Register a user
 const register = async ({ response, request }) => {
+    if (!request.body.username || !request.body.email) {
+        APIUtils_1.default.setResponse(response, 400, {
+            error: 'Email and username are required',
+            request: request.body,
+        });
+        return;
+    }
     const user = await APIUtils_1.default.buildUserDocument(request);
     await user_1.User.create(user)
         .then((user) => {
@@ -73,6 +80,13 @@ const register = async ({ response, request }) => {
 exports.register = register;
 // Log in a user
 const login = async ({ response, request }) => {
+    if (!request.body.email || !request.body.password) {
+        APIUtils_1.default.setResponse(response, 400, {
+            error: 'Email and password are required',
+            request: request.body,
+        });
+        return;
+    }
     await user_1.User.findOne({
         email: request.body.email,
     })
