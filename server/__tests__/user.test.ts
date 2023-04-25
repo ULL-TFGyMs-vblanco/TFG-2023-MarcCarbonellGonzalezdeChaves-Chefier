@@ -9,8 +9,6 @@ beforeAll(async () => {
   await User.deleteMany();
 });
 
-// let accessToken = '';
-
 describe('User router', (): void => {
   describe('Register', (): void => {
     it('should return 400 if username or email is missing', async () => {
@@ -107,7 +105,6 @@ describe('User router', (): void => {
           password: 'Password1',
         })
         .expect(200);
-      // accessToken = res.body.accessToken;
     });
     it('should return 404 if email or password is incorrect', async () => {
       await request(server)
@@ -123,21 +120,18 @@ describe('User router', (): void => {
     it('should return 404 if user is not found', async () => {
       await request(server)
         .get('/api/username/5f7b2c1e3e3c3c1b8c7f8c2f')
-        // .set('Authorization', `Bearer ${accessToken}`)
         .send({ provider: 'credentials' })
         .expect(404);
     });
     it('should return the specified user by username', async () => {
       await request(server)
         .get('/api/username/chefier')
-        // .set('Authorization', `Bearer ${accessToken}`)
         .send({ provider: 'credentials' })
         .expect(200);
     });
     it('should return the specified user by email', async () => {
       await request(server)
         .get('/api/email/chefier@test.com')
-        // .set('Authorization', `Bearer ${accessToken}`)
         .send({ provider: 'credentials' })
         .expect(200);
     });

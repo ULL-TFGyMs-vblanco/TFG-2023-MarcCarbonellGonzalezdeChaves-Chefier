@@ -14,7 +14,7 @@ beforeAll(async () => {
     email: 'tester@test.com',
     password: 'Password1',
   });
-  await user.save();
+  await User.create(user);
 });
 
 const recipe = {
@@ -58,12 +58,17 @@ describe('Recipe router', (): void => {
     });
   });
   describe('Post a recipe', () => {
-    it('should post a recipe', async () => {
-      const res = await request(server).post('/api/auth/login').send({
-        email: 'tester@test.com',
-        password: 'Password1',
-      });
+    it('should log in the test user', async () => {
+      const res = await request(server)
+        .post('/api/auth/login')
+        .send({
+          email: 'chefier@test.com',
+          password: 'Password1',
+        })
+        .expect(200);
       accessToken = res.body.accessToken;
+    });
+    it('should post a recipe', async () => {
       await request(server)
         .post('/api/recipe')
         .set('Authorization', `Bearer ${accessToken}`)

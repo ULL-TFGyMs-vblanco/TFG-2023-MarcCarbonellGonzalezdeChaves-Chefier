@@ -9,12 +9,6 @@ const server = app.listen();
 
 beforeAll(async () => {
   await User.deleteMany();
-  const user = new User({
-    username: 'user',
-    email: 'user@test.com',
-    password: 'Password1',
-  });
-  await user.save();
 });
 
 vi.spyOn(User, 'create').mockImplementation(() => {
