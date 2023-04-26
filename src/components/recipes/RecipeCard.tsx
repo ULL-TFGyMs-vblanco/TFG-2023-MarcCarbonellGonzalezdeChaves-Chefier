@@ -4,6 +4,7 @@ import styles from 'src/styles/recipes/RecipeCard.module.css';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { BsFillStarFill } from 'react-icons/bs';
 import { Recipe } from 'recipe-types';
+import { imageKitLoader } from '@/utils/imageKitLoader';
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -20,7 +21,8 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
       </div>
       <div className={styles.image__container}>
         <Image
-          src={recipe.images[0]}
+          loader={imageKitLoader}
+          src={recipe.image}
           alt={recipe.name}
           fill
           className={styles.image}
