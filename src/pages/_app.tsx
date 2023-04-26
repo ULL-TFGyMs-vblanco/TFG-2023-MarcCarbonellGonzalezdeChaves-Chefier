@@ -29,7 +29,7 @@ export default function App({
             dark: darkTheme.className,
           }}
         >
-          <NextUIProvider theme={darkTheme}>
+          <NextUIProvider>
             <main>
               <Layout>
                 <Component {...pageProps} />
