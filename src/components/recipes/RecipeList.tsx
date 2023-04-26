@@ -1,4 +1,4 @@
-import { Recipe } from '../../types/recipe';
+import { Recipe } from 'recipe-types';
 import { RecipeCard } from './RecipeCard';
 import styles from '../../styles/recipes/RecipeList.module.css';
 

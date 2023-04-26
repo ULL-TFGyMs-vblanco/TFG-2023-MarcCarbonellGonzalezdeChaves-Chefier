@@ -2,36 +2,13 @@ import { useFieldArray, useForm } from 'react-hook-form';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
 import styles from 'src/styles/recipes/NewRecipeForm.module.css';
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Title } from '../ui/Title';
 import { FiTrash2 } from 'react-icons/fi';
 import { BsPlus } from 'react-icons/bs';
 import { AiOutlineMinus } from 'react-icons/ai';
-
-interface NewRecipeFormInputs {
-  name: string;
-  description: string;
-  tags: {
-    breakfast: boolean;
-    lunch: boolean;
-    dinner: boolean;
-    dessert: boolean;
-    snack: boolean;
-  };
-  cookTime: number;
-  difficulty: string;
-  rations: number;
-  image: File;
-  ingredients: {
-    name: string;
-    quantity: number | undefined;
-    unit: string;
-  }[];
-  instructions: {
-    step: string;
-  }[];
-}
+import { NewRecipeFormInputs } from 'recipe-types';
+import { useImage } from '../../hooks/useImage';
 
 export const NewRecipeForm: React.FC = () => {
   const {
@@ -62,22 +39,8 @@ export const NewRecipeForm: React.FC = () => {
     control,
     name: 'instructions',
   });
-  const [image, setImage] = useState<File | null>(null);
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (image) {
-      setImageUrl(URL.createObjectURL(image));
-    } else {
-      setImageUrl(null);
-    }
-  }, [image]);
-
-  const onImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
-      setImage(e.target.files[0]);
-    }
-  };
+  const { imageUrl, onImageChange, setImage } = useImage();
 
   const postHandler = (data: NewRecipeFormInputs) => {
     console.log(data);
