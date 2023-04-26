@@ -4,10 +4,16 @@ import validator from 'validator';
 export interface RecipeDocumentInterface extends Document {
   name: string;
   username: string;
-  images: string[];
+  image: string;
   description: string;
   date: Date;
-  tags: [string];
+  tags: {
+    breakfast: boolean;
+    lunch: boolean;
+    dinner: boolean;
+    dessert: boolean;
+    snack: boolean;
+  };
   difficulty: 'Fácil' | 'Media' | 'Difícil';
   cookTime: number;
   rations: number;
@@ -46,15 +52,14 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     required: true,
     trim: true,
   },
-  images: {
-    type: [String],
+  image: {
+    type: String,
     required: true,
-    validate: (value: [string]) => {
-      value.forEach((image) => {
-        if (!validator.isURL(image)) {
-          throw new Error('Image must be a valid URL');
-        }
-      });
+    trim: true,
+    validate: (value: string) => {
+      if (!validator.isURL(value)) {
+        throw new Error('Image must be a valid URL');
+      }
     },
   },
   description: {
@@ -73,17 +78,20 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     default: Date.now,
   },
   tags: {
-    type: [String],
-    trim: true,
-    validate: (value: [string]) => {
-      value.forEach((tag) => {
-        const hashtag = RegExp(/^#/);
-        if (!hashtag.test(tag)) {
-          throw new Error('Tags must begin with #');
-        }
-      });
+    type: {
+      breakfast: Boolean,
+      lunch: Boolean,
+      dinner: Boolean,
+      dessert: Boolean,
+      snack: Boolean,
     },
-    default: [],
+    default: {
+      breakfast: false,
+      lunch: false,
+      dinner: false,
+      dessert: false,
+      snack: false,
+    },
   },
   difficulty: {
     type: String,
