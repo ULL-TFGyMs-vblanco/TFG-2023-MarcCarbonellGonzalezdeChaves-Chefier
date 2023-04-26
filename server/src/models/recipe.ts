@@ -10,6 +10,7 @@ export interface RecipeDocumentInterface extends Document {
   tags: [string];
   difficulty: 'Fácil' | 'Media' | 'Difícil';
   cookTime: number;
+  rations: number;
   ingredients: [{ name: string; quantity: number; unit: string }];
   instructions: [string];
   valorations: [
@@ -103,13 +104,32 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
       }
     },
   },
+  rations: {
+    type: Number,
+    required: true,
+    validate: (value: number) => {
+      if (value <= 0) {
+        throw new Error('Rations must be positive');
+      }
+    },
+  },
   ingredients: {
     type: [{ name: String, quantity: Number, unit: String }],
     required: true,
     validate: (value: [{ name: string; quantity: number; unit: string }]) => {
       value.forEach((ingredient) => {
+        if (!validator.isLength(ingredient.name, { max: 50 })) {
+          throw new Error(
+            'Ingredient name must have a maximum of 50 characters'
+          );
+        }
         if (ingredient.quantity <= 0) {
           throw new Error('Ingredient quantity must be positive');
+        }
+        if (!validator.isLength(ingredient.unit, { max: 20 })) {
+          throw new Error(
+            'Ingredient unit must have a maximum of 20 characters'
+          );
         }
       });
     },
