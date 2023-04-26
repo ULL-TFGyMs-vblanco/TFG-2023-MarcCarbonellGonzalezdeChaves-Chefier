@@ -51,7 +51,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('email') ? watch('email') : ''}
-              className={styles.text__input}
+              className={styles.input__style}
               type='text'
               data-testid='email-input'
               {...register('email')}
@@ -63,7 +63,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('password') ? watch('password') : ''}
-              className={styles.text__input}
+              className={styles.input__style}
               type={showPassword ? 'text' : 'password'}
               data-testid='password-input'
               {...register('password')}
