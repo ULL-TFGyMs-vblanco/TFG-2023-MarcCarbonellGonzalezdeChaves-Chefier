@@ -25,13 +25,6 @@ export interface RecipeDocumentInterface extends Document {
       comment: string;
       rating: number;
       date: Date;
-      comments: [
-        {
-          username: string;
-          comment: string;
-          date: Date;
-        }
-      ];
     }
   ];
 }
@@ -160,7 +153,6 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
         comment: String,
         valoration: Number,
         date: Date,
-        comments: [{ username: String, comment: String, date: Date }],
       },
     ],
     validate: (
@@ -170,7 +162,6 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
           comment: string;
           rating: number;
           date: Date;
-          comments: [{ username: string; comment: string; date: Date }];
         }
       ]
     ) => {
@@ -191,11 +182,6 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
         ) {
           throw new Error('Valoration must be between 1 and 5');
         }
-        valoration.comments.forEach((comment) => {
-          if (!validator.isLength(comment.comment, { max: 100 })) {
-            throw new Error('Comment have a maximum of 100 characters');
-          }
-        });
       });
     },
     default: [],
