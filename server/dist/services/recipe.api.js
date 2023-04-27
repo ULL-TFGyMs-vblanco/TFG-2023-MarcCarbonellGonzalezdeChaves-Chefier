@@ -22,20 +22,33 @@ const getRecipes = async ({ response, request }, filter) => {
 exports.getRecipes = getRecipes;
 // Post a recipe
 const postRecipe = async ({ response, request }) => {
-    console.log(request);
-    console.log(request.body.form);
-    console.log(request.form);
+    if (!request.body.recipe) {
+        APIUtils_1.default.setResponse(response, 400, {
+            error: { message: 'Missing recipe' },
+            request: request.body,
+        });
+        return;
+    }
+    let fileId = '';
     APIUtils_1.default
-        .uploadImage(request.body.form.image, request.body.recipe.name, request.body.recipe.username)
+        .uploadImage(request.body.recipe.image, request.body.recipe.name, `/images/posts/${request.body.recipe.username}`)
         .then((result) => {
         request.body.recipe.image = result.url;
+        fileId = result.fileId;
+    })
+        .catch((err) => {
+        APIUtils_1.default.setResponse(response, 500, {
+            error: { message: err },
+            request: request.body,
+        });
+        return;
     });
     const recipe = new recipe_1.Recipe(request.body.recipe);
     await recipe_1.Recipe.create(recipe)
         .then((recipe) => {
         APIUtils_1.default.setResponse(response, 200, { recipe });
     })
-        .catch((err) => {
+        .catch(async (err) => {
         if (err.name === 'ValidationError') {
             const errors = Object.keys(err.errors).map((key) => {
                 return { message: err.errors[key].message, field: key };
@@ -51,6 +64,7 @@ const postRecipe = async ({ response, request }) => {
                 request: request.body,
             });
         }
+        await APIUtils_1.default.deleteImage(fileId);
     });
 };
 exports.postRecipe = postRecipe;
