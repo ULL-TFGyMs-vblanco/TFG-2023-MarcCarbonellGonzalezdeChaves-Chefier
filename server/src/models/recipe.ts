@@ -18,7 +18,7 @@ export interface RecipeDocumentInterface extends Document {
   cookTime: number;
   rations: number;
   ingredients: [{ name: string; quantity: number; unit: string }];
-  instructions: [string];
+  instructions: [{ step: string }];
   valorations: [
     {
       username: string;
@@ -136,11 +136,11 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     },
   },
   instructions: {
-    type: [String],
+    type: [{ step: String }],
     required: true,
-    validate: (value: [string]) => {
+    validate: (value: [{ step: string }]) => {
       value.forEach((instruction) => {
-        if (!validator.isLength(instruction, { max: 200 })) {
+        if (!validator.isLength(instruction.step, { max: 200 })) {
           throw new Error('Instruction have a maximum of 200 characters');
         }
       });
