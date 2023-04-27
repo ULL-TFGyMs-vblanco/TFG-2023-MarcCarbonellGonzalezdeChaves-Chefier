@@ -19,7 +19,7 @@ const RecipeService = {
         }
       );
     } catch (err: any) {
-      throw new Error(err.response.data.error);
+      throw new Error(JSON.stringify(err.response.data.error));
     }
   },
 };
