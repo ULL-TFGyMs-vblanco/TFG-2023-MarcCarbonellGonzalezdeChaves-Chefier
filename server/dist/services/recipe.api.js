@@ -29,42 +29,40 @@ const postRecipe = async ({ response, request }) => {
         });
         return;
     }
-    let fileId = '';
     APIUtils_1.default
         .uploadImage(request.body.recipe.image, request.body.recipe.name, `/images/posts/${request.body.recipe.username}`)
-        .then((result) => {
+        .then(async (result) => {
         request.body.recipe.image = result.url;
-        fileId = result.fileId;
+        const fileId = result.fileId;
+        const recipe = new recipe_1.Recipe(request.body.recipe);
+        await recipe_1.Recipe.create(recipe)
+            .then((recipe) => {
+            APIUtils_1.default.setResponse(response, 200, { recipe });
+        })
+            .catch(async (err) => {
+            if (err.name === 'ValidationError') {
+                const errors = Object.keys(err.errors).map((key) => {
+                    return { message: err.errors[key].message, field: key };
+                });
+                APIUtils_1.default.setResponse(response, 400, {
+                    error: { message: err._message, errors: errors },
+                    request: request.body,
+                });
+            }
+            else {
+                APIUtils_1.default.setResponse(response, 500, {
+                    error: { message: err },
+                    request: request.body,
+                });
+            }
+            await APIUtils_1.default.deleteImage(fileId);
+        });
     })
         .catch((err) => {
         APIUtils_1.default.setResponse(response, 500, {
             error: { message: err },
             request: request.body,
         });
-        return;
-    });
-    const recipe = new recipe_1.Recipe(request.body.recipe);
-    await recipe_1.Recipe.create(recipe)
-        .then((recipe) => {
-        APIUtils_1.default.setResponse(response, 200, { recipe });
-    })
-        .catch(async (err) => {
-        if (err.name === 'ValidationError') {
-            const errors = Object.keys(err.errors).map((key) => {
-                return { message: err.errors[key].message, field: key };
-            });
-            APIUtils_1.default.setResponse(response, 400, {
-                error: { message: err._message, errors: errors },
-                request: request.body,
-            });
-        }
-        else {
-            APIUtils_1.default.setResponse(response, 500, {
-                error: { message: err },
-                request: request.body,
-            });
-        }
-        await APIUtils_1.default.deleteImage(fileId);
     });
 };
 exports.postRecipe = postRecipe;

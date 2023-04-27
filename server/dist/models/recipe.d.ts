@@ -20,7 +20,9 @@ export interface RecipeDocumentInterface extends Document {
         quantity: number;
         unit: string;
     }];
-    instructions: [string];
+    instructions: [{
+        step: string;
+    }];
     valorations: [
         {
             username: string;

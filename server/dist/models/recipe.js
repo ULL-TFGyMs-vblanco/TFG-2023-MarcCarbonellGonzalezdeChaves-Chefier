@@ -109,11 +109,11 @@ exports.RecipeSchema = new mongoose_1.Schema({
         },
     },
     instructions: {
-        type: [String],
+        type: [{ step: String }],
         required: true,
         validate: (value) => {
             value.forEach((instruction) => {
-                if (!validator_1.default.isLength(instruction, { max: 200 })) {
+                if (!validator_1.default.isLength(instruction.step, { max: 200 })) {
                     throw new Error('Instruction have a maximum of 200 characters');
                 }
             });
