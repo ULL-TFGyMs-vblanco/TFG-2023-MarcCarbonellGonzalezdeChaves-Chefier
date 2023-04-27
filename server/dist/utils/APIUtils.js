@@ -56,7 +56,7 @@ APIUtils.buildUserDocument = async (request) => {
         return user;
     }
 };
-APIUtils.uploadImage = async (image, name, username) => {
+APIUtils.uploadImage = async (image, name, folder) => {
     const imagekit = new imagekit_javascript_1.default({
         publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
         urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
@@ -66,7 +66,7 @@ APIUtils.uploadImage = async (image, name, username) => {
         .upload({
         file: image,
         fileName: name,
-        folder: `/images/posts/${username}`,
+        folder: folder,
         useUniqueFileName: true,
     })
         .then((result) => {
@@ -82,12 +82,12 @@ APIUtils.deleteImage = async (fileID) => {
         privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
         urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
     });
-    imagekit
+    return imagekit
         .deleteFile(fileID)
-        .then((result) => {
-        console.log(result);
+        .then(() => {
+        return;
     })
-        .then((error) => {
-        console.log(error);
+        .catch(() => {
+        return;
     });
 };
