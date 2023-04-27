@@ -8,7 +8,7 @@ import { LoginData, LoginFormInputs } from 'auth-types';
 import { SignInOptions } from 'next-auth/react';
 import { useTheme } from '@nextui-org/react';
 import styles from 'src/styles/auth/AuthForm.module.css';
-import useShow from 'src/hooks/useShow';
+import { useShow } from 'src/hooks/useShow';
 import OauthLogin from './OauthLogin';
 
 interface LoginFormProps {

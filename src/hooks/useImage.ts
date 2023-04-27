@@ -17,5 +17,5 @@ export function useImage() {
       setImage(e.target.files[0]);
     }
   };
-  return { imageUrl, onImageChange, setImage };
+  return { image, imageUrl, onImageChange, setImage };
 }

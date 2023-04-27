@@ -2,15 +2,15 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import styles from 'src/styles/layout/ToggleMenu.module.css';
 import { Avatar } from '../ui/Avatar';
-import useUser from '../../hooks/useUser';
 import { Loading } from '@nextui-org/react';
+import { useLoggeedUser } from '@/hooks/useLoggedUser';
 
 export const ToggleMenu: React.FC<{
   toggleAnimation: boolean;
   toggleHandler: () => void;
 }> = ({ toggleAnimation, toggleHandler }) => {
   const { data: session } = useSession();
-  const { user, isLoading, isError } = useUser('email', session?.user.email);
+  const { user, isLoading, isError } = useLoggeedUser();
 
   return (
     <div

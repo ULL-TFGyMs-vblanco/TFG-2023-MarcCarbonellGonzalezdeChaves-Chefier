@@ -2,21 +2,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
-import useToggleMenu from 'src/hooks/useToggleMenu';
+import { useToggleMenu } from 'src/hooks/useToggleMenu';
 import styles from 'src/styles/layout/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
 import { Avatar } from '../ui/Avatar';
 import { signOut, useSession } from 'next-auth/react';
 import { Loading, useTheme } from '@nextui-org/react';
 import { useTheme as useNextTheme } from 'next-themes';
-import useUser from '../../hooks/useUser';
+import { useLoggeedUser } from '@/hooks/useLoggedUser';
 
 export const Navbar: React.FC = () => {
   const { isDark } = useTheme();
   const { setTheme } = useNextTheme();
   const [firstToggle, toggle, handleToggle] = useToggleMenu();
   const { data: session } = useSession();
-  const { user, isLoading, isError } = useUser('email', session?.user.email);
+  const { user, isLoading, isError } = useLoggeedUser();
 
   return (
     <div className={styles.navbar}>

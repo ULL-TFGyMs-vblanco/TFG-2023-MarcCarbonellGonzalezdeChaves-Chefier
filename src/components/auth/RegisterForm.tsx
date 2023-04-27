@@ -9,7 +9,7 @@ import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import styles from 'src/styles/auth/AuthForm.module.css';
 import { RegisterFormInputs, RegisterData } from 'auth-types';
-import useShow from 'src/hooks/useShow';
+import { useShow } from 'src/hooks/useShow';
 import OauthLogin from './OauthLogin';
 
 interface RegisterFormProps {
