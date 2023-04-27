@@ -25,11 +25,6 @@ declare module 'recipe-types' {
       comment: string;
       rating: number;
       date: Date;
-      comments: {
-        username: string;
-        comment: string;
-        date: Date;
-      }[];
     }[];
   }
 
