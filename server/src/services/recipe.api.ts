@@ -62,7 +62,7 @@ export const postRecipe = async ({ response, request }: Context) => {
     })
     .catch((err) => {
       utils.setResponse(response, 500, {
-        error: { message: err },
+        error: { message: JSON.stringify(err) },
         request: request.body,
       });
     });

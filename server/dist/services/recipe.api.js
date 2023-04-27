@@ -60,7 +60,7 @@ const postRecipe = async ({ response, request }) => {
     })
         .catch((err) => {
         APIUtils_1.default.setResponse(response, 500, {
-            error: { message: err },
+            error: { message: JSON.stringify(err) },
             request: request.body,
         });
     });
