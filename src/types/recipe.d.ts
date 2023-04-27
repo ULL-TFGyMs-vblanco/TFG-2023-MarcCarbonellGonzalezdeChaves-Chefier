@@ -51,4 +51,29 @@ declare module 'recipe-types' {
       step: string;
     }[];
   }
+
+  interface NewRecipeData {
+    name: string;
+    username: string;
+    description: string;
+    tags: {
+      breakfast: boolean;
+      lunch: boolean;
+      dinner: boolean;
+      dessert: boolean;
+      snack: boolean;
+    };
+    cookTime: number;
+    difficulty: 'Fácil' | 'Media' | 'Difícil';
+    rations: number;
+    image: File;
+    ingredients: {
+      name: string;
+      quantity: number | undefined;
+      unit: string;
+    }[];
+    instructions: {
+      step: string;
+    }[];
+  }
 }

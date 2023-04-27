@@ -9,6 +9,8 @@ import { BsPlus } from 'react-icons/bs';
 import { AiOutlineMinus } from 'react-icons/ai';
 import { NewRecipeFormInputs } from 'recipe-types';
 import { useImage } from '../../hooks/useImage';
+import { useLoggedUser } from '../../hooks/useLoggedUser';
+import RecipeService from '@/services/RecipeService';
 
 export const NewRecipeForm: React.FC = () => {
   const {
@@ -39,11 +41,20 @@ export const NewRecipeForm: React.FC = () => {
     control,
     name: 'instructions',
   });
-
+  const { user } = useLoggedUser();
   const { imageUrl, onImageChange, setImage } = useImage();
 
-  const postHandler = (data: NewRecipeFormInputs) => {
-    console.log(data);
+  const postHandler = async (data: NewRecipeFormInputs) => {
+    const username = user.nickname ? user.nickname : user.username;
+    const recipe = {
+      username,
+      ...data,
+    };
+    try {
+      await RecipeService.postRecipe('/api/recipe', recipe);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -257,7 +268,7 @@ export const NewRecipeForm: React.FC = () => {
                   <input
                     placeholder='2'
                     className={styles.input__style}
-                    type='text'
+                    type='number'
                     data-testid='rations-input'
                     {...register('rations', {
                       required: true,
