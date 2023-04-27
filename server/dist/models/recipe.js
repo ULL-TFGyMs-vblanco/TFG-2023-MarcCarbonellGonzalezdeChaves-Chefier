@@ -22,15 +22,14 @@ exports.RecipeSchema = new mongoose_1.Schema({
         required: true,
         trim: true,
     },
-    images: {
-        type: [String],
+    image: {
+        type: String,
         required: true,
+        trim: true,
         validate: (value) => {
-            value.forEach((image) => {
-                if (!validator_1.default.isURL(image)) {
-                    throw new Error('Image must be a valid URL');
-                }
-            });
+            if (!validator_1.default.isURL(value)) {
+                throw new Error('Image must be a valid URL');
+            }
         },
     },
     description: {
@@ -49,17 +48,20 @@ exports.RecipeSchema = new mongoose_1.Schema({
         default: Date.now,
     },
     tags: {
-        type: [String],
-        trim: true,
-        validate: (value) => {
-            value.forEach((tag) => {
-                const hashtag = RegExp(/^#/);
-                if (!hashtag.test(tag)) {
-                    throw new Error('Tags must begin with #');
-                }
-            });
+        type: {
+            breakfast: Boolean,
+            lunch: Boolean,
+            dinner: Boolean,
+            dessert: Boolean,
+            snack: Boolean,
         },
-        default: [],
+        default: {
+            breakfast: false,
+            lunch: false,
+            dinner: false,
+            dessert: false,
+            snack: false,
+        },
     },
     difficulty: {
         type: String,
@@ -80,13 +82,28 @@ exports.RecipeSchema = new mongoose_1.Schema({
             }
         },
     },
+    rations: {
+        type: Number,
+        required: true,
+        validate: (value) => {
+            if (value <= 0) {
+                throw new Error('Rations must be positive');
+            }
+        },
+    },
     ingredients: {
         type: [{ name: String, quantity: Number, unit: String }],
         required: true,
         validate: (value) => {
             value.forEach((ingredient) => {
-                if (ingredient.quantity < 0) {
+                if (!validator_1.default.isLength(ingredient.name, { max: 50 })) {
+                    throw new Error('Ingredient name must have a maximum of 50 characters');
+                }
+                if (ingredient.quantity <= 0) {
                     throw new Error('Ingredient quantity must be positive');
+                }
+                if (!validator_1.default.isLength(ingredient.unit, { max: 20 })) {
+                    throw new Error('Ingredient unit must have a maximum of 20 characters');
                 }
             });
         },
@@ -109,7 +126,6 @@ exports.RecipeSchema = new mongoose_1.Schema({
                 comment: String,
                 valoration: Number,
                 date: Date,
-                comments: [{ username: String, comment: String, date: Date }],
             },
         ],
         validate: (value) => {
@@ -126,11 +142,6 @@ exports.RecipeSchema = new mongoose_1.Schema({
                 ])) {
                     throw new Error('Valoration must be between 1 and 5');
                 }
-                valoration.comments.forEach((comment) => {
-                    if (!validator_1.default.isLength(comment.comment, { max: 100 })) {
-                        throw new Error('Comment have a maximum of 100 characters');
-                    }
-                });
             });
         },
         default: [],

@@ -26,10 +26,22 @@ const verifyToken = async ({ response, request }, next) => {
                     return next();
             }
             else if (request.body.provider === 'google') {
-                verifyGoogle(token, next, request, response);
+                try {
+                    await verifyGoogle(token, request, response);
+                    return next();
+                }
+                catch (error) {
+                    return;
+                }
             }
             else {
-                verifyGithub(token, next, request, response);
+                try {
+                    await verifyGithub(token, request, response);
+                    return next();
+                }
+                catch (error) {
+                    return;
+                }
             }
         }
         else {
@@ -54,22 +66,26 @@ function verifyCredentials(token, request, response) {
         return false;
     }
 }
-async function verifyGoogle(token, next, request, response) {
+async function verifyGoogle(token, request, response) {
     const client = new google_auth_library_1.OAuth2Client(process.env.CLIENT_ID);
-    await client
+    return await client
         .verifyIdToken({
         idToken: token,
         audience: process.env.CLIENT_ID,
     })
         .then(() => {
-        return next();
+        return;
     })
         .catch((error) => {
-        APIUtils_1.default.setResponse(response, 401, { error, request: request.body });
+        APIUtils_1.default.setResponse(response, 401, {
+            error,
+            request: request.body,
+        });
+        throw new Error();
     });
 }
-async function verifyGithub(token, next, request, response) {
-    await axios_1.default
+async function verifyGithub(token, request, response) {
+    return await axios_1.default
         .post(`https://api.github.com/aplications/${process.env.GITHUB_CLIENT_ID}/token`, {
         access_token: token,
     }, {
@@ -77,20 +93,12 @@ async function verifyGithub(token, next, request, response) {
             Authorization: `Bearer ${token}`,
         },
     })
-        .then((res) => {
-        if (res.status === 200) {
-            return next();
-        }
-        else {
-            APIUtils_1.default.setResponse(response, 500, {
-                error: res,
-                request: request.body,
-            });
-            return;
-        }
+        .then(() => {
+        return;
     })
         .catch((error) => {
         APIUtils_1.default.setResponse(response, 401, { error, request: request.body });
+        throw new Error();
     });
 }
 // import axios from 'axios';

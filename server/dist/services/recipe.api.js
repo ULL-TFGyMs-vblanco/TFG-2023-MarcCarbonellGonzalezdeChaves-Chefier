@@ -22,7 +22,14 @@ const getRecipes = async ({ response, request }, filter) => {
 exports.getRecipes = getRecipes;
 // Post a recipe
 const postRecipe = async ({ response, request }) => {
-    console.log(request.body);
+    console.log(request);
+    console.log(request.body.form);
+    console.log(request.form);
+    APIUtils_1.default
+        .uploadImage(request.body.form.image, request.body.recipe.name, request.body.recipe.username)
+        .then((result) => {
+        request.body.recipe.image = result.url;
+    });
     const recipe = new recipe_1.Recipe(request.body.recipe);
     await recipe_1.Recipe.create(recipe)
         .then((recipe) => {

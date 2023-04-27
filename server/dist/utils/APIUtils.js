@@ -6,6 +6,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const imagekit_1 = __importDefault(require("imagekit"));
 class APIUtils {
 }
 exports.default = APIUtils;
@@ -53,4 +54,40 @@ APIUtils.buildUserDocument = async (request) => {
         const user = new user_1.User({ username, email, password });
         return user;
     }
+};
+APIUtils.uploadImage = async (file, name, username) => {
+    const imagekit = new imagekit_1.default({
+        publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
+        urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
+        privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
+    });
+    const image = Buffer.from(file.toString(), 'base64');
+    return imagekit
+        .upload({
+        file: image,
+        fileName: name,
+        folder: `/images/posts/${username}`,
+        useUniqueFileName: true,
+    })
+        .then((result) => {
+        return result;
+    })
+        .catch((error) => {
+        throw new Error(error);
+    });
+};
+APIUtils.deleteImage = async (fileID) => {
+    const imagekit = new imagekit_1.default({
+        publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
+        privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
+        urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
+    });
+    imagekit
+        .deleteFile(fileID)
+        .then((result) => {
+        console.log(result);
+    })
+        .then((error) => {
+        console.log(error);
+    });
 };
