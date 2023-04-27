@@ -3,14 +3,14 @@ import Link from 'next/link';
 import styles from 'src/styles/layout/ToggleMenu.module.css';
 import { Avatar } from '../ui/Avatar';
 import { Loading } from '@nextui-org/react';
-import { useLoggeedUser } from '@/hooks/useLoggedUser';
+import { useLoggedUser } from '@/hooks/useLoggedUser';
 
 export const ToggleMenu: React.FC<{
   toggleAnimation: boolean;
   toggleHandler: () => void;
 }> = ({ toggleAnimation, toggleHandler }) => {
   const { data: session } = useSession();
-  const { user, isLoading, isError } = useLoggeedUser();
+  const { user, isLoading, isError } = useLoggedUser();
 
   return (
     <div
