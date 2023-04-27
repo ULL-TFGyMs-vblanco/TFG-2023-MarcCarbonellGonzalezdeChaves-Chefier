@@ -89,7 +89,7 @@ describe('Recipe router', (): void => {
       const res = await request(server)
         .post('/api/auth/login')
         .send({
-          email: 'chefier@test.com',
+          email: 'tester@test.com',
           password: 'Password1',
         })
         .expect(200);
