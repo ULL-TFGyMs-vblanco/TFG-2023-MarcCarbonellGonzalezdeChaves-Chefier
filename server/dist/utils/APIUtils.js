@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const imagekit_1 = __importDefault(require("imagekit"));
+const imagekit_javascript_1 = __importDefault(require("imagekit-javascript"));
 class APIUtils {
 }
 exports.default = APIUtils;
@@ -55,13 +56,12 @@ APIUtils.buildUserDocument = async (request) => {
         return user;
     }
 };
-APIUtils.uploadImage = async (file, name, username) => {
-    const imagekit = new imagekit_1.default({
+APIUtils.uploadImage = async (image, name, username) => {
+    const imagekit = new imagekit_javascript_1.default({
         publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
         urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
-        privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
+        authenticationEndpoint: 'http://localhost:3000/api/imagekit/auth',
     });
-    const image = Buffer.from(file.toString(), 'base64');
     return imagekit
         .upload({
         file: image,
