@@ -1,7 +1,6 @@
 .form__card {
-  width: 400px;
-  border-radius: 0;
-  margin: var(--nextui-space-7) auto;
+  width: 25rem;
+  margin: var(--nextui-space-15) auto;
 }
 
 @media screen and (width < 650px) {
@@ -104,11 +103,12 @@
   color: var(--nextui-colors-secondary600);
 }
 
-.text__input {
+.input__style {
   font-size: var(--nextui-fontSizes-sm);
   /* font-family: var(--font-family); */
   box-sizing: border-box;
   width: 100%;
+  height: 3rem;
   padding: var(--nextui-space-6);
   border-radius: var(--nextui-radii-xs);
   border: var(--nextui-borderWeights-light) solid
@@ -116,8 +116,8 @@
   background-color: var(--nextui-colors-primary100);
 }
 
-.text__input:focus + .field__label .label__text,
-:not(.text__input[value='']) + .field__label .label__text {
+.input__style:focus + .field__label .label__text,
+:not(.input__style[value='']) + .field__label .label__text {
   background-color: var(--nextui-colors-primary100);
   font-size: var(--nextui-fontSizes-xs);
   color: var(--nextui-colors-secondary600);
@@ -135,7 +135,6 @@
 }
 
 .checkbox__text {
-  margin: 0;
   color: var(--nextui-colors-secondary600);
 }
 
@@ -172,6 +171,5 @@
 /* BUTTONS */
 
 .credentials__button {
-  color: white;
   width: 100%;
 }

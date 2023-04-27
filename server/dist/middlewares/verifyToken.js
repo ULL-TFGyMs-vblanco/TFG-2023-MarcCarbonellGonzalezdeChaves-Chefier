@@ -22,13 +22,26 @@ const verifyToken = async ({ response, request }, next) => {
         if (bearerHeader) {
             const token = bearerHeader.split(' ')[1];
             if (request.body.provider === 'credentials') {
-                verifyCredentials(token, next, request, response);
+                if (verifyCredentials(token, request, response))
+                    return next();
             }
             else if (request.body.provider === 'google') {
-                verifyGoogle(token, next, request, response);
+                try {
+                    await verifyGoogle(token, request, response);
+                    return next();
+                }
+                catch (error) {
+                    return;
+                }
             }
             else {
-                verifyGithub(token, next, request, response);
+                try {
+                    await verifyGithub(token, request, response);
+                    return next();
+                }
+                catch (error) {
+                    return;
+                }
             }
         }
         else {
@@ -40,35 +53,39 @@ const verifyToken = async ({ response, request }, next) => {
     }
 };
 exports.verifyToken = verifyToken;
-function verifyCredentials(token, next, request, response) {
+function verifyCredentials(token, request, response) {
     try {
         jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
-        return next();
+        return true;
     }
     catch (error) {
         APIUtils_1.default.setResponse(response, 401, {
             error,
             request: request.body,
         });
-        return;
+        return false;
     }
 }
-async function verifyGoogle(token, next, request, response) {
+async function verifyGoogle(token, request, response) {
     const client = new google_auth_library_1.OAuth2Client(process.env.CLIENT_ID);
-    await client
+    return await client
         .verifyIdToken({
         idToken: token,
         audience: process.env.CLIENT_ID,
     })
         .then(() => {
-        return next();
+        return;
     })
         .catch((error) => {
-        APIUtils_1.default.setResponse(response, 401, { error, request: request.body });
+        APIUtils_1.default.setResponse(response, 401, {
+            error,
+            request: request.body,
+        });
+        throw new Error();
     });
 }
-async function verifyGithub(token, next, request, response) {
-    await axios_1.default
+async function verifyGithub(token, request, response) {
+    return await axios_1.default
         .post(`https://api.github.com/aplications/${process.env.GITHUB_CLIENT_ID}/token`, {
         access_token: token,
     }, {
@@ -76,19 +93,87 @@ async function verifyGithub(token, next, request, response) {
             Authorization: `Bearer ${token}`,
         },
     })
-        .then((res) => {
-        if (res.status === 200) {
-            return next();
-        }
-        else {
-            APIUtils_1.default.setResponse(response, 500, {
-                error: res,
-                request: request.body,
-            });
-            return;
-        }
+        .then(() => {
+        return;
     })
         .catch((error) => {
         APIUtils_1.default.setResponse(response, 401, { error, request: request.body });
+        throw new Error();
     });
 }
+// import axios from 'axios';
+// import { OAuth2Client } from 'google-auth-library';
+// import jwt from 'jsonwebtoken';
+// import { Context, Next } from 'koa';
+// import ctx from '../utils/APIUtils';
+// export const verifyToken = async (
+//   { response, request }: Context,
+//   next: Next
+// ) => {
+//   if (
+//     request.body.provider !== 'credentials' &&
+//     request.body.provider !== 'google' &&
+//     request.body.provider !== 'github'
+//   ) {
+//     ctx.setResponse(response, 401, {
+//       error: 'Invalid provider',
+//       request: request.body,
+//     });
+//   } else {
+//     const bearerHeader = request.headers.authorization;
+//     if (bearerHeader) {
+//       const token = bearerHeader.split(' ')[1];
+//       if (request.body.provider === 'credentials') {
+//         try {
+//           jwt.verify(token, process.env.JWT_SECRET as string);
+//           return next();
+//         } catch (error: any) {
+//           ctx.setResponse(response, 401, {
+//             error,
+//             request: request.body,
+//           });
+//         }
+//       } else if (request.body.provider === 'google') {
+//         const client = new OAuth2Client(process.env.CLIENT_ID);
+//         try {
+//           await client.verifyIdToken({
+//             idToken: token,
+//             audience: process.env.CLIENT_ID,
+//           });
+//           return next();
+//         } catch (error: any) {
+//           ctx.setResponse(response, 401, { error, request: request.body });
+//         }
+//       } else {
+//         try {
+//           const res = await axios.post(
+//             `https://api.github.com/aplications/${process.env.GITHUB_CLIENT_ID}/token`,
+//             {
+//               access_token: token,
+//             },
+//             {
+//               headers: {
+//                 Authorization: `Bearer ${token}`,
+//               },
+//             }
+//           );
+//           if (res.status === 200) {
+//             return next();
+//           } else {
+//             ctx.setResponse(response, 500, {
+//               error: res,
+//               request: request.body,
+//             });
+//           }
+//         } catch (error: any) {
+//           ctx.setResponse(response, 401, { error, request: request.body });
+//         }
+//       }
+//     } else {
+//       ctx.setResponse(response, 401, {
+//         error: 'An access token must be provided',
+//         request: request.body,
+//       });
+//     }
+//   }
+// };

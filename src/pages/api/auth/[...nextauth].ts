@@ -64,9 +64,22 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user, account }) {
       if (account) {
-        token.accessToken = user?.accessToken;
+        if (account.provider === 'credentials') {
+          token.accessToken = user?.accessToken;
+        }
+        token.provider = account.provider;
       }
       return token;
+    },
+    async session({ token, session }) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { accessToken, ...user } = session.user;
+      session.user = {
+        ...user,
+        accessToken: token.accessToken as string,
+        provider: token.provider as string,
+      };
+      return session;
     },
   },
 };

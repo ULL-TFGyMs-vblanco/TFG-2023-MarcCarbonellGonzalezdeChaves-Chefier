@@ -1,6 +1,6 @@
 .button {
   background-color: var(--nextui-colors-accent100);
-  color: var(--nextui-colors-primary100);
+  color: white;
   border: none;
   border-radius: var(--nextui-radii-xs);
   padding: var(--nextui-space-6) var(--nextui-space-10);

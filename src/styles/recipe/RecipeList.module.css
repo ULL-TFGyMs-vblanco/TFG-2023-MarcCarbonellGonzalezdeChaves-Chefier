@@ -1,0 +1,9 @@
+.list__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 11.25rem);
+  justify-content: center;
+  grid-gap: var(--nextui-space-13);
+  width: 100%;
+  padding-top: var(--nextui-space-15);
+  padding-bottom: var(--nextui-space-21);
+}

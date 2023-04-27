@@ -1,16 +1,15 @@
 import { Button } from '../components/ui/Button';
-import Link from 'next/link';
 import styles from 'src/styles/home/Home.module.css';
 import { signOut, useSession } from 'next-auth/react';
+import { recipes } from '../data/recipes';
+import { RecipeList } from '../components/recipe/RecipeList';
 
 export default function Home() {
   const { data: session } = useSession();
+
   return (
     <div className={styles.container}>
       <h1>Chefier</h1>
-      <Button testid='register-button'>
-        <Link href='/auth/register'>Register</Link>
-      </Button>
       {session && (
         <>
           <h1>Logged in as {session.user.name}</h1>
@@ -21,6 +20,7 @@ export default function Home() {
           </Button>
         </>
       )}
+      <RecipeList recipes={recipes} />
     </div>
   );
 }

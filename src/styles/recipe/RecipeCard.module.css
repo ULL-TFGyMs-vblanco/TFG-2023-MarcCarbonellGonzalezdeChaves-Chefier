@@ -1,0 +1,126 @@
+.recipe__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 16.875rem;
+  width: 11.25rem;
+  padding-top: 0;
+  position: relative;
+}
+
+.recipe__container:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.image__overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 65%,
+    var(--nextui-colors-primary100)
+  );
+}
+
+.favorite__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  vertical-align: middle;
+  position: absolute;
+  top: 8.819rem;
+  right: 0.938rem;
+  gap: var(--nextui-space-1);
+  z-index: var(--nextui-zIndices-1);
+}
+
+.favorite__count {
+  vertical-align: middle;
+}
+
+.favorite__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  border-radius: var(--nextui-radii-rounded);
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0;
+}
+
+.favorite__button:hover {
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.5);
+}
+
+.heart {
+  color: var(--nextui-colors-secondary600);
+  height: 90%;
+  width: 90%;
+}
+
+.image__container {
+  height: 11.25rem;
+  width: 11.25rem;
+  position: relative;
+}
+
+.image {
+  object-fit: cover;
+  border-top-right-radius: var(--nextui-radii-sm);
+  border-top-left-radius: var(--nextui-radii-sm);
+}
+
+.info {
+  padding: var(--nextui-space-5);
+}
+
+.divider {
+  border-left: var(--nextui-borderWeights-light) solid
+    var(--nextui-colors-secondary600);
+  height: 1.25rem;
+}
+
+.name {
+  font-size: var(--nextui-fontSizes-md);
+  font-weight: var(--nextui-fontWeights-medium);
+  color: var(--nextui-colors-secondary600);
+  padding: var(--nextui-space-5);
+  padding-bottom: 0;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--nextui-space-5);
+}
+
+.valoration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--nextui-space-3);
+  width: 2.25rem;
+  text-align: center;
+}
+
+.star {
+  color: yellow;
+  height: 0.938rem;
+}
+
+.time {
+  width: 2.25rem;
+  text-align: center;
+}
+
+.difficulty {
+  width: 2.25rem;
+  text-align: center;
+}

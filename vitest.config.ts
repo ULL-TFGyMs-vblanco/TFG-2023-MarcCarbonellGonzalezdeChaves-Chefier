@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { configDefaults, defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
@@ -11,6 +11,7 @@ export default defineConfig({
     coverage: {
       provider: 'istanbul',
       reporter: 'lcov',
+      exclude: [...configDefaults.exclude, '**/server/src/db/*', '**/server/src/models/*'],
     },
   },
 });

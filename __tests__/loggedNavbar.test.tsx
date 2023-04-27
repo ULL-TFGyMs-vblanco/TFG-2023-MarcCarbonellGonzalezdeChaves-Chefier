@@ -47,9 +47,9 @@ describe('Navbar', (): void => {
     };
   });
 
-  vi.mock('../src/hooks/useUser', async () => {
+  vi.mock('../src/hooks/useLoggedUser', async () => {
     return {
-      default: () => ({
+      useLoggedUser: () => ({
         user: {
           name: 'chefier',
           email: 'chefier@chefier.com',
