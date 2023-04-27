@@ -9,12 +9,6 @@ const server = app.listen();
 beforeAll(async () => {
   await Recipe.deleteMany();
   await User.deleteMany();
-  const user = new User({
-    username: 'tester',
-    email: 'tester@test.com',
-    password: 'Password1',
-  });
-  await User.create(user);
 });
 
 const recipe = {
@@ -85,6 +79,16 @@ describe('Recipe router', (): void => {
     });
   });
   describe('Post a recipe', () => {
+    it('should register a test user', async () => {
+      await request(server)
+        .post('/api/auth/register')
+        .send({
+          username: 'tester',
+          email: 'tester@test.com',
+          password: 'Password1',
+        })
+        .expect(200);
+    });
     it('should log in the test user', async () => {
       const res = await request(server)
         .post('/api/auth/login')
