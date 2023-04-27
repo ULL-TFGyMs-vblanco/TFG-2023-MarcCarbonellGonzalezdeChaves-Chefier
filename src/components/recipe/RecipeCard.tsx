@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { Card } from '../ui/Card';
-import styles from 'src/styles/recipes/RecipeCard.module.css';
+import styles from 'src/styles/recipe/RecipeCard.module.css';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { BsFillStarFill } from 'react-icons/bs';
 import { Recipe } from 'recipe-types';

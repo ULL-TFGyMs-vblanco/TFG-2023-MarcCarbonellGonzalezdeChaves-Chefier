@@ -2,7 +2,7 @@ import { Button } from '../components/ui/Button';
 import styles from 'src/styles/home/Home.module.css';
 import { signOut, useSession } from 'next-auth/react';
 import { recipes } from '../data/recipes';
-import { RecipeList } from '../components/recipes/RecipeList';
+import { RecipeList } from '../components/recipe/RecipeList';
 
 export default function Home() {
   const { data: session } = useSession();

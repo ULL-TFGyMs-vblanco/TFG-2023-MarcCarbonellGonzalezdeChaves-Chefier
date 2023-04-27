@@ -1,4 +1,4 @@
-import { NewRecipeForm } from '@/components/recipes/NewRecipeForm';
+import { NewRecipeForm } from '@/components/recipe/NewRecipeForm';
 
 const NewRecipe: React.FC = () => {
   return <NewRecipeForm />;

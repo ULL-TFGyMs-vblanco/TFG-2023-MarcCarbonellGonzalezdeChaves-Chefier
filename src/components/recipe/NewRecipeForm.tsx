@@ -1,7 +1,7 @@
 import { useFieldArray, useForm } from 'react-hook-form';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
-import styles from 'src/styles/recipes/NewRecipeForm.module.css';
+import styles from 'src/styles/recipe/NewRecipeForm.module.css';
 import Image from 'next/image';
 import { Title } from '../ui/Title';
 import { FiTrash2 } from 'react-icons/fi';
