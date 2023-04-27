@@ -9,7 +9,7 @@ import { Avatar } from '../ui/Avatar';
 import { signOut, useSession } from 'next-auth/react';
 import { Loading, useTheme } from '@nextui-org/react';
 import { useTheme as useNextTheme } from 'next-themes';
-import { useLoggedUser } from '@/hooks/useLoggedUser';
+import { useLoggedUser } from '../../hooks/useLoggedUser';
 
 export const Navbar: React.FC = () => {
   const { isDark } = useTheme();

@@ -21,6 +21,13 @@ export const getRecipes = async (
 
 // Post a recipe
 export const postRecipe = async ({ response, request }: Context) => {
+  if (!request.body.recipe) {
+    utils.setResponse(response, 400, {
+      error: { message: 'Missing recipe' },
+      request: request.body,
+    });
+    return;
+  }
   let fileId = '';
   utils
     .uploadImage(

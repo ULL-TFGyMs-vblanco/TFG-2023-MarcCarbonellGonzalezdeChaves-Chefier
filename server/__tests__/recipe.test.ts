@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../src/app';
-import { describe, it, beforeAll } from '../../node_modules/vitest';
+import { describe, it, beforeAll, vi } from 'vitest';
 import { Recipe } from '../src/models/recipe';
 import { User } from '../src/models/user';
 
@@ -20,13 +20,19 @@ beforeAll(async () => {
 const recipe = {
   name: 'Ensalada de quinoa y aguacate',
   username: 'chefjulia',
-  images: [
+  image:
     'https://ik.imagekit.io/czvxqgafa/images/posts/ensalada_quinoa_aguacate.jpg',
-  ],
   description: 'Una receta saludable y fácil de preparar para una cena ligera.',
-  tags: ['#ensalada', '#quinoa', '#aguacate', '#vegetariano'],
+  tags: {
+    brekfast: false,
+    lunch: true,
+    dinner: true,
+    dessert: false,
+    snack: false,
+  },
   difficulty: 'Fácil',
   cookTime: 30,
+  rations: 2,
   ingredients: [
     { name: 'quinoa', quantity: 1, unit: 'taza' },
     { name: 'aguacate', quantity: 2, unit: 'unidades' },
@@ -52,6 +58,17 @@ const recipe = {
 let accessToken = '';
 
 describe('Recipe router', (): void => {
+  vi.mock('imagekit-javascript', async () => {
+    return {
+      default: () => ({
+        upload: () => ({
+          url: '1234',
+          fileId: '1234',
+        }),
+      }),
+    };
+  });
+
   describe('Get recipes', (): void => {
     it('should return all the recipes', async () => {
       await request(server).get('/api/recipes').expect(200);
@@ -69,11 +86,12 @@ describe('Recipe router', (): void => {
       accessToken = res.body.accessToken;
     });
     it('should post a recipe', async () => {
-      await request(server)
+      const response = await request(server)
         .post('/api/recipe')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({ provider: 'credentials', recipe })
         .expect(200);
+      console.log(response.body);
     });
     it('should throw a validation error for duplication', async () => {
       await request(server)
