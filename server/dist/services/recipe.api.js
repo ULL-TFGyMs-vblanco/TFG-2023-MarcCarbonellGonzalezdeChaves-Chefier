@@ -50,7 +50,7 @@ const postRecipe = async ({ response, request }) => {
                 });
             }
             else {
-                APIUtils_1.default.setResponse(response, 501, {
+                APIUtils_1.default.setResponse(response, 500, {
                     error: { message: err },
                     request: request.body,
                 });
@@ -60,7 +60,7 @@ const postRecipe = async ({ response, request }) => {
     })
         .catch((err) => {
         APIUtils_1.default.setResponse(response, 500, {
-            error: { message: err },
+            error: { message: err.message },
             request: request.body,
         });
     });
