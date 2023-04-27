@@ -116,8 +116,8 @@
   background-color: var(--nextui-colors-primary100);
 }
 
-.text__input:focus + .field__label .label__text,
-:not(.text__input[value='']) + .field__label .label__text {
+.input__style:focus + .field__label .label__text,
+:not(.input__style[value='']) + .field__label .label__text {
   background-color: var(--nextui-colors-primary100);
   font-size: var(--nextui-fontSizes-xs);
   color: var(--nextui-colors-secondary600);

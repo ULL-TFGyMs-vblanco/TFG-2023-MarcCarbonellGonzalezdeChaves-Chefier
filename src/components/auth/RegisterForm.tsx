@@ -69,7 +69,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('username') ? watch('username') : ''}
-              className={styles.text__input}
+              className={styles.input__style}
               type='text'
               data-testid='username-input'
               {...register('username', {
@@ -98,7 +98,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('email') ? watch('email') : ''}
-              className={styles.text__input}
+              className={styles.input__style}
               type='text'
               data-testid='email-input'
               {...register('email', {
@@ -172,7 +172,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           <div className={styles.field} data-testid='form-field'>
             <input
               value={watch('confirmPassword') ? watch('confirmPassword') : ''}
-              className={styles.text__input}
+              className={styles.input__style}
               type={showPassword ? 'text' : 'password'}
               data-testid='confirm-password-input'
               {...register('confirmPassword', {
