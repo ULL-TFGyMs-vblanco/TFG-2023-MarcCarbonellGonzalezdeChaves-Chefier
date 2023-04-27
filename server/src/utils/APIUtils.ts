@@ -71,8 +71,8 @@ export default class APIUtils {
       .then((result: UploadResponse) => {
         return result;
       })
-      .catch((error) => {
-        throw new Error(error);
+      .catch(() => {
+        throw new Error(JSON.stringify(image));
       });
   };
 

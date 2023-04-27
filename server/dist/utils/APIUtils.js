@@ -72,8 +72,8 @@ APIUtils.uploadImage = async (image, name, folder) => {
         .then((result) => {
         return result;
     })
-        .catch((error) => {
-        throw new Error(error);
+        .catch(() => {
+        throw new Error(JSON.stringify(image));
     });
 };
 APIUtils.deleteImage = async (fileID) => {
