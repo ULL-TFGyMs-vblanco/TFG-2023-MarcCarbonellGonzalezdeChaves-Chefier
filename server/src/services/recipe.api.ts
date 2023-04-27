@@ -24,7 +24,7 @@ export const postRecipe = async ({ response, request }: Context) => {
   let fileId = '';
   utils
     .uploadImage(
-      request.body.form.image,
+      request.body.recipe.image,
       request.body.recipe.name,
       `/images/posts/${request.body.recipe.username}`
     )
