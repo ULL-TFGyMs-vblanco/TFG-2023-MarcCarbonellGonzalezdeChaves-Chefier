@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../src/app';
-import { describe, it, beforeAll } from '../../node_modules/vitest';
+import { describe, it, beforeAll, vi } from 'vitest';
 import { User } from '../src/models/user';
 
 const server = app.listen();
@@ -10,6 +10,16 @@ beforeAll(async () => {
 });
 
 describe('User router', (): void => {
+  vi.mock('imagekit', async () => {
+    return {
+      default: vi.fn().mockImplementation(() => ({
+        default: () => ({
+          deleteFile: () => ({}),
+        }),
+      })),
+    };
+  });
+
   describe('Register', (): void => {
     it('should return 400 if username or email is missing', async () => {
       await request(server)

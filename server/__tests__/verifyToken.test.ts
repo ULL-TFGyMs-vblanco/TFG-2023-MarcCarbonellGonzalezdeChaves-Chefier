@@ -18,39 +18,49 @@ beforeAll(async () => {
   await User.create(user);
 });
 
-vi.spyOn(jwt, 'verify').mockImplementation((token: string) => {
-  if (token === 'accessToken') {
-    return {};
-  } else {
-    throw new Error('Not valid token');
-  }
-});
+describe('Verify token middleware', (): void => {
+  vi.spyOn(jwt, 'verify').mockImplementation((token: string) => {
+    if (token === 'accessToken') {
+      return {};
+    } else {
+      throw new Error('Not valid token');
+    }
+  });
 
-vi.spyOn(OAuth2Client.prototype, 'verifyIdToken').mockImplementation(
-  async ({ idToken }) => {
-    if (idToken === 'accessToken') {
+  vi.spyOn(OAuth2Client.prototype, 'verifyIdToken').mockImplementation(
+    async ({ idToken }) => {
+      if (idToken === 'accessToken') {
+        return {
+          getPayload: () => {
+            return {};
+          },
+        };
+      } else {
+        throw new Error('Not valid token');
+      }
+    }
+  );
+
+  vi.spyOn(axios, 'post').mockImplementation(async (url, body, options) => {
+    if (options?.headers?.Authorization === 'Bearer accessToken') {
       return {
-        getPayload: () => {
-          return {};
-        },
+        status: 200,
       };
     } else {
       throw new Error('Not valid token');
     }
-  }
-);
+  });
 
-vi.spyOn(axios, 'post').mockImplementation(async (url, body, options) => {
-  if (options?.headers?.Authorization === 'Bearer accessToken') {
+  vi.mock('imagekit', async () => {
     return {
-      status: 200,
+      default: vi.fn().mockImplementation(() => ({
+        default: () => ({
+          deleteFile: () => ({}),
+        }),
+      })),
     };
-  } else {
-    throw new Error('Not valid token');
-  }
-});
+  });
 
-describe('Verify token middleware', (): void => {
   it('should return 401 if provider is not valid', async () => {
     await request(server)
       .post('/api/recipe')

@@ -69,6 +69,16 @@ describe('Recipe router', (): void => {
     };
   });
 
+  vi.mock('imagekit', async () => {
+    return {
+      default: vi.fn().mockImplementation(() => ({
+        default: () => ({
+          deleteFile: () => ({}),
+        }),
+      })),
+    };
+  });
+
   describe('Get recipes', (): void => {
     it('should return all the recipes', async () => {
       await request(server).get('/api/recipes').expect(200);
@@ -86,12 +96,11 @@ describe('Recipe router', (): void => {
       accessToken = res.body.accessToken;
     });
     it('should post a recipe', async () => {
-      const response = await request(server)
+      await request(server)
         .post('/api/recipe')
         .set('Authorization', `Bearer ${accessToken}`)
         .send({ provider: 'credentials', recipe })
         .expect(200);
-      console.log(response.body);
     });
     it('should throw a validation error for duplication', async () => {
       await request(server)
