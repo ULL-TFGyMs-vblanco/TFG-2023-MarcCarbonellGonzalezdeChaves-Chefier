@@ -21,12 +21,30 @@ export const getRecipes = async (
 
 // Post a recipe
 export const postRecipe = async ({ response, request }: Context) => {
+  let fileId = '';
+  utils
+    .uploadImage(
+      request.body.form.image,
+      request.body.recipe.name,
+      `/images/posts/${request.body.recipe.username}`
+    )
+    .then((result) => {
+      request.body.recipe.image = result.url;
+      fileId = result.fileId;
+    })
+    .catch((err) => {
+      utils.setResponse(response, 500, {
+        error: { message: err },
+        request: request.body,
+      });
+      return;
+    });
   const recipe = new Recipe(request.body.recipe);
   await Recipe.create(recipe)
     .then((recipe) => {
       utils.setResponse(response, 200, { recipe });
     })
-    .catch((err) => {
+    .catch(async (err) => {
       if (err.name === 'ValidationError') {
         const errors = Object.keys(err.errors).map((key) => {
           return { message: err.errors[key].message, field: key };
@@ -41,6 +59,7 @@ export const postRecipe = async ({ response, request }: Context) => {
           request: request.body,
         });
       }
+      await utils.deleteImage(fileId);
     });
 };
 
