@@ -42,7 +42,7 @@ const RecipeService = {
     reader.onerror = function (e) {
       console.log('Error : ' + e.type);
     };
-    reader.readAsBinaryString(recipeData.image);
+    reader.readAsText(recipeData.image, 'base64');
   },
 };
 
