@@ -52,7 +52,7 @@ export const NewRecipeForm: React.FC = () => {
       image: image as File,
     };
     try {
-      await RecipeService.postRecipe('/api/recipe', recipe);
+      await RecipeService.postRecipe('/recipe', recipe);
     } catch (error) {
       console.log(error);
     }
