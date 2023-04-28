@@ -9,8 +9,8 @@ export default class ImagekitUtils {
     folder: string
   ) => {
     const imagekit = new ImageKitJs({
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-      urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
+      publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+      urlEndpoint: 'https://ik.imagekit.io/czvxqgafa/',
       authenticationEndpoint:
         'https://chefier-backend-git-develop-tfg-marccarbonell.vercel.app/api/imagekit/auth',
     });
@@ -31,9 +31,9 @@ export default class ImagekitUtils {
 
   public static deleteImage = async (fileID: string) => {
     const imagekit = new ImageKit({
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-      privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
-      urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
+      publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,
+      privateKey: process.env.IMAGEKIT_PRIVATE_KEY as string,
+      urlEndpoint: 'https://ik.imagekit.io/czvxqgafa/',
     });
     return imagekit
       .deleteFile(fileID)
