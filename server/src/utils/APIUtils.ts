@@ -1,8 +1,5 @@
 import { User } from '../models/user';
 import bcrypt from 'bcrypt';
-import ImageKit from 'imagekit';
-import ImageKitJs from 'imagekit-javascript';
-import { UploadResponse } from 'imagekit/dist/libs/interfaces';
 
 export default class APIUtils {
   public static setResponse = (response: any, status: number, body: any) => {
@@ -49,46 +46,5 @@ export default class APIUtils {
       const user = new User({ username, email, password });
       return user;
     }
-  };
-
-  public static uploadImage = async (
-    image: File,
-    name: string,
-    folder: string
-  ) => {
-    const imagekit = new ImageKitJs({
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-      urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
-      authenticationEndpoint: 'http://localhost:3000/api/imagekit/auth',
-    });
-    return imagekit
-      .upload({
-        file: image,
-        fileName: name,
-        folder: folder,
-        useUniqueFileName: true,
-      })
-      .then((result: UploadResponse) => {
-        return result;
-      })
-      .catch(() => {
-        throw new Error(JSON.stringify(image));
-      });
-  };
-
-  public static deleteImage = async (fileID: string) => {
-    const imagekit = new ImageKit({
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-      privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
-      urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
-    });
-    return imagekit
-      .deleteFile(fileID)
-      .then(() => {
-        return;
-      })
-      .catch(() => {
-        return;
-      });
   };
 }

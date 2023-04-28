@@ -1,4 +1,4 @@
-import axios from '../../../../axios_config';
+import axios from 'axios';
 import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
@@ -20,7 +20,7 @@ export const authOptions: NextAuthOptions = {
         };
 
         try {
-          const res = await axios.post('/auth/login', {
+          const res = await axios.post(`${process.env.API_URL}/auth/login`, {
             email,
             password,
           });
