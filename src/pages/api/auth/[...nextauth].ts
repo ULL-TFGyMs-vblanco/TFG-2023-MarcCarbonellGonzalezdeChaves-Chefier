@@ -31,15 +31,15 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
     GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID || '',
-      clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET || '',
+  secret: process.env.NEXTAUTH_SECRET as string,
   pages: {
     signIn: '/auth/login',
     error: '/auth/login',
@@ -66,6 +66,8 @@ export const authOptions: NextAuthOptions = {
       if (account) {
         if (account.provider === 'credentials') {
           token.accessToken = user?.accessToken;
+        } else {
+          token.accessToken = account?.access_token;
         }
         token.provider = account.provider;
       }
