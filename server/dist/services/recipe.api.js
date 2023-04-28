@@ -23,7 +23,8 @@ exports.getRecipes = getRecipes;
 // Post a recipe
 const postRecipe = async ({ response, request }) => {
     try {
-        const res = await APIUtils_1.default.uploadImage(request.files.image, request.body.recipe.name, `/images/posts/${request.body.recipe.username}}`);
+        const recipeData = JSON.parse(request.body.recipe);
+        const res = await APIUtils_1.default.uploadImage(request.file, recipeData.name, `/images/posts/${request.body.recipe.username}}`);
         request.body.recipe.image = res.url;
         const fileID = res.fileId;
         const recipe = new recipe_1.Recipe(request.body.recipe);
@@ -52,7 +53,7 @@ const postRecipe = async ({ response, request }) => {
     }
     catch (err) {
         APIUtils_1.default.setResponse(response, 500, {
-            error: { message: err },
+            error: { message: 'Error uploading post image' },
             request: request.body,
         });
     }
