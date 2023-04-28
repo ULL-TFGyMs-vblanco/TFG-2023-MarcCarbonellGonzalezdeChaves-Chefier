@@ -8,9 +8,9 @@ const koa_router_1 = __importDefault(require("koa-router"));
 const imagekit_1 = __importDefault(require("imagekit"));
 exports.imagekitRouter = new koa_router_1.default();
 const imagekit = new imagekit_1.default({
-    publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-    privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
-    urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
+    publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+    privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+    urlEndpoint: process.env.IMAGEKIT_ENDPOINT,
 });
 exports.imagekitRouter.get('/api/imagekit/auth', async (ctx) => {
     const result = imagekit.getAuthenticationParameters();
