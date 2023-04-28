@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default class ImagekitUtils {
-  public static uploadImage = async (image: File) => {
+  public static uploadImage = async (image: string) => {
     const formData = new FormData();
     formData.append('file', image);
     formData.append('upload_preset', 'posts-images');
