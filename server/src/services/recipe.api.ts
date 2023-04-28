@@ -22,9 +22,10 @@ export const getRecipes = async (
 // Post a recipe
 export const postRecipe = async ({ response, request }: Context) => {
   try {
+    const recipeData = JSON.parse(request.body.recipe);
     const res = await utils.uploadImage(
-      request.files.image,
-      request.body.recipe.name,
+      request.file,
+      recipeData.name,
       `/images/posts/${request.body.recipe.username}}`
     );
     request.body.recipe.image = res.url;
@@ -53,7 +54,7 @@ export const postRecipe = async ({ response, request }: Context) => {
       });
   } catch (err) {
     utils.setResponse(response, 500, {
-      error: { message: err },
+      error: { message: 'Error uploading post image' },
       request: request.body,
     });
   }
