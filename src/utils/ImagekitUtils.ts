@@ -4,7 +4,7 @@ import { UploadResponse } from 'imagekit/dist/libs/interfaces';
 
 export default class ImagekitUtils {
   public static uploadImage = async (
-    image: File,
+    image: string,
     name: string,
     folder: string
   ) => {

@@ -46,9 +46,12 @@ export const NewRecipeForm: React.FC = () => {
 
   const postHandler = async (data: NewRecipeFormInputs) => {
     const username = user.nickname ? user.nickname : user.username;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { image, ...rest } = data;
     const recipe = {
+      image: imageUrl as string,
       username,
-      ...data,
+      ...rest,
     };
     try {
       await RecipeService.postRecipe('/recipe', recipe);
