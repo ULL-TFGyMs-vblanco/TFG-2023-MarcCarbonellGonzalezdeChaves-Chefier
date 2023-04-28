@@ -18,6 +18,7 @@
     "@types/koa": "^2.13.5",
     "@types/koa-bodyparser": "^4.3.10",
     "@types/koa-cors": "^0.0.2",
+    "@types/koa-multer": "^1.0.1",
     "@types/koa-router": "^7.4.4",
     "@types/node": "^18.14.0",
     "@types/supertest": "^2.0.12",
@@ -29,19 +30,18 @@
   },
   "dependencies": {
     "@koa/cors": "^4.0.0",
-    "@koa/multer": "^3.0.2",
     "@vercel/node": "^2.11.0",
     "axios": "^1.3.4",
     "bcrypt": "^5.1.0",
     "google-auth-library": "^8.7.0",
     "imagekit": "^4.1.3",
-    "imagekit-javascript": "^1.5.5",
     "jsonwebtoken": "^9.0.0",
     "koa": "^2.14.1",
     "koa-bodyparser": "^4.3.0",
+    "koa-multer-esm": "^3.1.2",
     "koa-router": "^12.0.0",
     "mongoose": "5.13.14",
-    "multer": "1.4.4-lts.1",
+    "multer": "^1.4.4",
     "validator": "^13.9.0"
   }
 }

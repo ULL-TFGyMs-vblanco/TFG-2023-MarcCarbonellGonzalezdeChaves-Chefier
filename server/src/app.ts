@@ -4,7 +4,6 @@ import './db/mongoose';
 import { defaultRouter } from './routers/default.routes';
 import { userRouter } from './routers/user.routes';
 import { recipeRouter } from './routers/recipe.routes';
-import { imagekitRouter } from './routers/imagekit.routes';
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cors = require('@koa/cors');
 
@@ -17,6 +16,4 @@ app
   .use(userRouter.allowedMethods())
   .use(recipeRouter.routes())
   .use(recipeRouter.allowedMethods())
-  .use(imagekitRouter.routes())
-  .use(imagekitRouter.allowedMethods())
   .use(defaultRouter.routes());

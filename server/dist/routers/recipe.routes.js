@@ -7,8 +7,8 @@ exports.recipeRouter = void 0;
 const koa_router_1 = __importDefault(require("koa-router"));
 const recipe_api_1 = require("../services/recipe.api");
 const verifyToken_1 = require("../middlewares/verifyToken");
-const multer = require('@koa/multer');
-const upload = multer();
+const koa_multer_esm_1 = __importDefault(require("koa-multer-esm"));
+const upload = (0, koa_multer_esm_1.default)();
 exports.recipeRouter = new koa_router_1.default();
 exports.recipeRouter.get('/api/recipes', async (ctx) => {
     await (0, recipe_api_1.getRecipes)(ctx, ctx.query);

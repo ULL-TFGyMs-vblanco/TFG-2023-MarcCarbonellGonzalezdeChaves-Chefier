@@ -1,7 +1,7 @@
 import Router from 'koa-router';
 import { getRecipes, postRecipe, deleteRecipe } from '../services/recipe.api';
 import { verifyToken } from '../middlewares/verifyToken';
-const multer = require('@koa/multer');
+import multer from 'koa-multer-esm';
 const upload = multer();
 
 export const recipeRouter = new Router();
