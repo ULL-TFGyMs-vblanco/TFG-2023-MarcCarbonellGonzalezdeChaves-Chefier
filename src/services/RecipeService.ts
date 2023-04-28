@@ -6,10 +6,9 @@ import ImagekitUtils from '../utils/ImagekitUtils';
 const RecipeService = {
   postRecipe: async (url: string, recipeData: NewRecipeData) => {
     try {
-      const url = await ImagekitUtils.uploadImage(recipeData.image);
+      const imageUrl = await ImagekitUtils.uploadImage(recipeData.image);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { image, ...rest } = recipeData;
-      const recipe = { image: url, ...rest };
+      const recipe = { ...recipeData, image: imageUrl };
       const session = await getSession();
       try {
         await axios.post(

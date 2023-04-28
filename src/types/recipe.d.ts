@@ -41,7 +41,7 @@ declare module 'recipe-types' {
     cookTime: number;
     difficulty: 'Fácil' | 'Media' | 'Difícil';
     rations: number;
-    image: File[];
+    image: any;
     ingredients: {
       name: string;
       quantity: number | undefined;
