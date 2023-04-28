@@ -11,7 +11,7 @@ export default class ImagekitUtils {
       );
       return res.data['secure_url'];
     } catch (err: any) {
-      throw new Error(JSON.stringify(err));
+      throw new Error(JSON.stringify(err.response.data.error));
     }
   };
 
