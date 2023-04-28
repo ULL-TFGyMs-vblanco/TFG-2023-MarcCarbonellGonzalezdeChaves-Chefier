@@ -6,14 +6,11 @@ export default class ImagekitUtils {
     formData.append('file', image);
     formData.append('upload_preset', 'posts-images');
     try {
-      const res = await fetch(
+      const res = await axios.post(
         'https://api.cloudinary.com/v1_1/duwhgqlfk/image/upload',
-        {
-          method: 'POST',
-          body: formData,
-        }
+        formData
       );
-      console.log(res.json());
+      return res.data['secure_url'];
     } catch (err: any) {
       throw new Error(JSON.stringify(err.response.data.error));
     }
