@@ -42,14 +42,14 @@ export const NewRecipeForm: React.FC = () => {
     name: 'instructions',
   });
   const { user } = useLoggedUser();
-  const { imageUrl, onImageChange, setImage } = useImage();
+  const { image, imageUrl, onImageChange, setImage } = useImage();
 
   const postHandler = async (data: NewRecipeFormInputs) => {
     const username = user.nickname ? user.nickname : user.username;
     const recipe = {
       username,
       ...data,
-      image: data.image[0],
+      image: image as File,
     };
     try {
       await RecipeService.postRecipe('/api/recipe', recipe);
