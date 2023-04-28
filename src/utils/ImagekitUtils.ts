@@ -1,5 +1,5 @@
 import ImageKit from 'imagekit';
-import ImageKitJs from 'imagekit-javascript';
+// import ImageKitJs from 'imagekit-javascript';
 import { UploadResponse } from 'imagekit/dist/libs/interfaces';
 
 export default class ImagekitUtils {
@@ -8,11 +8,10 @@ export default class ImagekitUtils {
     name: string,
     folder: string
   ) => {
-    const imagekit = new ImageKitJs({
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+    const imagekit = new ImageKit({
+      publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,
+      privateKey: process.env.IMAGEKIT_PRIVATE_KEY as string,
       urlEndpoint: 'https://ik.imagekit.io/czvxqgafa/',
-      authenticationEndpoint:
-        'https://chefier-backend-git-develop-tfg-marccarbonell.vercel.app/api/imagekit/auth',
     });
     return imagekit
       .upload({

@@ -10,7 +10,8 @@ import { AiOutlineMinus } from 'react-icons/ai';
 import { NewRecipeFormInputs } from 'recipe-types';
 import { useImage } from '../../hooks/useImage';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
-import RecipeService from '@/services/RecipeService';
+import RecipeService from '../../services/RecipeService';
+import { readFile } from 'fs';
 
 export const NewRecipeForm: React.FC = () => {
   const {
@@ -45,16 +46,24 @@ export const NewRecipeForm: React.FC = () => {
   const { imageUrl, onImageChange, setImage } = useImage();
 
   const postHandler = async (data: NewRecipeFormInputs) => {
-    const username = user.nickname ? user.nickname : user.username;
-    const recipe = {
-      username,
-      ...data,
-    };
-    try {
-      await RecipeService.postRecipe('/recipe', recipe);
-    } catch (error) {
-      console.log(error);
-    }
+    readFile(
+      imageUrl as string,
+      { encoding: 'base64' },
+      async function (err, image) {
+        if (err) console.log(err);
+        const username = user.nickname ? user.nickname : user.username;
+        const recipe = {
+          username,
+          ...data,
+          image: image,
+        };
+        try {
+          await RecipeService.postRecipe('/api/recipe', recipe);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    );
   };
 
   return (

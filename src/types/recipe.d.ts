@@ -66,7 +66,7 @@ declare module 'recipe-types' {
     cookTime: number;
     difficulty: 'Fácil' | 'Media' | 'Difícil';
     rations: number;
-    image: File;
+    image: string;
     ingredients: {
       name: string;
       quantity: number | undefined;
