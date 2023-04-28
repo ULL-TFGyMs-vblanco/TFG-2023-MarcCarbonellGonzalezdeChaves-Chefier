@@ -2,7 +2,10 @@ import { Document, Schema } from 'mongoose';
 export interface RecipeDocumentInterface extends Document {
     name: string;
     username: string;
-    image: string;
+    image: {
+        url: string;
+        fileId: string;
+    };
     description: string;
     date: Date;
     tags: {

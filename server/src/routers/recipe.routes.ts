@@ -1,7 +1,7 @@
 import Router from 'koa-router';
-import { getRecipes, postRecipe } from '../services/recipe.api';
+import { getRecipes, postRecipe, deleteRecipe } from '../services/recipe.api';
 import { verifyToken } from '../middlewares/verifyToken';
-const multer = require('multer');
+const multer = require('@koa/multer');
 const upload = multer();
 
 export const recipeRouter = new Router();
@@ -16,3 +16,5 @@ recipeRouter.post(
   verifyToken,
   postRecipe
 );
+
+recipeRouter.delete('/api/recipe/:id', verifyToken, deleteRecipe);

@@ -7,7 +7,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const imagekit_1 = __importDefault(require("imagekit"));
-const imagekit_javascript_1 = __importDefault(require("imagekit-javascript"));
 class APIUtils {
 }
 exports.default = APIUtils;
@@ -57,23 +56,23 @@ APIUtils.buildUserDocument = async (request) => {
     }
 };
 APIUtils.uploadImage = async (image, name, folder) => {
-    const imagekit = new imagekit_javascript_1.default({
+    const imagekit = new imagekit_1.default({
         publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
         urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
-        authenticationEndpoint: 'http://localhost:3000/api/imagekit/auth',
+        privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
     });
     return imagekit
         .upload({
         file: image,
-        fileName: name,
+        fileName: name.replace(/ /g, '_'),
         folder: folder,
         useUniqueFileName: true,
     })
         .then((result) => {
         return result;
     })
-        .catch(() => {
-        throw new Error(JSON.stringify(image));
+        .catch((error) => {
+        throw new Error(error);
     });
 };
 APIUtils.deleteImage = async (fileID) => {

@@ -1,7 +1,6 @@
 import { User } from '../models/user';
 import bcrypt from 'bcrypt';
 import ImageKit from 'imagekit';
-import ImageKitJs from 'imagekit-javascript';
 import { UploadResponse } from 'imagekit/dist/libs/interfaces';
 
 export default class APIUtils {
@@ -52,27 +51,27 @@ export default class APIUtils {
   };
 
   public static uploadImage = async (
-    image: File,
+    image: string,
     name: string,
     folder: string
   ) => {
-    const imagekit = new ImageKitJs({
+    const imagekit = new ImageKit({
       publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
       urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
-      authenticationEndpoint: 'http://localhost:3000/api/imagekit/auth',
+      privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
     });
     return imagekit
       .upload({
         file: image,
-        fileName: name,
+        fileName: name.replace(/ /g, '_'),
         folder: folder,
         useUniqueFileName: true,
       })
       .then((result: UploadResponse) => {
         return result;
       })
-      .catch(() => {
-        throw new Error(JSON.stringify(image));
+      .catch((error) => {
+        throw new Error(error);
       });
   };
 

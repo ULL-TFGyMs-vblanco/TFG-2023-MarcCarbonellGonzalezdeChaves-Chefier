@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postRecipe = exports.getRecipes = void 0;
+exports.deleteRecipe = exports.postRecipe = exports.getRecipes = void 0;
 const recipe_1 = require("../models/recipe");
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
 // Get recipes list
@@ -24,10 +24,13 @@ exports.getRecipes = getRecipes;
 const postRecipe = async ({ response, request }) => {
     try {
         const recipeData = JSON.parse(request.body.recipe);
-        const res = await APIUtils_1.default.uploadImage(request.file, recipeData.name, `/images/posts/${request.body.recipe.username}}`);
-        request.body.recipe.image = res.url;
-        const fileID = res.fileId;
-        const recipe = new recipe_1.Recipe(request.body.recipe);
+        const res = await APIUtils_1.default.uploadImage(request.file.buffer.toString('base64'), recipeData.name, `/images/posts/${recipeData.username}`);
+        const fileId = res.fileId;
+        recipeData.image = {
+            url: res.url,
+            fileId,
+        };
+        const recipe = new recipe_1.Recipe(recipeData);
         await recipe_1.Recipe.create(recipe)
             .then((recipe) => {
             APIUtils_1.default.setResponse(response, 200, { recipe });
@@ -48,18 +51,42 @@ const postRecipe = async ({ response, request }) => {
                     request: request.body,
                 });
             }
-            APIUtils_1.default.deleteImage(fileID);
+            APIUtils_1.default.deleteImage(fileId);
         });
     }
     catch (err) {
         APIUtils_1.default.setResponse(response, 500, {
-            error: { message: 'Error uploading post image' },
+            error: { message: err },
             request: request.body,
         });
     }
 };
 exports.postRecipe = postRecipe;
+// Delete a recipe
+const deleteRecipe = async ({ response, params }) => {
+    await recipe_1.Recipe.findByIdAndDelete(params.id)
+        .then(async (recipe) => {
+        try {
+            await APIUtils_1.default.deleteImage(recipe?.image.fileId);
+            APIUtils_1.default.setResponse(response, 200, { recipe });
+        }
+        catch (err) {
+            APIUtils_1.default.setResponse(response, 500, {
+                error: { message: err },
+                request: params.id,
+            });
+        }
+    })
+        .catch((err) => {
+        APIUtils_1.default.setResponse(response, 500, {
+            error: { message: err },
+            request: params.id,
+        });
+    });
+};
+exports.deleteRecipe = deleteRecipe;
 module.exports = {
     getRecipes: exports.getRecipes,
     postRecipe: exports.postRecipe,
+    deleteRecipe: exports.deleteRecipe,
 };

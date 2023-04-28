@@ -23,11 +23,14 @@ exports.RecipeSchema = new mongoose_1.Schema({
         trim: true,
     },
     image: {
-        type: String,
+        type: {
+            url: String,
+            fileId: String,
+        },
         required: true,
         trim: true,
         validate: (value) => {
-            if (!validator_1.default.isURL(value)) {
+            if (!validator_1.default.isURL(value.url)) {
                 throw new Error('Image must be a valid URL');
             }
         },

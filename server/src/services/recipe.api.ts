@@ -24,13 +24,16 @@ export const postRecipe = async ({ response, request }: Context) => {
   try {
     const recipeData = JSON.parse(request.body.recipe);
     const res = await utils.uploadImage(
-      request.file,
+      request.file.buffer.toString('base64'),
       recipeData.name,
-      `/images/posts/${request.body.recipe.username}}`
+      `/images/posts/${recipeData.username}`
     );
-    request.body.recipe.image = res.url;
-    const fileID = res.fileId;
-    const recipe = new Recipe(request.body.recipe);
+    const fileId = res.fileId;
+    recipeData.image = {
+      url: res.url,
+      fileId,
+    };
+    const recipe = new Recipe(recipeData);
     await Recipe.create(recipe)
       .then((recipe) => {
         utils.setResponse(response, 200, { recipe });
@@ -50,17 +53,40 @@ export const postRecipe = async ({ response, request }: Context) => {
             request: request.body,
           });
         }
-        utils.deleteImage(fileID);
+        utils.deleteImage(fileId);
       });
   } catch (err) {
     utils.setResponse(response, 500, {
-      error: { message: 'Error uploading post image' },
+      error: { message: err },
       request: request.body,
     });
   }
 };
 
+// Delete a recipe
+export const deleteRecipe = async ({ response, params }: Context) => {
+  await Recipe.findByIdAndDelete(params.id)
+    .then(async (recipe) => {
+      try {
+        await utils.deleteImage(recipe?.image.fileId as string);
+        utils.setResponse(response, 200, { recipe });
+      } catch (err) {
+        utils.setResponse(response, 500, {
+          error: { message: err },
+          request: params.id,
+        });
+      }
+    })
+    .catch((err) => {
+      utils.setResponse(response, 500, {
+        error: { message: err },
+        request: params.id,
+      });
+    });
+};
+
 module.exports = {
   getRecipes,
   postRecipe,
+  deleteRecipe,
 };

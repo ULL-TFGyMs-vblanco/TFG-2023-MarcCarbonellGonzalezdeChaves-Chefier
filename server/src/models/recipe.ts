@@ -4,7 +4,10 @@ import validator from 'validator';
 export interface RecipeDocumentInterface extends Document {
   name: string;
   username: string;
-  image: string;
+  image: {
+    url: string;
+    fileId: string;
+  };
   description: string;
   date: Date;
   tags: {
@@ -46,11 +49,14 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     trim: true,
   },
   image: {
-    type: String,
+    type: {
+      url: String,
+      fileId: String,
+    },
     required: true,
     trim: true,
-    validate: (value: string) => {
-      if (!validator.isURL(value)) {
+    validate: (value: { url: string; fileId: string }) => {
+      if (!validator.isURL(value.url)) {
         throw new Error('Image must be a valid URL');
       }
     },
