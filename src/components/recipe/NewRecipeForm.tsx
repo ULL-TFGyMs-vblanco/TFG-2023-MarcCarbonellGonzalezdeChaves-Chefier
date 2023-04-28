@@ -49,7 +49,6 @@ export const NewRecipeForm: React.FC = () => {
     const recipe = {
       username,
       ...data,
-      image: imageUrl as string,
     };
     try {
       await RecipeService.postRecipe('/api/recipe', recipe);
