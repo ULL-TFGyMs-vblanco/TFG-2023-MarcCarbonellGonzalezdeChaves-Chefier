@@ -9,10 +9,16 @@ import { BsPlus } from 'react-icons/bs';
 import { AiOutlineMinus } from 'react-icons/ai';
 import { NewRecipeFormInputs } from 'recipe-types';
 import { useImage } from '../../hooks/useImage';
-import { useLoggedUser } from '../../hooks/useLoggedUser';
-import RecipeService from '../../services/RecipeService';
 
-export const NewRecipeForm: React.FC = () => {
+interface NewRecipeFormProps {
+  onPostRecipe: (data: NewRecipeFormInputs, image: File) => Promise<boolean>;
+  toggleModal: (visible: boolean) => void;
+}
+
+export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
+  onPostRecipe,
+  toggleModal,
+}) => {
   const {
     control,
     register,
@@ -41,21 +47,25 @@ export const NewRecipeForm: React.FC = () => {
     control,
     name: 'instructions',
   });
-  const { user } = useLoggedUser();
   const { image, imageUrl, onImageChange, setImage } = useImage();
 
   const postHandler = async (data: NewRecipeFormInputs) => {
-    const username = user.nickname ? user.nickname : user.username;
-    const recipe = {
-      username,
-      ...data,
-      image: image as File,
-    };
-    try {
-      await RecipeService.postRecipe('/recipe', recipe);
-    } catch (error) {
-      console.log(error);
-    }
+    //   const username = user.nickname ? user.nickname : user.username;
+    //   const recipe = {
+    //     username,
+    //     ...data,
+    //     image: image as File,
+    //   };
+    //   try {
+    //     await RecipeService.postRecipe('/recipe', recipe);
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    onPostRecipe(data, image as File).then((res) => {
+      if (res) {
+        toggleModal(true);
+      }
+    });
   };
 
   return (
@@ -64,7 +74,7 @@ export const NewRecipeForm: React.FC = () => {
         <form
           autoComplete='off'
           className={styles.form}
-          onSubmit={handleSubmit(postHandler)}
+          onSubmit={handleSubmit((data) => postHandler(data))}
           data-testid='new-recipe-form'
         >
           <div className={styles.header}>
