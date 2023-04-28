@@ -28,7 +28,7 @@ const RecipeService = {
         throw new Error(err.response.data.error);
       }
     } catch (err: any) {
-      throw new Error(err.response.data.error);
+      throw new Error(JSON.stringify(err));
     }
   },
 };
