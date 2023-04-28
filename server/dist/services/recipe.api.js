@@ -22,47 +22,27 @@ const getRecipes = async ({ response, request }, filter) => {
 exports.getRecipes = getRecipes;
 // Post a recipe
 const postRecipe = async ({ response, request }) => {
-    if (!request.body.recipe) {
-        APIUtils_1.default.setResponse(response, 400, {
-            error: { message: 'Missing recipe' },
-            request: request.body,
-        });
-        return;
-    }
-    APIUtils_1.default
-        .uploadImage(request.body.recipe.image, request.body.recipe.name, `/images/posts/${request.body.recipe.username}`)
-        .then(async (result) => {
-        request.body.recipe.image = result.url;
-        const fileId = result.fileId;
-        const recipe = new recipe_1.Recipe(request.body.recipe);
-        await recipe_1.Recipe.create(recipe)
-            .then((recipe) => {
-            APIUtils_1.default.setResponse(response, 200, { recipe });
-        })
-            .catch(async (err) => {
-            if (err.name === 'ValidationError') {
-                const errors = Object.keys(err.errors).map((key) => {
-                    return { message: err.errors[key].message, field: key };
-                });
-                APIUtils_1.default.setResponse(response, 400, {
-                    error: { message: err._message, errors: errors },
-                    request: request.body,
-                });
-            }
-            else {
-                APIUtils_1.default.setResponse(response, 500, {
-                    error: { message: err },
-                    request: request.body,
-                });
-            }
-            await APIUtils_1.default.deleteImage(fileId);
-        });
+    const recipe = new recipe_1.Recipe(request.body.recipe);
+    await recipe_1.Recipe.create(recipe)
+        .then((recipe) => {
+        APIUtils_1.default.setResponse(response, 200, { recipe });
     })
         .catch((err) => {
-        APIUtils_1.default.setResponse(response, 500, {
-            error: { message: JSON.stringify(err) },
-            request: request.body,
-        });
+        if (err.name === 'ValidationError') {
+            const errors = Object.keys(err.errors).map((key) => {
+                return { message: err.errors[key].message, field: key };
+            });
+            APIUtils_1.default.setResponse(response, 400, {
+                error: { message: err._message, errors: errors },
+                request: request.body,
+            });
+        }
+        else {
+            APIUtils_1.default.setResponse(response, 500, {
+                error: { message: err },
+                request: request.body,
+            });
+        }
     });
 };
 exports.postRecipe = postRecipe;
