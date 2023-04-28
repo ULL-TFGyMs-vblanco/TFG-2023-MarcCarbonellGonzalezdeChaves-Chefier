@@ -5,7 +5,12 @@ export default class ImagekitUtils {
     folder: string
   ) => {
     const cloudinary = require('cloudinary').v2;
-    return cloudinary.uploader
+    const cloudinaryInstance = new cloudinary.Cloudinary({
+      cloud_name: 'duwhgqlfk',
+      api_key: '426374489172323',
+      api_secret: 'MvvbP0SRiUgKuZg0wj7mRRHytjY',
+    });
+    return cloudinaryInstance.uploader
       .upload(image, {
         public_id: name,
         folder: folder,
@@ -20,7 +25,12 @@ export default class ImagekitUtils {
 
   public static deleteImage = async (publicID: string) => {
     const cloudinary = require('cloudinary').v2;
-    cloudinary.uploader.destroy(publicID, (error: any, result: any) => {
+    const cloudinaryInstance = new cloudinary.Cloudinary({
+      cloud_name: 'duwhgqlfk',
+      api_key: '426374489172323',
+      api_secret: 'MvvbP0SRiUgKuZg0wj7mRRHytjY',
+    });
+    cloudinaryInstance.uploader.destroy(publicID, (error: any, result: any) => {
       if (error) {
         return error;
       }
