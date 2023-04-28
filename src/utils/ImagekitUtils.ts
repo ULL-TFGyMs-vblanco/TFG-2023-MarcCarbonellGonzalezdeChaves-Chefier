@@ -16,17 +16,6 @@ export default class ImagekitUtils {
   };
 
   public static deleteImage = async (publicID: string) => {
-    const cloudinary = require('cloudinary').v2;
-    const cloudinaryInstance = new cloudinary.Cloudinary({
-      cloud_name: 'duwhgqlfk',
-      api_key: '426374489172323',
-      api_secret: 'MvvbP0SRiUgKuZg0wj7mRRHytjY',
-    });
-    cloudinaryInstance.uploader.destroy(publicID, (error: any, result: any) => {
-      if (error) {
-        return error;
-      }
-      return result;
-    });
+    console.log(publicID);
   };
 }
