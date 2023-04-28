@@ -29,7 +29,7 @@ const RecipeService = {
             }
           );
         } catch (err: any) {
-          ImagekitUtils.deleteImage(res.fileId);
+          ImagekitUtils.deleteImage(res.asset_id);
           throw new Error(err.response.data.error);
         }
       })
