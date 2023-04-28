@@ -5,10 +5,12 @@ export default class ImagekitUtils {
     const formData = new FormData();
     formData.append('file', image);
     formData.append('upload_preset', 'posts-images');
+    formData.append('cloud_name', 'duwhgqlfk');
     try {
       const res = await axios.post(
         'https://api.cloudinary.com/v1_1/duwhgqlfk/image/upload',
-        formData
+        formData,
+        { headers: { 'Content-Type': 'multipart/form-data' } }
       );
       return res.data['secure_url'];
     } catch (err: any) {
