@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
-require('dotenv').config();
-
 export default class ImagekitUtils {
   public static uploadImage = async (
     image: string,
@@ -21,9 +18,9 @@ export default class ImagekitUtils {
       });
   };
 
-  public static deleteImage = async (assetID: string) => {
+  public static deleteImage = async (publicID: string) => {
     const cloudinary = require('cloudinary').v2;
-    cloudinary.uploader.destroy(assetID, (error: any, result: any) => {
+    cloudinary.uploader.destroy(publicID, (error: any, result: any) => {
       if (error) {
         return error;
       }
