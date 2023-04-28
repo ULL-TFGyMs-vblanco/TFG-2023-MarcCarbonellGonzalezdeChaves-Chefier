@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 
 const Login: React.FC = () => {
   const [error, setError] = useState<string | string[]>();
-
   const router = useRouter();
   const [visible, setVisible] = useState(false);
 

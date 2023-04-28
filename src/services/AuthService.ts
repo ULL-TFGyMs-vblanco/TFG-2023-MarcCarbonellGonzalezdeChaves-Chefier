@@ -3,9 +3,9 @@ import axios from '../../axios_config';
 import { signIn, SignInOptions } from 'next-auth/react';
 
 const AuthService = {
-  register: async (url: string, data: { arg: RegisterData }) => {
+  register: async (url: string, data: RegisterData) => {
     try {
-      await axios.post(url, data.arg);
+      await axios.post(url, data);
     } catch (err: any) {
       const error = err.response.data.error;
       let errorMessage = error.message;

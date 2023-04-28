@@ -1,4 +1,3 @@
-import useSWRMutation from 'swr/mutation';
 import { CustomModal } from '../../components/ui/CustomModal';
 import { RegisterForm } from '../../components/auth/RegisterForm';
 import { RegisterData } from 'auth-types';
@@ -13,7 +12,6 @@ const Register: React.FC = () => {
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const router = useRouter();
-  const { trigger } = useSWRMutation('/auth/register', AuthService.register);
 
   useEffect(() => {
     error ? setErrorModal(true) : setErrorModal(false);
@@ -21,7 +19,7 @@ const Register: React.FC = () => {
 
   const registerHandler = async (data: RegisterData) => {
     try {
-      await trigger(data);
+      await AuthService.register('/auth/register', data);
       return true;
     } catch (error) {
       const errorMessage = (error as Error).toString();
@@ -61,7 +59,7 @@ const Register: React.FC = () => {
         handler={setSuccesModal}
         onClose={closeSuccessModalHandler}
       >
-        Congratulations, your account has been successfully created!
+        Felicidades, tu cuenta ha sido creada con éxito!
       </CustomModal>
       <CustomModal
         type='error'
