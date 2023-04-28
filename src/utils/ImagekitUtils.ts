@@ -11,7 +11,8 @@ export default class ImagekitUtils {
     const imagekit = new ImageKitJs({
       publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
       urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
-      authenticationEndpoint: `${process.env.API_URL}/imagekit/auth`,
+      authenticationEndpoint:
+        'https://chefier-backend-git-develop-tfg-marccarbonell.vercel.app/api/imagekit/auth',
     });
     return imagekit
       .upload({

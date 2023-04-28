@@ -1,8 +1,7 @@
 import useSWR from 'swr';
-import axios from 'axios';
+import axios from '../../axios_config';
 
-const fetcher = (url: string) =>
-  axios.get(`${process.env.API_URL}${url}`).then((res) => res.data);
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export function useUser(filter: 'email' | 'username', credential?: string) {
   const { data, error, isLoading } = useSWR(

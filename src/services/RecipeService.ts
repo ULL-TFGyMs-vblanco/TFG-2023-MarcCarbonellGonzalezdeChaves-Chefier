@@ -1,5 +1,5 @@
 import { NewRecipeData } from 'recipe-types';
-import axios from 'axios';
+import axios from '../../axios_config';
 import { getSession } from 'next-auth/react';
 import ImagekitUtils from '../utils/ImagekitUtils';
 
@@ -17,7 +17,7 @@ const RecipeService = {
         const session = await getSession();
         try {
           await axios.post(
-            `${process.env.API_URL}${url}`,
+            url,
             {
               provider: session?.user.provider,
               recipe,
