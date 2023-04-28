@@ -49,11 +49,9 @@ export const authOptions: NextAuthOptions = {
       if (account?.provider !== 'credentials') {
         try {
           await AuthService.register('/auth/register', {
-            arg: {
-              email: user.email,
-              username: user.name,
-              image: user.image,
-            },
+            email: user.email,
+            username: user.name,
+            image: user.image,
           });
         } catch (err: any) {
           const error = err.toString();
@@ -67,7 +65,7 @@ export const authOptions: NextAuthOptions = {
         if (account.provider === 'credentials') {
           token.accessToken = user?.accessToken;
         } else {
-          token.accessToken = account?.access_token;
+          token.accessToken = account.access_token;
         }
         token.provider = account.provider;
       }
