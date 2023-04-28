@@ -7,6 +7,7 @@ exports.recipeRouter = void 0;
 const koa_router_1 = __importDefault(require("koa-router"));
 const recipe_api_1 = require("../services/recipe.api");
 const verifyToken_1 = require("../middlewares/verifyToken");
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const multer = require('@koa/multer');
 const upload = multer();
 exports.recipeRouter = new koa_router_1.default();
