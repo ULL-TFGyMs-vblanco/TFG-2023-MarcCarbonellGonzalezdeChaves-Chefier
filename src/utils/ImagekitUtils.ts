@@ -6,17 +6,26 @@ export default class ImagekitUtils {
     formData.append('file', image);
     formData.append('upload_preset', 'posts-images');
     try {
-      const res = await axios.post(
+      const res = await fetch(
         'https://api.cloudinary.com/v1_1/duwhgqlfk/image/upload',
-        formData
+        {
+          method: 'POST',
+          body: formData,
+        }
       );
-      return res.data['secure_url'];
+      console.log(res.json());
     } catch (err: any) {
       throw new Error(JSON.stringify(err.response.data.error));
     }
   };
 
   public static deleteImage = async (publicID: string) => {
-    console.log(publicID);
+    try {
+      await axios.post(
+        `https://api.cloudinary.com/v1_1/duwhgqlfk/${publicID}/destroy`
+      );
+    } catch (err: any) {
+      throw new Error(JSON.stringify(err.response.data.error));
+    }
   };
 }
