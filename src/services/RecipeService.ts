@@ -34,7 +34,7 @@ const RecipeService = {
         }
       })
       .catch((err) => {
-        throw new Error(err);
+        throw new Error(JSON.stringify(err));
       });
   },
 };
