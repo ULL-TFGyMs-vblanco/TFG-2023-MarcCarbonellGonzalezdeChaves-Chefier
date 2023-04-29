@@ -64,8 +64,10 @@ export const authOptions: NextAuthOptions = {
       if (account) {
         if (account.provider === 'credentials') {
           token.accessToken = user?.accessToken;
-        } else {
+        } else if (account.provider === 'github') {
           token.accessToken = account.access_token;
+        } else if (account.provider === 'google') {
+          token.accessToken = account.id_token;
         }
         token.provider = account.provider;
       }

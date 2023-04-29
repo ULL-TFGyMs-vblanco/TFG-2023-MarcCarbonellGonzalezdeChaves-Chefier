@@ -69,7 +69,11 @@ async function verifyGoogle(
   request: Request,
   response: Response
 ) {
-  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+  const client = new OAuth2Client(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    ''
+  );
   return await client
     .verifyIdToken({
       idToken: token,
@@ -92,39 +96,24 @@ async function verifyGithub(
   request: Request,
   response: Response
 ) {
-  return await axios({
-    method: 'post',
-    url: `https://api.github.com/applications/${process.env.GITHUB_CLIENT_ID}/token`,
-    data: {
-      access_token: token,
-    },
-    headers: {
-      Accept: 'application/vnd.github+json',
-      Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-      'X-GitHub-Api-Version': '2022-11-28',
-    },
-    auth: {
-      username: process.env.GITHUB_CLIENT_ID as string,
-      password: process.env.GITHUB_CLIENT_SECRET as string,
-    },
-  })
-    // .post(
-    //   `https://api.github.com/applications/${process.env.GITHUB_CLIENT_ID}/token`,
-    //   {
-    //     access_token: token,
-    //   },
-    //   {
-    //     headers: {
-    //       Accept: 'application/vnd.github+json',
-    //       Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-    //       'X-GitHub-Api-Version': '2022-11-28',
-    //     },
-    //     auth: {
-    //       username: process.env.GITHUB_CLIENT_ID as string,
-    //       password: process.env.GITHUB_CLIENT_SECRET as string,
-    //     },
-    //   }
-    // )
+  return await axios
+    .post(
+      `https://api.github.com/applications/${process.env.GITHUB_CLIENT_ID}/token`,
+      {
+        access_token: token,
+      },
+      {
+        headers: {
+          Accept: 'application/vnd.github+json',
+          Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+          'X-GitHub-Api-Version': '2022-11-28',
+        },
+        auth: {
+          username: process.env.GITHUB_CLIENT_ID as string,
+          password: process.env.GITHUB_CLIENT_SECRET as string,
+        },
+      }
+    )
     .then(() => {
       return;
     })

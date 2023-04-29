@@ -60,25 +60,25 @@ function verifyCredentials(token, request, response) {
     }
     catch (error) {
         APIUtils_1.default.setResponse(response, 401, {
-            error,
+            error: { message: 'Invalid credentials token', error },
             request: request.body,
         });
         return false;
     }
 }
 async function verifyGoogle(token, request, response) {
-    const client = new google_auth_library_1.OAuth2Client(process.env.CLIENT_ID);
+    const client = new google_auth_library_1.OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, '');
     return await client
         .verifyIdToken({
         idToken: token,
-        audience: process.env.CLIENT_ID,
+        audience: process.env.GOOGLE_CLIENT_ID,
     })
         .then(() => {
         return;
     })
         .catch((error) => {
         APIUtils_1.default.setResponse(response, 401, {
-            error,
+            error: { message: 'Invalid google token', error },
             request: request.body,
         });
         throw new Error();
@@ -86,18 +86,27 @@ async function verifyGoogle(token, request, response) {
 }
 async function verifyGithub(token, request, response) {
     return await axios_1.default
-        .post(`https://api.github.com/aplications/${process.env.GITHUB_CLIENT_ID}/token`, {
+        .post(`https://api.github.com/applications/${process.env.GITHUB_CLIENT_ID}/token`, {
         access_token: token,
     }, {
         headers: {
-            Authorization: `Bearer ${token}`,
+            Accept: 'application/vnd.github+json',
+            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+            'X-GitHub-Api-Version': '2022-11-28',
+        },
+        auth: {
+            username: process.env.GITHUB_CLIENT_ID,
+            password: process.env.GITHUB_CLIENT_SECRET,
         },
     })
         .then(() => {
         return;
     })
         .catch((error) => {
-        APIUtils_1.default.setResponse(response, 401, { error, request: request.body });
+        APIUtils_1.default.setResponse(response, 401, {
+            error: { message: 'Invalid GitHub token', error: error.response.data },
+            request: request.body,
+        });
         throw new Error();
     });
 }
