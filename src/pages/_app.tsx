@@ -5,8 +5,8 @@ import Head from 'next/head';
 import { SessionProvider } from 'next-auth/react';
 import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
-import { lightTheme } from '../theme/lightTheme';
-import { darkTheme } from '../theme/darktheme';
+import { lightTheme } from '../themes/lightTheme';
+import { darkTheme } from '../themes/darktheme';
 
 export default function App({
   Component,
