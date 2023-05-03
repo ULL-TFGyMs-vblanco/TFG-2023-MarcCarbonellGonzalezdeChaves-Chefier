@@ -38,7 +38,7 @@ export const postRecipe = async ({ response, request }: Context) => {
       .then((recipe) => {
         utils.setResponse(response, 200, { recipe });
       })
-      .catch((err) => {
+      .catch(async (err) => {
         if (err.name === 'ValidationError') {
           const errors = Object.keys(err.errors).map((key) => {
             return { message: err.errors[key].message, field: key };
@@ -49,15 +49,15 @@ export const postRecipe = async ({ response, request }: Context) => {
           });
         } else {
           utils.setResponse(response, 500, {
-            error: { message: err },
+            error: { message: 'Error creating the new recipe', error: err },
             request: request.body,
           });
         }
-        utils.deleteImage(fileId);
+        await utils.deleteImage(fileId);
       });
   } catch (err) {
     utils.setResponse(response, 500, {
-      error: { message: err },
+      error: { message: 'Error uploading recipe image', error: err },
       request: request.body,
     });
   }
