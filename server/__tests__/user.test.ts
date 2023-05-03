@@ -39,6 +39,26 @@ describe('User router', (): void => {
         })
         .expect(200);
     });
+    it('should register a new user with a username with more than 20 characters', async () => {
+      await request(server)
+        .post('/api/auth/register')
+        .send({
+          username: 'chefier12345678909878',
+          email: 'chefier12345678909878@test.com',
+          image: 'https://i.imgur.com/4YKtXQ8.jpg',
+        })
+        .expect(200);
+    });
+    it('should register a new user with a username porvided by the server', async () => {
+      await request(server)
+        .post('/api/auth/register')
+        .send({
+          username: 'chefier',
+          email: 'chefierEmail@test.com',
+          image: 'https://i.imgur.com/4YKtXQ8.jpg',
+        })
+        .expect(200);
+    });
     it('should register a new user without password', async () => {
       await request(server)
         .post('/api/auth/register')
@@ -54,14 +74,6 @@ describe('User router', (): void => {
         .post('/api/auth/register')
         .send({
           username: 'thisIsAnInvalidUsername',
-          email: 'chefier@test.com',
-          password: 'Password1',
-        })
-        .expect(400);
-      await request(server)
-        .post('/api/auth/register')
-        .send({
-          username: 'InvalidUsername',
           email: 'chefier@test.com',
           password: 'Password1',
         })
