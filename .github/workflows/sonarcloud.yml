@@ -35,6 +35,11 @@ jobs:
         DATABASE_URL: ${{ secrets.SONARCLOUD_DATABASE_URL }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         IMAGEKIT_ENDPOINT: ${{ secrets.IMAGEKIT_ENDPOINT }}
+        GITHUB_CLIENT_ID: ${{ secrets.GH_CLIENT_ID }}
+        GITHUB_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
    
     - name: SonarCloud Scan
       uses: SonarSource/sonarcloud-github-action@master
