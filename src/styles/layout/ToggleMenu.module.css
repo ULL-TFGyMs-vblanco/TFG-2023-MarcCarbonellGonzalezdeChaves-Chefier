@@ -97,6 +97,6 @@
 
 .divider {
   border-top: var(--nextui-borderWeights-light) solid
-    var(--nextui-colors-secondary100);
+    var(--nextui-colors-border);
   width: 100%;
 }

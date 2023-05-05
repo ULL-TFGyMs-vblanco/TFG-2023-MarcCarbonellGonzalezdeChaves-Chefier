@@ -55,7 +55,7 @@
 
 .favorite__button:hover {
   cursor: pointer;
-  background-color: rgba(255, 0, 0, 0.5);
+  background-color: var(--nextui-colors-red600);
 }
 
 .heart {
@@ -111,7 +111,7 @@
 }
 
 .star {
-  color: yellow;
+  color: var(--nextui-colors-yellow600);
   height: 0.938rem;
 }
 

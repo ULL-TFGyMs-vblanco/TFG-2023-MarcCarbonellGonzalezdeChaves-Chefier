@@ -30,7 +30,7 @@ export const Avatar: React.FC<AvatarProps> = ({
         alt={`${username} avatar`}
         width={size}
         height={size}
-        style={{ borderRadius: '50%', display: 'block' }}
+        style={{ borderRadius: '50%', display: 'block', objectFit: 'cover' }}
       />
     </Link>
   );

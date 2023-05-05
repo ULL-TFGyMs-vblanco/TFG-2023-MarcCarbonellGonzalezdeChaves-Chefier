@@ -74,6 +74,6 @@
 
 .divider {
   border-left: var(--nextui-borderWeights-light) solid
-    var(--nextui-colors-secondary600);
+    var(--nextui-colors-border);
   height: 100%;
 }

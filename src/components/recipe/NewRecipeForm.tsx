@@ -50,17 +50,6 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
   const { image, imageUrl, onImageChange, setImage } = useImage();
 
   const postHandler = async (data: NewRecipeFormInputs) => {
-    //   const username = user.nickname ? user.nickname : user.username;
-    //   const recipe = {
-    //     username,
-    //     ...data,
-    //     image: image as File,
-    //   };
-    //   try {
-    //     await RecipeService.postRecipe('/recipe', recipe);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
     onPostRecipe(data, image as File).then((res) => {
       if (res) {
         toggleModal(true);

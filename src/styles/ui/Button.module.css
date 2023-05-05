@@ -4,7 +4,6 @@
   border: none;
   border-radius: var(--nextui-radii-xs);
   padding: var(--nextui-space-6) var(--nextui-space-10);
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,5 +11,15 @@
 }
 
 .button:hover {
+  cursor: pointer;
   background-color: var(--nextui-colors-accent200);
+}
+
+.button:disabled {
+  background-color: var(--nextui-colors-gray300);
+}
+
+.button:disabled:hover {
+  background-color: var(--nextui-colors-gray300);
+  cursor: default;
 }
