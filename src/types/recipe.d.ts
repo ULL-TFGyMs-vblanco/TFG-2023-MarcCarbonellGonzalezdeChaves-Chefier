@@ -1,8 +1,8 @@
 declare module 'recipe-types' {
-  export interface Recipe {
+  interface Recipe {
     name: string;
     username: string;
-    image: string;
+    image: { url: string; fileId: string };
     description: string;
     date: Date;
     tags: {
@@ -20,12 +20,15 @@ declare module 'recipe-types' {
     saves: string[];
     likes: string[];
     valoration: number;
-    valorations: {
-      username: string;
-      comment: string;
-      rating: number;
-      date: Date;
-    }[];
+    valorations: Valoration[];
+  }
+
+  interface Valoration {
+    username: string;
+    title: string;
+    comment?: string;
+    rating: number;
+    date: Date;
   }
 
   interface NewRecipeFormInputs {

@@ -58,7 +58,7 @@ export const darkTheme = createTheme({
     },
     lineHeights: {
       xs: 1 /* 16px */,
-      sm: 1.25 /* 20px */,
+      sm: 1.2 /* 19.2px */,
       base: 1.5 /* 24px */,
       md: 1.5 /* 24px */,
       lg: 1.75 /* 28px */,

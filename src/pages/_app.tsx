@@ -7,6 +7,9 @@ import { NextUIProvider } from '@nextui-org/react';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { lightTheme } from '../themes/lightTheme';
 import { darkTheme } from '../themes/darkTheme';
+import TimeAgo from 'javascript-time-ago';
+
+TimeAgo.addDefaultLocale(require('javascript-time-ago/locale/es'));
 
 export default function App({
   Component,
