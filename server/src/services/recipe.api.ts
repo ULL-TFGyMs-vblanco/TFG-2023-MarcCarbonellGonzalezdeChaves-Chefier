@@ -13,7 +13,7 @@ export const getRecipes = async (
     })
     .catch((err) => {
       utils.setResponse(response, 500, {
-        error: err,
+        error: { message: 'Error finding recipes', error: err },
         requerequest: request.body,
       });
     });
@@ -63,6 +63,53 @@ export const postRecipe = async ({ response, request }: Context) => {
   }
 };
 
+// Update a recipe
+export const updateRecipe = async ({ response, request }: Context) => {
+  const allowedUpdates = ['likes', 'saves', 'valorations'];
+  const actualUpdates = Object.keys(request.body);
+  const isValidUpdate = actualUpdates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+  if (!isValidUpdate) {
+    utils.setResponse(response, 400, {
+      error: { message: 'Update is not permitted' },
+      request: request.body,
+    });
+  } else {
+    if (!request.query.id) {
+      utils.setResponse(response, 400, {
+        error: { message: 'An id must be provided' },
+        request: request.body,
+      });
+    } else {
+      try {
+        const element = await Recipe.findByIdAndUpdate(
+          request.query.id,
+          request.body,
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+
+        if (!element) {
+          utils.setResponse(response, 404, {
+            error: { message: 'Recipe not found' },
+            request: request.body,
+          });
+        } else {
+          utils.setResponse(response, 200, element);
+        }
+      } catch (err) {
+        utils.setResponse(response, 500, {
+          error: { message: 'Error updating the recipe', error: err },
+          request: request.body,
+        });
+      }
+    }
+  }
+};
+
 // Delete a recipe
 export const deleteRecipe = async ({ response, params }: Context) => {
   await Recipe.findByIdAndDelete(params.id)
@@ -79,7 +126,7 @@ export const deleteRecipe = async ({ response, params }: Context) => {
     })
     .catch((err) => {
       utils.setResponse(response, 500, {
-        error: { message: err },
+        error: { message: 'Error deleting the recipe', error: err },
         request: params.id,
       });
     });
@@ -88,5 +135,6 @@ export const deleteRecipe = async ({ response, params }: Context) => {
 module.exports = {
   getRecipes,
   postRecipe,
+  updateRecipe,
   deleteRecipe,
 };

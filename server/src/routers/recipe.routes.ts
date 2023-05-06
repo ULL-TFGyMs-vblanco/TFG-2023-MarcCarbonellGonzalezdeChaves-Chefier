@@ -1,5 +1,10 @@
 import Router from 'koa-router';
-import { getRecipes, postRecipe, deleteRecipe } from '../services/recipe.api';
+import {
+  getRecipes,
+  postRecipe,
+  updateRecipe,
+  deleteRecipe,
+} from '../services/recipe.api';
 import { verifyToken } from '../middlewares/verifyToken';
 import multer from 'koa-multer-esm';
 const upload = multer();
@@ -16,5 +21,7 @@ recipeRouter.post(
   verifyToken,
   postRecipe
 );
+
+recipeRouter.patch('/api/recipe/:id', verifyToken, updateRecipe);
 
 recipeRouter.delete('/api/recipe/:id', verifyToken, deleteRecipe);
