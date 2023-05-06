@@ -30,6 +30,8 @@ export interface RecipeDocumentInterface extends Document {
       date: Date;
     }
   ];
+  likes: [string];
+  saved: [string];
 }
 
 export const RecipeSchema = new Schema<RecipeDocumentInterface>({
@@ -191,6 +193,16 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
       });
     },
     default: [],
+  },
+  likes: {
+    type: [String],
+    default: [],
+    required: false,
+  },
+  saved: {
+    type: [String],
+    default: [],
+    required: false,
   },
 });
 
