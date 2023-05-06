@@ -39,7 +39,7 @@
   text-align: center;
   margin: var(--nextui-space-7) auto;
   border-top: var(--nextui-borderWeights-light) solid
-    var(--nextui-colors-secondary100);
+    var(--nextui-colors-border);
 }
 
 .divider__text {
@@ -105,7 +105,6 @@
 
 .input__style {
   font-size: var(--nextui-fontSizes-sm);
-  /* font-family: var(--font-family); */
   box-sizing: border-box;
   width: 100%;
   height: 3rem;

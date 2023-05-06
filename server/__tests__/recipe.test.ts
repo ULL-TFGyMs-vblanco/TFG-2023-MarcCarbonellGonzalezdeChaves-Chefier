@@ -1,8 +1,9 @@
 import request from 'supertest';
 import { app } from '../src/app';
-import { describe, it, beforeAll, vi } from 'vitest';
+import { describe, it, beforeAll } from 'vitest';
 import { Recipe } from '../src/models/recipe';
 import { User } from '../src/models/user';
+import path from 'path';
 
 const server = app.listen();
 
@@ -12,10 +13,8 @@ beforeAll(async () => {
 });
 
 const recipe = {
-  name: 'Ensalada de quinoa y aguacate',
-  username: 'chefjulia',
-  image:
-    'https://ik.imagekit.io/czvxqgafa/images/posts/ensalada_quinoa_aguacate.jpg',
+  name: 'Pizza con piña',
+  username: 'elgranchef',
   description: 'Una receta saludable y fácil de preparar para una cena ligera.',
   tags: {
     brekfast: false,
@@ -27,51 +26,32 @@ const recipe = {
   difficulty: 'Fácil',
   cookTime: 30,
   rations: 2,
-  ingredients: [
-    { name: 'quinoa', quantity: 1, unit: 'taza' },
-    { name: 'aguacate', quantity: 2, unit: 'unidades' },
-    { name: 'tomate cherry', quantity: 1, unit: 'taza' },
-    { name: 'cebolla morada', quantity: 1, unit: 'unidad' },
-    { name: 'pimiento rojo', quantity: 1, unit: 'unidad' },
-    { name: 'limón', quantity: 1, unit: 'unidad' },
-    { name: 'aceite de oliva', quantity: 2, unit: 'cucharadas' },
-    { name: 'sal', quantity: 1, unit: 'pizca' },
-    { name: 'pimienta negra', quantity: 1, unit: 'pizca' },
-  ],
-  instructions: [
-    'Enjuagar la quinoa bajo agua fría y escurrir.',
-    'Colocar la quinoa en una olla con dos tazas de agua y sal al gusto. Cocinar a fuego medio hasta que la quinoa esté cocida, aproximadamente 15 minutos.',
-    'Mientras tanto, picar la cebolla, el pimiento y el tomate cherry. Cortar los aguacates en cubos y rociar con limón para evitar que se oxiden.',
-    'Una vez cocida la quinoa, dejar enfriar.',
-    'Mezclar la quinoa con los vegetales picados y el aceite de oliva.',
-    'Agregar sal y pimienta al gusto.',
-    'Servir frío y disfrutar!',
-  ],
+  ingredients: [{ name: 'quinoa', quantity: 1, unit: 'taza' }],
+  instructions: [{ step: 'Enjuagar la quinoa bajo agua fría y escurrir.' }],
+};
+
+const recipe2 = {
+  name: 'Ensalada de quinoa y aguacate',
+  username: 'chefjulia',
 };
 
 let accessToken = '';
+let id = '';
 
 describe('Recipe router', (): void => {
-  vi.mock('imagekit-javascript', async () => {
-    return {
-      default: () => ({
-        upload: () => ({
-          url: '1234',
-          fileId: '1234',
-        }),
-      }),
-    };
-  });
-
-  vi.mock('imagekit', async () => {
-    return {
-      default: vi.fn().mockImplementation(() => ({
-        default: () => ({
-          deleteFile: () => ({}),
-        }),
-      })),
-    };
-  });
+  // vi.mock('../src/utils/APIUtils.ts', async () => {
+  //   const mod: any = await vi.importActual('../src/utils/APIUtils.ts');
+  //   return {
+  //     default: {
+  //       ...mod.default,
+  //       uploadImage: () => ({
+  //         url: 'https://ik.imagekit.io/czvxqgafa/images/posts/ensalada_quinoa_aguacate.jpg',
+  //         fileId: '1234',
+  //       }),
+  //       deleteImage: () => ({}),
+  //     },
+  //   };
+  // });
 
   describe('Get recipes', (): void => {
     it('should return all the recipes', async () => {
@@ -100,17 +80,37 @@ describe('Recipe router', (): void => {
       accessToken = res.body.accessToken;
     });
     it('should post a recipe', async () => {
-      await request(server)
+      const res = await request(server)
         .post('/api/recipe')
+        .attach(
+          'image',
+          path.resolve(__dirname, '../../public/images/chefier.png')
+        )
         .set('Authorization', `Bearer ${accessToken}`)
-        .send({ provider: 'credentials', recipe })
+        .set('Content-Type', 'multipart/form-data')
+        .field('provider', 'credentials')
+        .field('recipe', JSON.stringify(recipe))
         .expect(200);
+      id = res.body.recipe._id;
     });
-    it('should throw a validation error for duplication', async () => {
+    it('should delete a recipe', async () => {
       await request(server)
-        .post('/api/recipe')
+        .delete(`/api/recipe/${id}`)
         .set('Authorization', `Bearer ${accessToken}`)
         .send({ provider: 'credentials' })
+        .expect(200);
+    });
+    it('should throw a validation error', async () => {
+      await request(server)
+        .post('/api/recipe')
+        .attach(
+          'image',
+          path.resolve(__dirname, '../../public/images/chefier.png')
+        )
+        .set('Authorization', `Bearer ${accessToken}`)
+        .set('Content-Type', 'multipart/form-data')
+        .field('provider', 'credentials')
+        .field('recipe', JSON.stringify(recipe2))
         .expect(400);
     });
   });

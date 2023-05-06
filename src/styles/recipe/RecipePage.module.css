@@ -1,0 +1,413 @@
+.card {
+  width: 100%;
+  margin: var(--nextui-space-15) auto;
+}
+
+@media screen and (width < 650px) {
+  .card {
+    box-shadow: none;
+    background-color: transparent;
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--nextui-space-15) var(--nextui-space-19);
+  gap: var(--nextui-space-7);
+  width: 100%;
+}
+
+.top__section {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: var(--nextui-space-15);
+}
+
+@media screen and (width < 650px) {
+  .top__section {
+    flex-wrap: wrap-reverse;
+    flex-direction: column-reverse;
+    gap: var(--nextui-space-7);
+  }
+}
+
+.middle__section {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: var(--nextui-space-15);
+}
+
+@media screen and (width < 650px) {
+  .middle__section {
+    flex-direction: column;
+    gap: var(--nextui-space-7);
+  }
+}
+
+.left__subsection {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--nextui-space-9);
+}
+
+.right__subsection {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nextui-space-7);
+}
+
+.bottom__section {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: var(--nextui-space-15);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nextui-space-4);
+  width: 100%;
+}
+
+.field__title {
+  font-size: var(--nextui-fontSizes-md);
+  font-weight: var(--nextui-fontWeights-bold);
+}
+
+.user__info {
+  display: flex;
+  flex-direction: row;
+  gap: var(--nextui-space-4);
+}
+
+.avatar:hover {
+  opacity: 0.8;
+}
+
+.user__name:hover {
+  color: var(--nextui-colors-secondary100);
+}
+
+.tags__container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nextui-space-4);
+}
+
+.tag {
+  width: min-content;
+  padding: 0 var(--nextui-space-4);
+  border-radius: var(--nextui-radii-sm);
+  background-color: var(--nextui-colors-accent100);
+  color: white;
+  user-select: none;
+}
+
+.tag:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-accent200);
+}
+
+.image__container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: var(--nextui-radii-sm);
+  overflow: hidden;
+}
+
+.save__button {
+  position: absolute;
+  width: 1.25rem;
+  height: 1.25rem;
+  bottom: 0.6rem;
+  right: 3.75rem;
+  color: var(--nextui-colors-yellow600);
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.save__button:hover {
+  cursor: pointer;
+  color: var(--nextui-colors-yellow700);
+}
+
+.disabled__save__button {
+  position: absolute;
+  width: 1.2rem;
+  height: 1.2rem;
+  bottom: 0.6rem;
+  right: 1.5rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.saves__count {
+  position: absolute;
+  bottom: 0.4rem;
+  right: 3rem;
+  font-size: var(--nextui-fontSizes-md);
+  font-weight: var(--nextui-fontWeights-bold);
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  text-shadow: 1px 1px 2px var(--nextui-colors-gray600);
+}
+
+.like__button {
+  position: absolute;
+  width: 1.2rem;
+  height: 1.2rem;
+  bottom: 0.6rem;
+  right: 1.5rem;
+  color: var(--nextui-colors-red600);
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.like__button:hover {
+  cursor: pointer;
+  color: var(--nextui-colors-red700);
+}
+
+.disabled__like__button {
+  position: absolute;
+  width: 1.2rem;
+  height: 1.2rem;
+  bottom: 0.6rem;
+  right: 1.5rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.likes__count {
+  position: absolute;
+  bottom: 0.4rem;
+  right: 0.75rem;
+  font-size: var(--nextui-fontSizes-md);
+  font-weight: var(--nextui-fontWeights-bold);
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  text-shadow: 1px 1px 2px var(--nextui-colors-gray600);
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  gap: var(--nextui-space-4);
+  align-items: center;
+  width: 100%;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: var(--nextui-space-2);
+}
+
+.stats__divider {
+  border-left: var(--nextui-borderWeights-light) solid
+    var(--nextui-colors-border);
+  height: 4rem;
+}
+
+.stat__data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--nextui-space-3);
+  text-align: center;
+}
+
+.stat__number {
+  font-size: var(--nextui-fontSizes-base);
+}
+
+.star__icon {
+  color: var(--nextui-colors-yellow600);
+}
+
+.clock__icon {
+  color: var(--nextui-colors-secondary600);
+  height: 0.938rem;
+}
+
+.rations__icon {
+  position: relative;
+  top: 0.14rem;
+  gap: var(--nextui-space-3);
+}
+
+.ingredient {
+  display: flex;
+  gap: var(--nextui-space-5);
+  margin: var(--nextui-space-7) 0;
+}
+
+.instruction {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  margin: var(--nextui-space-7) 0;
+}
+
+.instruction__number {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  line-height: var(--nextui-lineHeights-sm);
+  color: white;
+  border-radius: var(--nextui-radii-rounded);
+  background-color: var(--nextui-colors-accent100);
+  font-weight: var(--nextui-fontWeights-bold);
+  font-size: var(--nextui-fontSizes-sm);
+}
+
+.step {
+  margin-left: var(--nextui-space-12);
+}
+
+.valorations__header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: var(--nextui-space-7);
+  gap: var(--nextui-space-8);
+}
+
+.valoration__mean {
+  display: flex;
+  align-items: center;
+  gap: var(--nextui-space-5);
+}
+
+.mean {
+  font-size: var(--nextui-fontSizes-4xl);
+  font-weight: var(--nextui-fontWeights-bold);
+  color: var(--nextui-colors-secondary600);
+}
+
+.add__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.5rem;
+  width: 8rem;
+  gap: var(--nextui-space-2);
+  background-color: var(--nextui-colors-green600);
+  font-size: var(--nextui-fontSizes-sm);
+  padding: 0;
+}
+
+.add__button:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-green700);
+}
+
+.review__container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nextui-space-6);
+  font-size: var(--nextui-fontSizes-sm);
+  width: 100%;
+  padding: var(--nextui-space-6);
+  border-radius: var(--nextui-radii-xs);
+  border: var(--nextui-borderWeights-light) solid
+    var(--nextui-colors-primary400);
+  position: relative;
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--nextui-space-4);
+  margin-right: var(--nextui-space-12);
+}
+
+.rating {
+  display: flex;
+  flex-direction: column;
+}
+
+.rating__msg {
+  font-size: var(--nextui-fontSizes-sm);
+}
+
+.send__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.5rem;
+  width: 5rem;
+  gap: var(--nextui-space-2);
+  background-color: var(--nextui-colors-accent100);
+  padding: 0;
+}
+
+.send__button:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-accent200);
+}
+
+.close__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.5rem;
+  width: 1.5rem;
+  gap: var(--nextui-space-2);
+  background-color: transparent;
+  color: var(--nextui-colors-secondary300);
+  border: none;
+  padding: 0;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+
+.close__button:hover {
+  background-color: transparent;
+  color: var(--nextui-colors-secondary100);
+  cursor: pointer;
+}
+
+.comment__input {
+  font-size: var(--nextui-fontSizes-sm);
+  width: 100%;
+  height: 3rem;
+  padding: var(--nextui-space-6);
+  border-radius: var(--nextui-radii-xs);
+  border: var(--nextui-borderWeights-light) solid
+    var(--nextui-colors-primary400);
+  background-color: var(--nextui-colors-primary100);
+}

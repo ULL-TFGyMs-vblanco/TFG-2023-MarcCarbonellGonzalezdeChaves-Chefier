@@ -4,8 +4,10 @@ export const recipes: Recipe[] = [
   {
     name: 'Ensalada de quinoa y aguacate',
     username: 'chefjulia',
-    image:
-      'https://ik.imagekit.io/czvxqgafa/images/posts/demo/ensalada_quinoa_aguacate.jpg',
+    image: {
+      url: 'https://ik.imagekit.io/czvxqgafa/images/posts/demo/ensalada_quinoa_aguacate.jpg',
+      fileId: '1234',
+    },
     description:
       'Una receta saludable y fácil de preparar para una cena ligera.',
     date: new Date('2023-04-23T19:00:00.000Z'),

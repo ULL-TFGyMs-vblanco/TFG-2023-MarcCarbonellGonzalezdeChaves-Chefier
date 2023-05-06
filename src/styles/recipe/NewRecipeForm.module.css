@@ -22,7 +22,7 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  margin-bottom: 1rem;
+  margin-bottom: var(--nextui-space-9);
 }
 
 .post__button {
@@ -124,7 +124,7 @@
 
 .tag__checked {
   width: min-content;
-  padding: 0 0.5rem;
+  padding: 0 var(--nextui-space-4);
   border-radius: var(--nextui-radii-sm);
   background-color: var(--nextui-colors-accent100);
   color: white;
@@ -138,7 +138,7 @@
 
 .tag__not__checked {
   width: min-content;
-  padding: 0 0.5rem;
+  padding: 0 var(--nextui-space-4);
   border-radius: var(--nextui-radii-sm);
   background-color: var(--nextui-colors-gray700);
   color: white;
@@ -188,7 +188,7 @@
   background-color: var(--nextui-colors-red600);
   border: none;
   border-radius: var(--nextui-radii-sm);
-  padding: 1rem;
+  padding: var(--nextui-space-9);
 }
 
 .remove__image__button:hover {

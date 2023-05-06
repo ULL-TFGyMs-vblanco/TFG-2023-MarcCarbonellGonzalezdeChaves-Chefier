@@ -30,8 +30,8 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     handleSubmit,
   } = useForm<RegisterFormInputs>();
   const { isDark } = useTheme();
-  const [showMore, toggleShowMore] = useShow();
-  const [showPassword, toggleShowPassword] = useShow();
+  const { show: showMore, toggleShow: toggleShowMore } = useShow();
+  const { show: showPassword, toggleShow: toggleShowPassword } = useShow();
 
   const loginHandler = (provider: string) => {
     onOauthLogin(provider, { callbackUrl: '/' });

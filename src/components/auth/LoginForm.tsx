@@ -18,7 +18,7 @@ interface LoginFormProps {
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const { isDark } = useTheme();
   const { register, watch, handleSubmit } = useForm<LoginFormInputs>();
-  const [showPassword, toggleShowPassword] = useShow();
+  const { show: showPassword, toggleShow: toggleShowPassword } = useShow();
 
   const loginHandler = (provider: string, credentials?: LoginData) => {
     if (credentials) {

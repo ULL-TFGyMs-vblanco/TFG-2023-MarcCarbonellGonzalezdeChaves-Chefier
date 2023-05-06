@@ -7,6 +7,7 @@ interface ButtonProps {
   style?: string;
   testid?: string;
   onClick?: () => void;
+  disabled?: boolean;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -15,6 +16,7 @@ export const Button: React.FC<ButtonProps> = ({
   style,
   testid,
   onClick,
+  disabled = false,
 }) => {
   return (
     <button
@@ -22,6 +24,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={`${styles.button} ${style}`}
       data-testid={testid}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

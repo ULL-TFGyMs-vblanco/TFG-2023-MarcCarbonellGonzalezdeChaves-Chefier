@@ -16,6 +16,7 @@ export interface RecipeDocumentInterface extends Document {
     dinner: boolean;
     dessert: boolean;
     snack: boolean;
+    drink: boolean;
   };
   difficulty: 'Fácil' | 'Media' | 'Difícil';
   cookTime: number;
@@ -25,11 +26,14 @@ export interface RecipeDocumentInterface extends Document {
   valorations: [
     {
       username: string;
-      comment: string;
+      title: string;
+      comment?: string;
       rating: number;
       date: Date;
     }
   ];
+  likes: [string];
+  saved: [string];
 }
 
 export const RecipeSchema = new Schema<RecipeDocumentInterface>({
@@ -191,6 +195,16 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
       });
     },
     default: [],
+  },
+  likes: {
+    type: [String],
+    default: [],
+    required: false,
+  },
+  saved: {
+    type: [String],
+    default: [],
+    required: false,
   },
 });
 

@@ -1,8 +1,8 @@
 declare module 'recipe-types' {
-  export interface Recipe {
+  interface Recipe {
     name: string;
     username: string;
-    image: string;
+    image: { url: string; fileId: string };
     description: string;
     date: Date;
     tags: {
@@ -11,6 +11,7 @@ declare module 'recipe-types' {
       dinner: boolean;
       dessert: boolean;
       snack: boolean;
+      drink: boolean;
     };
     cookTime: number;
     difficulty: 'Fácil' | 'Media' | 'Difícil';
@@ -20,12 +21,25 @@ declare module 'recipe-types' {
     saves: string[];
     likes: string[];
     valoration: number;
-    valorations: {
-      username: string;
-      comment: string;
-      rating: number;
-      date: Date;
-    }[];
+    valorations: Valoration[];
+  }
+
+  interface Ingredient {
+    name: string;
+    quantity: number;
+    unit: string;
+  }
+
+  interface Instruction {
+    step: string;
+  }
+
+  interface Valoration {
+    username: string;
+    title: string;
+    comment?: string;
+    rating: number;
+    date: Date;
   }
 
   interface NewRecipeFormInputs {
@@ -37,6 +51,7 @@ declare module 'recipe-types' {
       dinner: boolean;
       dessert: boolean;
       snack: boolean;
+      drink: boolean;
     };
     cookTime: number;
     difficulty: 'Fácil' | 'Media' | 'Difícil';

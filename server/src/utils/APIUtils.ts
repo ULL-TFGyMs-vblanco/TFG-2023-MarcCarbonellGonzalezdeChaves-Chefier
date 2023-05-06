@@ -86,8 +86,8 @@ export default class APIUtils {
       .then(() => {
         return;
       })
-      .catch(() => {
-        return;
+      .catch((error) => {
+        throw new Error(error);
       });
   };
 }

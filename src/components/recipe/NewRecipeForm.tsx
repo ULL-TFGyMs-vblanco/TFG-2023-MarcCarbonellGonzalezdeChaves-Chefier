@@ -50,17 +50,6 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
   const { image, imageUrl, onImageChange, setImage } = useImage();
 
   const postHandler = async (data: NewRecipeFormInputs) => {
-    //   const username = user.nickname ? user.nickname : user.username;
-    //   const recipe = {
-    //     username,
-    //     ...data,
-    //     image: image as File,
-    //   };
-    //   try {
-    //     await RecipeService.postRecipe('/recipe', recipe);
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
     onPostRecipe(data, image as File).then((res) => {
       if (res) {
         toggleModal(true);
@@ -222,6 +211,22 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                       {...register('tags.snack')}
                     />
                     Picoteo
+                  </label>
+                  <label
+                    className={
+                      watch('tags.drink')
+                        ? styles.tag__checked
+                        : styles.tag__not__checked
+                    }
+                  >
+                    <input
+                      value='Bebida'
+                      className={styles.tag__checkbox}
+                      type='checkbox'
+                      data-testid='drink-input'
+                      {...register('tags.drink')}
+                    />
+                    Bebida
                   </label>
                 </div>
               </div>
