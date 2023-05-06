@@ -14,6 +14,7 @@ export interface RecipeDocumentInterface extends Document {
         dinner: boolean;
         dessert: boolean;
         snack: boolean;
+        drink: boolean;
     };
     difficulty: 'Fácil' | 'Media' | 'Difícil';
     cookTime: number;
@@ -29,11 +30,14 @@ export interface RecipeDocumentInterface extends Document {
     valorations: [
         {
             username: string;
-            comment: string;
+            title: string;
+            comment?: string;
             rating: number;
             date: Date;
         }
     ];
+    likes: [string];
+    saved: [string];
 }
 export declare const RecipeSchema: Schema<RecipeDocumentInterface, import("mongoose").Model<RecipeDocumentInterface, any, any>, undefined, {}>;
 export declare const Recipe: import("mongoose").Model<RecipeDocumentInterface, {}, {}>;

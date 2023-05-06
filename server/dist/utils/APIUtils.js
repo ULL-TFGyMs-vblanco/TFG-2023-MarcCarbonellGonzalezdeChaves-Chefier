@@ -86,7 +86,7 @@ APIUtils.deleteImage = async (fileID) => {
         .then(() => {
         return;
     })
-        .catch(() => {
-        return;
+        .catch((error) => {
+        throw new Error(error);
     });
 };
