@@ -216,7 +216,11 @@ const RecipePage: React.FC = () => {
                     />
                     {session ? (
                       <BsBookmarkFill
-                        className={styles.save__button}
+                        className={
+                          recipe.saves.includes(user.username)
+                            ? styles.marked__save__button
+                            : styles.unmarked__save__button
+                        }
                         onClick={() => updateHandler('save')}
                       />
                     ) : (
@@ -231,7 +235,11 @@ const RecipePage: React.FC = () => {
                     </p>
                     {session ? (
                       <BsHeartFill
-                        className={styles.like__button}
+                        className={
+                          recipe.likes.includes(user.username)
+                            ? styles.marked__like__button
+                            : styles.unmarked__like__button
+                        }
                         onClick={() => updateHandler('like')}
                       />
                     ) : (

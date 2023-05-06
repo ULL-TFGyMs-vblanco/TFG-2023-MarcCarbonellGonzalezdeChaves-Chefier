@@ -137,7 +137,7 @@
   overflow: hidden;
 }
 
-.save__button {
+.marked__save__button {
   position: absolute;
   width: 1.25rem;
   height: 1.25rem;
@@ -148,9 +148,25 @@
   filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
 }
 
-.save__button:hover {
+.marked__save__button:hover {
   cursor: pointer;
   color: var(--nextui-colors-yellow700);
+}
+
+.unmarked__save__button {
+  position: absolute;
+  width: 1.25rem;
+  height: 1.25rem;
+  bottom: 0.6rem;
+  right: 3.75rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.unmarked__save__button:hover {
+  cursor: pointer;
+  color: #dbdbdb;
 }
 
 .disabled__save__button {
@@ -175,7 +191,7 @@
   text-shadow: 1px 1px 2px var(--nextui-colors-gray600);
 }
 
-.like__button {
+.marked__like__button {
   position: absolute;
   width: 1.2rem;
   height: 1.2rem;
@@ -186,9 +202,25 @@
   filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
 }
 
-.like__button:hover {
+.marked__like__button:hover {
   cursor: pointer;
   color: var(--nextui-colors-red700);
+}
+
+.unmarked__like__button {
+  position: absolute;
+  width: 1.2rem;
+  height: 1.2rem;
+  bottom: 0.6rem;
+  right: 1.5rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.unmarked__like__button:hover {
+  cursor: pointer;
+  color: #dbdbdb;
 }
 
 .disabled__like__button {
