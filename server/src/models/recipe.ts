@@ -16,6 +16,7 @@ export interface RecipeDocumentInterface extends Document {
     dinner: boolean;
     dessert: boolean;
     snack: boolean;
+    drink: boolean;
   };
   difficulty: 'Fácil' | 'Media' | 'Difícil';
   cookTime: number;
@@ -25,7 +26,8 @@ export interface RecipeDocumentInterface extends Document {
   valorations: [
     {
       username: string;
-      comment: string;
+      title: string;
+      comment?: string;
       rating: number;
       date: Date;
     }

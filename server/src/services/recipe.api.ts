@@ -2,12 +2,30 @@ import { Context } from 'koa';
 import { Recipe } from '../models/recipe';
 import utils from '../utils/APIUtils';
 
+// Get recipes by id
+export const getRecipe = async ({ response, request, params }: Context) => {
+  await Recipe.findById(params.id)
+    .then((recipe) => {
+      if (!recipe) {
+        utils.setResponse(response, 404, {
+          error: { message: 'Recipe not found' },
+          request,
+        });
+      } else {
+        utils.setResponse(response, 200, recipe);
+      }
+    })
+    .catch((err) => {
+      utils.setResponse(response, 500, {
+        error: { message: 'Error finding the recipe', error: err },
+        requerequest: request.body,
+      });
+    });
+};
+
 // Get recipes list
-export const getRecipes = async (
-  { response, request }: Context,
-  filter: any
-) => {
-  await Recipe.find(filter)
+export const getRecipes = async ({ response, request, query }: Context) => {
+  await Recipe.find(query)
     .then((recipes) => {
       utils.setResponse(response, 200, recipes);
     })
@@ -64,7 +82,7 @@ export const postRecipe = async ({ response, request }: Context) => {
 };
 
 // Update a recipe
-export const updateRecipe = async ({ response, request }: Context) => {
+export const updateRecipe = async ({ response, request, params }: Context) => {
   const allowedUpdates = ['likes', 'saves', 'valorations'];
   const actualUpdates = Object.keys(request.body);
   const isValidUpdate = actualUpdates.every((update) =>
@@ -76,7 +94,7 @@ export const updateRecipe = async ({ response, request }: Context) => {
       request: request.body,
     });
   } else {
-    if (!request.query.id) {
+    if (!params.id) {
       utils.setResponse(response, 400, {
         error: { message: 'An id must be provided' },
         request: request.body,
@@ -84,7 +102,7 @@ export const updateRecipe = async ({ response, request }: Context) => {
     } else {
       try {
         const element = await Recipe.findByIdAndUpdate(
-          request.query.id,
+          params.id,
           request.body,
           {
             new: true,
