@@ -11,6 +11,7 @@ declare module 'recipe-types' {
       dinner: boolean;
       dessert: boolean;
       snack: boolean;
+      drink: boolean;
     };
     cookTime: number;
     difficulty: 'Fácil' | 'Media' | 'Difícil';
@@ -21,6 +22,16 @@ declare module 'recipe-types' {
     likes: string[];
     valoration: number;
     valorations: Valoration[];
+  }
+
+  interface Ingredient {
+    name: string;
+    quantity: number;
+    unit: string;
+  }
+
+  interface Instruction {
+    step: string;
   }
 
   interface Valoration {
@@ -40,6 +51,7 @@ declare module 'recipe-types' {
       dinner: boolean;
       dessert: boolean;
       snack: boolean;
+      drink: boolean;
     };
     cookTime: number;
     difficulty: 'Fácil' | 'Media' | 'Difícil';

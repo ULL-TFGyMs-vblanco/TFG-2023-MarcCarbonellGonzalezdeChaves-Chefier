@@ -212,6 +212,22 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                     />
                     Picoteo
                   </label>
+                  <label
+                    className={
+                      watch('tags.drink')
+                        ? styles.tag__checked
+                        : styles.tag__not__checked
+                    }
+                  >
+                    <input
+                      value='Bebida'
+                      className={styles.tag__checkbox}
+                      type='checkbox'
+                      data-testid='drink-input'
+                      {...register('tags.drink')}
+                    />
+                    Bebida
+                  </label>
                 </div>
               </div>
               <div className={styles.stats}>
