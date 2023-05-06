@@ -32,9 +32,7 @@ const RecipePage: React.FC = () => {
   const [reviewTitle, setReviewTitle] = useState();
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  const { recipe, isLoading, isError } = useRecipe(
-    router.pathname.split('/')[1] as string
-  );
+  const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
   const { user } = useLoggedUser();
   const { data: session } = useSession();
 
