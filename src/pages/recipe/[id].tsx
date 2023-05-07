@@ -354,6 +354,7 @@ const RecipePage = () => {
                       {recipe.valorations.length} valoraciones
                     </p>
                     {session &&
+                      loggedUserIsLoading &&
                       !show &&
                       !isAlreadyValorated(recipe.valorations) && (
                         <Button style={styles.add__button} onClick={toggleShow}>
@@ -361,15 +362,17 @@ const RecipePage = () => {
                           Escribir&nbsp;reseña
                         </Button>
                       )}
-                    {session && isAlreadyValorated(recipe.valorations) && (
-                      <Button
-                        style={styles.delete__button}
-                        onClick={valorationHandler}
-                      >
-                        <BsFillTrashFill />
-                        Eliminar reseña
-                      </Button>
-                    )}
+                    {session &&
+                      loggedUserIsLoading &&
+                      isAlreadyValorated(recipe.valorations) && (
+                        <Button
+                          style={styles.delete__button}
+                          onClick={valorationHandler}
+                        >
+                          <BsFillTrashFill />
+                          Eliminar reseña
+                        </Button>
+                      )}
                   </div>
                   <div className={styles.valoration__mean}>
                     <p className={styles.mean}>
