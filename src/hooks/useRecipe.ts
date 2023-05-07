@@ -3,8 +3,10 @@ import axios from '../../axios_config';
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
-export function useRecipe(id: string | string[] | undefined) {
-  const { data, error, isLoading } = useSWR(`/recipe/${id}`, fetcher);
+export function useRecipe(id: string | undefined) {
+  const { data, error, isLoading } = useSWR(`/recipe/${id}`, fetcher, {
+    revalidateOnMount: true,
+  });
 
   return {
     recipe: data,
