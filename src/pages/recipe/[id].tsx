@@ -34,8 +34,11 @@ const RecipePage = () => {
   const { mutate } = useSWRConfig();
   const router = useRouter();
   const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
-  const { user } = useLoggedUser();
-  const { user: recipeUser } = useUser('username', recipe?.username as string);
+  const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
+  const { user: recipeUser, isLoading: recipeUserIsLoading } = useUser(
+    'username',
+    recipe?.username as string
+  );
   const { data: session } = useSession();
 
   const updateHandler = async (update: 'like' | 'save' | 'valoration') => {
@@ -124,13 +127,17 @@ const RecipePage = () => {
                   <Title style={styles.title}>{recipe.name}</Title>
                   <div className={styles.field} data-testid='form-field'>
                     <div className={styles.user__info}>
-                      <Avatar
-                        source={recipeUser.image}
-                        username={recipe.username}
-                        link={`/${recipe.username}`}
-                        size={30}
-                        style={styles.avatar}
-                      />
+                      {recipeUserIsLoading ? (
+                        <Loading />
+                      ) : (
+                        <Avatar
+                          source={recipeUser.image}
+                          username={recipe.username}
+                          link={`/${recipe.username}`}
+                          size={30}
+                          style={styles.avatar}
+                        />
+                      )}
                       <Link
                         href={`/${recipe.username}`}
                         className={styles.user__name}
@@ -218,14 +225,18 @@ const RecipePage = () => {
                         priority
                       />
                       {session ? (
-                        <BsBookmarkFill
-                          className={
-                            recipe.saved.includes(user.username)
-                              ? styles.marked__save__button
-                              : styles.unmarked__save__button
-                          }
-                          onClick={() => updateHandler('save')}
-                        />
+                        loggedUserIsLoading ? (
+                          <Loading />
+                        ) : (
+                          <BsBookmarkFill
+                            className={
+                              recipe.saved.includes(user.username)
+                                ? styles.marked__save__button
+                                : styles.unmarked__save__button
+                            }
+                            onClick={() => updateHandler('save')}
+                          />
+                        )
                       ) : (
                         <BsBookmarkFill
                           className={styles.disabled__save__button}
@@ -237,14 +248,18 @@ const RecipePage = () => {
                           : recipe.saved.length}
                       </p>
                       {session ? (
-                        <BsHeartFill
-                          className={
-                            recipe.likes.includes(user.username)
-                              ? styles.marked__like__button
-                              : styles.unmarked__like__button
-                          }
-                          onClick={() => updateHandler('like')}
-                        />
+                        loggedUserIsLoading ? (
+                          <Loading />
+                        ) : (
+                          <BsHeartFill
+                            className={
+                              recipe.likes.includes(user.username)
+                                ? styles.marked__like__button
+                                : styles.unmarked__like__button
+                            }
+                            onClick={() => updateHandler('like')}
+                          />
+                        )
                       ) : (
                         <BsHeartFill
                           className={styles.disabled__like__button}
