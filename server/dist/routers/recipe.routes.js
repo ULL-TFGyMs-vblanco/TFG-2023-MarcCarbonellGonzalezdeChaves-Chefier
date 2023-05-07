@@ -10,8 +10,8 @@ const verifyToken_1 = require("../middlewares/verifyToken");
 const koa_multer_esm_1 = __importDefault(require("koa-multer-esm"));
 const upload = (0, koa_multer_esm_1.default)();
 exports.recipeRouter = new koa_router_1.default();
-exports.recipeRouter.get('/api/recipes', async (ctx) => {
-    await (0, recipe_api_1.getRecipes)(ctx, ctx.query);
-});
+exports.recipeRouter.get('/api/recipe/:id', recipe_api_1.getRecipe);
+exports.recipeRouter.get('/api/recipes', recipe_api_1.getRecipes);
 exports.recipeRouter.post('/api/recipe', upload.single('image'), verifyToken_1.verifyToken, recipe_api_1.postRecipe);
+exports.recipeRouter.patch('/api/recipe/:id', verifyToken_1.verifyToken, recipe_api_1.updateRecipe);
 exports.recipeRouter.delete('/api/recipe/:id', verifyToken_1.verifyToken, recipe_api_1.deleteRecipe);

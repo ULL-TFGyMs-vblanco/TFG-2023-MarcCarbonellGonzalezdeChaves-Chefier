@@ -149,5 +149,15 @@ exports.RecipeSchema = new mongoose_1.Schema({
         },
         default: [],
     },
+    likes: {
+        type: [String],
+        default: [],
+        required: false,
+    },
+    saved: {
+        type: [String],
+        default: [],
+        required: false,
+    },
 });
 exports.Recipe = (0, mongoose_1.model)('Recipe', exports.RecipeSchema);

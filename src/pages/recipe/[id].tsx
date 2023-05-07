@@ -32,9 +32,7 @@ const RecipePage: React.FC = () => {
   const [reviewTitle, setReviewTitle] = useState();
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  const { recipe, isLoading, isError } = useRecipe(
-    router.pathname.split('/')[1] as string
-  );
+  const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
   const { user } = useLoggedUser();
   const { data: session } = useSession();
 
@@ -218,7 +216,11 @@ const RecipePage: React.FC = () => {
                     />
                     {session ? (
                       <BsBookmarkFill
-                        className={styles.save__button}
+                        className={
+                          recipe.saves.includes(user.username)
+                            ? styles.marked__save__button
+                            : styles.unmarked__save__button
+                        }
                         onClick={() => updateHandler('save')}
                       />
                     ) : (
@@ -233,7 +235,11 @@ const RecipePage: React.FC = () => {
                     </p>
                     {session ? (
                       <BsHeartFill
-                        className={styles.like__button}
+                        className={
+                          recipe.likes.includes(user.username)
+                            ? styles.marked__like__button
+                            : styles.unmarked__like__button
+                        }
                         onClick={() => updateHandler('like')}
                       />
                     ) : (

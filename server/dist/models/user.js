@@ -92,25 +92,5 @@ exports.UserSchema = new mongoose_1.Schema({
         default: [],
         required: false,
     },
-    followers: {
-        type: [String],
-        default: [],
-        required: false,
-    },
-    recipes: {
-        type: [String],
-        default: [],
-        required: false,
-    },
-    likes: {
-        type: [String],
-        default: [],
-        required: false,
-    },
-    saved: {
-        type: [String],
-        default: [],
-        required: false,
-    },
 });
 exports.User = (0, mongoose_1.model)('User', exports.UserSchema);

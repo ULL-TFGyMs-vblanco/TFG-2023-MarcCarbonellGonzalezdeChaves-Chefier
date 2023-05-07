@@ -104,7 +104,7 @@ async function verifyGithub(token, request, response) {
     })
         .catch((error) => {
         APIUtils_1.default.setResponse(response, 401, {
-            error: { message: 'Invalid GitHub token', error: error.response.data },
+            error: { message: 'Invalid GitHub token', error },
             request: request.body,
         });
         throw new Error();
