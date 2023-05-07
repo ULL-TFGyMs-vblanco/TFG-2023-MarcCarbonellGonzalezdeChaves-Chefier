@@ -17,22 +17,27 @@ import { IoClose } from 'react-icons/io5';
 import { useRecipe } from '@/hooks/useRecipe';
 import { useRouter } from 'next/router';
 import { Loading } from '@nextui-org/react';
-import { Ingredient, Instruction, Valoration } from 'recipe-types';
+import { Ingredient, Instruction, Recipe, Valoration } from 'recipe-types';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
 import RecipeService from '@/services/RecipeService';
 import { useSWRConfig } from 'swr';
 import { useSession } from 'next-auth/react';
+import { NextPageContext } from 'next';
+import axios from '../../../axios_config';
 
 const timeAgo = new TimeAgo('es-ES');
 
-const RecipePage: React.FC = () => {
+const RecipePage = (props: { recipe: Recipe }) => {
   const { show, toggleShow } = useShow();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState();
   const [reviewTitle, setReviewTitle] = useState();
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
+  const { recipe, isLoading, isError } = useRecipe(
+    router.query.id as string,
+    props.recipe
+  );
   const { user } = useLoggedUser();
   const { data: session } = useSession();
 
@@ -394,6 +399,12 @@ const RecipePage: React.FC = () => {
       </div>
     </Card>
   );
+};
+
+RecipePage.getInitialProps = async (ctx: NextPageContext) => {
+  const { id } = ctx.query;
+  const { data } = await axios.get(`/recipes/${id}`);
+  return { recipe: data };
 };
 
 export default RecipePage;
