@@ -119,7 +119,7 @@ export const updateRecipe = async ({ response, request, params }: Context) => {
         }
       } catch (err) {
         utils.setResponse(response, 500, {
-          error: { message: 'Error updating the recipe', error: err },
+          error: { message: JSON.stringify(err), error: err },
           request: request.body,
         });
       }

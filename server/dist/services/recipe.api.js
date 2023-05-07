@@ -120,7 +120,7 @@ const updateRecipe = async ({ response, request, params }) => {
             }
             catch (err) {
                 APIUtils_1.default.setResponse(response, 500, {
-                    error: { message: 'Error updating the recipe', error: err },
+                    error: { message: JSON.stringify(err), error: err },
                     request: request.body,
                 });
             }
