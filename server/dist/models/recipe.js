@@ -129,7 +129,7 @@ exports.RecipeSchema = new mongoose_1.Schema({
                     image: String,
                 },
                 comment: String,
-                valoration: Number,
+                rating: Number,
                 date: Date,
             },
         ],

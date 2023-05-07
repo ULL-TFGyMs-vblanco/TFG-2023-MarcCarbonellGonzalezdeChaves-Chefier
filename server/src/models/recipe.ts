@@ -169,7 +169,7 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
           image: String,
         },
         comment: String,
-        valoration: Number,
+        rating: Number,
         date: Date,
       },
     ],

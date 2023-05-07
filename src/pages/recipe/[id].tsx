@@ -11,7 +11,12 @@ import { Button } from '../../components/ui/Button';
 import { useShow } from '../../hooks/useShow';
 import ReactStars from 'react-stars';
 import { GrStar } from 'react-icons/gr';
-import { BsBookmarkFill, BsFillPersonFill, BsHeartFill } from 'react-icons/bs';
+import {
+  BsBookmarkFill,
+  BsFillPersonFill,
+  BsFillTrashFill,
+  BsHeartFill,
+} from 'react-icons/bs';
 import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useRecipe } from '@/hooks/useRecipe';
@@ -123,6 +128,14 @@ const RecipePage = () => {
         0
       ) / valorations.length;
     return isNaN(average) ? 0 : average;
+  };
+
+  const isAlreadyValorated = (valorations: Valoration[]) => {
+    return valorations.some(
+      (valoration: Valoration) =>
+        valoration.user.name === user.username ||
+        valoration.user.name === user.nickname
+    );
   };
 
   return (
@@ -340,10 +353,21 @@ const RecipePage = () => {
                       Valoraciones y reseñas&nbsp;&nbsp;&middot;&nbsp;&nbsp;
                       {recipe.valorations.length} valoraciones
                     </p>
-                    {session && !show && (
-                      <Button style={styles.add__button} onClick={toggleShow}>
-                        <BiEditAlt />
-                        Escribir&nbsp;reseña
+                    {session &&
+                      !show &&
+                      !isAlreadyValorated(recipe.valorations) && (
+                        <Button style={styles.add__button} onClick={toggleShow}>
+                          <BiEditAlt />
+                          Escribir&nbsp;reseña
+                        </Button>
+                      )}
+                    {session && isAlreadyValorated(recipe.valorations) && (
+                      <Button
+                        style={styles.delete__button}
+                        onClick={valorationHandler}
+                      >
+                        <BsFillTrashFill />
+                        Eliminar reseña
                       </Button>
                     )}
                   </div>
