@@ -51,27 +51,28 @@ const RecipePage = () => {
   };
 
   const likeHandler = () => {
-    let update = recipe.likes;
     if (recipe.likes.includes(user.username)) {
-      update = update.filter((like: string) => like !== user.username);
+      recipe.likes = recipe.likes.filter(
+        (like: string) => like !== user.username
+      );
     } else {
-      update.push(user.username);
+      recipe.likes.push(user.username);
     }
-    updateHandler({ likes: update });
+    updateHandler({ likes: recipe.likes });
   };
 
   const saveHandler = () => {
-    let update = recipe.saved;
     if (recipe.saved.includes(user.username)) {
-      update = update.filter((save: string) => save !== user.username);
+      recipe.saved = recipe.saved.filter(
+        (save: string) => save !== user.username
+      );
     } else {
-      update.push(user.username);
+      recipe.saved.push(user.username);
     }
-    updateHandler({ saved: update });
+    updateHandler({ saved: recipe.saved });
   };
 
   const valorationHandler = () => {
-    let update = recipe.valorations;
     if (
       recipe.valorations.some(
         (valoration: any) =>
@@ -79,13 +80,13 @@ const RecipePage = () => {
           valoration.user.name === user.nickname
       )
     ) {
-      update = update.filter(
+      recipe.valorations = recipe.valorations.filter(
         (valoration: any) =>
           valoration.username !== user.username &&
           valoration.username !== user.nickname
       );
     } else {
-      update.push(
+      recipe.valorations.push(
         comment
           ? {
               user: {
@@ -94,6 +95,7 @@ const RecipePage = () => {
               },
               title: reviewTitle,
               rating: rating,
+              date: Date.now(),
               comment: comment,
             }
           : {
@@ -103,11 +105,12 @@ const RecipePage = () => {
               },
               title: reviewTitle,
               rating: rating,
+              date: Date.now(),
             }
       );
       toggleShow();
     }
-    updateHandler({ valorations: update });
+    updateHandler({ valorations: recipe.valorations });
   };
 
   const commentHandler = (e: any) => {
@@ -141,7 +144,7 @@ const RecipePage = () => {
         {isLoading ? (
           <Loading />
         ) : isError ? (
-          <Title>Oops! Ha ocurrido un error al cargar la receta.</Title>
+          <Title>Oops! Ha ocurrido un error al cargar la receta</Title>
         ) : (
           recipe && (
             <>
