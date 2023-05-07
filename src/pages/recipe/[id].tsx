@@ -47,11 +47,11 @@ const RecipePage = () => {
       }
     } else if (update === 'save') {
       if (recipe.saved.includes(user.username)) {
-        recipe.saves = recipe.saves.filter(
+        recipe.saved = recipe.saved.filter(
           (save: string) => save !== user.username
         );
       } else {
-        recipe.saves.push(user.username);
+        recipe.saved.push(user.username);
       }
     } else if (update === 'valoration') {
       if (
@@ -229,10 +229,10 @@ const RecipePage = () => {
                           className={styles.disabled__save__button}
                         />
                       )}
-                      <p className={styles.saves__count}>
+                      <p className={styles.saved__count}>
                         {recipe.likes.length > 1000
-                          ? `${recipe.saves.length / 1000}k`
-                          : recipe.saves.length}
+                          ? `${recipe.saved.length / 1000}k`
+                          : recipe.saved.length}
                       </p>
                       {session ? (
                         <BsHeartFill

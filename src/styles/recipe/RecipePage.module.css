@@ -180,7 +180,7 @@
   filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
 }
 
-.saves__count {
+.saved__count {
   position: absolute;
   bottom: 0.4rem;
   right: 3rem;
