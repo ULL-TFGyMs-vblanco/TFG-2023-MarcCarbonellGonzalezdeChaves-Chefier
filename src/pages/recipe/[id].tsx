@@ -141,7 +141,7 @@ const RecipePage = () => {
         {isLoading ? (
           <Loading />
         ) : isError ? (
-          <Title>Oops! Ha ocurrido un error al cargar la receta</Title>
+          <Title>Oops! Ha ocurrido un error al cargar la receta.</Title>
         ) : (
           recipe && (
             <>
