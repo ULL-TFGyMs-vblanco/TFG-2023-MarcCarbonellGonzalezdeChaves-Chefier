@@ -17,7 +17,7 @@ import { IoClose } from 'react-icons/io5';
 import { useRecipe } from '@/hooks/useRecipe';
 import { useRouter } from 'next/router';
 import { Loading } from '@nextui-org/react';
-import { Ingredient, Instruction, Valoration } from 'recipe-types';
+import { Ingredient, Instruction, ValidUpdate, Valoration } from 'recipe-types';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
 import RecipeService from '@/services/RecipeService';
 import { useSWRConfig } from 'swr';
@@ -36,68 +36,76 @@ const RecipePage = () => {
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
   const { data: session } = useSession();
 
-  const updateHandler = async (update: 'like' | 'save' | 'valoration') => {
-    if (update === 'like') {
-      if (recipe.likes.includes(user.username)) {
-        recipe.likes = recipe.likes.filter(
-          (like: string) => like !== user.username
-        );
-      } else {
-        recipe.likes.push(user.username);
-      }
-    } else if (update === 'save') {
-      if (recipe.saved.includes(user.username)) {
-        recipe.saved = recipe.saved.filter(
-          (save: string) => save !== user.username
-        );
-      } else {
-        recipe.saved.push(user.username);
-      }
-    } else if (update === 'valoration') {
-      if (
-        recipe.valorations.some(
-          (valoration: any) =>
-            valoration.user.name === user.username ||
-            valoration.user.name === user.nickname
-        )
-      ) {
-        recipe.valorations = recipe.valorations.filter(
-          (valoration: any) =>
-            valoration.username !== user.username &&
-            valoration.username !== user.nickname
-        );
-      } else {
-        recipe.valorations.push(
-          comment
-            ? {
-                user: {
-                  name: user.nickname ? user.nickname : user.username,
-                  image: user.image,
-                },
-                title: reviewTitle,
-                rating: rating,
-                date: Date.now(),
-                comment: comment,
-              }
-            : {
-                user: {
-                  name: user.nickname ? user.nickname : user.username,
-                  image: user.image,
-                },
-                title: reviewTitle,
-                rating: rating,
-                date: Date.now(),
-              }
-        );
-        toggleShow();
-      }
-    }
+  const updateHandler = async (update: ValidUpdate) => {
     try {
-      await RecipeService.updateRecipe(`/recipe/${recipe._id}`, recipe);
+      await RecipeService.updateRecipe(`/recipe/${recipe._id}`, update);
       mutate('/recipe/' + recipe._id);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const likeHandler = () => {
+    if (recipe.likes.includes(user.username)) {
+      recipe.likes = recipe.likes.filter(
+        (like: string) => like !== user.username
+      );
+    } else {
+      recipe.likes.push(user.username);
+    }
+    updateHandler({ likes: recipe.likes });
+  };
+
+  const saveHandler = () => {
+    if (recipe.saved.includes(user.username)) {
+      recipe.saved = recipe.saved.filter(
+        (save: string) => save !== user.username
+      );
+    } else {
+      recipe.saved.push(user.username);
+    }
+    updateHandler({ saved: recipe.saved });
+  };
+
+  const valorationHandler = () => {
+    if (
+      recipe.valorations.some(
+        (valoration: any) =>
+          valoration.user.name === user.username ||
+          valoration.user.name === user.nickname
+      )
+    ) {
+      recipe.valorations = recipe.valorations.filter(
+        (valoration: any) =>
+          valoration.username !== user.username &&
+          valoration.username !== user.nickname
+      );
+    } else {
+      recipe.valorations.push(
+        comment
+          ? {
+              user: {
+                name: user.nickname ? user.nickname : user.username,
+                image: user.image,
+              },
+              title: reviewTitle,
+              rating: rating,
+              date: Date.now(),
+              comment: comment,
+            }
+          : {
+              user: {
+                name: user.nickname ? user.nickname : user.username,
+                image: user.image,
+              },
+              title: reviewTitle,
+              rating: rating,
+              date: Date.now(),
+            }
+      );
+      toggleShow();
+    }
+    updateHandler({ valorations: recipe.valorations });
   };
 
   const commentHandler = (e: any) => {
@@ -235,7 +243,7 @@ const RecipePage = () => {
                                 ? styles.marked__save__button
                                 : styles.unmarked__save__button
                             }
-                            onClick={() => updateHandler('save')}
+                            onClick={likeHandler}
                           />
                         )
                       ) : (
@@ -258,7 +266,7 @@ const RecipePage = () => {
                                 ? styles.marked__like__button
                                 : styles.unmarked__like__button
                             }
-                            onClick={() => updateHandler('like')}
+                            onClick={saveHandler}
                           />
                         )
                       ) : (
@@ -370,7 +378,7 @@ const RecipePage = () => {
                         <div className={styles.review__buttons}>
                           <Button
                             style={styles.send__button}
-                            onClick={() => updateHandler('valoration')}
+                            onClick={valorationHandler}
                             disabled={reviewTitle ? false : true}
                           >
                             Enviar

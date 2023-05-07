@@ -1,4 +1,4 @@
-import { NewRecipeData, Recipe } from 'recipe-types';
+import { NewRecipeData, ValidUpdate } from 'recipe-types';
 import axios from '../../axios_config';
 import { getSession } from 'next-auth/react';
 
@@ -26,12 +26,12 @@ const RecipeService = {
     }
   },
 
-  updateRecipe: async (url: string, recipe: Recipe) => {
+  updateRecipe: async (url: string, update: ValidUpdate) => {
     const session = await getSession();
     try {
       await axios.patch(
         url,
-        { recipe, provider: session?.user.provider as string },
+        { update, provider: session?.user.provider as string },
         {
           headers: {
             Authorization: `Bearer ${session?.user.accessToken}`,

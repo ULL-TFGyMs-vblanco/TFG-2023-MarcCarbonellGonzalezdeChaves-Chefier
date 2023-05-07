@@ -48,6 +48,12 @@ declare module 'recipe-types' {
     date: Date;
   }
 
+  interface ValidUpdate {
+    likes?: string[];
+    saved?: string[];
+    valorations?: Valoration[];
+  }
+
   interface NewRecipeFormInputs {
     name: string;
     description: string;
