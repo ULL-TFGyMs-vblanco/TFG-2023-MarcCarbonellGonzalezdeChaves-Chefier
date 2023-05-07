@@ -1,12 +1,12 @@
 import useSWR from 'swr';
 import axios from '../../axios_config';
 
-const fetcher = (url: string) =>
-  axios
+const fetcher = async (url: string) =>
+  await axios
     .get(url)
     .then((res) => res.data)
-    .catch(() => {
-      throw new Error('An error occurred while fetching the data.');
+    .catch((error) => {
+      throw error;
     });
 
 export function useRecipe(id: string) {
