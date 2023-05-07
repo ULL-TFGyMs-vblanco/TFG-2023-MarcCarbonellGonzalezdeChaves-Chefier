@@ -87,7 +87,7 @@ exports.postRecipe = postRecipe;
 // Update a recipe
 const updateRecipe = async ({ response, request, params }) => {
     const allowedUpdates = ['likes', 'saves', 'valorations'];
-    const actualUpdates = Object.keys(request.body);
+    const actualUpdates = Object.keys(request.body.recipe);
     const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
     if (!isValidUpdate) {
         APIUtils_1.default.setResponse(response, 400, {
@@ -104,7 +104,7 @@ const updateRecipe = async ({ response, request, params }) => {
         }
         else {
             try {
-                const element = await recipe_1.Recipe.findByIdAndUpdate(params.id, request.body, {
+                const element = await recipe_1.Recipe.findByIdAndUpdate(params.id, request.body.recipe, {
                     new: true,
                     runValidators: true,
                 });

@@ -27,8 +27,17 @@ const RecipeService = {
   },
 
   updateRecipe: async (url: string, recipe: Recipe) => {
+    const session = await getSession();
     try {
-      await axios.patch(url, recipe);
+      await axios.patch(
+        url,
+        { recipe, provider: session?.user.provider as string },
+        {
+          headers: {
+            Authorization: `Bearer ${session?.user.accessToken}`,
+          },
+        }
+      );
     } catch (err: any) {
       throw new Error(err.response.data.error.message);
     }

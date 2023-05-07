@@ -84,7 +84,7 @@ export const postRecipe = async ({ response, request }: Context) => {
 // Update a recipe
 export const updateRecipe = async ({ response, request, params }: Context) => {
   const allowedUpdates = ['likes', 'saves', 'valorations'];
-  const actualUpdates = Object.keys(request.body);
+  const actualUpdates = Object.keys(request.body.recipe);
   const isValidUpdate = actualUpdates.every((update) =>
     allowedUpdates.includes(update)
   );
@@ -103,7 +103,7 @@ export const updateRecipe = async ({ response, request, params }: Context) => {
       try {
         const element = await Recipe.findByIdAndUpdate(
           params.id,
-          request.body,
+          request.body.recipe,
           {
             new: true,
             runValidators: true,

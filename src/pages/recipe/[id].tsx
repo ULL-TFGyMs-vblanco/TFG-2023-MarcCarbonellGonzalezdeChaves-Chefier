@@ -38,42 +38,52 @@ const RecipePage = () => {
 
   const updateHandler = async (update: 'like' | 'save' | 'valoration') => {
     if (update === 'like') {
-      if (recipe.likes.includes(user.name)) {
+      if (recipe.likes.includes(user.username)) {
         recipe.likes = recipe.likes.filter(
-          (like: string) => like !== user.name
+          (like: string) => like !== user.username
         );
       } else {
-        recipe.likes.push(user.name);
+        recipe.likes.push(user.username);
       }
     } else if (update === 'save') {
-      if (recipe.saved.includes(user.name)) {
+      if (recipe.saved.includes(user.username)) {
         recipe.saved = recipe.saved.filter(
-          (save: string) => save !== user.name
+          (save: string) => save !== user.username
         );
       } else {
-        recipe.saved.push(user.name);
+        recipe.saved.push(user.username);
       }
     } else if (update === 'valoration') {
       if (
         recipe.valorations.some(
-          (valoration: any) => valoration.username === user.name
+          (valoration: any) =>
+            valoration.user.name === user.username ||
+            valoration.user.name === user.nickname
         )
       ) {
         recipe.valorations = recipe.valorations.filter(
-          (valoration: any) => valoration.username !== user.name
+          (valoration: any) =>
+            valoration.username !== user.username &&
+            valoration.username !== user.nickname
         );
       } else {
         recipe.valorations.push(
           comment
             ? {
-                username: 'prueba',
+                user: {
+                  name: user.nickname ? user.nickname : user.username,
+                  image: user.image,
+                },
                 title: reviewTitle,
                 rating: rating,
                 date: Date.now(),
                 comment: comment,
               }
             : {
-                username: 'prueba',
+                user: {
+                  name: user.nickname ? user.nickname : user.username,
+                  image: user.image,
+                },
                 title: reviewTitle,
                 rating: rating,
                 date: Date.now(),
@@ -221,7 +231,7 @@ const RecipePage = () => {
                         ) : (
                           <BsBookmarkFill
                             className={
-                              recipe.saved.includes(user.name)
+                              recipe.saved.includes(user.username)
                                 ? styles.marked__save__button
                                 : styles.unmarked__save__button
                             }
@@ -244,7 +254,7 @@ const RecipePage = () => {
                         ) : (
                           <BsHeartFill
                             className={
-                              recipe.likes.includes(user.name)
+                              recipe.likes.includes(user.username)
                                 ? styles.marked__like__button
                                 : styles.unmarked__like__button
                             }
