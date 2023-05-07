@@ -51,28 +51,27 @@ const RecipePage = () => {
   };
 
   const likeHandler = () => {
+    let update = recipe.likes;
     if (recipe.likes.includes(user.username)) {
-      recipe.likes = recipe.likes.filter(
-        (like: string) => like !== user.username
-      );
+      update = update.filter((like: string) => like !== user.username);
     } else {
-      recipe.likes.push(user.username);
+      update.push(user.username);
     }
-    updateHandler({ likes: recipe.likes });
+    updateHandler({ likes: update });
   };
 
   const saveHandler = () => {
+    let update = recipe.saved;
     if (recipe.saved.includes(user.username)) {
-      recipe.saved = recipe.saved.filter(
-        (save: string) => save !== user.username
-      );
+      update = update.filter((save: string) => save !== user.username);
     } else {
-      recipe.saved.push(user.username);
+      update.push(user.username);
     }
-    updateHandler({ saved: recipe.saved });
+    updateHandler({ saved: update });
   };
 
   const valorationHandler = () => {
+    let update = recipe.valorations;
     if (
       recipe.valorations.some(
         (valoration: any) =>
@@ -80,13 +79,13 @@ const RecipePage = () => {
           valoration.user.name === user.nickname
       )
     ) {
-      recipe.valorations = recipe.valorations.filter(
+      update = update.filter(
         (valoration: any) =>
           valoration.username !== user.username &&
           valoration.username !== user.nickname
       );
     } else {
-      recipe.valorations.push(
+      update.push(
         comment
           ? {
               user: {
@@ -108,7 +107,7 @@ const RecipePage = () => {
       );
       toggleShow();
     }
-    updateHandler({ valorations: recipe.valorations });
+    updateHandler({ valorations: update });
   };
 
   const commentHandler = (e: any) => {
