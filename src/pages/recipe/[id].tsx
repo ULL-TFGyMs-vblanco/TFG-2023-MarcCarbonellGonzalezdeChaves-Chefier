@@ -36,59 +36,59 @@ const RecipePage = () => {
   const { user } = useLoggedUser();
   const { data: session } = useSession();
 
-  // const updateHandler = async (update: 'like' | 'save' | 'valoration') => {
-  //   if (update === 'like') {
-  //     if (recipe.likes.includes(user.username)) {
-  //       recipe.likes = recipe.likes.filter(
-  //         (like: string) => like !== user.username
-  //       );
-  //     } else {
-  //       recipe.likes.push(user.username);
-  //     }
-  //   } else if (update === 'save') {
-  //     if (recipe.saved.includes(user.username)) {
-  //       recipe.saves = recipe.saves.filter(
-  //         (save: string) => save !== user.username
-  //       );
-  //     } else {
-  //       recipe.saves.push(user.username);
-  //     }
-  //   } else if (update === 'valoration') {
-  //     if (
-  //       recipe.valorations.some(
-  //         (valoration: any) => valoration.username === user.username
-  //       )
-  //     ) {
-  //       recipe.valorations = recipe.valorations.filter(
-  //         (valoration: any) => valoration.username !== user.username
-  //       );
-  //     } else {
-  //       recipe.valorations.push(
-  //         comment
-  //           ? {
-  //               username: 'prueba',
-  //               title: reviewTitle,
-  //               rating: rating,
-  //               date: Date.now(),
-  //               comment: comment,
-  //             }
-  //           : {
-  //               username: 'prueba',
-  //               title: reviewTitle,
-  //               rating: rating,
-  //               date: Date.now(),
-  //             }
-  //       );
-  //       toggleShow();
-  //     }
-  //   }
-  //   try {
-  //     await RecipeService.updateRecipe('', recipe);
-  //     mutate('/recipe/' + recipe._id);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const updateHandler = async (update: 'like' | 'save' | 'valoration') => {
+    if (update === 'like') {
+      if (recipe.likes.includes(user.username)) {
+        recipe.likes = recipe.likes.filter(
+          (like: string) => like !== user.username
+        );
+      } else {
+        recipe.likes.push(user.username);
+      }
+    } else if (update === 'save') {
+      if (recipe.saved.includes(user.username)) {
+        recipe.saves = recipe.saves.filter(
+          (save: string) => save !== user.username
+        );
+      } else {
+        recipe.saves.push(user.username);
+      }
+    } else if (update === 'valoration') {
+      if (
+        recipe.valorations.some(
+          (valoration: any) => valoration.username === user.username
+        )
+      ) {
+        recipe.valorations = recipe.valorations.filter(
+          (valoration: any) => valoration.username !== user.username
+        );
+      } else {
+        recipe.valorations.push(
+          comment
+            ? {
+                username: 'prueba',
+                title: reviewTitle,
+                rating: rating,
+                date: Date.now(),
+                comment: comment,
+              }
+            : {
+                username: 'prueba',
+                title: reviewTitle,
+                rating: rating,
+                date: Date.now(),
+              }
+        );
+        toggleShow();
+      }
+    }
+    try {
+      await RecipeService.updateRecipe('', recipe);
+      mutate('/recipe/' + recipe._id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const commentHandler = (e: any) => {
     setComment(e.target.value);
@@ -222,7 +222,7 @@ const RecipePage = () => {
                               ? styles.marked__save__button
                               : styles.unmarked__save__button
                           }
-                          // onClick={() => updateHandler('save')}
+                          onClick={() => updateHandler('save')}
                         />
                       ) : (
                         <BsBookmarkFill
@@ -241,7 +241,7 @@ const RecipePage = () => {
                               ? styles.marked__like__button
                               : styles.unmarked__like__button
                           }
-                          // onClick={() => updateHandler('like')}
+                          onClick={() => updateHandler('like')}
                         />
                       ) : (
                         <BsHeartFill
@@ -352,7 +352,7 @@ const RecipePage = () => {
                         <div className={styles.review__buttons}>
                           <Button
                             style={styles.send__button}
-                            // onClick={() => updateHandler('valoration')}
+                            onClick={() => updateHandler('valoration')}
                             disabled={reviewTitle ? false : true}
                           >
                             Enviar
