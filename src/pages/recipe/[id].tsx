@@ -389,7 +389,7 @@ const RecipePage = () => {
                 </div>
               </div>
             </div> */}
-            <h1>{isError}</h1>
+            <h1>{typeof router.query.id}</h1>
           </>
         )}
       </div>
