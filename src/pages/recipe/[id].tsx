@@ -32,9 +32,7 @@ const RecipePage = () => {
   const [reviewTitle, setReviewTitle] = useState();
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  const { recipe, isLoading, isError } = useRecipe(
-    router.query.id === '' ? undefined : router.query.id
-  );
+  const { recipe, isLoading, isError } = useRecipe(router.query.id);
   const { user } = useLoggedUser();
   const { data: session } = useSession();
 
@@ -391,7 +389,7 @@ const RecipePage = () => {
                 </div>
               </div>
             </div> */}
-            <h1>{typeof router.query.id}</h1>
+            <h1>{`--${router.query.id}--`}</h1>
           </>
         )}
       </div>
