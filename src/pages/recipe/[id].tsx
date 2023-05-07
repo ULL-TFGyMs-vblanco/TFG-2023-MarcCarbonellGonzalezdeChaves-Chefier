@@ -22,18 +22,17 @@ import { useLoggedUser } from '../../hooks/useLoggedUser';
 import RecipeService from '@/services/RecipeService';
 import { useSWRConfig } from 'swr';
 import { useSession } from 'next-auth/react';
-import { NextPageContext } from 'next';
 
 const timeAgo = new TimeAgo('es-ES');
 
-const RecipePage = ({ id }: { id: string }) => {
+const RecipePage = () => {
   const { show, toggleShow } = useShow();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState();
   const [reviewTitle, setReviewTitle] = useState();
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  const { recipe, isLoading, isError } = useRecipe(id);
+  const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
   const { user } = useLoggedUser();
   const { data: session } = useSession();
 
@@ -114,7 +113,7 @@ const RecipePage = ({ id }: { id: string }) => {
         {isLoading ? (
           <Loading />
         ) : isError ? (
-          <Title>{router.query.id}</Title>
+          <Title>Oops! Ha ocurrido un error al cargar la receta</Title>
         ) : (
           <>
             <div className={styles.top__section}>
@@ -396,11 +395,5 @@ const RecipePage = ({ id }: { id: string }) => {
     </Card>
   );
 };
-
-export function getServerSideProps(context: NextPageContext) {
-  return {
-    props: { id: context.query.id },
-  };
-}
 
 export default RecipePage;
