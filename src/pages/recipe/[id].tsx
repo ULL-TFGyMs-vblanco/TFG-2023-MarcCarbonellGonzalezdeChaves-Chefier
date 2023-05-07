@@ -46,7 +46,7 @@ const RecipePage = () => {
         recipe.likes.push(user.username);
       }
     } else if (update === 'save') {
-      if (recipe.saves.includes(user.username)) {
+      if (recipe.saved.includes(user.username)) {
         recipe.saves = recipe.saves.filter(
           (save: string) => save !== user.username
         );
