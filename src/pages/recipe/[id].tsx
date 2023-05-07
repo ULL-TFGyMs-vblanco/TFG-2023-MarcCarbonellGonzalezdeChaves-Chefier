@@ -243,7 +243,7 @@ const RecipePage = () => {
                                 ? styles.marked__save__button
                                 : styles.unmarked__save__button
                             }
-                            onClick={likeHandler}
+                            onClick={saveHandler}
                           />
                         )
                       ) : (
@@ -266,7 +266,7 @@ const RecipePage = () => {
                                 ? styles.marked__like__button
                                 : styles.unmarked__like__button
                             }
-                            onClick={saveHandler}
+                            onClick={likeHandler}
                           />
                         )
                       ) : (

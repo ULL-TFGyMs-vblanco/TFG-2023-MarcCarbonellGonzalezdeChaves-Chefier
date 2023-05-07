@@ -109,7 +109,6 @@ export const updateRecipe = async ({ response, request, params }: Context) => {
             runValidators: true,
           }
         );
-
         if (!element) {
           utils.setResponse(response, 404, {
             error: { message: 'Recipe not found' },
