@@ -151,6 +151,7 @@ export const deleteRecipe = async ({ response, params }: Context) => {
 };
 
 module.exports = {
+  getRecipe,
   getRecipes,
   postRecipe,
   updateRecipe,

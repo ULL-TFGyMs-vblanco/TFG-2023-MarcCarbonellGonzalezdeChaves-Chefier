@@ -152,6 +152,7 @@ const deleteRecipe = async ({ response, params }) => {
 };
 exports.deleteRecipe = deleteRecipe;
 module.exports = {
+    getRecipe: exports.getRecipe,
     getRecipes: exports.getRecipes,
     postRecipe: exports.postRecipe,
     updateRecipe: exports.updateRecipe,
