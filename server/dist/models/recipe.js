@@ -17,10 +17,9 @@ exports.RecipeSchema = new mongoose_1.Schema({
             }
         },
     },
-    username: {
-        type: String,
+    user: {
+        type: { name: String, image: String },
         required: true,
-        trim: true,
     },
     image: {
         type: {
@@ -125,7 +124,10 @@ exports.RecipeSchema = new mongoose_1.Schema({
     valorations: {
         type: [
             {
-                username: String,
+                user: {
+                    name: String,
+                    image: String,
+                },
                 comment: String,
                 valoration: Number,
                 date: Date,
@@ -152,12 +154,10 @@ exports.RecipeSchema = new mongoose_1.Schema({
     likes: {
         type: [String],
         default: [],
-        required: false,
     },
     saved: {
         type: [String],
         default: [],
-        required: false,
     },
 });
 exports.Recipe = (0, mongoose_1.model)('Recipe', exports.RecipeSchema);

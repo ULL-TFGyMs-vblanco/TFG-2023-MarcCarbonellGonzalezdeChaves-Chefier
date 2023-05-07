@@ -38,7 +38,10 @@ declare module 'recipe-types' {
   }
 
   interface Valoration {
-    username: string;
+    user: {
+      name: string;
+      image: string;
+    };
     title: string;
     comment?: string;
     rating: number;

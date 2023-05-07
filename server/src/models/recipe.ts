@@ -28,7 +28,10 @@ export interface RecipeDocumentInterface extends Document {
   instructions: [{ step: string }];
   valorations: [
     {
-      username: string;
+      user: {
+        name: string;
+        image: string;
+      };
       title: string;
       comment?: string;
       rating: number;
@@ -161,7 +164,10 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
   valorations: {
     type: [
       {
-        username: String,
+        user: {
+          name: String,
+          image: String,
+        },
         comment: String,
         valoration: Number,
         date: Date,
@@ -170,7 +176,10 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     validate: (
       value: [
         {
-          username: string;
+          user: {
+            name: string;
+            image: string;
+          };
           comment: string;
           rating: number;
           date: Date;

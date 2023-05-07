@@ -1,7 +1,5 @@
 import { Valoration } from 'recipe-types';
 import { Avatar } from '../ui/Avatar';
-import { useUser } from '../../hooks/useUser';
-import { Loading } from '@nextui-org/react';
 import { GrStar } from 'react-icons/gr';
 import styles from '../../styles/recipe/Review.module.css';
 import TimeAgo from 'javascript-time-ago';
@@ -14,29 +12,19 @@ interface ReviewProps {
 }
 
 export const Review: React.FC<ReviewProps> = ({ valoration }) => {
-  const { user, isLoading, isError } = useUser('email', valoration.username);
-
   return (
     <div className={styles.review}>
       <div className={styles.review__metadata}>
         <div className={styles.review__user}>
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <Avatar
-              source={
-                isError
-                  ? `https://ik.imagekit.io/czvxqgafa/images/avatar_default.jpg`
-                  : user.avatarUrl
-              }
-              username={valoration.username}
-              link={`/profile/${valoration.username}`}
-              size={20}
-              style={styles.avatar}
-            />
-          )}
-          <Link href={`/${valoration.username}`} className={styles.user__name}>
-            <p>@{valoration.username}</p>
+          <Avatar
+            source={valoration.user.image}
+            username={valoration.user.name}
+            link={`/profile/${valoration.user.name}`}
+            size={20}
+            style={styles.avatar}
+          />
+          <Link href={`/${valoration.user.name}`} className={styles.user__name}>
+            <p>@{valoration.user.name}</p>
           </Link>
         </div>
         <p className={styles.review__date}>{timeAgo.format(valoration.date)}</p>

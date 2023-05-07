@@ -1,7 +1,10 @@
 import { Document, Schema } from 'mongoose';
 export interface RecipeDocumentInterface extends Document {
     name: string;
-    username: string;
+    user: {
+        name: string;
+        image: string;
+    };
     image: {
         url: string;
         fileId: string;
@@ -29,7 +32,10 @@ export interface RecipeDocumentInterface extends Document {
     }];
     valorations: [
         {
-            username: string;
+            user: {
+                name: string;
+                image: string;
+            };
             title: string;
             comment?: string;
             rating: number;
