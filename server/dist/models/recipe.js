@@ -145,10 +145,16 @@ exports.RecipeSchema = new mongoose_1.Schema({
                     throw new Error('Valoration comment have a maximum of 100 characters');
                 }
                 if (!validator_1.default.isIn(valoration.rating.toString(), [
+                    '0',
+                    '0.5',
                     '1',
+                    '1.5',
                     '2',
+                    '2.5',
                     '3',
+                    '3.5',
                     '4',
+                    '4.5',
                     '5',
                 ])) {
                     throw new Error('Valoration must be between 1 and 5');
