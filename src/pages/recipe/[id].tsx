@@ -136,7 +136,7 @@ const RecipePage: React.FC = () => {
                     </Link>
                     <p>
                       &middot;&nbsp;&nbsp;
-                      {timeAgo.format(recipe.date)}
+                      {timeAgo.format(Date.parse(recipe.date))}
                     </p>
                   </div>
                 </div>
