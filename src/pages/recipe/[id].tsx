@@ -116,7 +116,7 @@ const RecipePage = () => {
           <Title>Oops! Ha ocurrido un error al cargar la receta</Title>
         ) : (
           <>
-            <div className={styles.top__section}>
+            {/* <div className={styles.top__section}>
               <div className={styles.left__subsection}>
                 <Title style={styles.title}>{recipe.name}</Title>
                 <div className={styles.field} data-testid='form-field'>
@@ -388,7 +388,8 @@ const RecipePage = () => {
                   )}
                 </div>
               </div>
-            </div>
+            </div> */}
+            <h1>dfs</h1>
           </>
         )}
       </div>
