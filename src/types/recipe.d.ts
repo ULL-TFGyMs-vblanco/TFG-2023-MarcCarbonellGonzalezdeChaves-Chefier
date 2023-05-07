@@ -1,7 +1,10 @@
 declare module 'recipe-types' {
   interface Recipe {
     name: string;
-    username: string;
+    user: {
+      name: string;
+      image: string;
+    };
     image: { url: string; fileId: string };
     description: string;
     date: Date;
@@ -69,7 +72,10 @@ declare module 'recipe-types' {
 
   interface NewRecipeData {
     name: string;
-    username: string;
+    user: {
+      name: string;
+      image: string;
+    };
     description: string;
     tags: {
       breakfast: boolean;

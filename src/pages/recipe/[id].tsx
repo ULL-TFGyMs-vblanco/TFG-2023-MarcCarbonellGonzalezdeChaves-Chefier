@@ -22,7 +22,6 @@ import { useLoggedUser } from '../../hooks/useLoggedUser';
 import RecipeService from '@/services/RecipeService';
 import { useSWRConfig } from 'swr';
 import { useSession } from 'next-auth/react';
-import { useUser } from '@/hooks/useUser';
 
 const timeAgo = new TimeAgo('es-ES');
 
@@ -35,37 +34,33 @@ const RecipePage = () => {
   const router = useRouter();
   const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
-  const { user: recipeUser, isLoading: recipeUserIsLoading } = useUser(
-    'username',
-    recipe?.username as string
-  );
   const { data: session } = useSession();
 
   const updateHandler = async (update: 'like' | 'save' | 'valoration') => {
     if (update === 'like') {
-      if (recipe.likes.includes(user.username)) {
+      if (recipe.likes.includes(user.name)) {
         recipe.likes = recipe.likes.filter(
-          (like: string) => like !== user.username
+          (like: string) => like !== user.name
         );
       } else {
-        recipe.likes.push(user.username);
+        recipe.likes.push(user.name);
       }
     } else if (update === 'save') {
-      if (recipe.saved.includes(user.username)) {
+      if (recipe.saved.includes(user.name)) {
         recipe.saved = recipe.saved.filter(
-          (save: string) => save !== user.username
+          (save: string) => save !== user.name
         );
       } else {
-        recipe.saved.push(user.username);
+        recipe.saved.push(user.name);
       }
     } else if (update === 'valoration') {
       if (
         recipe.valorations.some(
-          (valoration: any) => valoration.username === user.username
+          (valoration: any) => valoration.username === user.name
         )
       ) {
         recipe.valorations = recipe.valorations.filter(
-          (valoration: any) => valoration.username !== user.username
+          (valoration: any) => valoration.username !== user.name
         );
       } else {
         recipe.valorations.push(
@@ -127,22 +122,18 @@ const RecipePage = () => {
                   <Title style={styles.title}>{recipe.name}</Title>
                   <div className={styles.field} data-testid='form-field'>
                     <div className={styles.user__info}>
-                      {recipeUserIsLoading ? (
-                        <Loading />
-                      ) : (
-                        <Avatar
-                          source={recipeUser.image}
-                          username={recipe.username}
-                          link={`/${recipe.username}`}
-                          size={30}
-                          style={styles.avatar}
-                        />
-                      )}
+                      <Avatar
+                        source={recipe.user.image}
+                        username={recipe.user.name}
+                        link={`/${recipe.user.name}`}
+                        size={30}
+                        style={styles.avatar}
+                      />
                       <Link
-                        href={`/${recipe.username}`}
+                        href={`/${recipe.user.name}`}
                         className={styles.user__name}
                       >
-                        <p>@{recipe.username}</p>
+                        <p>@{recipe.user.name}</p>
                       </Link>
                       <p>
                         &middot;&nbsp;&nbsp;
@@ -230,7 +221,7 @@ const RecipePage = () => {
                         ) : (
                           <BsBookmarkFill
                             className={
-                              recipe.saved.includes(user.username)
+                              recipe.saved.includes(user.name)
                                 ? styles.marked__save__button
                                 : styles.unmarked__save__button
                             }
@@ -253,7 +244,7 @@ const RecipePage = () => {
                         ) : (
                           <BsHeartFill
                             className={
-                              recipe.likes.includes(user.username)
+                              recipe.likes.includes(user.name)
                                 ? styles.marked__like__button
                                 : styles.unmarked__like__button
                             }

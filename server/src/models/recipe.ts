@@ -3,7 +3,10 @@ import validator from 'validator';
 
 export interface RecipeDocumentInterface extends Document {
   name: string;
-  username: string;
+  user: {
+    name: string;
+    image: string;
+  };
   image: {
     url: string;
     fileId: string;
@@ -47,10 +50,9 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
       }
     },
   },
-  username: {
-    type: String,
+  user: {
+    type: { name: String, image: String },
     required: true,
-    trim: true,
   },
   image: {
     type: {

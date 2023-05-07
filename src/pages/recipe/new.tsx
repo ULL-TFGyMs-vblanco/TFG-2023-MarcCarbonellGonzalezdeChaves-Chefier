@@ -27,9 +27,12 @@ const NewRecipe: React.FC = () => {
   };
 
   const postRecipeHandler = async (data: NewRecipeFormInputs, image: File) => {
-    const username = user.nickname ? user.nickname : user.username;
+    const name = user.nickname ? user.nickname : user.username;
     const recipe = {
-      username,
+      user: {
+        name,
+        image: user.image,
+      },
       ...data,
       image: image as File,
     };
