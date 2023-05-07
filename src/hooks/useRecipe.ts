@@ -1,10 +1,10 @@
 import useSWR from 'swr';
+import axios from '../../axios_config';
 
-const fetcher = (url: string) => fetch(url).then((r) => r.json());
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
-export function useRecipe(id: string) {
-  const key = `https://chefier-backend-git-develop-tfg-marccarbonell.vercel.app/api/recipe/${id}`;
-  const { data, error, isLoading } = useSWR(key, fetcher);
+export function useRecipe(id: string | undefined) {
+  const { data, error, isLoading } = useSWR(`/recipe/${id}`, fetcher);
 
   return {
     recipe: data,

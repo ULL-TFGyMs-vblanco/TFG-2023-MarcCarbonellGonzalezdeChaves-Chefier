@@ -32,7 +32,9 @@ const RecipePage = () => {
   const [reviewTitle, setReviewTitle] = useState();
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
+  const { recipe, isLoading, isError } = useRecipe(
+    router.query.id as string | undefined
+  );
   const { user } = useLoggedUser();
   const { data: session } = useSession();
 
