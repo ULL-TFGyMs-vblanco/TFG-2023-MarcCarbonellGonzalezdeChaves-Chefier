@@ -83,7 +83,7 @@ const RecipePage = () => {
       }
     }
     try {
-      await RecipeService.updateRecipe('', recipe);
+      await RecipeService.updateRecipe(`/recipe/${recipe._id}`, recipe);
       mutate('/recipe/' + recipe._id);
     } catch (error) {
       console.log(error);
