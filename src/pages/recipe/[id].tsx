@@ -12,7 +12,7 @@ import { useShow } from '../../hooks/useShow';
 import ReactStars from 'react-stars';
 import { GrStar } from 'react-icons/gr';
 import { BsBookmarkFill, BsFillPersonFill, BsHeartFill } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useRecipe } from '@/hooks/useRecipe';
 import { useRouter } from 'next/router';
@@ -22,25 +22,20 @@ import { useLoggedUser } from '../../hooks/useLoggedUser';
 import RecipeService from '@/services/RecipeService';
 import { useSWRConfig } from 'swr';
 import { useSession } from 'next-auth/react';
+import { NextPageContext } from 'next';
 
 const timeAgo = new TimeAgo('es-ES');
 
-const RecipePage = () => {
+const RecipePage = ({ id }: { id: string }) => {
   const { show, toggleShow } = useShow();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState();
   const [reviewTitle, setReviewTitle] = useState();
-  const [recipeId, setRecipeId] = useState<string | undefined>();
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  const { recipe, isLoading, isError } = useRecipe(recipeId);
+  const { recipe, isLoading, isError } = useRecipe(id);
   const { user } = useLoggedUser();
   const { data: session } = useSession();
-
-  useEffect(() => {
-    if (!router.query.id) return;
-    setRecipeId(router.query.id as string);
-  }, [router.query.id]);
 
   const updateHandler = async (update: 'like' | 'save' | 'valoration') => {
     if (update === 'like') {
@@ -401,5 +396,11 @@ const RecipePage = () => {
     </Card>
   );
 };
+
+export function getServerSideProps(context: NextPageContext) {
+  return {
+    props: { id: context.query.id },
+  };
+}
 
 export default RecipePage;
