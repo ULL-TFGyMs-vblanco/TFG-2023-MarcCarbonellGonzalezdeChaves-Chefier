@@ -218,7 +218,7 @@ const RecipePage = () => {
                       {session ? (
                         <BsBookmarkFill
                           className={
-                            recipe.saves.includes(user.username)
+                            recipe.saved.includes(user.username)
                               ? styles.marked__save__button
                               : styles.unmarked__save__button
                           }
