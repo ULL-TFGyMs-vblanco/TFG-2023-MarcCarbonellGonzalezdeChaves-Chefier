@@ -12,34 +12,35 @@ import { useShow } from '../../hooks/useShow';
 import ReactStars from 'react-stars';
 import { GrStar } from 'react-icons/gr';
 import { BsBookmarkFill, BsFillPersonFill, BsHeartFill } from 'react-icons/bs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { useRecipe } from '@/hooks/useRecipe';
 import { useRouter } from 'next/router';
 import { Loading } from '@nextui-org/react';
-import { Ingredient, Instruction, Recipe, Valoration } from 'recipe-types';
+import { Ingredient, Instruction, Valoration } from 'recipe-types';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
 import RecipeService from '@/services/RecipeService';
 import { useSWRConfig } from 'swr';
 import { useSession } from 'next-auth/react';
-import { NextPageContext } from 'next';
-import axios from '../../../axios_config';
 
 const timeAgo = new TimeAgo('es-ES');
 
-const RecipePage = (props: { recipe: Recipe }) => {
+const RecipePage = () => {
   const { show, toggleShow } = useShow();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState();
   const [reviewTitle, setReviewTitle] = useState();
+  const [recipeId, setRecipeId] = useState<string | undefined>();
   const { mutate } = useSWRConfig();
   const router = useRouter();
-  const { recipe, isLoading, isError } = useRecipe(
-    router.query.id as string,
-    props.recipe
-  );
+  const { recipe, isLoading, isError } = useRecipe(recipeId);
   const { user } = useLoggedUser();
   const { data: session } = useSession();
+
+  useEffect(() => {
+    if (!router.query.id) return;
+    setRecipeId(router.query.id as string);
+  }, [router.query.id]);
 
   const updateHandler = async (update: 'like' | 'save' | 'valoration') => {
     if (update === 'like') {
@@ -399,12 +400,6 @@ const RecipePage = (props: { recipe: Recipe }) => {
       </div>
     </Card>
   );
-};
-
-RecipePage.getInitialProps = async (ctx: NextPageContext) => {
-  const { id } = ctx.query;
-  const { data } = await axios.get(`/recipes/${id}`);
-  return { recipe: data };
 };
 
 export default RecipePage;
