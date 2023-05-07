@@ -22,6 +22,7 @@ import { useLoggedUser } from '../../hooks/useLoggedUser';
 import RecipeService from '@/services/RecipeService';
 import { useSWRConfig } from 'swr';
 import { useSession } from 'next-auth/react';
+import { useUser } from '@/hooks/useUser';
 
 const timeAgo = new TimeAgo('es-ES');
 
@@ -34,6 +35,7 @@ const RecipePage = () => {
   const router = useRouter();
   const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
   const { user } = useLoggedUser();
+  const { user: recipeUser } = useUser('username', recipe?.username as string);
   const { data: session } = useSession();
 
   const updateHandler = async (update: 'like' | 'save' | 'valoration') => {
@@ -123,7 +125,7 @@ const RecipePage = () => {
                   <div className={styles.field} data-testid='form-field'>
                     <div className={styles.user__info}>
                       <Avatar
-                        source={recipe.image.url}
+                        source={recipeUser.image}
                         username={recipe.username}
                         link={`/${recipe.username}`}
                         size={30}
