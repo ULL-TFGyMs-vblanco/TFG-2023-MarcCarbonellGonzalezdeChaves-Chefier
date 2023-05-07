@@ -99,12 +99,12 @@ const RecipePage = () => {
   };
 
   const getAverageRating = (valorations: Valoration[]) => {
-    return (
+    const average =
       valorations.reduce(
         (acc: number, valoration: Valoration) => acc + valoration.rating,
         0
-      ) / valorations.length
-    );
+      ) / valorations.length;
+    return isNaN(average) ? 0 : average;
   };
 
   return (
