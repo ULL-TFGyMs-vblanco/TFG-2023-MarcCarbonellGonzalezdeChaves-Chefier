@@ -113,7 +113,7 @@ const RecipePage: React.FC = () => {
         {isLoading ? (
           <Loading />
         ) : isError ? (
-          <Title>Ha ocurrido un error al cargar la receta</Title>
+          <Title>{router.query.id}</Title>
         ) : (
           <>
             <div className={styles.top__section}>

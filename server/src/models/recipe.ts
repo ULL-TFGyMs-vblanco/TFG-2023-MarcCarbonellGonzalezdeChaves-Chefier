@@ -199,12 +199,10 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
   likes: {
     type: [String],
     default: [],
-    required: false,
   },
   saved: {
     type: [String],
     default: [],
-    required: false,
   },
 });
 
