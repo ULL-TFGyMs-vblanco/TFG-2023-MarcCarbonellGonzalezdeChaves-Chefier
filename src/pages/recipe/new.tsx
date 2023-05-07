@@ -54,7 +54,7 @@ const NewRecipe: React.FC = () => {
       />
       <CustomModal
         type='success'
-        title='SUCCESS'
+        title='¡Listo!'
         visible={successModal}
         handler={setSuccesModal}
         onClose={closeSuccessModalHandler}
@@ -63,7 +63,7 @@ const NewRecipe: React.FC = () => {
       </CustomModal>
       <CustomModal
         type='error'
-        title='ERROR'
+        title='Error'
         visible={errorModal}
         handler={setErrorModal}
         onClose={closeErrorModalHandler}
