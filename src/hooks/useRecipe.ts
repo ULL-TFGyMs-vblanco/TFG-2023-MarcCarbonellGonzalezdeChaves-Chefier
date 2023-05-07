@@ -1,17 +1,10 @@
 import useSWR from 'swr';
 import axios from '../../axios_config';
 
-const fetcher = async (url: string) =>
-  await axios
-    .get(url)
-    .then((res) => res.data)
-    .catch((error) => {
-      throw error;
-    });
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export function useRecipe(id: string) {
-  const key = `/recipe/${id}`;
-  const { data, error, isLoading } = useSWR(key, fetcher);
+  const { data, error, isLoading } = useSWR(`/recipe/${id}`, fetcher);
 
   return {
     recipe: data,
