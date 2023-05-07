@@ -33,7 +33,7 @@ export interface RecipeDocumentInterface extends Document {
         image: string;
       };
       title: string;
-      comment?: string;
+      comment: string;
       rating: number;
       date: Date;
     }
@@ -168,9 +168,15 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
           name: String,
           image: String,
         },
-        comment: String,
+        comment: {
+          type: String,
+          required: false,
+        },
         rating: Number,
-        date: Date,
+        date: {
+          type: Date,
+          default: Date.now(),
+        },
       },
     ],
     validate: (

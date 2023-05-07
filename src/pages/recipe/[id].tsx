@@ -95,7 +95,6 @@ const RecipePage = () => {
               },
               title: reviewTitle,
               rating: rating,
-              date: Date.now(),
               comment: comment,
             }
           : {
@@ -105,7 +104,6 @@ const RecipePage = () => {
               },
               title: reviewTitle,
               rating: rating,
-              date: Date.now(),
             }
       );
       toggleShow();

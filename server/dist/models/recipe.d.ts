@@ -37,7 +37,7 @@ export interface RecipeDocumentInterface extends Document {
                 image: string;
             };
             title: string;
-            comment?: string;
+            comment: string;
             rating: number;
             date: Date;
         }

@@ -128,9 +128,15 @@ exports.RecipeSchema = new mongoose_1.Schema({
                     name: String,
                     image: String,
                 },
-                comment: String,
+                comment: {
+                    type: String,
+                    required: false,
+                },
                 rating: Number,
-                date: Date,
+                date: {
+                    type: Date,
+                    default: Date.now(),
+                },
             },
         ],
         validate: (value) => {
