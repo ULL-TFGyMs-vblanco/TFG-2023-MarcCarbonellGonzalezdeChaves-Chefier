@@ -346,7 +346,7 @@ const RecipePage = () => {
                   </div>
                 </div>
               </div>
-              <div className={styles.bottom__section}>
+              {/* <div className={styles.bottom__section}>
                 <div className={styles.field} data-testid='form-field'>
                   <div className={styles.valorations__header}>
                     <p className={styles.field__title}>
@@ -447,8 +447,8 @@ const RecipePage = () => {
                       )
                     )}
                   </div>
-                </div>
-              </div>
+                </div> 
+                      </div> */}
             </>
           )
         )}
