@@ -37,7 +37,14 @@ const recipe = {
 
 const recipe2 = {
   name: 'Ensalada de quinoa y aguacate',
-  username: 'chefjulia',
+  user: {
+    id: 'chefjulia',
+  },
+};
+
+const recipe3 = {
+  name: 'Ensalada de quinoa y aguacate',
+  user: { name: 'chefjulia' },
 };
 
 let accessToken = '';
@@ -84,14 +91,7 @@ describe('Recipe router', (): void => {
         .expect(200);
       id = res.body.recipe._id;
     });
-    it('should delete a recipe', async () => {
-      await request(server)
-        .delete(`/api/recipe/${id}`)
-        .set('Authorization', `Bearer ${accessToken}`)
-        .set('Provider', 'credentials')
-        .expect(200);
-    });
-    it('should throw a validation error', async () => {
+    it('should return bad request 400', async () => {
       await request(server)
         .post('/api/recipe')
         .attach(
@@ -103,6 +103,73 @@ describe('Recipe router', (): void => {
         .set('Provider', 'credentials')
         .field('recipe', JSON.stringify(recipe2))
         .expect(400);
+    });
+    it('should throw a validation error', async () => {
+      await request(server)
+        .post('/api/recipe')
+        .attach(
+          'image',
+          path.resolve(__dirname, '../../public/images/chefier.png')
+        )
+        .set('Authorization', `Bearer ${accessToken}`)
+        .set('Content-Type', 'multipart/form-data')
+        .set('Provider', 'credentials')
+        .field('recipe', JSON.stringify(recipe3))
+        .expect(400);
+    });
+  });
+  describe('Get a recipe', (): void => {
+    it('should return the recipe', async () => {
+      await request(server).get(`/api/recipe/${id}`).expect(200);
+    });
+    it('should return not found 404', async () => {
+      await request(server)
+        .get('/api/recipe/6458f7cbe5a01b000843e88b')
+        .expect(404);
+    });
+    it('should return server error 500', async () => {
+      await request(server).get('/api/recipe/1234').expect(500);
+    });
+  });
+  describe('Update a recipe', (): void => {
+    it('should delete the recipe', async () => {
+      await request(server)
+        .patch(`/api/recipe/${id}`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .set('Provider', 'credentials')
+        .send({ update: { likes: ['1234'] } })
+        .expect(200);
+    });
+    it('should return a bad request error 400 for invalid update', async () => {
+      await request(server)
+        .patch(`/api/recipe/${id}`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .set('Provider', 'credentials')
+        .send({ update: { description: '1234' } })
+        .expect(400);
+    });
+    it('should return server error 500', async () => {
+      await request(server)
+        .patch(`/api/recipe/${id}`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .set('Provider', 'credentials')
+        .expect(500);
+    });
+  });
+  describe('Delete a recipe', (): void => {
+    it('should delete the recipe', async () => {
+      await request(server)
+        .delete(`/api/recipe/${id}`)
+        .set('Authorization', `Bearer ${accessToken}`)
+        .set('Provider', 'credentials')
+        .expect(200);
+    });
+    it('should return server error 500', async () => {
+      await request(server)
+        .delete('/api/recipe/1234')
+        .set('Authorization', `Bearer ${accessToken}`)
+        .set('Provider', 'credentials')
+        .expect(500);
     });
   });
 });
