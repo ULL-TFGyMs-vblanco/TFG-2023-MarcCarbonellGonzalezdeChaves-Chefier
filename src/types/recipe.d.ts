@@ -46,7 +46,7 @@ declare module 'recipe-types' {
     title: string;
     comment?: string;
     rating: number;
-    date: string | Date;
+    date: string;
   }
 
   interface ValidUpdate {

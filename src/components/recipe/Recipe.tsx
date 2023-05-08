@@ -433,7 +433,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
         </div>
       </div>
       <CustomModal
-        title='¿Estás seguro de que quieres eliminar esta receta?'
+        title='¿Estás seguro de que quieres eliminar tu reseña?'
         type='warning'
         visible={visible}
         handler={setVisible}
