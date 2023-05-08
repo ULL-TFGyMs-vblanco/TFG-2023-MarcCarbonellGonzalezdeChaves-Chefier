@@ -74,16 +74,6 @@ export const ToggleMenu: React.FC<{
             New&nbsp;Recipe
           </Link>
         </li>
-        <li>
-          <Link
-            className={styles.link}
-            href='/new-recipe'
-            data-testid='toggle-navigation-link'
-            onClick={toggleHandler}
-          >
-            New Recipe
-          </Link>
-        </li>
       </ul>
       <hr className={styles.divider} />
       <ul className={styles.links}>

@@ -46,7 +46,21 @@ exports.getRecipes = getRecipes;
 const postRecipe = async ({ response, request }) => {
     try {
         const recipeData = JSON.parse(request.body.recipe);
-        const res = await APIUtils_1.default.uploadImage(request.file.buffer.toString('base64'), recipeData.name, `/images/posts/${recipeData.username}`);
+        if (!recipeData.name || !recipeData.user) {
+            APIUtils_1.default.setResponse(response, 400, {
+                error: { message: 'Recipe name and user name are required' },
+                request: request.body,
+            });
+            return;
+        }
+        else if (recipeData.user && !recipeData.user.name) {
+            APIUtils_1.default.setResponse(response, 400, {
+                error: { message: 'Recipe user name is required' },
+                request: request.body,
+            });
+            return;
+        }
+        const res = await APIUtils_1.default.uploadImage(request.file.buffer.toString('base64'), recipeData.name, `/images/posts/${recipeData.user.name}`);
         const fileId = res.fileId;
         recipeData.image = {
             url: res.url,
