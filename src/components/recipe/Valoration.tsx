@@ -99,7 +99,7 @@ export const Valoration: React.FC<ValorationProps> = ({
         type='warning'
         visible={valorationModalVisible}
         handler={setValorationModalVisible}
-        onClose={() => handleDelete}
+        onClose={handleDelete}
       >
         Esta acción no se puede deshacer.
       </CustomModal>
