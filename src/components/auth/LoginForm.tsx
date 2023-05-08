@@ -28,6 +28,12 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     }
   };
 
+  const submitHandler = (data: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { passwordVisibility, ...credentials } = data;
+    loginHandler('credentials', credentials);
+  };
+
   return (
     <Card style={styles.form__card} testid='form-card'>
       <div className={styles.form__container}>
@@ -42,10 +48,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         <form
           autoComplete='off'
           className={styles.form}
-          // eslint-disable-next-line @typescript-eslint/no-unused-vars
-          onSubmit={handleSubmit(({ passwordVisibility, ...credentials }) =>
-            loginHandler('credentials', credentials)
-          )}
+          onSubmit={handleSubmit(submitHandler)}
           data-testid='login-form'
         >
           <div className={styles.field} data-testid='form-field'>

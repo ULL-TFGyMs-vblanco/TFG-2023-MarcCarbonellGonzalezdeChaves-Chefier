@@ -18,6 +18,10 @@ export const Navbar: React.FC = () => {
   const { data: session } = useSession();
   const { user, isLoading, isError } = useLoggedUser();
 
+  const signOutHandler = async () => {
+    await signOut();
+  };
+
   return (
     <div className={styles.navbar}>
       <nav className={styles.bar}>
@@ -86,7 +90,7 @@ export const Navbar: React.FC = () => {
                     <button
                       className={styles.logout__button}
                       data-testid='logout-button'
-                      onClick={() => signOut()}
+                      onClick={signOutHandler}
                     >
                       Log&nbsp;out
                     </button>

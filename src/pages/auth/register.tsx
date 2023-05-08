@@ -38,7 +38,7 @@ const Register: React.FC = () => {
   };
 
   const closeSuccessModalHandler = async () => {
-    router.push('/auth/login');
+    await router.push('/auth/login');
   };
 
   const closeErrorModalHandler = async () => {

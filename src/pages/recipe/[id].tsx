@@ -20,7 +20,7 @@ const RecipePage = () => {
   const updateHandler = async (update: ValidUpdate) => {
     try {
       await RecipeService.updateRecipe(`/recipe/${recipe._id}`, update);
-      mutate('/recipe/' + recipe._id);
+      await mutate('/recipe/' + recipe._id);
     } catch (error) {
       console.log(error);
     }
@@ -29,8 +29,8 @@ const RecipePage = () => {
   const deleteHandler = async () => {
     try {
       await RecipeService.deleteRecipe(`/recipe/${recipe._id}`);
-      mutate('/recipe/' + recipe._id);
-      router.push('/');
+      await mutate('/recipe/' + recipe._id);
+      await router.push('/');
     } catch (error) {
       setErrorModal(true);
     }

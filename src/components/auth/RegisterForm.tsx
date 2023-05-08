@@ -37,12 +37,18 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     onOauthLogin(provider, { callbackUrl: '/' });
   };
 
-  const registerHandler = (credentials: RegisterData) => {
-    onRegister(credentials).then((res) => {
+  const registerHandler = async (credentials: RegisterData) => {
+    await onRegister(credentials).then((res) => {
       if (res) {
         toggleModal(true);
       }
     });
+  };
+
+  const submitHandler = (data: any) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { confirmPassword, passwordVisibility, ...credentials } = data;
+    registerHandler(credentials);
   };
 
   return (
@@ -59,11 +65,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         <form
           autoComplete='off'
           className={styles.form}
-          onSubmit={handleSubmit(
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            ({ confirmPassword, passwordVisibility, ...credentials }) =>
-              registerHandler(credentials)
-          )}
+          onSubmit={handleSubmit(submitHandler)}
           data-testid='register-form'
         >
           <div className={styles.field} data-testid='form-field'>

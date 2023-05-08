@@ -65,28 +65,28 @@ export const Recipe: React.FC<RecipeProps> = ({
     }
   }, [recipe, user]);
 
-  const likeHandler = () => {
+  const likeHandler = async () => {
     setLiked(true);
     recipe.likes.push(user._id);
-    updateHandler({ likes: recipe.likes });
+    await updateHandler({ likes: recipe.likes });
   };
 
-  const removeLikeHandler = () => {
+  const removeLikeHandler = async () => {
     setLiked(false);
     recipe.likes = recipe.likes.filter((like: string) => like !== user._id);
-    updateHandler({ likes: recipe.likes });
+    await updateHandler({ likes: recipe.likes });
   };
 
-  const saveHandler = () => {
+  const saveHandler = async () => {
     setSaved(true);
     recipe.saved.push(user._id);
-    updateHandler({ saved: recipe.saved });
+    await updateHandler({ saved: recipe.saved });
   };
 
-  const removeSaveHandler = () => {
+  const removeSaveHandler = async () => {
     setSaved(false);
     recipe.saved = recipe.saved.filter((save: string) => save !== user._id);
-    updateHandler({ saved: recipe.saved });
+    await updateHandler({ saved: recipe.saved });
   };
 
   const valorationHandler = async () => {
@@ -114,7 +114,7 @@ export const Recipe: React.FC<RecipeProps> = ({
             date: new Date().toISOString(),
           }
     );
-    updateHandler({ valorations: recipe.valorations });
+    await updateHandler({ valorations: recipe.valorations });
     toggleShow();
   };
 
@@ -237,12 +237,12 @@ export const Recipe: React.FC<RecipeProps> = ({
                   ) : saved ? (
                     <BsBookmarkFill
                       className={styles.marked__save__button}
-                      onClick={removeSaveHandler}
+                      onClick={() => removeSaveHandler}
                     />
                   ) : (
                     <BsBookmarkFill
                       className={styles.unmarked__save__button}
-                      onClick={saveHandler}
+                      onClick={() => saveHandler}
                     />
                   )
                 ) : (
@@ -259,12 +259,12 @@ export const Recipe: React.FC<RecipeProps> = ({
                   ) : liked ? (
                     <BsHeartFill
                       className={styles.marked__like__button}
-                      onClick={removeLikeHandler}
+                      onClick={() => removeLikeHandler}
                     />
                   ) : (
                     <BsHeartFill
                       className={styles.unmarked__like__button}
-                      onClick={likeHandler}
+                      onClick={() => likeHandler}
                     />
                   )
                 ) : (
@@ -377,7 +377,7 @@ export const Recipe: React.FC<RecipeProps> = ({
                   <div className={styles.review__buttons}>
                     <Button
                       style={styles.send__button}
-                      onClick={valorationHandler}
+                      onClick={() => valorationHandler}
                       disabled={reviewTitle ? false : true}
                     >
                       Enviar

@@ -30,7 +30,7 @@ const Login: React.FC = () => {
   };
 
   const closeModalHandler = async () => {
-    router.push('/auth/login');
+    await router.push('/auth/login');
   };
 
   return (

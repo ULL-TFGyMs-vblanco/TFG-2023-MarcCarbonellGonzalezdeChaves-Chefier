@@ -68,7 +68,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
         <form
           autoComplete='off'
           className={styles.form}
-          onSubmit={handleSubmit((data) => postHandler(data))}
+          onSubmit={handleSubmit(postHandler)}
           data-testid='new-recipe-form'
         >
           <div className={styles.header}>

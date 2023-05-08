@@ -19,7 +19,7 @@ const NewRecipe: React.FC = () => {
   }, [error]);
 
   const closeSuccessModalHandler = async () => {
-    router.push('/');
+    await router.push('/');
   };
 
   const closeErrorModalHandler = async () => {
