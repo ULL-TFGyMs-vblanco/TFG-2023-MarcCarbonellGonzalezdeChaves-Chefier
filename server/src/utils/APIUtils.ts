@@ -56,9 +56,9 @@ export default class APIUtils {
     folder: string
   ) => {
     const imagekit = new ImageKit({
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-      urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
-      privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
+      publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,
+      urlEndpoint: process.env.IMAGEKIT_ENDPOINT as string,
+      privateKey: process.env.IMAGEKIT_PRIVATE_KEY as string,
     });
     return imagekit
       .upload({
@@ -77,9 +77,9 @@ export default class APIUtils {
 
   public static deleteImage = async (fileID: string) => {
     const imagekit = new ImageKit({
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-      privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
-      urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
+      publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,
+      privateKey: process.env.IMAGEKIT_PRIVATE_KEY as string,
+      urlEndpoint: process.env.IMAGEKIT_ENDPOINT as string,
     });
     return imagekit
       .deleteFile(fileID)

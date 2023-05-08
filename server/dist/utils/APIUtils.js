@@ -57,9 +57,9 @@ APIUtils.buildUserDocument = async (request) => {
 };
 APIUtils.uploadImage = async (image, name, folder) => {
     const imagekit = new imagekit_1.default({
-        publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-        urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
-        privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
+        publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+        urlEndpoint: process.env.IMAGEKIT_ENDPOINT,
+        privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
     });
     return imagekit
         .upload({
@@ -77,9 +77,9 @@ APIUtils.uploadImage = async (image, name, folder) => {
 };
 APIUtils.deleteImage = async (fileID) => {
     const imagekit = new imagekit_1.default({
-        publicKey: process.env.IMAGEKIT_PUBLIC_KEY || '',
-        privateKey: process.env.IMAGEKIT_PRIVATE_KEY || '',
-        urlEndpoint: process.env.IMAGEKIT_ENDPOINT || '',
+        publicKey: process.env.IMAGEKIT_PUBLIC_KEY,
+        privateKey: process.env.IMAGEKIT_PRIVATE_KEY,
+        urlEndpoint: process.env.IMAGEKIT_ENDPOINT,
     });
     return imagekit
         .deleteFile(fileID)

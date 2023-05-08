@@ -35,7 +35,7 @@ const NewRecipe: React.FC = () => {
         image: user.image,
       },
       ...data,
-      image: image as File,
+      image: image,
     };
     try {
       await RecipeService.postRecipe('/recipe', recipe);

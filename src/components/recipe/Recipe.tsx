@@ -249,9 +249,7 @@ export const Recipe: React.FC<RecipeProps> = ({
                   <BsBookmarkFill className={styles.disabled__save__button} />
                 )}
                 <p className={styles.saved__count}>
-                  {recipe.likes.length > 1000
-                    ? `${recipe.saved.length / 1000}k`
-                    : recipe.saved.length}
+                  {utils.countRecipeStat(recipe.saved)}
                 </p>
                 {session ? (
                   loggedUserIsLoading ? (
@@ -271,9 +269,7 @@ export const Recipe: React.FC<RecipeProps> = ({
                   <BsHeartFill className={styles.disabled__like__button} />
                 )}
                 <p className={styles.likes__count}>
-                  {recipe.likes.length > 1000
-                    ? `${recipe.likes.length / 1000}k`
-                    : recipe.likes.length}
+                  {utils.countRecipeStat(recipe.likes)}
                 </p>
               </div>
             </div>

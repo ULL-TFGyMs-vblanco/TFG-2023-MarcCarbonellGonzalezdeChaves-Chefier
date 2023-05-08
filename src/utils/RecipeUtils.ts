@@ -19,4 +19,8 @@ export default class RecipeUtils {
       (valoration: Valoration) => valoration.user.id === user._id
     );
   };
+
+  public static countRecipeStat = (stat: string[]) => {
+    return stat.length > 1000 ? `${stat.length / 1000}k` : stat.length;
+  };
 }

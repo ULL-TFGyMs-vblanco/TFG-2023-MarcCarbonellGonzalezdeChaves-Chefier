@@ -17,33 +17,33 @@ export const verifyToken = async (
       error: 'Invalid provider',
       request: request.body,
     });
-  } else {
-    const bearerHeader = request.headers.authorization;
-    if (bearerHeader) {
-      const token = bearerHeader.split(' ')[1];
-      if (request.headers.provider === 'credentials') {
-        if (verifyCredentials(token, request, response)) return next();
-      } else if (request.headers.provider === 'google') {
-        try {
-          await verifyGoogle(token, request, response);
-          return next();
-        } catch (error: any) {
-          return;
-        }
-      } else {
-        try {
-          await verifyGithub(token, request, response);
-          return next();
-        } catch (error: any) {
-          return;
-        }
+    return;
+  }
+  const bearerHeader = request.headers.authorization;
+  if (bearerHeader) {
+    const token = bearerHeader.split(' ')[1];
+    if (request.headers.provider === 'credentials') {
+      if (verifyCredentials(token, request, response)) return next();
+    } else if (request.headers.provider === 'google') {
+      try {
+        await verifyGoogle(token, request, response);
+        return next();
+      } catch (error: any) {
+        return;
       }
     } else {
-      utils.setResponse(response, 401, {
-        error: 'An access token must be provided',
-        request: request.body,
-      });
+      try {
+        await verifyGithub(token, request, response);
+        return next();
+      } catch (error: any) {
+        return;
+      }
     }
+  } else {
+    utils.setResponse(response, 401, {
+      error: 'An access token must be provided',
+      request: request.body,
+    });
   }
 };
 
