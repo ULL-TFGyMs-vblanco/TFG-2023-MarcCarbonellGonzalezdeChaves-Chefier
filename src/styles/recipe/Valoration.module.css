@@ -53,3 +53,27 @@
 .star__inactive {
   color: var(--nextui-colors-gray800);
 }
+
+.delete__button__container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.delete__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 1.5rem;
+  width: 8rem;
+  gap: var(--nextui-space-2);
+  background-color: var(--nextui-colors-red600);
+  font-size: var(--nextui-fontSizes-sm);
+  padding: 0;
+}
+
+.delete__button:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-red700);
+}

@@ -10,12 +10,7 @@ import { Button } from '../../components/ui/Button';
 import { useShow } from '../../hooks/useShow';
 import ReactStars from 'react-stars';
 import { GrStar } from 'react-icons/gr';
-import {
-  BsBookmarkFill,
-  BsFillPersonFill,
-  BsFillTrashFill,
-  BsHeartFill,
-} from 'react-icons/bs';
+import { BsBookmarkFill, BsFillPersonFill, BsHeartFill } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { Loading } from '@nextui-org/react';
@@ -52,7 +47,6 @@ export const Recipe: React.FC<RecipeProps> = ({
   const [liked, setLiked] = useState<boolean>();
   const [valorationModalVisible, setValorationModalVisible] = useState(false);
   const [recipeModalVisible, setRecipeModalVisible] = useState(false);
-  const [isPostingValoration, setIsPostingValoration] = useState(false);
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
   const { data: session } = useSession();
 
@@ -120,9 +114,7 @@ export const Recipe: React.FC<RecipeProps> = ({
             date: new Date().toISOString(),
           }
     );
-    setIsPostingValoration(true);
-    await updateHandler({ valorations: recipe.valorations });
-    setIsPostingValoration(false);
+    updateHandler({ valorations: recipe.valorations });
     toggleShow();
   };
 
@@ -341,29 +333,12 @@ export const Recipe: React.FC<RecipeProps> = ({
               {session &&
                 user &&
                 !show &&
-                !utils.isAlreadyValorated(recipe.valorations, user) &&
-                (loggedUserIsLoading ? (
-                  <Loading />
-                ) : (
+                !utils.isAlreadyValorated(recipe.valorations, user) && (
                   <Button style={styles.add__button} onClick={toggleShow}>
                     <BiEditAlt />
                     Escribir&nbsp;reseña
                   </Button>
-                ))}
-              {session &&
-                user &&
-                utils.isAlreadyValorated(recipe.valorations, user) &&
-                (loggedUserIsLoading ? (
-                  <Loading />
-                ) : (
-                  <Button
-                    style={styles.delete__valoration__button}
-                    onClick={() => setValorationModalVisible(true)}
-                  >
-                    <BsFillTrashFill />
-                    Eliminar reseña
-                  </Button>
-                ))}
+                )}
             </div>
             <div className={styles.valoration__mean}>
               <p className={styles.mean}>
@@ -399,7 +374,7 @@ export const Recipe: React.FC<RecipeProps> = ({
                       onClick={valorationHandler}
                       disabled={reviewTitle ? false : true}
                     >
-                      {isPostingValoration ? <Loading /> : 'Enviar'}
+                      Enviar
                     </Button>
                   </div>
                 </div>
@@ -422,14 +397,17 @@ export const Recipe: React.FC<RecipeProps> = ({
               </div>
             )}
             <div>
-              {recipe.valorations.map(
-                (valoration: ValorationType, index: number) => (
+              {recipe.valorations
+                .reverse()
+                .map((valoration: ValorationType, index: number) => (
                   <div key={index}>
-                    <Valoration valoration={valoration} />
+                    <Valoration
+                      valoration={valoration}
+                      deleteHandler={removeValorationHandler}
+                    />
                     {index < recipe.valorations.length - 1 && <hr />}
                   </div>
-                )
-              )}
+                ))}
             </div>
           </div>
         </div>

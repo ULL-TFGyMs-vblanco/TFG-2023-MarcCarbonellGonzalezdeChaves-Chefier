@@ -4,14 +4,25 @@ import { GrStar } from 'react-icons/gr';
 import styles from '../../styles/recipe/Valoration.module.css';
 import TimeAgo from 'javascript-time-ago';
 import Link from 'next/link';
+import { useLoggedUser } from '@/hooks/useLoggedUser';
+import { useSession } from 'next-auth/react';
+import { BsFillTrashFill } from 'react-icons/bs';
+import { Button } from '../ui/Button';
 
 const timeAgo = new TimeAgo('es-ES');
 
 interface ValorationProps {
   valoration: ValorationType;
+  deleteHandler: () => void;
 }
 
-export const Valoration: React.FC<ValorationProps> = ({ valoration }) => {
+export const Valoration: React.FC<ValorationProps> = ({
+  valoration,
+  deleteHandler,
+}) => {
+  const { user } = useLoggedUser();
+  const { data: session } = useSession();
+
   return (
     <div className={styles.valoration}>
       <div className={styles.valoration__metadata}>
@@ -48,6 +59,14 @@ export const Valoration: React.FC<ValorationProps> = ({ valoration }) => {
       {valoration.comment && (
         <div>
           <p>{valoration.comment}</p>
+        </div>
+      )}
+      {session && user && (
+        <div className={styles.delete__button__container}>
+          <Button style={styles.delete__button} onClick={deleteHandler}>
+            <BsFillTrashFill />
+            Eliminar reseña
+          </Button>
         </div>
       )}
     </div>

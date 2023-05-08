@@ -352,23 +352,6 @@
   background-color: var(--nextui-colors-green700);
 }
 
-.delete__valoration__button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 1.5rem;
-  width: 8rem;
-  gap: var(--nextui-space-2);
-  background-color: var(--nextui-colors-red600);
-  font-size: var(--nextui-fontSizes-sm);
-  padding: 0;
-}
-
-.delete__valoration__button:hover {
-  cursor: pointer;
-  background-color: var(--nextui-colors-red700);
-}
-
 .review__container {
   display: flex;
   flex-direction: column;
@@ -458,6 +441,6 @@
 
 .delete__button:hover {
   background-color: transparent;
-  color: var(--nextui-colors-secondary600);
+  color: white;
   background-color: var(--nextui-colors-accent300);
 }
