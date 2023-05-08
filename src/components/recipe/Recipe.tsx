@@ -129,6 +129,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
         valoration.user.name !== user.nickname
     );
     updateHandler({ valorations: recipe.valorations });
+    setVisible(false);
   };
 
   return (

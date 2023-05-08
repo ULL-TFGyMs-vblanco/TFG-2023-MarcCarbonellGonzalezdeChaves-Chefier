@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react';
 import {
   IoCheckmarkCircleOutline,
   IoCloseCircleOutline,
+  IoWarningOutline,
 } from 'react-icons/io5';
 
 interface CustomModalProps {
@@ -37,11 +38,11 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           flexDirection: 'column',
         }}
       >
-        {type === 'success' ? (
+        {type === 'success' && (
           <IoCheckmarkCircleOutline color='green' size={75} />
-        ) : (
-          <IoCloseCircleOutline color='red' size={75} />
         )}
+        {type === 'error' && <IoCloseCircleOutline color='red' size={75} />}
+        {type === 'warning' && <IoWarningOutline color='orange' size={75} />}
         <h1 style={{ fontSize: '1.25rem' }}>{title}</h1>
       </Modal.Header>
       <Modal.Body
@@ -52,6 +53,28 @@ export const CustomModal: React.FC<CustomModalProps> = ({
         <p>{children}</p>
       </Modal.Body>
       <Modal.Footer>
+        {type === 'warning' && (
+          <>
+            <Button
+              auto
+              flat
+              color='error'
+              onPress={onClose}
+              data-testid='close-modal'
+            >
+              Si
+            </Button>
+            <Button
+              auto
+              flat
+              color={type}
+              onPress={() => handler(false)}
+              data-testid='close-modal'
+            >
+              No
+            </Button>
+          </>
+        )}
         <Button
           auto
           flat
@@ -59,7 +82,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           onPress={onClose}
           data-testid='close-modal'
         >
-          Close
+          Aceptar
         </Button>
       </Modal.Footer>
     </Modal>

@@ -23,7 +23,7 @@ export const Avatar: React.FC<AvatarProps> = ({
       className={style}
       href={link}
       data-testid={testid}
-      style={{ borderRadius: '50%', display: 'block' }}
+      style={{ borderRadius: '50%', display: 'block', minWidth: `${size}px` }}
     >
       <Image
         src={source}
