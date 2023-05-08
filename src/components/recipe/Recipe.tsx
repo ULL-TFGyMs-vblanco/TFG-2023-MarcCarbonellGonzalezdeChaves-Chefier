@@ -47,6 +47,7 @@ export const Recipe: React.FC<RecipeProps> = ({
   const [liked, setLiked] = useState<boolean>();
   const [recipeModalVisible, setRecipeModalVisible] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isPostingValoration, setIsPostingValoration] = useState(false);
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
   const { data: session } = useSession();
 
@@ -90,6 +91,7 @@ export const Recipe: React.FC<RecipeProps> = ({
   };
 
   const valorationHandler = async () => {
+    setIsPostingValoration(true);
     recipe.valorations.push(
       comment
         ? {
@@ -116,6 +118,7 @@ export const Recipe: React.FC<RecipeProps> = ({
     );
     await updateHandler({ valorations: recipe.valorations });
     toggleShow();
+    setIsPostingValoration(false);
   };
 
   const removeValorationHandler = async () => {
@@ -376,7 +379,7 @@ export const Recipe: React.FC<RecipeProps> = ({
                       onClick={valorationHandler}
                       disabled={reviewTitle ? false : true}
                     >
-                      Enviar
+                      {isPostingValoration ? <Loading /> : 'Enviar'}
                     </Button>
                   </div>
                 </div>

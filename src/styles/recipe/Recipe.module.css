@@ -387,7 +387,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 1.5rem;
+  height: 2rem;
   width: 5rem;
   gap: var(--nextui-space-2);
   background-color: var(--nextui-colors-accent100);
