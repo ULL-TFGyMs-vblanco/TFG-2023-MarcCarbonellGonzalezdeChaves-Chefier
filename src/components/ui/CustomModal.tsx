@@ -53,7 +53,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
         <p>{children}</p>
       </Modal.Body>
       <Modal.Footer>
-        {type === 'warning' && (
+        {type === 'warning' ? (
           <>
             <Button
               auto
@@ -74,16 +74,17 @@ export const CustomModal: React.FC<CustomModalProps> = ({
               No
             </Button>
           </>
+        ) : (
+          <Button
+            auto
+            flat
+            color={type}
+            onPress={onClose}
+            data-testid='close-modal'
+          >
+            Aceptar
+          </Button>
         )}
-        <Button
-          auto
-          flat
-          color={type}
-          onPress={onClose}
-          data-testid='close-modal'
-        >
-          Aceptar
-        </Button>
       </Modal.Footer>
     </Modal>
   );
