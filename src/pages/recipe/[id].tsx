@@ -8,11 +8,8 @@ import { Card } from '@/components/ui/Card';
 import styles from '@/styles/recipe/RecipePage.module.css';
 import { Loading } from '@nextui-org/react';
 import { Title } from '@/components/ui/Title';
-import { CustomModal } from '@/components/ui/CustomModal';
-import { useState } from 'react';
 
 const RecipePage = () => {
-  const [visible, setVisible] = useState(false);
   const { mutate } = useSWRConfig();
   const router = useRouter();
   const { recipe, isLoading, isError } = useRecipe(router.query.id as string);

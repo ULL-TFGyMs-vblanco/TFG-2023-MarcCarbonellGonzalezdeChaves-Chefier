@@ -28,7 +28,7 @@ export const Review: React.FC<ReviewProps> = ({ valoration }) => {
           </Link>
         </div>
         <p className={styles.review__date}>
-          {timeAgo.format(Date.parse(valoration.date))}
+          {timeAgo.format(Date.parse(valoration.date.toString()))}
         </p>
       </div>
       <p className={styles.review__title}>{valoration.title}</p>
