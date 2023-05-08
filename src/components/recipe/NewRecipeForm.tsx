@@ -9,6 +9,8 @@ import { BsPlus } from 'react-icons/bs';
 import { AiOutlineMinus } from 'react-icons/ai';
 import { NewRecipeFormInputs } from 'recipe-types';
 import { useImage } from '../../hooks/useImage';
+import { Loading } from '@nextui-org/react';
+import { useState } from 'react';
 
 interface NewRecipeFormProps {
   onPostRecipe: (data: NewRecipeFormInputs, image: File) => Promise<boolean>;
@@ -48,13 +50,16 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
     name: 'instructions',
   });
   const { image, imageUrl, onImageChange, setImage } = useImage();
+  const [postingRecipe, setPostingRecipe] = useState(false);
 
   const postHandler = async (data: NewRecipeFormInputs) => {
-    onPostRecipe(data, image as File).then((res) => {
+    setPostingRecipe(true);
+    await onPostRecipe(data, image as File).then((res) => {
       if (res) {
         toggleModal(true);
       }
     });
+    setPostingRecipe(false);
   };
 
   return (
@@ -69,7 +74,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
           <div className={styles.header}>
             <Title style={styles.title}>Nueva receta</Title>
             <Button style={styles.post__button} testid='post-button' submit>
-              Publicar
+              {postingRecipe ? <Loading /> : 'Publicar'}
             </Button>
           </div>
           <div className={styles.top__form__section}>

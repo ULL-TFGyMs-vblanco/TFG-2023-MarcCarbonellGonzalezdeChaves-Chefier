@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Title } from '../../components/ui/Title';
 import { Avatar } from '../../components/ui/Avatar';
 import { BiTimeFive, BiEditAlt } from 'react-icons/bi';
-import { Review } from '../../components/recipe/Review';
+// import { Review } from '../../components/recipe/Review';
 import TimeAgo from 'javascript-time-ago';
 import Link from 'next/link';
 import { Button } from '../../components/ui/Button';
@@ -249,12 +249,12 @@ const RecipePage = () => {
                         ) : recipe.saved.includes(user.username) ? (
                           <BsBookmarkFill
                             className={styles.marked__save__button}
-                            onClick={saveHandler}
+                            onClick={removeSaveHandler}
                           />
                         ) : (
                           <BsBookmarkFill
                             className={styles.unmarked__save__button}
-                            onClick={removeSaveHandler}
+                            onClick={saveHandler}
                           />
                         )
                       ) : (

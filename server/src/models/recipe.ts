@@ -172,6 +172,7 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
           type: String,
           required: false,
         },
+        title: String,
         rating: Number,
         date: {
           type: Date,
@@ -186,6 +187,7 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
             name: string;
             image: string;
           };
+          title: string;
           comment: string;
           rating: number;
           date: Date;

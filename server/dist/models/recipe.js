@@ -132,6 +132,7 @@ exports.RecipeSchema = new mongoose_1.Schema({
                     type: String,
                     required: false,
                 },
+                title: String,
                 rating: Number,
                 date: {
                     type: Date,
