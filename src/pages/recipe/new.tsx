@@ -30,6 +30,7 @@ const NewRecipe: React.FC = () => {
     const name = user.nickname ? user.nickname : user.username;
     const recipe = {
       user: {
+        id: user._id,
         name,
         image: user.image,
       },

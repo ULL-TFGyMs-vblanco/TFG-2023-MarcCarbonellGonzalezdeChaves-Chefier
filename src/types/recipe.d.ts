@@ -3,6 +3,7 @@ declare module 'recipe-types' {
     _id: string;
     name: string;
     user: {
+      id: any;
       name: string;
       image: string;
     };
@@ -24,7 +25,6 @@ declare module 'recipe-types' {
     instructions: Instruction[];
     saved: string[];
     likes: string[];
-    valoration: number;
     valorations: Valoration[];
   }
 
@@ -40,6 +40,7 @@ declare module 'recipe-types' {
 
   interface Valoration {
     user: {
+      id: string;
       name: string;
       image: string;
     };

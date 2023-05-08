@@ -352,7 +352,7 @@
   background-color: var(--nextui-colors-green700);
 }
 
-.delete__button {
+.delete__valoration__button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -364,7 +364,7 @@
   padding: 0;
 }
 
-.delete__button:hover {
+.delete__valoration__button:hover {
   cursor: pointer;
   background-color: var(--nextui-colors-red700);
 }
@@ -447,4 +447,17 @@
   border: var(--nextui-borderWeights-light) solid
     var(--nextui-colors-primary400);
   background-color: var(--nextui-colors-primary100);
+}
+
+.delete__button {
+  align-self: flex-end;
+  background-color: transparent;
+  color: var(--nextui-colors-accent300);
+  border: var(--nextui-borderWeights-light) solid var(--nextui-colors-accent300);
+}
+
+.delete__button:hover {
+  background-color: transparent;
+  color: var(--nextui-colors-secondary600);
+  background-color: var(--nextui-colors-accent300);
 }

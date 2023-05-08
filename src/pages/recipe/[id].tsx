@@ -23,6 +23,10 @@ const RecipePage = () => {
     }
   };
 
+  const deleteHandler = async () => {
+    console.log('delete recipe');
+  };
+
   return (
     <>
       <Card style={styles.card} testid='form-card'>
@@ -31,7 +35,13 @@ const RecipePage = () => {
         ) : isError ? (
           <Title>Oops! Ha ocurrido un error al cargar la receta.</Title>
         ) : (
-          recipe && <Recipe recipe={recipe} updateHandler={updateHandler} />
+          recipe && (
+            <Recipe
+              recipe={recipe}
+              updateHandler={updateHandler}
+              deleteHandler={deleteHandler}
+            />
+          )
         )}
       </Card>
     </>

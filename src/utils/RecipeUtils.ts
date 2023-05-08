@@ -16,9 +16,7 @@ export default class RecipeUtils {
     user: User
   ) => {
     return valorations.some(
-      (valoration: Valoration) =>
-        valoration.user.name === user.username ||
-        valoration.user.name === user.nickname
+      (valoration: Valoration) => valoration.user.id === user._id
     );
   };
 }

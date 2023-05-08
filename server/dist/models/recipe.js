@@ -18,7 +18,7 @@ exports.RecipeSchema = new mongoose_1.Schema({
         },
     },
     user: {
-        type: { name: String, image: String },
+        type: { name: String, image: String, id: String },
         required: true,
     },
     image: {
@@ -125,6 +125,7 @@ exports.RecipeSchema = new mongoose_1.Schema({
         type: [
             {
                 user: {
+                    id: String,
                     name: String,
                     image: String,
                 },

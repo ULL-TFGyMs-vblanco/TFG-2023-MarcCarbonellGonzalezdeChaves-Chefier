@@ -1,21 +1,21 @@
-import { Valoration } from 'recipe-types';
+import { Valoration as ValorationType } from 'recipe-types';
 import { Avatar } from '../ui/Avatar';
 import { GrStar } from 'react-icons/gr';
-import styles from '../../styles/recipe/Review.module.css';
+import styles from '../../styles/recipe/Valoration.module.css';
 import TimeAgo from 'javascript-time-ago';
 import Link from 'next/link';
 
 const timeAgo = new TimeAgo('es-ES');
 
-interface ReviewProps {
-  valoration: Valoration;
+interface ValorationProps {
+  valoration: ValorationType;
 }
 
-export const Review: React.FC<ReviewProps> = ({ valoration }) => {
+export const Valoration: React.FC<ValorationProps> = ({ valoration }) => {
   return (
-    <div className={styles.review}>
-      <div className={styles.review__metadata}>
-        <div className={styles.review__user}>
+    <div className={styles.valoration}>
+      <div className={styles.valoration__metadata}>
+        <div className={styles.valoration__user}>
           <Avatar
             source={valoration.user.image}
             username={valoration.user.name}
@@ -27,11 +27,11 @@ export const Review: React.FC<ReviewProps> = ({ valoration }) => {
             <p>@{valoration.user.name}</p>
           </Link>
         </div>
-        <p className={styles.review__date}>
+        <p className={styles.valoration__date}>
           {timeAgo.format(Date.parse(valoration.date))}
         </p>
       </div>
-      <p className={styles.review__title}>{valoration.title}</p>
+      <p className={styles.valoration__title}>{valoration.title}</p>
       <div className={styles.valoration__rating}>
         {[...Array(5)].map((_, index) => (
           <GrStar

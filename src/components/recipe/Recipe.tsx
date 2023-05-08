@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { Title } from '../../components/ui/Title';
 import { Avatar } from '../../components/ui/Avatar';
 import { BiTimeFive, BiEditAlt } from 'react-icons/bi';
-import { Review } from '../../components/recipe/Review';
+import { Valoration } from '../../components/recipe/Valoration';
 import TimeAgo from 'javascript-time-ago';
 import Link from 'next/link';
 import { Button } from '../../components/ui/Button';
@@ -23,7 +23,7 @@ import {
   Ingredient,
   Instruction,
   ValidUpdate,
-  Valoration,
+  Valoration as ValorationType,
   Recipe as RecipeType,
 } from 'recipe-types';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
@@ -36,28 +36,34 @@ const timeAgo = new TimeAgo('es-ES');
 interface RecipeProps {
   recipe: RecipeType;
   updateHandler: (update: ValidUpdate) => Promise<void>;
+  deleteHandler: () => Promise<void>;
 }
 
-export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
+export const Recipe: React.FC<RecipeProps> = ({
+  recipe,
+  updateHandler,
+  deleteHandler,
+}) => {
   const { show, toggleShow } = useShow();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState<string>();
   const [reviewTitle, setReviewTitle] = useState<string>();
   const [saved, setSaved] = useState<boolean>();
   const [liked, setLiked] = useState<boolean>();
-  const [visible, setVisible] = useState(false);
+  const [valorationModalVisible, setValorationModalVisible] = useState(false);
+  const [recipeModalVisible, setRecipeModalVisible] = useState(false);
   const [isPostingValoration, setIsPostingValoration] = useState(false);
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
   const { data: session } = useSession();
 
   useEffect(() => {
     if (recipe && user) {
-      if (recipe.saved.includes(user.username)) {
+      if (recipe.saved.includes(user._id)) {
         setSaved(true);
       } else {
         setSaved(false);
       }
-      if (recipe.likes.includes(user.username)) {
+      if (recipe.likes.includes(user._id)) {
         setLiked(true);
       } else {
         setLiked(false);
@@ -67,29 +73,25 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
 
   const likeHandler = () => {
     setLiked(true);
-    recipe.likes.push(user.username);
+    recipe.likes.push(user._id);
     updateHandler({ likes: recipe.likes });
   };
 
   const removeLikeHandler = () => {
     setLiked(false);
-    recipe.likes = recipe.likes.filter(
-      (like: string) => like !== user.username
-    );
+    recipe.likes = recipe.likes.filter((like: string) => like !== user._id);
     updateHandler({ likes: recipe.likes });
   };
 
   const saveHandler = () => {
     setSaved(true);
-    recipe.saved.push(user.username);
+    recipe.saved.push(user._id);
     updateHandler({ saved: recipe.saved });
   };
 
   const removeSaveHandler = () => {
     setSaved(false);
-    recipe.saved = recipe.saved.filter(
-      (save: string) => save !== user.username
-    );
+    recipe.saved = recipe.saved.filter((save: string) => save !== user._id);
     updateHandler({ saved: recipe.saved });
   };
 
@@ -98,6 +100,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
       comment
         ? {
             user: {
+              id: user._id,
               name: user.nickname ? user.nickname : user.username,
               image: user.image,
             },
@@ -108,6 +111,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
           }
         : {
             user: {
+              id: user._id,
               name: user.nickname ? user.nickname : user.username,
               image: user.image,
             },
@@ -124,12 +128,10 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
 
   const removeValorationHandler = () => {
     recipe.valorations = recipe.valorations.filter(
-      (valoration: any) =>
-        valoration.user.name !== user.username &&
-        valoration.user.name !== user.nickname
+      (valoration: any) => valoration.user.id !== user._id
     );
     updateHandler({ valorations: recipe.valorations });
-    setVisible(false);
+    setValorationModalVisible(false);
   };
 
   return (
@@ -355,8 +357,8 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
                   <Loading />
                 ) : (
                   <Button
-                    style={styles.delete__button}
-                    onClick={() => setVisible(true)}
+                    style={styles.delete__valoration__button}
+                    onClick={() => setValorationModalVisible(true)}
                   >
                     <BsFillTrashFill />
                     Eliminar reseña
@@ -421,9 +423,9 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
             )}
             <div>
               {recipe.valorations.map(
-                (valoration: Valoration, index: number) => (
+                (valoration: ValorationType, index: number) => (
                   <div key={index}>
-                    <Review valoration={valoration} />
+                    <Valoration valoration={valoration} />
                     {index < recipe.valorations.length - 1 && <hr />}
                   </div>
                 )
@@ -431,13 +433,30 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
             </div>
           </div>
         </div>
+        {session && user && user._id === recipe.user.id && (
+          <Button
+            style={styles.delete__button}
+            onClick={() => setRecipeModalVisible(true)}
+          >
+            Eliminar receta
+          </Button>
+        )}
       </div>
       <CustomModal
         title='¿Estás seguro de que quieres eliminar tu reseña?'
         type='warning'
-        visible={visible}
-        handler={setVisible}
+        visible={valorationModalVisible}
+        handler={setValorationModalVisible}
         onClose={removeValorationHandler}
+      >
+        Esta acción no se puede deshacer.
+      </CustomModal>
+      <CustomModal
+        title='¿Estás seguro de que quieres eliminar esta receta?'
+        type='warning'
+        visible={recipeModalVisible}
+        handler={setRecipeModalVisible}
+        onClose={deleteHandler}
       >
         Esta acción no se puede deshacer.
       </CustomModal>

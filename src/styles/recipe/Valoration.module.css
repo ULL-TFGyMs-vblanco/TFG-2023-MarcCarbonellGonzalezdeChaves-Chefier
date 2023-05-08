@@ -1,4 +1,4 @@
-.review {
+.valoration {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -7,7 +7,7 @@
   margin: var(--nextui-space-7) 0;
 }
 
-.review__metadata {
+.valoration__metadata {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -15,7 +15,7 @@
   align-items: center;
 }
 
-.review__user {
+.valoration__user {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -30,11 +30,11 @@
   color: var(--nextui-colors-secondary100);
 }
 
-.review__date {
+.valoration__date {
   font-size: var(--nextui-fontSizes-sm);
 }
 
-.review__title {
+.valoration__title {
   font-size: var(--nextui-fontSizes-md);
   font-weight: var(--nextui-fontWeights-bold);
 }
