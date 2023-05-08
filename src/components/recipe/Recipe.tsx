@@ -396,6 +396,7 @@ export const Recipe: React.FC<RecipeProps> = ({
             )}
             <div>
               {recipe.valorations
+                .slice(0)
                 .reverse()
                 .map((valoration: ValorationType, index: number) => (
                   <div key={index}>

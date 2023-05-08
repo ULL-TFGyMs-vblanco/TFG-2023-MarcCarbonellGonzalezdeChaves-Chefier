@@ -32,7 +32,6 @@ export const Valoration: React.FC<ValorationProps> = ({
     setIsDeleting(true);
     setValorationModalVisible(false);
     await deleteHandler();
-    setIsDeleting(false);
   };
 
   return (
