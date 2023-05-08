@@ -103,7 +103,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
             },
             title: reviewTitle as string,
             rating: rating,
-            date: Date.now().toString(),
+            date: new Date().toISOString(),
             comment: comment,
           }
         : {
@@ -113,7 +113,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
             },
             title: reviewTitle as string,
             rating: rating,
-            date: Date.now().toString(),
+            date: new Date().toISOString(),
           }
     );
     setIsPostingValoration(true);
