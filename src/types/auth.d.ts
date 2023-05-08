@@ -24,4 +24,17 @@ declare module 'auth-types' {
     password?: string;
     image?: string;
   }
+
+  interface User {
+    _id: string;
+    username: string;
+    nickname: string;
+    description: string;
+    registerDate: Date;
+    birthdate: Date;
+    image: string;
+    email: string;
+    password: string;
+    following: [string];
+  }
 }

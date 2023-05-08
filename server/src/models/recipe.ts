@@ -33,7 +33,7 @@ export interface RecipeDocumentInterface extends Document {
         image: string;
       };
       title: string;
-      comment: string;
+      comment?: string;
       rating: number;
       date: Date;
     }
@@ -188,14 +188,17 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
             image: string;
           };
           title: string;
-          comment: string;
+          comment?: string;
           rating: number;
           date: Date;
         }
       ]
     ) => {
       value.forEach((valoration) => {
-        if (!validator.isLength(valoration.comment, { max: 100 })) {
+        if (
+          valoration.comment &&
+          !validator.isLength(valoration.comment, { max: 100 })
+        ) {
           throw new Error(
             'Valoration comment have a maximum of 100 characters'
           );

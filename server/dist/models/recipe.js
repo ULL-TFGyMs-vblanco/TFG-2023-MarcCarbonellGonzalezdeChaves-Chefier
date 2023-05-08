@@ -142,7 +142,8 @@ exports.RecipeSchema = new mongoose_1.Schema({
         ],
         validate: (value) => {
             value.forEach((valoration) => {
-                if (!validator_1.default.isLength(valoration.comment, { max: 100 })) {
+                if (valoration.comment &&
+                    !validator_1.default.isLength(valoration.comment, { max: 100 })) {
                     throw new Error('Valoration comment have a maximum of 100 characters');
                 }
                 if (!validator_1.default.isIn(valoration.rating.toString(), [

@@ -1,5 +1,6 @@
 declare module 'recipe-types' {
   interface Recipe {
+    _id: string;
     name: string;
     user: {
       name: string;
@@ -20,8 +21,8 @@ declare module 'recipe-types' {
     difficulty: 'Fácil' | 'Media' | 'Difícil';
     rations: number;
     ingredients: { name: string; quantity: number; unit: string }[];
-    instructions: string[];
-    saves: string[];
+    instructions: Instruction[];
+    saved: string[];
     likes: string[];
     valoration: number;
     valorations: Valoration[];
