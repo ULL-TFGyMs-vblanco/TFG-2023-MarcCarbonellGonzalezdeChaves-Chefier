@@ -117,11 +117,11 @@ export const Recipe: React.FC<RecipeProps> = ({
     toggleShow();
   };
 
-  const removeValorationHandler = () => {
+  const removeValorationHandler = async () => {
     recipe.valorations = recipe.valorations.filter(
       (valoration: any) => valoration.user.id !== user._id
     );
-    updateHandler({ valorations: recipe.valorations });
+    await updateHandler({ valorations: recipe.valorations });
   };
 
   return (

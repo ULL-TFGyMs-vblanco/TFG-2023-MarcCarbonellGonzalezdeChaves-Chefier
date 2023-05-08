@@ -10,12 +10,13 @@ import { BsFillTrashFill } from 'react-icons/bs';
 import { Button } from '../ui/Button';
 import { useState } from 'react';
 import { CustomModal } from '../ui/CustomModal';
+import { Loading } from '@nextui-org/react';
 
 const timeAgo = new TimeAgo('es-ES');
 
 interface ValorationProps {
   valoration: ValorationType;
-  deleteHandler: () => void;
+  deleteHandler: () => Promise<void>;
 }
 
 export const Valoration: React.FC<ValorationProps> = ({
@@ -23,12 +24,15 @@ export const Valoration: React.FC<ValorationProps> = ({
   deleteHandler,
 }) => {
   const [valorationModalVisible, setValorationModalVisible] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { data: session } = useSession();
   const { user } = useLoggedUser();
 
   const handleDelete = async () => {
-    deleteHandler();
+    setIsDeleting(true);
     setValorationModalVisible(false);
+    await deleteHandler();
+    setIsDeleting(false);
   };
 
   return (
@@ -79,8 +83,14 @@ export const Valoration: React.FC<ValorationProps> = ({
               style={styles.delete__button}
               onClick={() => setValorationModalVisible(true)}
             >
-              <BsFillTrashFill />
-              Eliminar reseña
+              {isDeleting ? (
+                <Loading />
+              ) : (
+                <>
+                  <BsFillTrashFill />
+                  Eliminar reseña
+                </>
+              )}
             </Button>
           </div>
         )}
