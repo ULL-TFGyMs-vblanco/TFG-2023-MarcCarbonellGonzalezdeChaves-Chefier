@@ -45,7 +45,6 @@ export const Recipe: React.FC<RecipeProps> = ({
   const [reviewTitle, setReviewTitle] = useState<string>();
   const [saved, setSaved] = useState<boolean>();
   const [liked, setLiked] = useState<boolean>();
-  const [valorationModalVisible, setValorationModalVisible] = useState(false);
   const [recipeModalVisible, setRecipeModalVisible] = useState(false);
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
   const { data: session } = useSession();
@@ -123,7 +122,6 @@ export const Recipe: React.FC<RecipeProps> = ({
       (valoration: any) => valoration.user.id !== user._id
     );
     updateHandler({ valorations: recipe.valorations });
-    setValorationModalVisible(false);
   };
 
   return (
@@ -420,15 +418,6 @@ export const Recipe: React.FC<RecipeProps> = ({
           </Button>
         )}
       </div>
-      <CustomModal
-        title='¿Estás seguro de que quieres eliminar tu reseña?'
-        type='warning'
-        visible={valorationModalVisible}
-        handler={setValorationModalVisible}
-        onClose={removeValorationHandler}
-      >
-        Esta acción no se puede deshacer.
-      </CustomModal>
       <CustomModal
         title='¿Estás seguro de que quieres eliminar esta receta?'
         type='warning'
