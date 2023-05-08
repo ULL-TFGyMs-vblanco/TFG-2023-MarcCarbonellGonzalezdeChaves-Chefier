@@ -12,7 +12,7 @@ interface CustomModalProps {
   children: string;
   visible: boolean;
   handler: Dispatch<SetStateAction<boolean>>;
-  onClose: () => void;
+  onClose: () => void | Promise<void>;
 }
 
 export const CustomModal: React.FC<CustomModalProps> = ({

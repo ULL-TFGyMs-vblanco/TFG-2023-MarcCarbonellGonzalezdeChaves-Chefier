@@ -14,7 +14,10 @@ import OauthLogin from './OauthLogin';
 
 interface RegisterFormProps {
   onRegister: (data: RegisterData) => Promise<boolean>;
-  onOauthLogin: (provider: string, options: SignInOptions) => void;
+  onOauthLogin: (
+    provider: string,
+    options: SignInOptions
+  ) => void | Promise<void>;
   toggleModal: (visible: boolean) => void;
 }
 
@@ -45,10 +48,10 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     });
   };
 
-  const submitHandler = (data: any) => {
+  const submitHandler = async (data: any) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, passwordVisibility, ...credentials } = data;
-    registerHandler(credentials);
+    await registerHandler(credentials);
   };
 
   return (

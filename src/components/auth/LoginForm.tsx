@@ -12,7 +12,7 @@ import { useShow } from 'src/hooks/useShow';
 import OauthLogin from './OauthLogin';
 
 interface LoginFormProps {
-  onLogin: (provider: string, options: SignInOptions) => void;
+  onLogin: (provider: string, options: SignInOptions) => void | Promise<void>;
 }
 
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {

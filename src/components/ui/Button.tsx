@@ -6,7 +6,7 @@ interface ButtonProps {
   submit?: boolean;
   style?: string;
   testid?: string;
-  onClick?: () => void;
+  onClick?: () => void | Promise<void>;
   disabled?: boolean;
 }
 
