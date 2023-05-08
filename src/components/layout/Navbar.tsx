@@ -74,10 +74,10 @@ export const Navbar: React.FC = () => {
               <li className={styles.links__col}>
                 <Link
                   className={styles.link}
-                  href='/new-recipe'
+                  href='/recipe/new'
                   data-testid='navigation-link'
                 >
-                  Recipes
+                  New&nbsp;Recipe
                 </Link>
               </li>
               {session ? (

@@ -68,7 +68,8 @@ const Register: React.FC = () => {
         handler={setErrorModal}
         onClose={closeErrorModalHandler}
       >
-        {`${error}`}
+        Oops! Ha ocurrido un error al crear tu cuenta. Inténtalo de nuevo más
+        tarde.
       </CustomModal>
     </div>
   );

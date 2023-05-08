@@ -67,11 +67,11 @@ export const ToggleMenu: React.FC<{
         <li>
           <Link
             className={styles.link}
-            href='/recipes'
+            href='/recipe/new'
             data-testid='toggle-navigation-link'
             onClick={toggleHandler}
           >
-            Recipes
+            New&nbsp;Recipe
           </Link>
         </li>
         <li>

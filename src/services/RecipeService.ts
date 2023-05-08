@@ -42,6 +42,19 @@ const RecipeService = {
       throw new Error(err.response.data.error.message);
     }
   },
+
+  deleteRecipe: async (url: string) => {
+    const session = await getSession();
+    try {
+      await axios.delete(url, {
+        headers: {
+          Authorization: `Bearer ${session?.user.accessToken}`,
+        },
+      });
+    } catch (err: any) {
+      throw new Error(err.response.data.error.message);
+    }
+  },
 };
 
 export default RecipeService;

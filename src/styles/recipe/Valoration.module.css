@@ -65,7 +65,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 1.75rem;
+  height: 2rem;
   width: 8rem;
   gap: var(--nextui-space-2);
   background-color: var(--nextui-colors-red600);

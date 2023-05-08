@@ -8,11 +8,14 @@ import { Card } from '@/components/ui/Card';
 import styles from '@/styles/recipe/RecipePage.module.css';
 import { Loading } from '@nextui-org/react';
 import { Title } from '@/components/ui/Title';
+import { CustomModal } from '@/components/ui/CustomModal';
+import { useState } from 'react';
 
 const RecipePage = () => {
   const { mutate } = useSWRConfig();
   const router = useRouter();
   const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
+  const [errorModal, setErrorModal] = useState(false);
 
   const updateHandler = async (update: ValidUpdate) => {
     try {
@@ -24,7 +27,13 @@ const RecipePage = () => {
   };
 
   const deleteHandler = async () => {
-    console.log('delete recipe');
+    try {
+      await RecipeService.deleteRecipe(`/recipe/${recipe._id}`);
+      mutate('/recipe/' + recipe._id);
+      router.push('/');
+    } catch (error) {
+      setErrorModal(true);
+    }
   };
 
   return (
@@ -33,7 +42,7 @@ const RecipePage = () => {
         {isLoading ? (
           <Loading />
         ) : isError ? (
-          <Title>Oops! Ha ocurrido un error al cargar la receta.</Title>
+          <Title>Receta no encontrada</Title>
         ) : (
           recipe && (
             <Recipe
@@ -44,6 +53,16 @@ const RecipePage = () => {
           )
         )}
       </Card>
+      <CustomModal
+        type='error'
+        title='Error'
+        visible={errorModal}
+        handler={setErrorModal}
+        onClose={() => setErrorModal(false)}
+      >
+        Oops! Ha ocurrido un error al intentar eliminar la receta. Inténtalo de
+        nuevo más tarde.
+      </CustomModal>
     </>
   );
 };
