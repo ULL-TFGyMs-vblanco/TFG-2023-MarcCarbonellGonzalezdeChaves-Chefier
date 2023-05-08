@@ -51,65 +51,62 @@ const RecipePage = () => {
   };
 
   const likeHandler = () => {
-    if (recipe.likes.includes(user.username)) {
-      recipe.likes = recipe.likes.filter(
-        (like: string) => like !== user.username
-      );
-    } else {
-      recipe.likes.push(user.username);
-    }
+    recipe.likes.push(user.username);
+    updateHandler({ likes: recipe.likes });
+  };
+
+  const removeLikeHandler = () => {
+    recipe.likes = recipe.likes.filter(
+      (like: string) => like !== user.username
+    );
     updateHandler({ likes: recipe.likes });
   };
 
   const saveHandler = () => {
-    if (recipe.saved.includes(user.username)) {
-      recipe.saved = recipe.saved.filter(
-        (save: string) => save !== user.username
-      );
-    } else {
-      recipe.saved.push(user.username);
-    }
+    recipe.saved.push(user.username);
+    updateHandler({ saved: recipe.saved });
+  };
+
+  const removeSaveHandler = () => {
+    recipe.saved = recipe.saved.filter(
+      (save: string) => save !== user.username
+    );
     updateHandler({ saved: recipe.saved });
   };
 
   const valorationHandler = () => {
-    if (
-      recipe.valorations.some(
-        (valoration: any) =>
-          valoration.user.name === user.username ||
-          valoration.user.name === user.nickname
-      )
-    ) {
-      recipe.valorations = recipe.valorations.filter(
-        (valoration: any) =>
-          valoration.username !== user.username &&
-          valoration.username !== user.nickname
-      );
-    } else {
-      recipe.valorations.push(
-        comment
-          ? {
-              user: {
-                name: user.nickname ? user.nickname : user.username,
-                image: user.image,
-              },
-              title: reviewTitle,
-              rating: rating,
-              date: Date.now(),
-              comment: comment,
-            }
-          : {
-              user: {
-                name: user.nickname ? user.nickname : user.username,
-                image: user.image,
-              },
-              title: reviewTitle,
-              rating: rating,
-              date: Date.now(),
-            }
-      );
-      toggleShow();
-    }
+    recipe.valorations.push(
+      comment
+        ? {
+            user: {
+              name: user.nickname ? user.nickname : user.username,
+              image: user.image,
+            },
+            title: reviewTitle,
+            rating: rating,
+            date: Date.now(),
+            comment: comment,
+          }
+        : {
+            user: {
+              name: user.nickname ? user.nickname : user.username,
+              image: user.image,
+            },
+            title: reviewTitle,
+            rating: rating,
+            date: Date.now(),
+          }
+    );
+    toggleShow();
+    updateHandler({ valorations: recipe.valorations });
+  };
+
+  const removeValorationHandler = () => {
+    recipe.valorations = recipe.valorations.filter(
+      (valoration: any) =>
+        valoration.user.name !== user.username &&
+        valoration.user.name !== user.nickname
+    );
     updateHandler({ valorations: recipe.valorations });
   };
 
@@ -249,14 +246,15 @@ const RecipePage = () => {
                       {session ? (
                         loggedUserIsLoading ? (
                           <Loading />
+                        ) : recipe.saved.includes(user.username) ? (
+                          <BsBookmarkFill
+                            className={styles.marked__save__button}
+                            onClick={saveHandler}
+                          />
                         ) : (
                           <BsBookmarkFill
-                            className={
-                              recipe.saved.includes(user.username)
-                                ? styles.marked__save__button
-                                : styles.unmarked__save__button
-                            }
-                            onClick={saveHandler}
+                            className={styles.unmarked__save__button}
+                            onClick={removeSaveHandler}
                           />
                         )
                       ) : (
@@ -272,13 +270,14 @@ const RecipePage = () => {
                       {session ? (
                         loggedUserIsLoading ? (
                           <Loading />
+                        ) : recipe.likes.includes(user.username) ? (
+                          <BsHeartFill
+                            className={styles.marked__like__button}
+                            onClick={removeLikeHandler}
+                          />
                         ) : (
                           <BsHeartFill
-                            className={
-                              recipe.likes.includes(user.username)
-                                ? styles.marked__like__button
-                                : styles.unmarked__like__button
-                            }
+                            className={styles.unmarked__like__button}
                             onClick={likeHandler}
                           />
                         )
@@ -371,7 +370,7 @@ const RecipePage = () => {
                       ) : (
                         <Button
                           style={styles.delete__button}
-                          onClick={valorationHandler}
+                          onClick={removeValorationHandler}
                         >
                           <BsFillTrashFill />
                           Eliminar reseña
