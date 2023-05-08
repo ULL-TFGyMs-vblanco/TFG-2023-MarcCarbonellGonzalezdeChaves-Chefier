@@ -336,6 +336,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
                 {recipe.valorations.length} valoraciones
               </p>
               {session &&
+                user &&
                 !show &&
                 !utils.isAlreadyValorated(recipe.valorations, user) &&
                 (loggedUserIsLoading ? (
@@ -347,6 +348,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, updateHandler }) => {
                   </Button>
                 ))}
               {session &&
+                user &&
                 utils.isAlreadyValorated(recipe.valorations, user) &&
                 (loggedUserIsLoading ? (
                   <Loading />
