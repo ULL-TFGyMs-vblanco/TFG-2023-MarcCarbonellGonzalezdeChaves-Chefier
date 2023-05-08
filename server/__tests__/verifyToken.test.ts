@@ -19,8 +19,12 @@ beforeAll(async () => {
 });
 
 const recipe = {
-  name: 'Ensalada de quinoa y aguacate',
-  username: 'chefjulia',
+  name: 'Pizza con piña',
+  user: {
+    id: '123456789',
+    name: 'elgranchef',
+    image: 'https://www.google.com',
+  },
   description: 'Una receta saludable y fácil de preparar para una cena ligera.',
   tags: {
     brekfast: false,
@@ -28,6 +32,7 @@ const recipe = {
     dinner: true,
     dessert: false,
     snack: false,
+    drink: false,
   },
   difficulty: 'Fácil',
   cookTime: 30,
@@ -101,7 +106,7 @@ describe('Verify token middleware', (): void => {
       )
       .set('Authorization', `Bearer accessToken`)
       .set('Content-Type', 'multipart/form-data')
-      .field('provider', '1234')
+      .set('Provider', '1234')
       .field('recipe', JSON.stringify(recipe))
       .expect(401);
   });
@@ -113,7 +118,7 @@ describe('Verify token middleware', (): void => {
         path.resolve(__dirname, '../../public/images/chefier.png')
       )
       .set('Content-Type', 'multipart/form-data')
-      .field('provider', 'credentials')
+      .set('Provider', 'credentials')
       .field('recipe', JSON.stringify(recipe))
       .expect(401);
   });
@@ -127,7 +132,7 @@ describe('Verify token middleware', (): void => {
         )
         .set('Authorization', `Bearer accessToken`)
         .set('Content-Type', 'multipart/form-data')
-        .field('provider', 'credentials')
+        .set('Provider', 'credentials')
         .field('recipe', JSON.stringify(recipe2))
         .expect(400);
     });
@@ -140,7 +145,7 @@ describe('Verify token middleware', (): void => {
         )
         .set('Authorization', `Bearer 1234567890`)
         .set('Content-Type', 'multipart/form-data')
-        .field('provider', 'credentials')
+        .set('Provider', 'credentials')
         .field('recipe', JSON.stringify(recipe2))
         .expect(401);
     });
@@ -155,7 +160,7 @@ describe('Verify token middleware', (): void => {
         )
         .set('Authorization', `Bearer accessToken`)
         .set('Content-Type', 'multipart/form-data')
-        .field('provider', 'google')
+        .set('Provider', 'google')
         .field('recipe', JSON.stringify(recipe2))
         .expect(400);
     });
@@ -168,7 +173,7 @@ describe('Verify token middleware', (): void => {
         )
         .set('Authorization', `Bearer 1234567890`)
         .set('Content-Type', 'multipart/form-data')
-        .field('provider', 'google')
+        .set('Provider', 'google')
         .field('recipe', JSON.stringify(recipe2))
         .expect(401);
     });
@@ -183,7 +188,7 @@ describe('Verify token middleware', (): void => {
         )
         .set('Authorization', 'Bearer accessToken')
         .set('Content-Type', 'multipart/form-data')
-        .field('provider', 'github')
+        .set('Provider', 'github')
         .field('recipe', JSON.stringify(recipe2))
         .expect(400);
     });
@@ -196,7 +201,7 @@ describe('Verify token middleware', (): void => {
         )
         .set('Authorization', 'Bearer 1234567890')
         .set('Content-Type', 'multipart/form-data')
-        .field('provider', 'github')
+        .set('Provider', 'github')
         .field('recipe', JSON.stringify(recipe2))
         .expect(401);
     });

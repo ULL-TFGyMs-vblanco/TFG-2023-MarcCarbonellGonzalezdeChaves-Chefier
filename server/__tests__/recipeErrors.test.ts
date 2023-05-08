@@ -13,8 +13,12 @@ beforeAll(async () => {
 });
 
 const recipe = {
-  name: 'Ensalada de quinoa y aguacate',
-  username: 'chefjulia',
+  name: 'Pizza con piña',
+  user: {
+    id: '123456789',
+    name: 'elgranchef',
+    image: 'https://www.google.com',
+  },
   description: 'Una receta saludable y fácil de preparar para una cena ligera.',
   tags: {
     brekfast: false,
@@ -22,6 +26,7 @@ const recipe = {
     dinner: true,
     dessert: false,
     snack: false,
+    drink: false,
   },
   difficulty: 'Fácil',
   cookTime: 30,
@@ -75,8 +80,8 @@ describe('Recipe router', (): void => {
           path.resolve(__dirname, '../../public/images/chefier.png')
         )
         .set('Authorization', `Bearer ${accessToken}`)
+        .set('Provider', 'credentials')
         .set('Content-Type', 'multipart/form-data')
-        .field('provider', 'credentials')
         .field('recipe', JSON.stringify(recipe))
         .expect(500);
     });

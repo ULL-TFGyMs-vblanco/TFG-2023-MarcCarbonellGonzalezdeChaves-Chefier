@@ -14,7 +14,11 @@ beforeAll(async () => {
 
 const recipe = {
   name: 'Pizza con piña',
-  username: 'elgranchef',
+  user: {
+    id: '123456789',
+    name: 'elgranchef',
+    image: 'https://www.google.com',
+  },
   description: 'Una receta saludable y fácil de preparar para una cena ligera.',
   tags: {
     brekfast: false,
@@ -22,6 +26,7 @@ const recipe = {
     dinner: true,
     dessert: false,
     snack: false,
+    drink: false,
   },
   difficulty: 'Fácil',
   cookTime: 30,
@@ -39,20 +44,6 @@ let accessToken = '';
 let id = '';
 
 describe('Recipe router', (): void => {
-  // vi.mock('../src/utils/APIUtils.ts', async () => {
-  //   const mod: any = await vi.importActual('../src/utils/APIUtils.ts');
-  //   return {
-  //     default: {
-  //       ...mod.default,
-  //       uploadImage: () => ({
-  //         url: 'https://ik.imagekit.io/czvxqgafa/images/posts/ensalada_quinoa_aguacate.jpg',
-  //         fileId: '1234',
-  //       }),
-  //       deleteImage: () => ({}),
-  //     },
-  //   };
-  // });
-
   describe('Get recipes', (): void => {
     it('should return all the recipes', async () => {
       await request(server).get('/api/recipes').expect(200);
@@ -88,7 +79,7 @@ describe('Recipe router', (): void => {
         )
         .set('Authorization', `Bearer ${accessToken}`)
         .set('Content-Type', 'multipart/form-data')
-        .field('provider', 'credentials')
+        .set('Provider', 'credentials')
         .field('recipe', JSON.stringify(recipe))
         .expect(200);
       id = res.body.recipe._id;
@@ -97,7 +88,7 @@ describe('Recipe router', (): void => {
       await request(server)
         .delete(`/api/recipe/${id}`)
         .set('Authorization', `Bearer ${accessToken}`)
-        .send({ provider: 'credentials' })
+        .set('Provider', 'credentials')
         .expect(200);
     });
     it('should throw a validation error', async () => {
@@ -109,7 +100,7 @@ describe('Recipe router', (): void => {
         )
         .set('Authorization', `Bearer ${accessToken}`)
         .set('Content-Type', 'multipart/form-data')
-        .field('provider', 'credentials')
+        .set('Provider', 'credentials')
         .field('recipe', JSON.stringify(recipe2))
         .expect(400);
     });

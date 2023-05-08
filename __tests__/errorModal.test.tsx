@@ -77,14 +77,14 @@ describe('Error modal', (): void => {
       password: 'Password1',
     });
     await waitFor(() => expect(screen.getByTestId('modal')).toBeDefined());
-    screen.getByText('ERROR');
-    const close = screen.getByText('Close');
+    screen.getByText('Error');
+    const close = screen.getByText('Aceptar');
     fireEvent.click(close);
     const button = document.getElementsByClassName('nextui-modal-close-icon');
     expect(button).toHaveLength(1);
     fireEvent.click(button[0]);
     await waitFor(() => expect(screen.queryByTestId('modal')).toBeNull());
-    expect(screen.queryByText('ERROR')).toBeNull();
+    expect(screen.queryByText('Error')).toBeNull();
   });
 
   it('should show the error modal when login gives an error', async (): Promise<void> => {
@@ -104,13 +104,13 @@ describe('Error modal', (): void => {
       password: 'Password1',
     });
     await waitFor(() => expect(screen.getByTestId('modal')).toBeDefined());
-    screen.getByText('ERROR');
-    const close = screen.getByText('Close');
+    screen.getByText('Error');
+    const close = screen.getByText('Aceptar');
     fireEvent.click(close);
     const button = document.getElementsByClassName('nextui-modal-close-icon');
     expect(button).toHaveLength(1);
     fireEvent.click(button[0]);
     await waitFor(() => expect(screen.queryByTestId('modal')).toBeNull());
-    expect(screen.queryByText('ERROR')).toBeNull();
+    expect(screen.queryByText('Error')).toBeNull();
   });
 });

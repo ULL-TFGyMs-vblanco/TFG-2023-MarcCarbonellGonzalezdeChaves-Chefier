@@ -57,7 +57,7 @@ describe('Navbar', (): void => {
       const navLinks = screen.getAllByTestId('navigation-link');
       expect(navLinks.length).toBe(2);
       screen.getByText('Log in');
-      screen.getByText('Recipes');
+      screen.getByText('New Recipe');
     });
     it('should render toggle button', (): void => {
       render(<Navbar />);
@@ -87,9 +87,9 @@ describe('Navbar', (): void => {
       const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
       const navLinks = screen.getAllByTestId('toggle-navigation-link');
-      expect(navLinks.length).toBe(3);
+      expect(navLinks.length).toBe(2);
       expect(screen.getAllByText('Log in').length).toBe(2);
-      expect(screen.getAllByText('Recipes').length).toBe(2);
+      expect(screen.getAllByText('New Recipe').length).toBe(2);
     });
     it('should render help navigation links', (): void => {
       render(<Navbar />);
