@@ -8,7 +8,7 @@ declare module 'recipe-types' {
     };
     image: { url: string; fileId: string };
     description: string;
-    date: Date;
+    date: string;
     tags: {
       breakfast: boolean;
       lunch: boolean;

@@ -6,7 +6,7 @@ import {
 } from 'react-icons/io5';
 
 interface CustomModalProps {
-  type: 'success' | 'error';
+  type: 'success' | 'error' | 'warning';
   title: string;
   children: string;
   visible: boolean;
