@@ -10,7 +10,6 @@ const RecipeService = {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { image, ...recipeData } = recipe;
     formData.append('recipe', JSON.stringify(recipeData));
-    formData.append('provider', session?.user.provider as string);
     try {
       await axios({
         method: 'post',
@@ -19,6 +18,7 @@ const RecipeService = {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${session?.user.accessToken}`,
+          Provider: session?.user.provider as string,
         },
       });
     } catch (err: any) {
@@ -31,10 +31,11 @@ const RecipeService = {
     try {
       await axios.patch(
         url,
-        { update, provider: session?.user.provider as string },
+        { update },
         {
           headers: {
             Authorization: `Bearer ${session?.user.accessToken}`,
+            Provider: session?.user.provider as string,
           },
         }
       );
@@ -49,6 +50,7 @@ const RecipeService = {
       await axios.delete(url, {
         headers: {
           Authorization: `Bearer ${session?.user.accessToken}`,
+          Provider: session?.user.provider as string,
         },
       });
     } catch (err: any) {

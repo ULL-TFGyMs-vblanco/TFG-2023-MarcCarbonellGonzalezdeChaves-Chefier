@@ -9,9 +9,9 @@ const google_auth_library_1 = require("google-auth-library");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
 const verifyToken = async ({ response, request }, next) => {
-    if (request.body.provider !== 'credentials' &&
-        request.body.provider !== 'google' &&
-        request.body.provider !== 'github') {
+    if (request.headers.provider !== 'credentials' &&
+        request.headers.provider !== 'google' &&
+        request.headers.provider !== 'github') {
         APIUtils_1.default.setResponse(response, 401, {
             error: 'Invalid provider',
             request: request.body,
@@ -21,11 +21,11 @@ const verifyToken = async ({ response, request }, next) => {
         const bearerHeader = request.headers.authorization;
         if (bearerHeader) {
             const token = bearerHeader.split(' ')[1];
-            if (request.body.provider === 'credentials') {
+            if (request.headers.provider === 'credentials') {
                 if (verifyCredentials(token, request, response))
                     return next();
             }
-            else if (request.body.provider === 'google') {
+            else if (request.headers.provider === 'google') {
                 try {
                     await verifyGoogle(token, request, response);
                     return next();

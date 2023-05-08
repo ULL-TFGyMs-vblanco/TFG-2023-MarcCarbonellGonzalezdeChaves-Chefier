@@ -46,6 +46,7 @@ export const Recipe: React.FC<RecipeProps> = ({
   const [saved, setSaved] = useState<boolean>();
   const [liked, setLiked] = useState<boolean>();
   const [recipeModalVisible, setRecipeModalVisible] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
   const { data: session } = useSession();
 
@@ -122,6 +123,13 @@ export const Recipe: React.FC<RecipeProps> = ({
       (valoration: any) => valoration.user.id !== user._id
     );
     await updateHandler({ valorations: recipe.valorations });
+  };
+
+  const handleDelete = async () => {
+    setIsDeleting(true);
+    setRecipeModalVisible(false);
+    await deleteHandler();
+    setIsDeleting(false);
   };
 
   return (
@@ -415,7 +423,7 @@ export const Recipe: React.FC<RecipeProps> = ({
             style={styles.delete__button}
             onClick={() => setRecipeModalVisible(true)}
           >
-            Eliminar receta
+            {isDeleting ? <Loading /> : 'Eliminar receta'}
           </Button>
         )}
       </div>
@@ -424,7 +432,7 @@ export const Recipe: React.FC<RecipeProps> = ({
         type='warning'
         visible={recipeModalVisible}
         handler={setRecipeModalVisible}
-        onClose={deleteHandler}
+        onClose={handleDelete}
       >
         Esta acción no se puede deshacer.
       </CustomModal>
