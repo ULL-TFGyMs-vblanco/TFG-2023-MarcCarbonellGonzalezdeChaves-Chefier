@@ -1,13 +1,5 @@
 .form__card {
   width: 25rem;
-  margin: var(--nextui-space-15) auto;
-}
-
-@media screen and (width < 650px) {
-  .form__card {
-    box-shadow: none;
-    background-color: transparent;
-  }
 }
 
 .form__container {
