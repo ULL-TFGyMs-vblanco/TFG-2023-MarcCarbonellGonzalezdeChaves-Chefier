@@ -63,7 +63,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
   };
 
   return (
-    <Card style={styles.form__card} testid='form-card'>
+    <Card testid='form-card'>
       <div className={styles.form__container}>
         <form
           autoComplete='off'

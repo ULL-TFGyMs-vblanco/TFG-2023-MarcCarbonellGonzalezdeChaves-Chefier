@@ -5,7 +5,6 @@ import RecipeService from '@/services/RecipeService';
 import { useSWRConfig } from 'swr';
 import { Recipe } from '@/components/recipe/Recipe';
 import { Card } from '@/components/ui/Card';
-import styles from '@/styles/recipe/RecipePage.module.css';
 import { Loading } from '@nextui-org/react';
 import { Title } from '@/components/ui/Title';
 import { CustomModal } from '@/components/ui/CustomModal';
@@ -38,7 +37,7 @@ const RecipePage = () => {
 
   return (
     <>
-      <Card style={styles.card} testid='form-card'>
+      <Card testid='form-card'>
         {isLoading ? (
           <Loading />
         ) : isError ? (
