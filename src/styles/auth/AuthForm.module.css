@@ -7,6 +7,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
   padding: var(--nextui-space-15) var(--nextui-space-19);
 }
 

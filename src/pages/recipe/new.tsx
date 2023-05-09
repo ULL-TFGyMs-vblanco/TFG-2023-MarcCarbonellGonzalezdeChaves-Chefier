@@ -5,7 +5,6 @@ import RecipeService from '@/services/RecipeService';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { NewRecipeFormInputs } from 'recipe-types';
-import styles from 'src/styles/recipe/NewRecipe.module.css';
 
 const NewRecipe: React.FC = () => {
   const [error, setError] = useState<string | string[]>();
@@ -48,7 +47,7 @@ const NewRecipe: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div>
       <NewRecipeForm
         onPostRecipe={postRecipeHandler}
         toggleModal={setSuccesModal}

@@ -1,6 +1,7 @@
 .form__container {
   display: flex;
   flex-direction: column;
+  width: 100%;
   align-items: center;
   justify-content: center;
   padding: var(--nextui-space-15) var(--nextui-space-19);

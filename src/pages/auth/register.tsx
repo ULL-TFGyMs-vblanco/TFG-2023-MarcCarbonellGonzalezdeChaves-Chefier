@@ -1,7 +1,6 @@
 import { CustomModal } from '../../components/ui/CustomModal';
 import { RegisterForm } from '../../components/auth/RegisterForm';
 import { RegisterData } from 'auth-types';
-import styles from 'src/styles/auth/Auth.module.css';
 import AuthService from '../../services/AuthService';
 import { useEffect, useState } from 'react';
 import { SignInOptions } from 'next-auth/react';
@@ -46,7 +45,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div>
       <RegisterForm
         onRegister={registerHandler}
         onOauthLogin={loginHandler}
