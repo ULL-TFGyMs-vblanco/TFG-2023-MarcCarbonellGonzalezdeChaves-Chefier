@@ -20,7 +20,7 @@ export default class RecipeUtils {
     );
   };
 
-  public static countRecipeStat = (stat: string[]) => {
+  public static countInteractions = (stat: string[]) => {
     return stat.length > 1000 ? `${stat.length / 1000}k` : stat.length;
   };
 }

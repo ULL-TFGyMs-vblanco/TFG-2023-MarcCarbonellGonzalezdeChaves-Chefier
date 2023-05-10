@@ -25,7 +25,7 @@ import { useLoggedUser } from '../../hooks/useLoggedUser';
 import { useSession } from 'next-auth/react';
 import utils from '../../utils/RecipeUtils';
 import { CustomModal } from '../ui/CustomModal';
-import { useStat } from '../../hooks/useStat';
+import { useInteraction } from '../../hooks/useInteraction';
 import { useValoration } from '../../hooks/useValoration';
 
 const timeAgo = new TimeAgo('es-ES');
@@ -52,12 +52,12 @@ export const Recipe: React.FC<RecipeProps> = ({
     checked: saved,
     check: save,
     uncheck: removeSave,
-  } = useStat('saved', recipe, user, updateHandler);
+  } = useInteraction('saved', recipe, user, updateHandler);
   const {
     checked: liked,
     check: like,
     uncheck: removeLike,
-  } = useStat('likes', recipe, user, updateHandler);
+  } = useInteraction('likes', recipe, user, updateHandler);
   const { data: session } = useSession();
   const {
     isLoading: isPostingValoration,
@@ -214,7 +214,7 @@ export const Recipe: React.FC<RecipeProps> = ({
                   <BsBookmarkFill className={styles.disabled__save__button} />
                 )}
                 <p className={styles.saved__count}>
-                  {utils.countRecipeStat(recipe.saved)}
+                  {utils.countInteractions(recipe.saved)}
                 </p>
                 {session ? (
                   loggedUserIsLoading ? (
@@ -234,7 +234,7 @@ export const Recipe: React.FC<RecipeProps> = ({
                   <BsHeartFill className={styles.disabled__like__button} />
                 )}
                 <p className={styles.likes__count}>
-                  {utils.countRecipeStat(recipe.likes)}
+                  {utils.countInteractions(recipe.likes)}
                 </p>
               </div>
             </div>
