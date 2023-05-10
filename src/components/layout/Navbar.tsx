@@ -57,7 +57,7 @@ export const Navbar: React.FC = () => {
             <input
               className={styles.search}
               type='text'
-              placeholder='Search...'
+              placeholder='Buscar...'
               data-testid='search'
             />
             <div className={styles.theme__button__container}>
