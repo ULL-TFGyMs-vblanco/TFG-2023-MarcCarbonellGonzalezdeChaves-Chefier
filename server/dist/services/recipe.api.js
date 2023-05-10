@@ -56,8 +56,8 @@ const getRecipes = async ({ response, request, query }) => {
     await recipe_1.Recipe.find(filters)
         .then((recipes) => {
         APIUtils_1.default.setResponse(response, 200, {
-            list: recipes.slice((pageIndex - 1) * 25, pageIndex * 25),
-            totalPages: Math.ceil(recipes.length / 25),
+            list: recipes.slice((pageIndex - 1) * 20, pageIndex * 20),
+            totalPages: Math.ceil(recipes.length / 20),
         });
     })
         .catch((err) => {
