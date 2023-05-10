@@ -60,7 +60,7 @@ export const ToggleMenu: React.FC<{
                 data-testid='logout-button'
                 onClick={signOutHandler}
               >
-                Log&nbsp;out
+                Cerrar&nbsp;sesión
               </button>
             </li>
           </ul>
@@ -74,7 +74,7 @@ export const ToggleMenu: React.FC<{
               data-testid='toggle-navigation-link'
               onClick={toggleHandler}
             >
-              Log in
+              Iniciar&nbsp;sesión
             </Link>
           </li>
         </ul>
@@ -88,7 +88,7 @@ export const ToggleMenu: React.FC<{
             data-testid='toggle-navigation-link'
             onClick={toggleHandler}
           >
-            New&nbsp;Recipe
+            Nueva&nbsp;Receta
           </Link>
         </li>
       </ul>
@@ -101,7 +101,7 @@ export const ToggleMenu: React.FC<{
             data-testid='toggle-info-link'
             onClick={toggleHandler}
           >
-            About
+            Sobre&nbsp;nosotros
           </Link>
         </li>
         <li>
@@ -111,7 +111,7 @@ export const ToggleMenu: React.FC<{
             data-testid='toggle-info-link'
             onClick={toggleHandler}
           >
-            Contact
+            Contacto
           </Link>
         </li>
       </ul>

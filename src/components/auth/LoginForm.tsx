@@ -44,7 +44,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           height={100}
           priority
         />
-        <Title style={styles.title}>Log in to Chefier</Title>
+        <Title style={styles.title}>Inicia sesión en Chefier</Title>
         <form
           autoComplete='off'
           className={styles.form}
@@ -60,7 +60,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               {...register('email')}
             />
             <label className={styles.field__label}>
-              <div className={styles.label__text}>Email</div>
+              <div className={styles.label__text}>Correo&nbsp;electrónico</div>
             </label>
           </div>
           <div className={styles.field} data-testid='form-field'>
@@ -72,7 +72,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               {...register('password')}
             />
             <label className={styles.field__label}>
-              <div className={styles.label__text}>Password</div>
+              <div className={styles.label__text}>Contraseña</div>
             </label>
           </div>
           <div className={styles.show__password} data-testid='form-checkbox'>
@@ -85,24 +85,26 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 onClick={toggleShowPassword}
               />
             </div>
-            <span className={styles.checkbox__text}>show password</span>
+            <span className={styles.checkbox__text}>
+              mostrar&nbsp;contraseña
+            </span>
           </div>
           <Button
             style={styles.credentials__button}
             testid='submit-button'
             submit
           >
-            <span>Log in</span>
+            <span>Iniciar sesión</span>
           </Button>
         </form>
         <div className={styles.divider}>
-          <span className={styles.divider__text}>or</span>
+          <span className={styles.divider__text}>o</span>
         </div>
         <OauthLogin onLogin={loginHandler} />
         <p className={styles.session__msg}>
-          Don&apos;t have an account yet?&nbsp;
+          ¿Todavía&nbsp;no&nbsp;tienes&nbsp;una&nbsp;cuenta?&nbsp;
           <Link className={styles.session__link} href='/auth/register'>
-            Register
+            Regístrate
           </Link>
         </p>
       </div>

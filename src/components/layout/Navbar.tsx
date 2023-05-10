@@ -81,7 +81,7 @@ export const Navbar: React.FC = () => {
                   href='/recipe/new'
                   data-testid='navigation-link'
                 >
-                  New&nbsp;Recipe
+                  Nueva&nbsp;Receta
                 </Link>
               </li>
               {session ? (
@@ -92,7 +92,7 @@ export const Navbar: React.FC = () => {
                       data-testid='logout-button'
                       onClick={signOutHandler}
                     >
-                      Log&nbsp;out
+                      Cerrar&nbsp;sesión
                     </button>
                   </li>
                   <li className={styles.links__col}>
@@ -119,7 +119,7 @@ export const Navbar: React.FC = () => {
                     href='/auth/login'
                     data-testid='navigation-link'
                   >
-                    Log&nbsp;in
+                    Iniciar&nbsp;sesión
                   </Link>
                 </li>
               )}

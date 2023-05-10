@@ -64,7 +64,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           height={100}
           priority
         />
-        <Title style={styles.title}>Join Chefier</Title>
+        <Title style={styles.title}>Únete&nbsp;a&nbsp;Chefier</Title>
         <form
           autoComplete='off'
           className={styles.form}
@@ -83,20 +83,22 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               })}
             />
             <label className={styles.field__label}>
-              <div className={styles.label__text}>Username</div>
+              <div className={styles.label__text}>
+                Nombre&nbsp;de&nbsp;usuario
+              </div>
             </label>
           </div>
           {errors.username?.type === 'required' && (
             <div className={styles.errors}>
               <p className={styles.error__msg} data-testid='alert'>
-                Username is required
+                El&nbsp;nombre&nbsp;de&nbsp;usuario&nbsp;es&nbsp;obligatorio
               </p>
             </div>
           )}
           {errors.username?.type === 'maxLength' && (
             <div className={styles.errors}>
               <p className={styles.error__msg} data-testid='alert'>
-                Username must have at most 20 characters
+                El&nbsp;nombre&nbsp;de&nbsp;usuario&nbsp;debe&nbsp;tener&nbsp;como&nbsp;máximo&nbsp;20&nbsp;caracteres
               </p>
             </div>
           )}
@@ -111,13 +113,13 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               })}
             />
             <label className={styles.field__label}>
-              <div className={styles.label__text}>Email</div>
+              <div className={styles.label__text}>Correo&nbsp;electrónico</div>
             </label>
           </div>
           {errors.email && (
             <div className={styles.errors}>
               <p className={styles.error__msg} data-testid='alert'>
-                Email not valid
+                Correo&nbsp;electrónico&nbsp;no&nbsp;válido
               </p>
             </div>
           )}
@@ -139,7 +141,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               })}
             />
             <label className={styles.field__label}>
-              <div className={styles.label__text}>Password</div>
+              <div className={styles.label__text}>Contraseña</div>
             </label>
           </div>
           {errors.password && (
@@ -147,27 +149,26 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               {showMore ? (
                 <div className={styles.errors}>
                   <p className={styles.error__msg} data-testid='alert'>
-                    Password must be strong. At least eight characters, one
-                    lowercase, one upercase and one number.&nbsp;
+                    La&nbsp;contraseña&nbsp;debe&nbsp;tener&nbsp;como&nbsp;mínimo&nbsp;8&nbsp;caracteres,&nbsp;una&nbsp;mayúscula,&nbsp;una&nbsp;minúscula&nbsp;y&nbsp;un&nbsp;número.&nbsp;
                     <a
                       className={styles.show__more}
                       onClick={toggleShowMore}
                       data-testid='show-less'
                     >
-                      Show less
+                      Mostrar&nbsp;menos
                     </a>
                   </p>
                 </div>
               ) : (
                 <div className={styles.errors}>
                   <p className={styles.error__msg} data-testid='alert'>
-                    Password must be strong.&nbsp;
+                    La&nbsp;contraseña&nbsp;debe&nbsp;ser&nbsp;fuerte.&nbsp;
                     <a
                       className={styles.show__more}
                       onClick={toggleShowMore}
                       data-testid='show-more'
                     >
-                      Show more
+                      Mostrar&nbsp;más
                     </a>
                   </p>
                 </div>
@@ -185,13 +186,15 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
               })}
             />
             <label className={styles.field__label}>
-              <div className={styles.label__text}>Confirm password</div>
+              <div className={styles.label__text}>
+                Confirmar&nbsp;contraseña
+              </div>
             </label>
           </div>
           {errors.confirmPassword && (
             <div className={styles.errors}>
               <p className={styles.error__msg} data-testid='alert'>
-                Different passwords
+                Contraseñas&nbsp;diferentes
               </p>
             </div>
           )}
@@ -205,14 +208,16 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
                 onClick={toggleShowPassword}
               />
             </div>
-            <span className={styles.checkbox__text}>show password</span>
+            <span className={styles.checkbox__text}>
+              mostrar&nbsp;contraseña
+            </span>
           </div>
           <Button
             style={styles.credentials__button}
             testid='submit-button'
             submit
           >
-            Register
+            Registrarse
           </Button>
         </form>
         <div className={styles.divider}>
@@ -220,9 +225,9 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         </div>
         <OauthLogin onLogin={loginHandler} />
         <p className={styles.session__msg}>
-          Already have an account?&nbsp;
+          ¿Ya&nbsp;tienes&nbsp;una&nbsp;cuenta?&nbsp;
           <Link className={styles.session__link} href='/auth/login'>
-            Log in
+            Inicia&nbsp;sesión
           </Link>
         </p>
       </div>

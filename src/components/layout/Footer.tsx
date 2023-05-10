@@ -22,36 +22,29 @@ export const Footer: React.FC = () => {
             </Link>
             <hr className={styles.divider} />
             <ul>
-              <label className={styles.links__label}>Sitemap</label>
-              <li>
-                <Link
-                  className={styles.link}
-                  href='/recipes'
-                  data-testid='sitemap-link'
-                >
-                  Recipes
-                </Link>
-              </li>
+              <label className={styles.links__label}>
+                Mapa&nbsp;del&nbsp;sitio
+              </label>
               <li>
                 <Link
                   className={styles.link}
                   href='/new-recipe'
                   data-testid='sitemap-link'
                 >
-                  New Recipe
+                  Nueva&nbsp;Receta
                 </Link>
               </li>
             </ul>
             <hr className={styles.divider} />
             <ul>
-              <label className={styles.links__label}>Info</label>
+              <label className={styles.links__label}>Información</label>
               <li>
                 <Link
                   className={styles.link}
                   href='/about'
                   data-testid='info-link'
                 >
-                  About
+                  Sobre&nbsp;nosotros
                 </Link>
               </li>
               <li>
@@ -60,12 +53,12 @@ export const Footer: React.FC = () => {
                   href='/contact'
                   data-testid='info-link'
                 >
-                  Contact
+                  Contacto
                 </Link>
               </li>
             </ul>
           </div>
-          <p className={styles.authoring}>Created by Marc Carbonell</p>
+          <p className={styles.authoring}>Creado por Marc Carbonell</p>
         </div>
       </footer>
     </div>
