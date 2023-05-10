@@ -52,7 +52,7 @@ export const Recipe: React.FC<RecipeProps> = ({
     checked: saved,
     check: save,
     uncheck: removeSave,
-  } = useStat('saved', recipe, user._id, updateHandler);
+  } = useStat('saved', recipe, user, updateHandler);
   const {
     checked: liked,
     check: like,
