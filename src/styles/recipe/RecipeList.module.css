@@ -3,15 +3,14 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  padding: var(--nextui-space-12) 0;
 }
 
 .list {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
   width: 100%;
-  padding: var(--nextui-space-21) 0;
 }
 
 .list__elements {
@@ -20,4 +19,8 @@
   justify-content: center;
   width: 100%;
   grid-gap: var(--nextui-space-13);
+}
+
+.pagination {
+  z-index: var(--nextui-zIndices-1);
 }

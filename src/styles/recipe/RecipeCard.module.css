@@ -8,6 +8,7 @@
   padding-top: 0;
   position: relative;
   background-color: var(--nextui-colors-primary200);
+  overflow: hidden;
 }
 
 .recipe__container:hover {
@@ -132,6 +133,15 @@
   color: #ecedee;
   z-index: var(--nextui-zIndices-1);
   text-shadow: 1px 1px 2px var(--nextui-colors-gray600);
+}
+
+.recipe__data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 }
 
 .image__container {

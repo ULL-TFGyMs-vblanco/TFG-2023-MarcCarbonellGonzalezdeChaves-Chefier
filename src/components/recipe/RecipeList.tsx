@@ -51,6 +51,7 @@ export const RecipeList: React.FC<RecipeListProps> = ({ filters = '' }) => {
               size='lg'
               total={recipes.totalPages ? recipes.totalPages : 1}
               onChange={(page) => setPageIndex(page)}
+              className={styles.pagination}
             />
           </>
         ) : (
