@@ -2,21 +2,27 @@ import { Recipe } from 'recipe-types';
 
 export const recipes: Recipe[] = [
   {
+    _id: '1234',
     name: 'Ensalada de quinoa y aguacate',
-    username: 'chefjulia',
+    user: {
+      name: 'Javier',
+      image: 'https://ik.imagekit.io/czvxqgafa/images/users/demo/javier.jpg',
+      id: '1234',
+    },
     image: {
       url: 'https://ik.imagekit.io/czvxqgafa/images/posts/demo/ensalada_quinoa_aguacate.jpg',
       fileId: '1234',
     },
     description:
       'Una receta saludable y fácil de preparar para una cena ligera.',
-    date: new Date('2023-04-23T19:00:00.000Z'),
+    date: '2023-04-23T19:00:00.000Z',
     tags: {
       breakfast: false,
       lunch: true,
       dinner: true,
       dessert: false,
       snack: false,
+      drink: false,
     },
     difficulty: 'Fácil',
     cookTime: 30,
@@ -33,23 +39,34 @@ export const recipes: Recipe[] = [
       { name: 'pimienta negra', quantity: 1, unit: 'pizca' },
     ],
     instructions: [
-      'Enjuagar la quinoa bajo agua fría y escurrir.',
-      'Colocar la quinoa en una olla con dos tazas de agua y sal al gusto. Cocinar a fuego medio hasta que la quinoa esté cocida, aproximadamente 15 minutos.',
-      'Mientras tanto, picar la cebolla, el pimiento y el tomate cherry. Cortar los aguacates en cubos y rociar con limón para evitar que se oxiden.',
-      'Una vez cocida la quinoa, dejar enfriar.',
-      'Mezclar la quinoa con los vegetales picados y el aceite de oliva.',
-      'Agregar sal y pimienta al gusto.',
-      'Servir frío y disfrutar!',
+      { step: 'Enjuagar la quinoa bajo agua fría y escurrir.' },
+      {
+        step: 'Colocar la quinoa en una olla con dos tazas de agua y sal al gusto. Cocinar a fuego medio hasta que la quinoa esté cocida, aproximadamente 15 minutos.',
+      },
+      {
+        step: 'Mientras tanto, picar la cebolla, el pimiento y el tomate cherry. Cortar los aguacates en cubos y rociar con limón para evitar que se oxiden.',
+      },
+      { step: 'Una vez cocida la quinoa, dejar enfriar.' },
+      {
+        step: 'Mezclar la quinoa con los vegetales picados y el aceite de oliva.',
+      },
+      { step: 'Agregar sal y pimienta al gusto.' },
+      { step: 'Servir frío y disfrutar!' },
     ],
-    saves: ['saludablexsiempre', 'comidafit', 'cocineroencasa'],
+    saved: ['saludablexsiempre', 'comidafit', 'cocineroencasa'],
     likes: ['chefpepe', 'saludablexsiempre', 'comidafit', 'cocineroencasa'],
-    valoration: 4,
     valorations: [
       {
-        username: 'saludablexsiempre',
+        user: {
+          name: 'saludablexsiempre',
+          image:
+            'https://ik.imagekit.io/czvxqgafa/images/users/demo/saludablexsiempre.jpg',
+          id: '1234',
+        },
+        title: 'Muy rica y fácil de preparar',
         comment: 'Muy rica y fácil de preparar. Además, es súper saludable!',
         rating: 4,
-        date: new Date('2023-04-23T20:00:00.000Z'),
+        date: '2023-04-23T20:00:00.000Z',
       },
     ],
   },

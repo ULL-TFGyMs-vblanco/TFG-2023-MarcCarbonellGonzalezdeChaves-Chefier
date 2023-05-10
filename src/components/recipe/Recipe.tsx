@@ -11,7 +11,7 @@ import { useShow } from '../../hooks/useShow';
 import ReactStars from 'react-stars';
 import { GrStar } from 'react-icons/gr';
 import { BsBookmarkFill, BsFillPersonFill, BsHeartFill } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { Loading } from '@nextui-org/react';
 import {
@@ -25,6 +25,8 @@ import { useLoggedUser } from '../../hooks/useLoggedUser';
 import { useSession } from 'next-auth/react';
 import utils from '../../utils/RecipeUtils';
 import { CustomModal } from '../ui/CustomModal';
+import { useStat } from '../../hooks/useStat';
+import { useValoration } from '../../hooks/useValoration';
 
 const timeAgo = new TimeAgo('es-ES');
 
@@ -43,89 +45,49 @@ export const Recipe: React.FC<RecipeProps> = ({
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState<string>();
   const [reviewTitle, setReviewTitle] = useState<string>();
-  const [saved, setSaved] = useState<boolean>();
-  const [liked, setLiked] = useState<boolean>();
   const [recipeModalVisible, setRecipeModalVisible] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isPostingValoration, setIsPostingValoration] = useState(false);
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
+  const {
+    checked: saved,
+    check: save,
+    uncheck: removeSave,
+  } = useStat('saved', recipe, user._id, updateHandler);
+  const {
+    checked: liked,
+    check: like,
+    uncheck: removeLike,
+  } = useStat('likes', recipe, user, updateHandler);
   const { data: session } = useSession();
-
-  useEffect(() => {
-    if (recipe && user) {
-      if (recipe.saved.includes(user._id)) {
-        setSaved(true);
-      } else {
-        setSaved(false);
-      }
-      if (recipe.likes.includes(user._id)) {
-        setLiked(true);
-      } else {
-        setLiked(false);
-      }
-    }
-  }, [recipe, user]);
-
-  const likeHandler = async () => {
-    setLiked(true);
-    recipe.likes.push(user._id);
-    await updateHandler({ likes: recipe.likes });
-  };
-
-  const removeLikeHandler = async () => {
-    setLiked(false);
-    recipe.likes = recipe.likes.filter((like: string) => like !== user._id);
-    await updateHandler({ likes: recipe.likes });
-  };
+  const {
+    isLoading: isPostingValoration,
+    valorate,
+    removeValoration,
+  } = useValoration(recipe, user, updateHandler);
 
   const saveHandler = async () => {
-    setSaved(true);
-    recipe.saved.push(user._id);
-    await updateHandler({ saved: recipe.saved });
+    await save();
   };
 
   const removeSaveHandler = async () => {
-    setSaved(false);
-    recipe.saved = recipe.saved.filter((save: string) => save !== user._id);
-    await updateHandler({ saved: recipe.saved });
+    await removeSave();
+  };
+
+  const likeHandler = async () => {
+    await like();
+  };
+
+  const removeLikeHandler = async () => {
+    await removeLike();
   };
 
   const valorationHandler = async () => {
-    setIsPostingValoration(true);
-    recipe.valorations.push(
-      comment
-        ? {
-            user: {
-              id: user._id,
-              name: user.nickname ? user.nickname : user.username,
-              image: user.image,
-            },
-            title: reviewTitle as string,
-            rating: rating,
-            date: new Date().toISOString(),
-            comment: comment,
-          }
-        : {
-            user: {
-              id: user._id,
-              name: user.nickname ? user.nickname : user.username,
-              image: user.image,
-            },
-            title: reviewTitle as string,
-            rating: rating,
-            date: new Date().toISOString(),
-          }
-    );
-    await updateHandler({ valorations: recipe.valorations });
+    await valorate(reviewTitle as string, rating, comment);
     toggleShow();
-    setIsPostingValoration(false);
   };
 
   const removeValorationHandler = async () => {
-    recipe.valorations = recipe.valorations.filter(
-      (valoration: any) => valoration.user.id !== user._id
-    );
-    await updateHandler({ valorations: recipe.valorations });
+    await removeValoration();
   };
 
   const handleDelete = async () => {
