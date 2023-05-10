@@ -1,5 +1,5 @@
 import { User } from 'auth-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Recipe, ValidUpdate } from 'recipe-types';
 
 // Custom hook to handle the stats (likes and saves) of a recipe
@@ -11,19 +11,23 @@ export function useStat(
 ) {
   const [checked, setChecked] = useState<boolean>();
 
-  if (stat === 'likes') {
-    if (recipe.likes.includes(user._id)) {
-      setChecked(true);
-    } else {
-      setChecked(false);
+  useEffect(() => {
+    if (recipe && user) {
+      if (stat === 'likes') {
+        if (recipe.likes.includes(user._id)) {
+          setChecked(true);
+        } else {
+          setChecked(false);
+        }
+      } else if (stat === 'saved') {
+        if (recipe.saved.includes(user._id)) {
+          setChecked(true);
+        } else {
+          setChecked(false);
+        }
+      }
     }
-  } else if (stat === 'saved') {
-    if (recipe.saved.includes(user._id)) {
-      setChecked(true);
-    } else {
-      setChecked(false);
-    }
-  }
+  }, [recipe, stat, user]);
 
   const check = async () => {
     setChecked(true);
