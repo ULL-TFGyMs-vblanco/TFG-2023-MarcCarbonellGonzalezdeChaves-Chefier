@@ -125,7 +125,7 @@
   overflow: hidden;
 }
 
-.marked__save__button {
+.checked__save__button {
   position: absolute;
   width: 1.25rem;
   height: 1.25rem;
@@ -136,12 +136,12 @@
   filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
 }
 
-.marked__save__button:hover {
+.checked__save__button:hover {
   cursor: pointer;
   color: var(--nextui-colors-yellow700);
 }
 
-.unmarked__save__button {
+.unchecked__save__button {
   position: absolute;
   width: 1.25rem;
   height: 1.25rem;
@@ -152,7 +152,7 @@
   filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
 }
 
-.unmarked__save__button:hover {
+.unchecked__save__button:hover {
   cursor: pointer;
   color: #dbdbdb;
 }
@@ -179,7 +179,7 @@
   text-shadow: 1px 1px 2px var(--nextui-colors-gray600);
 }
 
-.marked__like__button {
+.checked__like__button {
   position: absolute;
   width: 1.2rem;
   height: 1.2rem;
@@ -190,12 +190,12 @@
   filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
 }
 
-.marked__like__button:hover {
+.checked__like__button:hover {
   cursor: pointer;
   color: var(--nextui-colors-red700);
 }
 
-.unmarked__like__button {
+.unchecked__like__button {
   position: absolute;
   width: 1.2rem;
   height: 1.2rem;
@@ -206,7 +206,7 @@
   filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
 }
 
-.unmarked__like__button:hover {
+.unchecked__like__button:hover {
   cursor: pointer;
   color: #dbdbdb;
 }

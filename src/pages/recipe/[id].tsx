@@ -16,19 +16,19 @@ const RecipePage = () => {
   const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
   const [errorModal, setErrorModal] = useState(false);
 
-  const updateHandler = async (update: ValidUpdate) => {
+  const updateHandler = async (recipeId: string, update: ValidUpdate) => {
     try {
-      await RecipeService.updateRecipe(`/recipe/${recipe._id}`, update);
-      await mutate('/recipe/' + recipe._id);
+      await RecipeService.updateRecipe(`/recipe/${recipeId}`, update);
+      await mutate('/recipe/' + recipeId);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const deleteHandler = async () => {
+  const deleteHandler = async (recipeId: string) => {
     try {
-      await RecipeService.deleteRecipe(`/recipe/${recipe._id}`);
-      await mutate('/recipe/' + recipe._id);
+      await RecipeService.deleteRecipe(`/recipe/${recipeId}`);
+      await mutate('/recipe/' + recipeId);
       await router.push('/');
     } catch (error) {
       setErrorModal(true);

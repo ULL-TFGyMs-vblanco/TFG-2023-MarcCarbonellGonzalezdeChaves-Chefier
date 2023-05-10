@@ -5,11 +5,21 @@ interface CardProps {
   children: ReactNode;
   style?: string;
   testid?: string;
+  onClick?: () => void;
 }
 
-export const Card: React.FC<CardProps> = ({ children, style, testid }) => {
+export const Card: React.FC<CardProps> = ({
+  children,
+  style,
+  testid,
+  onClick,
+}) => {
   return (
-    <div className={`${styles.card} ${style}`} data-testid={testid}>
+    <div
+      className={`${styles.card} ${style}`}
+      data-testid={testid}
+      onClick={onClick}
+    >
       {children}
     </div>
   );

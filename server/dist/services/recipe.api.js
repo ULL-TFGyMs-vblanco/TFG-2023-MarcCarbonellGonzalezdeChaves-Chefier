@@ -30,9 +30,35 @@ const getRecipe = async ({ response, request, params }) => {
 exports.getRecipe = getRecipe;
 // Get recipes list
 const getRecipes = async ({ response, request, query }) => {
-    await recipe_1.Recipe.find(query)
+    if (!query.page) {
+        APIUtils_1.default.setResponse(response, 400, {
+            error: { message: 'A page index must be provided' },
+            request: request.body,
+        });
+        return;
+    }
+    else if (isNaN(Number(query.page))) {
+        APIUtils_1.default.setResponse(response, 400, {
+            error: { message: 'Page index must be a number' },
+            request: request.body,
+        });
+        return;
+    }
+    else if (Number(query.page) < 1) {
+        APIUtils_1.default.setResponse(response, 400, {
+            error: { message: 'Page index must be greater than 0' },
+            request: request.body,
+        });
+        return;
+    }
+    const { page, ...filters } = query;
+    const pageIndex = Number(page);
+    await recipe_1.Recipe.find(filters)
         .then((recipes) => {
-        APIUtils_1.default.setResponse(response, 200, recipes);
+        APIUtils_1.default.setResponse(response, 200, {
+            list: recipes.slice((pageIndex - 1) * 25, pageIndex * 25),
+            totalPages: Math.ceil(recipes.length / 25),
+        });
     })
         .catch((err) => {
         APIUtils_1.default.setResponse(response, 500, {

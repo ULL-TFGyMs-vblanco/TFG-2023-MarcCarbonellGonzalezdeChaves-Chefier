@@ -7,7 +7,7 @@ export function useStat(
   stat: 'likes' | 'saved',
   recipe: Recipe,
   user: User,
-  updateHandler: (update: ValidUpdate) => Promise<void>
+  updateHandler: (recipeId: string, update: ValidUpdate) => Promise<void>
 ) {
   const [checked, setChecked] = useState<boolean>();
 
@@ -33,10 +33,10 @@ export function useStat(
     setChecked(true);
     if (stat === 'likes') {
       recipe.likes.push(user._id);
-      await updateHandler({ likes: recipe.likes });
+      await updateHandler(recipe._id, { likes: recipe.likes });
     } else if (stat === 'saved') {
       recipe.saved.push(user._id);
-      await updateHandler({ saved: recipe.saved });
+      await updateHandler(recipe._id, { saved: recipe.saved });
     }
   };
 
@@ -44,10 +44,10 @@ export function useStat(
     setChecked(false);
     if (stat === 'likes') {
       recipe.likes = recipe.likes.filter((like: string) => like !== user._id);
-      await updateHandler({ likes: recipe.likes });
+      await updateHandler(recipe._id, { likes: recipe.likes });
     } else if (stat === 'saved') {
       recipe.saved = recipe.saved.filter((save: string) => save !== user._id);
-      await updateHandler({ saved: recipe.saved });
+      await updateHandler(recipe._id, { saved: recipe.saved });
     }
   };
 

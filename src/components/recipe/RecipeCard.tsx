@@ -1,26 +1,103 @@
 import Image from 'next/image';
 import { Card } from '../ui/Card';
 import styles from 'src/styles/recipe/RecipeCard.module.css';
-import { AiOutlineHeart } from 'react-icons/ai';
-import { BsFillStarFill } from 'react-icons/bs';
-import { Recipe } from 'recipe-types';
+import { BsBookmarkFill, BsFillStarFill, BsHeartFill } from 'react-icons/bs';
+import { Recipe, ValidUpdate } from 'recipe-types';
+import utils from 'src/utils/RecipeUtils';
+import { useSession } from 'next-auth/react';
+import { useStat } from '../../hooks/useStat';
+import { useLoggedUser } from '@/hooks/useLoggedUser';
+import { Loading } from '@nextui-org/react';
+import { useRouter } from 'next/router';
 
 interface RecipeCardProps {
   recipe: Recipe;
+  updateHandler: (recipeId: string, update: ValidUpdate) => Promise<void>;
 }
 
-export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
+export const RecipeCard: React.FC<RecipeCardProps> = ({
+  recipe,
+  updateHandler,
+}) => {
+  const { data: session } = useSession();
+  const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
+  const router = useRouter();
+  const {
+    checked: saved,
+    check: save,
+    uncheck: removeSave,
+  } = useStat('saved', recipe, user, updateHandler);
+  const {
+    checked: liked,
+    check: like,
+    uncheck: removeLike,
+  } = useStat('likes', recipe, user, updateHandler);
+
+  const saveHandler = async () => {
+    await save();
+  };
+
+  const removeSaveHandler = async () => {
+    await removeSave();
+  };
+
+  const likeHandler = async () => {
+    await like();
+  };
+
+  const removeLikeHandler = async () => {
+    await removeLike();
+  };
+
+  const clickHandler = async () => {
+    await router.push(`/recipe/${recipe._id}`);
+  };
+
   return (
-    <Card style={styles.recipe__container}>
-      <div className={styles.favorite__container}>
-        <button className={styles.favorite__button}>
-          <AiOutlineHeart className={styles.heart} />
-        </button>
-        <span className={styles.favorite__count}>{recipe.likes.length}</span>
-      </div>
+    <Card style={styles.recipe__container} onClick={clickHandler}>
+      {session ? (
+        loggedUserIsLoading ? (
+          <Loading />
+        ) : saved ? (
+          <BsBookmarkFill
+            className={styles.checked__save__button}
+            onClick={removeSaveHandler}
+          />
+        ) : (
+          <BsBookmarkFill
+            className={styles.unchecked__save__button}
+            onClick={saveHandler}
+          />
+        )
+      ) : (
+        <BsBookmarkFill className={styles.disabled__save__button} />
+      )}
+      <p className={styles.saved__count}>
+        {utils.countRecipeStat(recipe.saved)}
+      </p>
+      {session ? (
+        loggedUserIsLoading ? (
+          <Loading />
+        ) : liked ? (
+          <BsHeartFill
+            className={styles.checked__like__button}
+            onClick={removeLikeHandler}
+          />
+        ) : (
+          <BsHeartFill
+            className={styles.unchecked__like__button}
+            onClick={likeHandler}
+          />
+        )
+      ) : (
+        <BsHeartFill className={styles.disabled__like__button} />
+      )}
+      <p className={styles.likes__count}>
+        {utils.countRecipeStat(recipe.likes)}
+      </p>
       <div className={styles.image__container}>
         <Image
-          src={recipe.image}
+          src={recipe.image.url}
           alt={recipe.name}
           fill
           sizes='(max-width: 768px) 100vw, 400px'
@@ -33,7 +110,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
         <div className={styles.stats}>
           <div className={styles.valoration}>
             <BsFillStarFill className={styles.star} />
-            <p>{recipe.valoration}</p>
+            <p>{utils.getAverageRating(recipe.valorations)}</p>
           </div>
           <hr className={styles.divider} />
           <p className={styles.time}>{recipe.cookTime}m</p>

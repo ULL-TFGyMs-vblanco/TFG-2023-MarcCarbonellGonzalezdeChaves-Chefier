@@ -32,8 +32,8 @@ const timeAgo = new TimeAgo('es-ES');
 
 interface RecipeProps {
   recipe: RecipeType;
-  updateHandler: (update: ValidUpdate) => Promise<void>;
-  deleteHandler: () => Promise<void>;
+  updateHandler: (recipeId: string, update: ValidUpdate) => Promise<void>;
+  deleteHandler: (recipeId: string) => Promise<void>;
 }
 
 export const Recipe: React.FC<RecipeProps> = ({
@@ -93,7 +93,7 @@ export const Recipe: React.FC<RecipeProps> = ({
   const handleDelete = async () => {
     setIsDeleting(true);
     setRecipeModalVisible(false);
-    await deleteHandler();
+    await deleteHandler(recipe._id);
     setIsDeleting(false);
   };
 
@@ -201,12 +201,12 @@ export const Recipe: React.FC<RecipeProps> = ({
                     <Loading />
                   ) : saved ? (
                     <BsBookmarkFill
-                      className={styles.marked__save__button}
+                      className={styles.checked__save__button}
                       onClick={removeSaveHandler}
                     />
                   ) : (
                     <BsBookmarkFill
-                      className={styles.unmarked__save__button}
+                      className={styles.unchecked__save__button}
                       onClick={saveHandler}
                     />
                   )
@@ -221,12 +221,12 @@ export const Recipe: React.FC<RecipeProps> = ({
                     <Loading />
                   ) : liked ? (
                     <BsHeartFill
-                      className={styles.marked__like__button}
+                      className={styles.checked__like__button}
                       onClick={removeLikeHandler}
                     />
                   ) : (
                     <BsHeartFill
-                      className={styles.unmarked__like__button}
+                      className={styles.unchecked__like__button}
                       onClick={likeHandler}
                     />
                   )

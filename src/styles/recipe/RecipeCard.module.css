@@ -7,6 +7,7 @@
   width: 11.25rem;
   padding-top: 0;
   position: relative;
+  background-color: var(--nextui-colors-primary200);
 }
 
 .recipe__container:hover {
@@ -21,47 +22,116 @@
   background-image: linear-gradient(
     to bottom,
     transparent 65%,
-    var(--nextui-colors-primary100)
+    var(--nextui-colors-primary200)
   );
 }
 
-.favorite__container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  vertical-align: middle;
+.checked__save__button {
   position: absolute;
-  top: 8.819rem;
-  right: 0.938rem;
-  gap: var(--nextui-space-1);
+  width: 0.9rem;
+  height: 0.9rem;
+  bottom: 7.5rem;
+  right: 3.25rem;
+  color: var(--nextui-colors-yellow600);
   z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
 }
 
-.favorite__count {
-  vertical-align: middle;
-}
-
-.favorite__button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: transparent;
-  border: none;
-  border-radius: var(--nextui-radii-rounded);
-  width: 1.25rem;
-  height: 1.25rem;
-  padding: 0;
-}
-
-.favorite__button:hover {
+.checked__save__button:hover {
   cursor: pointer;
-  background-color: var(--nextui-colors-red600);
+  color: var(--nextui-colors-yellow700);
 }
 
-.heart {
-  color: var(--nextui-colors-secondary600);
-  height: 90%;
-  width: 90%;
+.unchecked__save__button {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  bottom: 7.5rem;
+  right: 3.25rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.unchecked__save__button:hover {
+  cursor: pointer;
+  color: #dbdbdb;
+}
+
+.disabled__save__button {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  bottom: 7.5rem;
+  right: 3.25rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.saved__count {
+  position: absolute;
+  bottom: 7.2rem;
+  right: 2.5rem;
+  font-size: var(--nextui-fontSizes-sm);
+  font-weight: var(--nextui-fontWeights-bold);
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  text-shadow: 1px 1px 2px var(--nextui-colors-gray600);
+}
+
+.checked__like__button {
+  position: absolute;
+  width: 0.85rem;
+  height: 0.85rem;
+  bottom: 7.5rem;
+  right: 1.25rem;
+  color: var(--nextui-colors-red600);
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.checked__like__button:hover {
+  cursor: pointer;
+  color: var(--nextui-colors-red700);
+}
+
+.unchecked__like__button {
+  position: absolute;
+  width: 0.85rem;
+  height: 0.85rem;
+  bottom: 7.5rem;
+  right: 1.25rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.unchecked__like__button:hover {
+  cursor: pointer;
+  color: #dbdbdb;
+}
+
+.disabled__like__button {
+  position: absolute;
+  width: 0.85rem;
+  height: 0.85rem;
+  bottom: 7.5rem;
+  right: 1.25rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.likes__count {
+  position: absolute;
+  bottom: 7.2rem;
+  right: 0.5rem;
+  font-size: var(--nextui-fontSizes-sm);
+  font-weight: var(--nextui-fontWeights-bold);
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  text-shadow: 1px 1px 2px var(--nextui-colors-gray600);
 }
 
 .image__container {
