@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import styles from 'src/styles/layout/ToggleMenu.module.css';
 import { Avatar } from '../ui/Avatar';
@@ -12,6 +12,10 @@ export const ToggleMenu: React.FC<{
   const { data: session } = useSession();
   const { user, isLoading, isError } = useLoggedUser();
 
+  const signOutHandler = async () => {
+    await signOut();
+  };
+
   return (
     <div
       className={`${styles.toggle__menu} ${
@@ -20,34 +24,47 @@ export const ToggleMenu: React.FC<{
       data-testid='toggle-menu'
     >
       {session ? (
-        <div className={styles.user__info__container}>
-          {isLoading ? (
-            <Loading />
-          ) : isError ? (
-            <h1>{isError}</h1>
-          ) : (
-            <>
-              <Avatar
-                source={user.image}
-                link='/profile'
-                size={55}
-                username='Default'
-                style={styles.avatar}
-                testid='toggle_avatar'
-              />
-              <Link href='/profile' data-testid='toggle-avatar'>
-                <p className={styles.nickname} data-testid='user-name'>
-                  {user.nickname ? user.nickname : user.username}
-                </p>
-              </Link>
-              <Link href='/profile' data-testid='toggle-avatar'>
-                <p className={styles.username} data-testid='user-atname'>
-                  @{user.username}
-                </p>
-              </Link>
-            </>
-          )}
-        </div>
+        <>
+          <div className={styles.user__info__container}>
+            {isLoading ? (
+              <Loading />
+            ) : isError ? (
+              <h1>{isError}</h1>
+            ) : (
+              <>
+                <Avatar
+                  source={user.image}
+                  link='/profile'
+                  size={55}
+                  username='Default'
+                  style={styles.avatar}
+                  testid='toggle_avatar'
+                />
+                <Link href='/profile' data-testid='toggle-avatar'>
+                  <p className={styles.nickname} data-testid='user-name'>
+                    {user.nickname ? user.nickname : user.username}
+                  </p>
+                </Link>
+                <Link href='/profile' data-testid='toggle-avatar'>
+                  <p className={styles.username} data-testid='user-atname'>
+                    @{user.username}
+                  </p>
+                </Link>
+              </>
+            )}
+          </div>
+          <ul className={styles.links}>
+            <li>
+              <button
+                className={styles.logout__button}
+                data-testid='logout-button'
+                onClick={signOutHandler}
+              >
+                Log&nbsp;out
+              </button>
+            </li>
+          </ul>
+        </>
       ) : (
         <ul className={styles.links}>
           <li>

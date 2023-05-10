@@ -100,3 +100,17 @@
     var(--nextui-colors-border);
   width: 100%;
 }
+
+.logout__button {
+  font-size: var(--nextui-fontSizes-lg);
+  color: var(--nextui-colors-secondary600);
+  text-decoration: none;
+  border: 0;
+  padding: 0;
+  background-color: var(--nextui-colors-primary100);
+  cursor: pointer;
+}
+
+.logout__button:hover {
+  color: var(--nextui-colors-secondary100);
+}
