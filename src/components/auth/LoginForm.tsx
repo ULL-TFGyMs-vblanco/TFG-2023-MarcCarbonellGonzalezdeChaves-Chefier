@@ -6,10 +6,11 @@ import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import { LoginData, LoginFormInputs } from 'auth-types';
 import { SignInOptions } from 'next-auth/react';
-import { useTheme } from '@nextui-org/react';
+import { Loading, useTheme } from '@nextui-org/react';
 import styles from 'src/styles/auth/AuthForm.module.css';
 import { useShow } from 'src/hooks/useShow';
 import OauthLogin from './OauthLogin';
+import { useState } from 'react';
 
 interface LoginFormProps {
   onLogin: (provider: string, options: SignInOptions) => void | Promise<void>;
@@ -19,19 +20,22 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const { isDark } = useTheme();
   const { register, watch, handleSubmit } = useForm<LoginFormInputs>();
   const { show: showPassword, toggleShow: toggleShowPassword } = useShow();
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
-  const loginHandler = (provider: string, credentials?: LoginData) => {
+  const loginHandler = async (provider: string, credentials?: LoginData) => {
     if (credentials) {
-      onLogin(provider, { ...credentials, callbackUrl: '/' });
+      await onLogin(provider, { ...credentials, callbackUrl: '/' });
     } else {
-      onLogin(provider, { callbackUrl: '/' });
+      await onLogin(provider, { callbackUrl: '/' });
     }
   };
 
-  const submitHandler = (data: any) => {
+  const submitHandler = async (data: any) => {
+    setIsLoggingIn(true);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordVisibility, ...credentials } = data;
-    loginHandler('credentials', credentials);
+    await loginHandler('credentials', credentials);
+    setIsLoggingIn(false);
   };
 
   return (
@@ -94,7 +98,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             testid='submit-button'
             submit
           >
-            <span>Iniciar sesión</span>
+            {isLoggingIn ? <Loading /> : <span>Iniciar sesión</span>}
           </Button>
         </form>
         <div className={styles.divider}>

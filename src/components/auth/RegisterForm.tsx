@@ -1,7 +1,7 @@
 import validator from 'validator';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useTheme } from '@nextui-org/react';
+import { Loading, useTheme } from '@nextui-org/react';
 import { SignInOptions } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { Card } from '../ui/Card';
@@ -11,6 +11,7 @@ import styles from 'src/styles/auth/AuthForm.module.css';
 import { RegisterFormInputs, RegisterData } from 'auth-types';
 import { useShow } from 'src/hooks/useShow';
 import OauthLogin from './OauthLogin';
+import { useState } from 'react';
 
 interface RegisterFormProps {
   onRegister: (data: RegisterData) => Promise<boolean>;
@@ -35,14 +36,17 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   const { isDark } = useTheme();
   const { show: showMore, toggleShow: toggleShowMore } = useShow();
   const { show: showPassword, toggleShow: toggleShowPassword } = useShow();
+  const [isRegistering, setIsRegistering] = useState(false);
 
-  const loginHandler = (provider: string) => {
-    onOauthLogin(provider, { callbackUrl: '/' });
+  const loginHandler = async (provider: string) => {
+    await onOauthLogin(provider, { callbackUrl: '/' });
   };
 
   const registerHandler = async (credentials: RegisterData) => {
+    setIsRegistering(true);
     await onRegister(credentials).then((res) => {
       if (res) {
+        setIsRegistering(false);
         toggleModal(true);
       }
     });
@@ -217,7 +221,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             testid='submit-button'
             submit
           >
-            Registrarse
+            {isRegistering ? <Loading /> : <span>Registrarse</span>}
           </Button>
         </form>
         <div className={styles.divider}>
