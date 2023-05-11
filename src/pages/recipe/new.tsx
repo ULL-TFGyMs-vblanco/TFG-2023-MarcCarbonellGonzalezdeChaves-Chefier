@@ -40,7 +40,7 @@ const NewRecipe: React.FC = () => {
     try {
       const { _id } = await RecipeService.postRecipe('/recipe', recipe);
       await UserService.updateUser(`/user/${user._id}`, {
-        recipes: user.recipes.push(_id),
+        recipes: [...user.recipes, _id],
       });
       return true;
     } catch (error) {
