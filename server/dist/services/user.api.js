@@ -26,7 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUser = exports.login = exports.register = void 0;
+exports.updateUser = exports.getUser = exports.login = exports.register = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -140,8 +140,59 @@ const getUser = async ({ response, request }, filter) => {
     });
 };
 exports.getUser = getUser;
+// Update a user's data
+const updateUser = async ({ response, request, params }) => {
+    const allowedUpdates = [
+        'likes',
+        'saved',
+        'recipes',
+        'following',
+        'followers',
+    ];
+    const actualUpdates = Object.keys(request.body.update);
+    const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
+    if (!isValidUpdate) {
+        APIUtils_1.default.setResponse(response, 400, {
+            error: { message: 'Update is not permitted' },
+            request: request.body,
+        });
+    }
+    else {
+        if (!params.id) {
+            APIUtils_1.default.setResponse(response, 400, {
+                error: { message: 'An id must be provided' },
+                request: request.body,
+            });
+        }
+        else {
+            try {
+                const element = await user_1.User.findByIdAndUpdate(params.id, request.body.update, {
+                    new: true,
+                    runValidators: true,
+                });
+                if (!element) {
+                    APIUtils_1.default.setResponse(response, 404, {
+                        error: { message: 'User not found' },
+                        request: request.body,
+                    });
+                }
+                else {
+                    APIUtils_1.default.setResponse(response, 200, element);
+                }
+            }
+            catch (err) {
+                APIUtils_1.default.setResponse(response, 500, {
+                    error: { message: JSON.stringify(err), error: err },
+                    request: request.body,
+                });
+            }
+        }
+    }
+};
+exports.updateUser = updateUser;
 module.exports = {
     register: exports.register,
     login: exports.login,
     getUser: exports.getUser,
+    updateUser: exports.updateUser,
 };

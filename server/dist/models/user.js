@@ -87,7 +87,27 @@ exports.UserSchema = new mongoose_1.Schema({
             }
         },
     },
+    likes: {
+        type: [String],
+        default: [],
+        required: false,
+    },
+    saved: {
+        type: [String],
+        default: [],
+        required: false,
+    },
+    recipes: {
+        type: [String],
+        default: [],
+        required: false,
+    },
     following: {
+        type: [String],
+        default: [],
+        required: false,
+    },
+    followers: {
         type: [String],
         default: [],
         required: false,
