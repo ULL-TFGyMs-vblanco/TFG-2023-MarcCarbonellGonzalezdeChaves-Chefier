@@ -1,30 +1,18 @@
-import { Recipe, ValidUpdate } from 'recipe-types';
+import { Recipe } from 'recipe-types';
 import { RecipeCard } from './RecipeCard';
 import styles from '../../styles/recipe/RecipeList.module.css';
 import { useRecipes } from '@/hooks/useRecipes';
 import { useState } from 'react';
 import { Loading, Pagination } from '@nextui-org/react';
 import { Title } from '../ui/Title';
-import RecipeService from '../../services/RecipeService';
-import { useSWRConfig } from 'swr';
 
 interface RecipeListProps {
   filters?: string;
 }
 
 export const RecipeList: React.FC<RecipeListProps> = ({ filters = '' }) => {
-  const { mutate } = useSWRConfig();
   const [pageIndex, setPageIndex] = useState(1);
   const { recipes, isLoading, isError } = useRecipes(pageIndex, filters);
-
-  const updateHandler = async (recipeId: string, update: ValidUpdate) => {
-    try {
-      await RecipeService.updateRecipe(`/recipe/${recipeId}`, update);
-      await mutate('/recipe/' + recipeId);
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <div className={styles.list__container}>
@@ -39,11 +27,7 @@ export const RecipeList: React.FC<RecipeListProps> = ({ filters = '' }) => {
           <>
             <div className={styles.list__elements}>
               {recipes.list.map((recipe: Recipe) => (
-                <RecipeCard
-                  key={recipe.name}
-                  recipe={recipe}
-                  updateHandler={updateHandler}
-                />
+                <RecipeCard key={recipe.name} recipe={recipe} />
               ))}
             </div>
             <Pagination

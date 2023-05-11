@@ -31,7 +31,7 @@
   position: absolute;
   width: 0.9rem;
   height: 0.9rem;
-  bottom: 7.5rem;
+  bottom: 0.35rem;
   right: 3.25rem;
   color: var(--nextui-colors-yellow600);
   z-index: var(--nextui-zIndices-1);
@@ -47,7 +47,7 @@
   position: absolute;
   width: 0.9rem;
   height: 0.9rem;
-  bottom: 7.5rem;
+  bottom: 0.35rem;
   right: 3.25rem;
   color: #ecedee;
   z-index: var(--nextui-zIndices-1);
@@ -63,7 +63,7 @@
   position: absolute;
   width: 0.9rem;
   height: 0.9rem;
-  bottom: 7.5rem;
+  bottom: 0.35rem;
   right: 3.25rem;
   color: #ecedee;
   z-index: var(--nextui-zIndices-1);
@@ -72,7 +72,7 @@
 
 .saved__count {
   position: absolute;
-  bottom: 7.2rem;
+  bottom: 0;
   right: 2.5rem;
   font-size: var(--nextui-fontSizes-sm);
   font-weight: var(--nextui-fontWeights-bold);
@@ -85,7 +85,7 @@
   position: absolute;
   width: 0.85rem;
   height: 0.85rem;
-  bottom: 7.5rem;
+  bottom: 0.35rem;
   right: 1.25rem;
   color: var(--nextui-colors-red600);
   z-index: var(--nextui-zIndices-1);
@@ -101,7 +101,7 @@
   position: absolute;
   width: 0.85rem;
   height: 0.85rem;
-  bottom: 7.5rem;
+  bottom: 0.35rem;
   right: 1.25rem;
   color: #ecedee;
   z-index: var(--nextui-zIndices-1);
@@ -117,7 +117,7 @@
   position: absolute;
   width: 0.85rem;
   height: 0.85rem;
-  bottom: 7.5rem;
+  bottom: 0.35rem;
   right: 1.25rem;
   color: #ecedee;
   z-index: var(--nextui-zIndices-1);
@@ -126,7 +126,7 @@
 
 .likes__count {
   position: absolute;
-  bottom: 7.2rem;
+  bottom: 0;
   right: 0.5rem;
   font-size: var(--nextui-fontSizes-sm);
   font-weight: var(--nextui-fontWeights-bold);

@@ -177,7 +177,7 @@
   background-color: var(--nextui-colors-red600);
   border: none;
   border-radius: var(--nextui-radii-sm);
-  padding: var(--nextui-space-9);
+  padding: 0;
 }
 
 .remove__image__button:hover {
