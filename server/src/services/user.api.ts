@@ -113,8 +113,61 @@ export const getUser = async ({ response, request }: Context, filter: any) => {
     });
 };
 
+// Update a user's data
+export const updateUser = async ({ response, request, params }: Context) => {
+  const allowedUpdates = [
+    'likes',
+    'saved',
+    'recipes',
+    'following',
+    'followers',
+  ];
+  const actualUpdates = Object.keys(request.body.update);
+  const isValidUpdate = actualUpdates.every((update) =>
+    allowedUpdates.includes(update)
+  );
+  if (!isValidUpdate) {
+    utils.setResponse(response, 400, {
+      error: { message: 'Update is not permitted' },
+      request: request.body,
+    });
+  } else {
+    if (!params.id) {
+      utils.setResponse(response, 400, {
+        error: { message: 'An id must be provided' },
+        request: request.body,
+      });
+    } else {
+      try {
+        const element = await User.findByIdAndUpdate(
+          params.id,
+          request.body.update,
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+        if (!element) {
+          utils.setResponse(response, 404, {
+            error: { message: 'User not found' },
+            request: request.body,
+          });
+        } else {
+          utils.setResponse(response, 200, element);
+        }
+      } catch (err) {
+        utils.setResponse(response, 500, {
+          error: { message: JSON.stringify(err), error: err },
+          request: request.body,
+        });
+      }
+    }
+  }
+};
+
 module.exports = {
   register,
   login,
   getUser,
+  updateUser,
 };

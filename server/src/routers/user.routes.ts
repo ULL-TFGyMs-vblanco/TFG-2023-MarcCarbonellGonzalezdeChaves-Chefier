@@ -1,5 +1,6 @@
 import Router from 'koa-router';
-import { getUser, register, login } from '../services/user.api';
+import { getUser, register, login, updateUser } from '../services/user.api';
+import { verifyToken } from 'src/middlewares/verifyToken';
 
 export const userRouter = new Router();
 
@@ -14,3 +15,5 @@ userRouter.get('/api/email/:email', async (ctx) => {
 userRouter.post('/api/auth/register', register);
 
 userRouter.post('/api/auth/login', login);
+
+userRouter.patch('/api/user/:id', verifyToken, updateUser);
