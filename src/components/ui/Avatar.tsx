@@ -7,7 +7,7 @@ interface AvatarProps {
   username: string;
   style?: string;
   testid?: string;
-  link: string;
+  link?: string;
 }
 
 export const Avatar: React.FC<AvatarProps> = ({
@@ -19,19 +19,44 @@ export const Avatar: React.FC<AvatarProps> = ({
   link,
 }) => {
   return (
-    <Link
-      className={style}
-      href={link}
-      data-testid={testid}
-      style={{ borderRadius: '50%', display: 'block', minWidth: `${size}px` }}
-    >
-      <Image
-        src={source}
-        alt={`${username} avatar`}
-        width={size}
-        height={size}
-        style={{ borderRadius: '50%', display: 'block', objectFit: 'cover' }}
-      />
-    </Link>
+    <>
+      {link ? (
+        <Link
+          className={style}
+          href={link}
+          data-testid={testid}
+          style={{
+            borderRadius: '50%',
+            display: 'block',
+            minWidth: `${size}px`,
+          }}
+        >
+          <Image
+            src={source}
+            alt={`${username} avatar`}
+            width={size}
+            height={size}
+            style={{
+              borderRadius: '50%',
+              display: 'block',
+              objectFit: 'cover',
+            }}
+          />
+        </Link>
+      ) : (
+        <Image
+          src={source}
+          alt={`${username} avatar`}
+          width={size}
+          height={size}
+          style={{
+            borderRadius: '50%',
+            display: 'block',
+            objectFit: 'cover',
+            minWidth: `${size}px`,
+          }}
+        />
+      )}
+    </>
   );
 };

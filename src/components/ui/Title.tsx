@@ -5,6 +5,7 @@ interface TitleProps {
   children: ReactNode;
   style?: string;
   testid?: string;
+  xs?: boolean;
   sm?: boolean;
   md?: boolean;
   lg?: boolean;
@@ -15,6 +16,7 @@ export const Title: React.FC<TitleProps> = ({
   children,
   style,
   testid,
+  xs,
   sm,
   md,
   lg,
@@ -22,6 +24,11 @@ export const Title: React.FC<TitleProps> = ({
 }) => {
   return (
     <>
+      {xs && (
+        <p className={`${styles.title__xs} ${style}`} data-testid={testid}>
+          {children}
+        </p>
+      )}
       {sm && (
         <p className={`${styles.title__sm} ${style}`} data-testid={testid}>
           {children}
@@ -42,7 +49,7 @@ export const Title: React.FC<TitleProps> = ({
           {children}
         </p>
       )}
-      {!sm && !md && !lg && !xl && (
+      {!xs && !sm && !md && !lg && !xl && (
         <p className={`${styles.title__md} ${style}`} data-testid={testid}>
           {children}
         </p>
