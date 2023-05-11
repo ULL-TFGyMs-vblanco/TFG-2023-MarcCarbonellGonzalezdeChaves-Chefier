@@ -3,7 +3,7 @@ import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { Button } from '../ui/Button';
 import styles from 'src/styles/auth/OauthLogin.module.css';
-import { LoginData } from 'auth-types';
+import { LoginData } from 'user-types';
 import { Loading } from '@nextui-org/react';
 
 interface OauthLoginProps {

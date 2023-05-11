@@ -2,6 +2,7 @@ import { NewRecipeForm } from '@/components/recipe/NewRecipeForm';
 import { CustomModal } from '@/components/ui/CustomModal';
 import { useLoggedUser } from '@/hooks/useLoggedUser';
 import RecipeService from '@/services/RecipeService';
+import UserService from '@/services/UserService';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { NewRecipeFormInputs } from 'recipe-types';
@@ -37,7 +38,10 @@ const NewRecipe: React.FC = () => {
       image: image,
     };
     try {
-      await RecipeService.postRecipe('/recipe', recipe);
+      const { _id } = await RecipeService.postRecipe('/recipe', recipe);
+      await UserService.updateUser(`/user/${user._id}`, {
+        recipes: user.recipes.push(_id),
+      });
       return true;
     } catch (error) {
       const errorMessage = (error as Error).toString();

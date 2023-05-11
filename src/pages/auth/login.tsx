@@ -1,5 +1,5 @@
 import { LoginForm } from '../../components/auth/LoginForm';
-import AuthService from '../../services/AuthService';
+import UserService from '../../services/UserService';
 import { SignInOptions } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { CustomModal } from '../../components/ui/CustomModal';
@@ -21,7 +21,7 @@ const Login: React.FC = () => {
 
   const loginHandler = async (provider: string, data: SignInOptions) => {
     try {
-      await AuthService.login(provider, data);
+      await UserService.login(provider, data);
     } catch (error) {
       const errorMessage = (error as Error).toString();
       setError(errorMessage);

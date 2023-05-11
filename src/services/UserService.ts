@@ -1,8 +1,8 @@
-import { RegisterData } from 'auth-types';
+import { RegisterData, ValidUpdate } from 'user-types';
 import axios from '../../axios_config';
-import { signIn, SignInOptions } from 'next-auth/react';
+import { getSession, signIn, SignInOptions } from 'next-auth/react';
 
-const AuthService = {
+const UserService = {
   register: async (url: string, data: RegisterData) => {
     try {
       await axios.post(url, data);
@@ -24,6 +24,24 @@ const AuthService = {
       }
     });
   },
+
+  updateUser: async (url: string, update: ValidUpdate) => {
+    const session = await getSession();
+    try {
+      await axios.patch(
+        url,
+        { update },
+        {
+          headers: {
+            Authorization: `Bearer ${session?.user.accessToken}`,
+            Provider: session?.user.provider as string,
+          },
+        }
+      );
+    } catch (err: any) {
+      throw new Error(err.response.data.error.message);
+    }
+  },
 };
 
-export default AuthService;
+export default UserService;

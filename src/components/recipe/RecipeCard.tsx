@@ -5,7 +5,7 @@ import { BsBookmarkFill, BsFillStarFill, BsHeartFill } from 'react-icons/bs';
 import { Recipe, ValidUpdate } from 'recipe-types';
 import utils from 'src/utils/RecipeUtils';
 import { useSession } from 'next-auth/react';
-import { useInteraction } from '../../hooks/useInteraction';
+import { useInteraction } from '../../hooks/useSave';
 import { useLoggedUser } from '@/hooks/useLoggedUser';
 import { Loading } from '@nextui-org/react';
 import { useRouter } from 'next/router';

@@ -11,7 +11,7 @@ const RecipeService = {
     const { image, ...recipeData } = recipe;
     formData.append('recipe', JSON.stringify(recipeData));
     try {
-      await axios({
+      const res = await axios({
         method: 'post',
         url: url,
         data: formData,
@@ -21,6 +21,7 @@ const RecipeService = {
           Provider: session?.user.provider as string,
         },
       });
+      return res.data;
     } catch (err: any) {
       throw new Error(err.response.data.error.message);
     }

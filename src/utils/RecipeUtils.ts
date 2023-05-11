@@ -1,4 +1,4 @@
-import { User } from 'auth-types';
+import { User } from 'user-types';
 import { Valoration } from 'recipe-types';
 
 export default class RecipeUtils {

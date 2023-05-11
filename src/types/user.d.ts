@@ -1,4 +1,4 @@
-declare module 'auth-types' {
+declare module 'user-types' {
   export interface LoginFormInputs {
     email: string;
     password: string;
@@ -35,10 +35,18 @@ declare module 'auth-types' {
     image: string;
     email: string;
     password: string;
-    saved: [string];
-    likes: [string];
-    recipes: [string];
-    following: [string];
-    followers: [string];
+    saved: string[];
+    likes: string[];
+    recipes: string[];
+    following: string[];
+    followers: string[];
+  }
+
+  interface ValidUpdate {
+    saved?: string[];
+    likes?: string[];
+    recipes?: string[];
+    following?: string[];
+    followers?: string[];
   }
 }

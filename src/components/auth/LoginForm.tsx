@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
-import { LoginData, LoginFormInputs } from 'auth-types';
+import { LoginData, LoginFormInputs } from 'user-types';
 import { SignInOptions } from 'next-auth/react';
 import { Loading, useTheme } from '@nextui-org/react';
 import styles from 'src/styles/auth/AuthForm.module.css';

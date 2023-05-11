@@ -1,6 +1,5 @@
 import { useRecipe } from '@/hooks/useRecipe';
 import { useRouter } from 'next/router';
-import { ValidUpdate } from 'recipe-types';
 import RecipeService from '@/services/RecipeService';
 import { useSWRConfig } from 'swr';
 import { Recipe } from '@/components/recipe/Recipe';
@@ -9,6 +8,7 @@ import { Loading } from '@nextui-org/react';
 import { Title } from '@/components/ui/Title';
 import { CustomModal } from '@/components/ui/CustomModal';
 import { useState } from 'react';
+import UserService from '@/services/UserService';
 
 const RecipePage = () => {
   const { mutate } = useSWRConfig();
@@ -16,18 +16,12 @@ const RecipePage = () => {
   const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
   const [errorModal, setErrorModal] = useState(false);
 
-  const updateHandler = async (recipeId: string, update: ValidUpdate) => {
-    try {
-      await RecipeService.updateRecipe(`/recipe/${recipeId}`, update);
-      await mutate('/recipe/' + recipeId);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deleteHandler = async (recipeId: string) => {
+  const deleteHandler = async (recipeId: string, userRecipes: string[]) => {
     try {
       await RecipeService.deleteRecipe(`/recipe/${recipeId}`);
+      await UserService.updateUser(`/user/${recipe?.user.id}`, {
+        recipes: userRecipes.filter((id) => id !== recipeId),
+      });
       await mutate('/recipe/' + recipeId);
       await router.push('/');
     } catch (error) {
@@ -43,13 +37,7 @@ const RecipePage = () => {
         ) : isError ? (
           <Title>Receta no encontrada</Title>
         ) : (
-          recipe && (
-            <Recipe
-              recipe={recipe}
-              updateHandler={updateHandler}
-              deleteHandler={deleteHandler}
-            />
-          )
+          recipe && <Recipe recipe={recipe} deleteHandler={deleteHandler} />
         )}
       </Card>
       <CustomModal

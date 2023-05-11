@@ -17,7 +17,6 @@ import { Loading } from '@nextui-org/react';
 import {
   Ingredient,
   Instruction,
-  ValidUpdate,
   Valoration as ValorationType,
   Recipe as RecipeType,
 } from 'recipe-types';
@@ -25,22 +24,18 @@ import { useLoggedUser } from '../../hooks/useLoggedUser';
 import { useSession } from 'next-auth/react';
 import utils from '../../utils/RecipeUtils';
 import { CustomModal } from '../ui/CustomModal';
-import { useInteraction } from '../../hooks/useInteraction';
+import { useSave } from '../../hooks/useSave';
 import { useValoration } from '../../hooks/useValoration';
+import { useLike } from '../../hooks/useLike';
 
 const timeAgo = new TimeAgo('es-ES');
 
 interface RecipeProps {
   recipe: RecipeType;
-  updateHandler: (recipeId: string, update: ValidUpdate) => Promise<void>;
-  deleteHandler: (recipeId: string) => Promise<void>;
+  deleteHandler: (recipeId: string, userRecipes: string[]) => Promise<void>;
 }
 
-export const Recipe: React.FC<RecipeProps> = ({
-  recipe,
-  updateHandler,
-  deleteHandler,
-}) => {
+export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
   const { show, toggleShow } = useShow();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState<string>();
@@ -48,22 +43,14 @@ export const Recipe: React.FC<RecipeProps> = ({
   const [recipeModalVisible, setRecipeModalVisible] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
-  const {
-    checked: saved,
-    check: save,
-    uncheck: removeSave,
-  } = useInteraction('saved', recipe, user, updateHandler);
-  const {
-    checked: liked,
-    check: like,
-    uncheck: removeLike,
-  } = useInteraction('likes', recipe, user, updateHandler);
+  const { saved, save, removeSave } = useSave(recipe, user);
+  const { liked, like, removeLike } = useLike(recipe, user);
   const { data: session } = useSession();
   const {
     isLoading: isPostingValoration,
     valorate,
     removeValoration,
-  } = useValoration(recipe, user, updateHandler);
+  } = useValoration(recipe, user);
 
   const saveHandler = async () => {
     await save();
@@ -93,7 +80,7 @@ export const Recipe: React.FC<RecipeProps> = ({
   const handleDelete = async () => {
     setIsDeleting(true);
     setRecipeModalVisible(false);
-    await deleteHandler(recipe._id);
+    await deleteHandler(recipe._id, user.recipes);
     setIsDeleting(false);
   };
 

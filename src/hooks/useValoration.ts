@@ -1,13 +1,12 @@
-import { User } from 'auth-types';
+import RecipeService from '@/services/RecipeService';
+import { User } from 'user-types';
 import { useState } from 'react';
-import { Recipe, ValidUpdate } from 'recipe-types';
+import { Recipe } from 'recipe-types';
+import { useSWRConfig } from 'swr';
 
 // Custom hook to handle the user valoration of a recipe
-export function useValoration(
-  recipe: Recipe,
-  user: User,
-  updateHandler: (recipeId: string, update: ValidUpdate) => Promise<void>
-) {
+export function useValoration(recipe: Recipe, user: User) {
+  const { mutate } = useSWRConfig();
   const [isLoading, setIsLoading] = useState(false);
 
   const valorate = async (title: string, rating: number, comment?: string) => {
@@ -36,7 +35,10 @@ export function useValoration(
             date: new Date().toISOString(),
           }
     );
-    await updateHandler(recipe._id, { valorations: recipe.valorations });
+    await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
+      valorations: recipe.valorations,
+    });
+    await mutate('/recipe/' + recipe._id);
     setIsLoading(false);
   };
 
@@ -44,7 +46,10 @@ export function useValoration(
     recipe.valorations = recipe.valorations.filter(
       (valoration: any) => valoration.user.id !== user._id
     );
-    await updateHandler(recipe._id, { valorations: recipe.valorations });
+    await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
+      valorations: recipe.valorations,
+    });
+    await mutate('/recipe/' + recipe._id);
   };
 
   return {

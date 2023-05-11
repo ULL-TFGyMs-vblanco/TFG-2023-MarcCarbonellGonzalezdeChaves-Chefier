@@ -1,7 +1,7 @@
 import { describe, it, afterEach, expect, vi } from 'vitest';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import Register from '../src/pages/auth/register';
-import AuthService from '../src/services/AuthService';
+import UserService from '../src/services/UserService';
 import Login from '../src/pages/auth/login';
 import { MockImageProps } from '../src/types/test';
 
@@ -48,7 +48,7 @@ describe('Register', (): void => {
     };
   });
 
-  const spy = vi.spyOn(AuthService, 'login');
+  const spy = vi.spyOn(UserService, 'login');
 
   it('should try to sign in with Google provider from register page', async (): Promise<void> => {
     render(<Register />);

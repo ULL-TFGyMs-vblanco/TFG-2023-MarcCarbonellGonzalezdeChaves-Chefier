@@ -8,7 +8,7 @@ import { Card } from '../ui/Card';
 import { Title } from '../ui/Title';
 import { Button } from '../ui/Button';
 import styles from 'src/styles/auth/AuthForm.module.css';
-import { RegisterFormInputs, RegisterData } from 'auth-types';
+import { RegisterFormInputs, RegisterData } from 'user-types';
 import { useShow } from 'src/hooks/useShow';
 import OauthLogin from './OauthLogin';
 import { useState } from 'react';
