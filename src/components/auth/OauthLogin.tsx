@@ -40,7 +40,7 @@ export const OauthLogin: React.FC<OauthLoginProps> = ({ onLogin }) => {
         ) : (
           <>
             <FcGoogle />
-            <span>&nbsp;Iniciar&nbsp;sesión&nbsp;con&nbsp;Google</span>
+            <span>&nbsp;Iniciar sesión con Google</span>
           </>
         )}
       </Button>
@@ -55,7 +55,7 @@ export const OauthLogin: React.FC<OauthLoginProps> = ({ onLogin }) => {
         ) : (
           <>
             <FaGithub color='white' />
-            <span>&nbsp;Iniciar&nbsp;sesión&nbsp;con&nbsp;GitHub</span>
+            <span>&nbsp;Iniciar sesión con GitHub</span>
           </>
         )}
       </Button>

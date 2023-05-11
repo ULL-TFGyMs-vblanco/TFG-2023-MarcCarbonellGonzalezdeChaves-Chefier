@@ -1,5 +1,5 @@
 .form__card {
-  width: 25rem;
+  max-width: 25rem;
 }
 
 .form__container {
