@@ -35,6 +35,10 @@ declare module 'auth-types' {
     image: string;
     email: string;
     password: string;
+    saved: [string];
+    likes: [string];
+    recipes: [string];
     following: [string];
+    followers: [string];
   }
 }

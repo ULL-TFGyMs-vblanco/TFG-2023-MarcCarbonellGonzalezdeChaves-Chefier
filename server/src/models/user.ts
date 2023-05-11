@@ -10,7 +10,11 @@ export interface UserDocumentInterface extends Document {
   image: string;
   email: string;
   password: string;
+  likes: [string];
+  saved: [string];
+  recipes: [string];
   following: [string];
+  followers: [string];
 }
 
 export const UserSchema = new Schema<UserDocumentInterface>({
@@ -96,7 +100,27 @@ export const UserSchema = new Schema<UserDocumentInterface>({
       }
     },
   },
+  likes: {
+    type: [String],
+    default: [],
+    required: false,
+  },
+  saved: {
+    type: [String],
+    default: [],
+    required: false,
+  },
+  recipes: {
+    type: [String],
+    default: [],
+    required: false,
+  },
   following: {
+    type: [String],
+    default: [],
+    required: false,
+  },
+  followers: {
     type: [String],
     default: [],
     required: false,
