@@ -198,7 +198,14 @@ export const Recipe: React.FC<RecipeProps> = ({
                 />
                 {session ? (
                   loggedUserIsLoading ? (
-                    <Loading />
+                    <Loading
+                      css={{
+                        position: 'absolute',
+                        bottom: '0.6rem',
+                        right: '3.75rem',
+                        zIndex: '1',
+                      }}
+                    />
                   ) : saved ? (
                     <BsBookmarkFill
                       className={styles.checked__save__button}
@@ -218,7 +225,14 @@ export const Recipe: React.FC<RecipeProps> = ({
                 </p>
                 {session ? (
                   loggedUserIsLoading ? (
-                    <Loading />
+                    <Loading
+                      css={{
+                        position: 'absolute',
+                        bottom: '0.6rem',
+                        right: '1.5rem',
+                        zIndex: '1',
+                      }}
+                    />
                   ) : liked ? (
                     <BsHeartFill
                       className={styles.checked__like__button}

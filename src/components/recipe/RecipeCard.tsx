@@ -58,7 +58,15 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
       <div className={styles.recipe__buttons}>
         {session &&
           (loggedUserIsLoading ? (
-            <Loading />
+            <Loading
+              size='sm'
+              css={{
+                position: 'absolute',
+                bottom: '7.5rem',
+                right: '3.25rem',
+                zIndex: '1',
+              }}
+            />
           ) : saved ? (
             <BsBookmarkFill
               className={styles.checked__save__button}
@@ -75,7 +83,15 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({
         </p>
         {session &&
           (loggedUserIsLoading ? (
-            <Loading />
+            <Loading
+              size='sm'
+              css={{
+                position: 'absolute',
+                bottom: '7.5rem',
+                right: '1.25rem',
+                zIndex: '1',
+              }}
+            />
           ) : liked ? (
             <BsHeartFill
               className={styles.checked__like__button}
