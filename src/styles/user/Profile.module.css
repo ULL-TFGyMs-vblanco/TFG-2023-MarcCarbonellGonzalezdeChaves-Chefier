@@ -1,0 +1,49 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--nextui-space-15) var(--nextui-space-19);
+}
+
+.user__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: var(--nextui-space-7);
+}
+
+.user__atname {
+  font-weight: var(--font-weight-light);
+}
+
+.follow__btn {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  height: 2.5rem;
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: var(--nextui-space-5) 0;
+  gap: 15%;
+}
+
+.stats__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: var(--nextui-space-2) 0;
+}
+
+.stat__name {
+  text-align: center;
+  width: 4.5rem;
+}
