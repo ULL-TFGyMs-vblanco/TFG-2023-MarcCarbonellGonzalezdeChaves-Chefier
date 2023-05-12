@@ -16,11 +16,17 @@ const RecipePage = () => {
   const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
   const [errorModal, setErrorModal] = useState(false);
 
-  const deleteHandler = async (recipeId: string, userRecipes: string[]) => {
+  const deleteHandler = async (recipeId: string) => {
     try {
       await RecipeService.deleteRecipe(`/recipe/${recipeId}`);
       await UserService.updateUser(`/user/${recipe?.user.id}`, {
-        recipes: userRecipes.filter((id) => id !== recipeId),
+        $pull: { recipes: recipeId },
+      });
+      await UserService.updateUser(`/users?likes=${recipeId}`, {
+        $pull: { likes: recipeId },
+      });
+      await UserService.updateUser(`/users?saved=${recipeId}`, {
+        $pull: { saved: recipeId },
       });
       await mutate('/recipe/' + recipeId);
       await router.push('/');

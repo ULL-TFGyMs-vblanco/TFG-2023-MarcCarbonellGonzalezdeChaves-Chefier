@@ -32,7 +32,7 @@ const timeAgo = new TimeAgo('es-ES');
 
 interface RecipeProps {
   recipe: RecipeType;
-  deleteHandler: (recipeId: string, userRecipes: string[]) => Promise<void>;
+  deleteHandler: (recipeId: string) => Promise<void>;
 }
 
 export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
@@ -80,7 +80,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
   const handleDelete = async () => {
     setIsDeleting(true);
     setRecipeModalVisible(false);
-    await deleteHandler(recipe._id, user.recipes);
+    await deleteHandler(recipe._id);
     setIsDeleting(false);
   };
 
