@@ -15,7 +15,7 @@ export function useFollow(follower: User, followed: User) {
       false
     );
     await mutate(
-      `/username/${follower.username}`,
+      `/email/${follower.email}`,
       { ...follower, following: updatedFollowing },
       false
     );
@@ -40,7 +40,7 @@ export function useFollow(follower: User, followed: User) {
       false
     );
     await mutate(
-      `/username/${follower.username}`,
+      `/email/${follower.email}`,
       { ...follower, following: updatedFollowing },
       false
     );
