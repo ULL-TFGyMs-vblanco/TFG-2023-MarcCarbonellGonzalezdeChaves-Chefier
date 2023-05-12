@@ -143,10 +143,11 @@ exports.getUser = getUser;
 // Update a user's data
 const updateUser = async ({ response, request, params }, options = { multiple: false }) => {
     if (!APIUtils_1.default.isValidUserUpdate(request.body.update)) {
-        APIUtils_1.default.setResponse(response, 400, {
+        const result = APIUtils_1.default.setResponse(response, 400, {
             error: { message: 'Update is not permitted' },
             request: request.body,
         });
+        APIUtils_1.default.setResponse(response, 200, result);
     }
     else {
         try {

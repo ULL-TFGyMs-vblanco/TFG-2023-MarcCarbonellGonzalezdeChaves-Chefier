@@ -119,10 +119,11 @@ export const updateUser = async (
   options: { multiple: boolean } = { multiple: false }
 ) => {
   if (!utils.isValidUserUpdate(request.body.update)) {
-    utils.setResponse(response, 400, {
+    const result = utils.setResponse(response, 400, {
       error: { message: 'Update is not permitted' },
       request: request.body,
     });
+    utils.setResponse(response, 200, result);
   } else {
     try {
       if (options.multiple) {
