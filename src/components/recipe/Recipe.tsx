@@ -43,8 +43,8 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
   const [recipeModalVisible, setRecipeModalVisible] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
-  const { saved, save, removeSave } = useSave(recipe, user);
-  const { liked, like, removeLike } = useLike(recipe, user);
+  const { save, removeSave } = useSave(recipe, user);
+  const { like, removeLike } = useLike(recipe, user);
   const { data: session } = useSession();
   const {
     isLoading: isPostingValoration,
@@ -193,7 +193,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
                         zIndex: '1',
                       }}
                     />
-                  ) : saved ? (
+                  ) : recipe.saved.includes(user._id) ? (
                     <BsBookmarkFill
                       className={styles.checked__save__button}
                       onClick={removeSaveHandler}
@@ -220,7 +220,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
                         zIndex: '1',
                       }}
                     />
-                  ) : liked ? (
+                  ) : recipe.likes.includes(user._id) ? (
                     <BsHeartFill
                       className={styles.checked__like__button}
                       onClick={removeLikeHandler}

@@ -19,8 +19,8 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   const { data: session } = useSession();
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
   const router = useRouter();
-  const { saved, save, removeSave } = useSave(recipe, user);
-  const { liked, like, removeLike } = useLike(recipe, user);
+  const { save, removeSave } = useSave(recipe, user);
+  const { like, removeLike } = useLike(recipe, user);
 
   const saveHandler = async (e: any) => {
     e.stopPropagation();
@@ -70,7 +70,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
                     zIndex: '1',
                   }}
                 />
-              ) : saved ? (
+              ) : recipe.saved.includes(user._id) ? (
                 <BsBookmarkFill
                   className={styles.checked__save__button}
                   onClick={removeSaveHandler}
@@ -95,7 +95,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
                     zIndex: '1',
                   }}
                 />
-              ) : liked ? (
+              ) : recipe.likes.includes(user._id) ? (
                 <BsHeartFill
                   className={styles.checked__like__button}
                   onClick={removeLikeHandler}
