@@ -26,7 +26,7 @@ export function useSave(recipe: Recipe, user: User) {
       saved: recipe.saved,
     });
     await UserService.updateUser(`/user/${user._id}`, {
-      saved: [...user.saved, recipe._id],
+      saved: user.saved,
     });
   };
 
@@ -38,7 +38,7 @@ export function useSave(recipe: Recipe, user: User) {
       saved: recipe.saved,
     });
     await UserService.updateUser(`/user/${user._id}`, {
-      saved: user.saved.filter((save: string) => save !== recipe._id),
+      saved: user.saved,
     });
   };
 

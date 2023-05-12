@@ -26,7 +26,7 @@ export function useLike(recipe: Recipe, user: User) {
       likes: recipe.likes,
     });
     await UserService.updateUser(`/user/${user._id}`, {
-      likes: [...user.likes, recipe._id],
+      likes: user.likes,
     });
   };
 
@@ -38,7 +38,7 @@ export function useLike(recipe: Recipe, user: User) {
       likes: recipe.likes,
     });
     await UserService.updateUser(`/user/${user._id}`, {
-      likes: user.likes.filter((like: string) => like !== recipe._id),
+      likes: user.likes,
     });
   };
 
