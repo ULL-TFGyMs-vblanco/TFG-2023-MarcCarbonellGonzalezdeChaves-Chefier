@@ -16,7 +16,7 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
   const { data: session } = useSession();
 
   const recipesTabHandler = async () => {
-    router.push(`/${user.username}/recipes`);
+    router.push(`/${user.username}`);
   };
 
   const likesTabHandler = async () => {
@@ -65,7 +65,7 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
       <div className={styles.tabs__container}>
         <div
           className={
-            router.query.category === 'recipes'
+            !router.query.category
               ? styles.selected__tab
               : styles.unselected__tab
           }
@@ -96,7 +96,7 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
       </div>
       <hr className={styles.divider} />
       <div className={styles.recipe__list}>
-        {router.query.category === 'recipes' &&
+        {!router.query.category &&
           (user.recipes.length > 0 ? (
             <RecipeList filters={`user.id=${user._id}`} />
           ) : (
