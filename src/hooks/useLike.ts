@@ -24,7 +24,7 @@ export function useLike(recipe: Recipe, user: User) {
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       likes: updatedRecipeLikes,
     });
-    await UserService.updateUser(`/user/${user._id}`, {
+    await UserService.updateUser(`/username/${user.username}`, {
       likes: updatedUserLikes,
     });
   };
@@ -49,7 +49,7 @@ export function useLike(recipe: Recipe, user: User) {
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       likes: updatedRecipeLikes,
     });
-    await UserService.updateUser(`/user/${user._id}`, {
+    await UserService.updateUser(`/username/${user.username}`, {
       likes: updatedUserLikes,
     });
   };
