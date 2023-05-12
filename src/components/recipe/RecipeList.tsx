@@ -5,7 +5,6 @@ import { useRecipes } from '@/hooks/useRecipes';
 import { useState } from 'react';
 import { Loading, Pagination } from '@nextui-org/react';
 import { Title } from '../ui/Title';
-import { useSWRConfig } from 'swr';
 
 interface RecipeListProps {
   filters: string;
@@ -13,25 +12,16 @@ interface RecipeListProps {
 
 export const RecipeList: React.FC<RecipeListProps> = ({ filters }) => {
   const [pageIndex, setPageIndex] = useState(1);
-  const { mutate } = useSWRConfig();
-  const { recipes, isLoading, isError } = useRecipes(pageIndex, filters);
+  const { recipes, isLoading, isError, mutate } = useRecipes(
+    pageIndex,
+    filters
+  );
 
   const updateListHandler = async (updatedRecipe: Recipe) => {
-    console.log(
-      'updatedlist',
-      recipes.list.map((recipe: Recipe) =>
-        recipe._id === updatedRecipe._id ? updatedRecipe : recipe
-      )
+    const updatedList = recipes.list.map((recipe: Recipe) =>
+      recipe._id === updatedRecipe._id ? updatedRecipe : recipe
     );
-    await mutate(
-      filters
-        ? `/recipes?page=${pageIndex}&${filters}`
-        : `/recipes?page=${pageIndex}`,
-      recipes.list.map((recipe: Recipe) =>
-        recipe._id === updatedRecipe._id ? updatedRecipe : recipe
-      ),
-      false
-    );
+    await mutate({ ...recipes, list: updatedList }, false);
   };
 
   return (

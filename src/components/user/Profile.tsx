@@ -69,7 +69,7 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
             })
           }
         >
-          <span>Mis recetas</span>
+          <span>Recetas</span>
         </div>
         <div
           className={
