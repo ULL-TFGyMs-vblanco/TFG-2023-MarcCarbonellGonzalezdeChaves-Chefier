@@ -21,7 +21,7 @@ const RecipeService = {
           Provider: session?.user.provider as string,
         },
       });
-      return res.data;
+      return res.data.recipe;
     } catch (err: any) {
       throw new Error(err.response.data.error.message);
     }

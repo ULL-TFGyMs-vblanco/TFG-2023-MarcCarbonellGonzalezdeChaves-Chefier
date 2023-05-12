@@ -47,3 +47,50 @@
   text-align: center;
   width: 4.5rem;
 }
+
+.divider {
+  width: 100%;
+}
+
+.tabs__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 15%;
+}
+
+.selected__tab {
+  text-align: center;
+  color: var(--nextui-colors-secondary600);
+  border-bottom: var(--nextui-borderWeights-extrabold) solid
+    var(--nextui-colors-accent100);
+  padding: var(--nextui-space-6) 0;
+  font-weight: var(--nextui-fontWeights-bold);
+  width: 7rem;
+}
+
+.selected__tab:hover {
+  cursor: pointer;
+}
+
+.unselected__tab {
+  text-align: center;
+  color: var(--nextui-colors-secondary600);
+  border-bottom: var(--nextui-borderWeights-extrabold) solid transparent;
+  padding: var(--nextui-space-6) 0;
+  width: 7rem;
+}
+
+.unselected__tab:hover {
+  cursor: pointer;
+  color: var(--nextui-colors-secondary100);
+}
+
+.recipe__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 10rem;
+}
