@@ -43,6 +43,20 @@ declare module 'user-types' {
   }
 
   interface ValidUpdate {
+    $push?: {
+      saved?: string;
+      likes?: string;
+      recipes?: string;
+      following?: string;
+      followers?: string;
+    };
+    $pull?: {
+      saved?: string;
+      likes?: string;
+      recipes?: string;
+      following?: string;
+      followers?: string;
+    };
     saved?: string[];
     likes?: string[];
     recipes?: string[];
