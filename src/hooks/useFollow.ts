@@ -19,10 +19,10 @@ export function useFollow(follower: User, followed: User) {
       { ...follower, following: updatedFollowing },
       false
     );
-    await UserService.updateUser(`/username/${followed.username}`, {
+    await UserService.updateUser(`/user/${followed._id}`, {
       followers: updatedFollowers,
     });
-    await UserService.updateUser(`/username/${follower.username}`, {
+    await UserService.updateUser(`/user/${follower._id}`, {
       following: updatedFollowing,
     });
   };
@@ -44,10 +44,10 @@ export function useFollow(follower: User, followed: User) {
       { ...follower, following: updatedFollowing },
       false
     );
-    await UserService.updateUser(`/username/${followed.username}`, {
+    await UserService.updateUser(`/user/${followed._id}`, {
       followers: updatedFollowers,
     });
-    await UserService.updateUser(`/username/${follower.username}`, {
+    await UserService.updateUser(`/user/${follower._id}`, {
       following: updatedFollowing,
     });
   };

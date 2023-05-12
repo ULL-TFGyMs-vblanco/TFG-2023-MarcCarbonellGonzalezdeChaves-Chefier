@@ -24,7 +24,7 @@ export function useSave(recipe: Recipe, user: User) {
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       saved: updatedRecipeSaved,
     });
-    await UserService.updateUser(`/username/${user.username}`, {
+    await UserService.updateUser(`/user/${user._id}`, {
       saved: updatedUserSaved,
     });
   };
@@ -49,7 +49,7 @@ export function useSave(recipe: Recipe, user: User) {
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       saved: updatedRecipeSaved,
     });
-    await UserService.updateUser(`/username/${user.username}`, {
+    await UserService.updateUser(`/user/${user._id}`, {
       saved: updatedUserSaved,
     });
   };
