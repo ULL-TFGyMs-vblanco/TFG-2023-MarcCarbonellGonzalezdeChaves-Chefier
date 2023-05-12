@@ -14,7 +14,7 @@ import { useLoggedUser } from '../../hooks/useLoggedUser';
 export const Navbar: React.FC = () => {
   const { isDark } = useTheme();
   const { setTheme } = useNextTheme();
-  const [firstToggle, toggle, handleToggle] = useToggleMenu();
+  const { firstToggle, toggle, handleToggle } = useToggleMenu();
   const { data: session } = useSession();
   const { user, isLoading, isError } = useLoggedUser();
 

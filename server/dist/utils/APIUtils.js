@@ -111,6 +111,14 @@ APIUtils.isValidUserUpdate = (update) => {
 };
 APIUtils.isValidRecipeUpdate = (update) => {
     const allowedUpdates = ['likes', 'saved', 'valorations'];
-    const actualUpdates = Object.keys(update);
+    const updateEntries = Object.entries(update);
+    const actualUpdates = updateEntries.map((entry) => {
+        if (entry[0] === '$push' || entry[0] === '$pull') {
+            if (typeof entry[1] === 'object' && entry[1] !== null) {
+                return Object.keys(entry[1])[0];
+            }
+        }
+        return entry[0];
+    });
     return actualUpdates.every((update) => allowedUpdates.includes(update));
 };
