@@ -11,8 +11,11 @@ import { useLoggedUser } from '@/hooks/useLoggedUser';
 import { Loading } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 
+// Interface for RecipeCard component
 interface RecipeCardProps {
+  // Recipe to be displayed
   recipe: Recipe;
+  // Function to be called when the recipe is updated
   onChange: (
     updatedRecipe: Recipe,
     options?: {
@@ -21,6 +24,7 @@ interface RecipeCardProps {
   ) => Promise<void>;
 }
 
+// RecipeCard component
 export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
   const { data: session } = useSession();
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
