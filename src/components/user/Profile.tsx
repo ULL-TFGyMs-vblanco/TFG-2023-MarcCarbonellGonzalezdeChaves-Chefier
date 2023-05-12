@@ -6,7 +6,6 @@ import { Button } from '../ui/Button';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { RecipeList } from '../recipe/RecipeList';
-import { useState } from 'react';
 
 interface ProfileProps {
   user: User;
@@ -15,11 +14,18 @@ interface ProfileProps {
 export const Profile: React.FC<ProfileProps> = ({ user }) => {
   const router = useRouter();
   const { data: session } = useSession();
-  const [selectedTab, setSelectedTab] = useState({
-    recipes: true,
-    likes: false,
-    saved: false,
-  });
+
+  const recipesTabHandler = async () => {
+    router.push(`/${user.username}/recipes`);
+  };
+
+  const likesTabHandler = async () => {
+    router.push(`/${user.username}/likes`);
+  };
+
+  const savedTabHandler = async () => {
+    router.push(`/${user.username}/saved`);
+  };
 
   const followHandler = async () => {
     if (!session) {
@@ -59,62 +65,50 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
       <div className={styles.tabs__container}>
         <div
           className={
-            selectedTab.recipes ? styles.selected__tab : styles.unselected__tab
+            router.query.category === 'recipes'
+              ? styles.selected__tab
+              : styles.unselected__tab
           }
-          onClick={() =>
-            setSelectedTab({
-              recipes: true,
-              likes: false,
-              saved: false,
-            })
-          }
+          onClick={recipesTabHandler}
         >
           <span>Recetas</span>
         </div>
         <div
           className={
-            selectedTab.likes ? styles.selected__tab : styles.unselected__tab
+            router.query.category === 'likes'
+              ? styles.selected__tab
+              : styles.unselected__tab
           }
-          onClick={() =>
-            setSelectedTab({
-              recipes: false,
-              likes: true,
-              saved: false,
-            })
-          }
+          onClick={likesTabHandler}
         >
           <span>Me gustas</span>
         </div>
         <div
           className={
-            selectedTab.saved ? styles.selected__tab : styles.unselected__tab
+            router.query.category === 'saved'
+              ? styles.selected__tab
+              : styles.unselected__tab
           }
-          onClick={() =>
-            setSelectedTab({
-              recipes: false,
-              likes: false,
-              saved: true,
-            })
-          }
+          onClick={savedTabHandler}
         >
           <span>Guardados</span>
         </div>
       </div>
       <hr className={styles.divider} />
       <div className={styles.recipe__list}>
-        {selectedTab.recipes &&
+        {router.query.category === 'recipes' &&
           (user.recipes.length > 0 ? (
             <RecipeList filters={`user.id=${user._id}`} />
           ) : (
             <Title xs>Todavía no has publicado ninguna receta</Title>
           ))}
-        {selectedTab.likes &&
+        {router.query.category === 'likes' &&
           (user.likes.length > 0 ? (
             <RecipeList filters={`likes=${user._id}`} />
           ) : (
             <Title xs>Todavía no has dado me gusta a ninguna receta</Title>
           ))}
-        {selectedTab.saved &&
+        {router.query.category === 'saved' &&
           (user.saved.length > 0 ? (
             <RecipeList filters={`saved=${user._id}`} />
           ) : (
