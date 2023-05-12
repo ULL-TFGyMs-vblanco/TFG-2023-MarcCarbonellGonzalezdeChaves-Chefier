@@ -53,8 +53,8 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
           </Button>
         )
       ) : (
-        <Button style={styles.unfollow__btn} onClick={unfollowHandler}>
-          Siguiendo
+        <Button style={styles.follow__btn} onClick={followHandler}>
+          Seguir
         </Button>
       )}
       <div className={styles.stats}>
