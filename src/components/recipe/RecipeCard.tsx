@@ -13,9 +13,10 @@ import { useRouter } from 'next/router';
 
 interface RecipeCardProps {
   recipe: Recipe;
+  onChange: () => Promise<void>;
 }
 
-export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
+export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
   const { data: session } = useSession();
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
   const router = useRouter();
@@ -25,21 +26,25 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
   const saveHandler = async (e: any) => {
     e.stopPropagation();
     await save();
+    await onChange();
   };
 
   const removeSaveHandler = async (e: any) => {
     e.stopPropagation();
     await removeSave();
+    await onChange();
   };
 
   const likeHandler = async (e: any) => {
     e.stopPropagation();
     await like();
+    await onChange();
   };
 
   const removeLikeHandler = async (e: any) => {
     e.stopPropagation();
     await removeLike();
+    await onChange();
   };
 
   const clickHandler = async () => {

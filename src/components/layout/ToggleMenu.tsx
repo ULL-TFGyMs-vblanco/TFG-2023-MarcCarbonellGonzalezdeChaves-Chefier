@@ -34,18 +34,18 @@ export const ToggleMenu: React.FC<{
               <>
                 <Avatar
                   source={user.image}
-                  link={`/${user.username}}`}
+                  link={`/${user.username}`}
                   size={55}
                   username='Default'
                   style={styles.avatar}
                   testid='toggle_avatar'
                 />
-                <Link href={`/${user.username}}`} data-testid='toggle-avatar'>
+                <Link href={`/${user.username}`} data-testid='toggle-avatar'>
                   <p className={styles.nickname} data-testid='user-name'>
                     {user.nickname ? user.nickname : user.username}
                   </p>
                 </Link>
-                <Link href={`/${user.username}}`} data-testid='toggle-avatar'>
+                <Link href={`/${user.username}`} data-testid='toggle-avatar'>
                   <p className={styles.username} data-testid='user-atname'>
                     @{user.username}
                   </p>

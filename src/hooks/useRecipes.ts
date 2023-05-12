@@ -4,7 +4,7 @@ import axios from '../../axios_config';
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export function useRecipes(pageIndex: number, filters?: string) {
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading, mutate } = useSWR(
     filters
       ? `/recipes?page=${pageIndex}&${filters}`
       : `/recipes?page=${pageIndex}`,
@@ -18,5 +18,6 @@ export function useRecipes(pageIndex: number, filters?: string) {
     recipes: data,
     isLoading,
     isError: error,
+    mutate,
   };
 }

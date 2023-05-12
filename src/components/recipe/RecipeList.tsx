@@ -12,7 +12,14 @@ interface RecipeListProps {
 
 export const RecipeList: React.FC<RecipeListProps> = ({ filters = '' }) => {
   const [pageIndex, setPageIndex] = useState(1);
-  const { recipes, isLoading, isError } = useRecipes(pageIndex, filters);
+  const { recipes, isLoading, isError, mutate } = useRecipes(
+    pageIndex,
+    filters
+  );
+
+  const updateListHandler = async () => {
+    await mutate();
+  };
 
   return (
     <div className={styles.list__container}>
@@ -27,7 +34,11 @@ export const RecipeList: React.FC<RecipeListProps> = ({ filters = '' }) => {
           <>
             <div className={styles.list__elements}>
               {recipes.list.map((recipe: Recipe) => (
-                <RecipeCard key={recipe.name} recipe={recipe} />
+                <RecipeCard
+                  key={recipe.name}
+                  recipe={recipe}
+                  onChange={updateListHandler}
+                />
               ))}
             </div>
             <Pagination
