@@ -1,10 +1,12 @@
 import { User } from 'user-types';
 import UserService from '@/services/UserService';
 import { useSWRConfig } from 'swr';
+import { useLoggedUser } from './useLoggedUser';
 
 // Custom hook to handle recipe 'liking'
-export function useFollow(follower: User, followed: User) {
+export function useFollow(followed: User) {
   const { mutate } = useSWRConfig();
+  const { user: follower, mutate: mutateFollower } = useLoggedUser();
 
   const follow = async () => {
     const updatedFollowers = [...followed.followers, follower._id];
@@ -14,11 +16,7 @@ export function useFollow(follower: User, followed: User) {
       { ...followed, followers: updatedFollowers },
       false
     );
-    await mutate(
-      `/email/${follower.email}`,
-      { ...follower, following: updatedFollowing },
-      false
-    );
+    await mutateFollower({ ...follower, following: updatedFollowing }, false);
     await UserService.updateUser(`/user/${followed._id}`, {
       followers: updatedFollowers,
     });
@@ -39,11 +37,7 @@ export function useFollow(follower: User, followed: User) {
       { ...followed, followers: updatedFollowers },
       false
     );
-    await mutate(
-      `/email/${follower.email}`,
-      { ...follower, following: updatedFollowing },
-      false
-    );
+    await mutateFollower({ ...follower, following: updatedFollowing }, false);
     await UserService.updateUser(`/user/${followed._id}`, {
       followers: updatedFollowers,
     });

@@ -17,7 +17,7 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const { user: loggedUser } = useLoggedUser();
-  const { follow, unfollow } = useFollow(loggedUser, user);
+  const { follow, unfollow } = useFollow(user);
 
   const tabHandler = async (tab: string) => {
     router.push(`/${user.username}${tab}`);

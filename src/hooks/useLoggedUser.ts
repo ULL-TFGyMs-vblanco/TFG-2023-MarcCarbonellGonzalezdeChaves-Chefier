@@ -3,6 +3,9 @@ import { useUser } from './useUser';
 
 export function useLoggedUser() {
   const { data: session } = useSession();
-  const { user, isLoading, isError } = useUser('email', session?.user.email);
-  return { user, isLoading, isError };
+  const { user, isLoading, isError, mutate } = useUser(
+    'email',
+    session?.user.email
+  );
+  return { user, isLoading, isError, mutate };
 }

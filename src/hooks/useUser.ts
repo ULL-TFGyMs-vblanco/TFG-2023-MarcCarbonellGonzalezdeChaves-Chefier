@@ -4,7 +4,7 @@ import axios from '../../axios_config';
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export function useUser(filter: 'email' | 'username', credential?: string) {
-  const { data, error, isLoading } = useSWR(
+  const { data, error, isLoading, mutate } = useSWR(
     credential ? `/${filter}/${credential}` : null,
     fetcher
   );
@@ -13,5 +13,6 @@ export function useUser(filter: 'email' | 'username', credential?: string) {
     user: data,
     isLoading,
     isError: error,
+    mutate,
   };
 }
