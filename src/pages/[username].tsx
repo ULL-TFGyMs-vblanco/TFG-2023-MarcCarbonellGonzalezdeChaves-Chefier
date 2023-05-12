@@ -1,7 +1,7 @@
-import { Card } from '../../components/ui/Card';
-import { Title } from '../../components/ui/Title';
-import { Profile } from '../../components/user/Profile';
-import { useUser } from '../../hooks/useUser';
+import { Card } from '../components/ui/Card';
+import { Title } from '../components/ui/Title';
+import { Profile } from '../components/user/Profile';
+import { useUser } from '../hooks/useUser';
 import { Loading } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 
