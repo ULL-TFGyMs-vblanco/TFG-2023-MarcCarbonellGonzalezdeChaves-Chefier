@@ -25,8 +25,16 @@ export function useSave(recipe: Recipe, user: User) {
     // user.saved.push(recipe._id);
     const updatedRecipeSaved = [...recipe.saved, user._id];
     const updatedUserSaved = [...user.saved, recipe._id];
-    await mutate(`/recipe/${recipe._id}`, updatedRecipeSaved, false);
-    await mutate(`/username/${user.username}`, updatedUserSaved, false);
+    await mutate(
+      `/recipe/${recipe._id}`,
+      { ...recipe, saved: updatedRecipeSaved },
+      false
+    );
+    await mutate(
+      `/username/${user.username}`,
+      { ...user, saved: updatedUserSaved },
+      false
+    );
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       saved: updatedRecipeSaved,
     });
@@ -45,8 +53,16 @@ export function useSave(recipe: Recipe, user: User) {
     const updatedUserSaved = user.saved.filter(
       (save: string) => save !== recipe._id
     );
-    await mutate(`/recipe/${recipe._id}`, updatedRecipeSaved, false);
-    await mutate(`/username/${user.username}`, updatedUserSaved, false);
+    await mutate(
+      `/recipe/${recipe._id}`,
+      { ...recipe, saved: updatedRecipeSaved },
+      false
+    );
+    await mutate(
+      `/username/${user.username}`,
+      { ...user, saved: updatedUserSaved },
+      false
+    );
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       saved: updatedRecipeSaved,
     });

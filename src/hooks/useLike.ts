@@ -25,8 +25,16 @@ export function useLike(recipe: Recipe, user: User) {
     // user.likes.push(recipe._id);
     const updatedRecipeLikes = [...recipe.likes, user._id];
     const updatedUserLikes = [...user.likes, recipe._id];
-    await mutate(`/recipe/${recipe._id}`, updatedRecipeLikes, false);
-    await mutate(`/username/${user.username}`, updatedUserLikes, false);
+    await mutate(
+      `/recipe/${recipe._id}`,
+      { ...recipe, likes: updatedRecipeLikes },
+      false
+    );
+    await mutate(
+      `/username/${user.username}`,
+      { ...user, likes: updatedUserLikes },
+      false
+    );
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       likes: updatedRecipeLikes,
     });
@@ -45,8 +53,16 @@ export function useLike(recipe: Recipe, user: User) {
     const updatedUserLikes = user.likes.filter(
       (like: string) => like !== recipe._id
     );
-    await mutate(`/recipe/${recipe._id}`, updatedRecipeLikes, false);
-    await mutate(`/username/${user.username}`, updatedUserLikes, false);
+    await mutate(
+      `/recipe/${recipe._id}`,
+      { ...recipe, likes: updatedRecipeLikes },
+      false
+    );
+    await mutate(
+      `/username/${user.username}`,
+      { ...user, likes: updatedUserLikes },
+      false
+    );
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       likes: updatedRecipeLikes,
     });
