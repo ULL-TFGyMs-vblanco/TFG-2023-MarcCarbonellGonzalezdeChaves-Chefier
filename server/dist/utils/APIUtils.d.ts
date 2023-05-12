@@ -4,4 +4,6 @@ export default class APIUtils {
     static buildUserDocument: (request: any) => Promise<import("../models/user").UserDocumentInterface>;
     static uploadImage: (image: string, name: string, folder: string) => Promise<UploadResponse>;
     static deleteImage: (fileID: string) => Promise<void>;
+    static isValidUserUpdate: (update: any) => boolean;
+    static isValidRecipeUpdate: (update: any) => boolean;
 }

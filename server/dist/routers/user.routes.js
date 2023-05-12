@@ -16,4 +16,9 @@ exports.userRouter.get('/api/email/:email', async (ctx) => {
 });
 exports.userRouter.post('/api/auth/register', user_api_1.register);
 exports.userRouter.post('/api/auth/login', user_api_1.login);
-exports.userRouter.patch('/api/user/:id', verifyToken_1.verifyToken, user_api_1.updateUser);
+exports.userRouter.patch('/api/user/:id', verifyToken_1.verifyToken, (ctx) => {
+    (0, user_api_1.updateUser)(ctx);
+});
+exports.userRouter.patch('/api/users', verifyToken_1.verifyToken, (ctx) => {
+    (0, user_api_1.updateUser)(ctx, { multiple: true });
+});

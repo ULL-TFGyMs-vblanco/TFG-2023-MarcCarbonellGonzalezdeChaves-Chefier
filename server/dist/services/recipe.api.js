@@ -126,10 +126,7 @@ const postRecipe = async ({ response, request }) => {
 exports.postRecipe = postRecipe;
 // Update a recipe
 const updateRecipe = async ({ response, request, params }) => {
-    const allowedUpdates = ['likes', 'saved', 'valorations'];
-    const actualUpdates = Object.keys(request.body.update);
-    const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
-    if (!isValidUpdate) {
+    if (!APIUtils_1.default.isValidRecipeUpdate(request.body.update)) {
         APIUtils_1.default.setResponse(response, 400, {
             error: { message: 'Update is not permitted' },
             request: request.body,

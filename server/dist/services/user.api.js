@@ -71,7 +71,7 @@ const register = async ({ response, request }) => {
         }
         else {
             APIUtils_1.default.setResponse(response, 500, {
-                error: { message: err },
+                error: { message: 'Error registering user', error: err },
                 request: request.body,
             });
         }
@@ -112,7 +112,7 @@ const login = async ({ response, request }) => {
     })
         .catch((err) => {
         APIUtils_1.default.setResponse(response, 500, {
-            error: err,
+            error: { message: 'Error logging in', error: err },
             request: request.body,
         });
     });
@@ -134,58 +134,60 @@ const getUser = async ({ response, request }, filter) => {
     })
         .catch((err) => {
         APIUtils_1.default.setResponse(response, 500, {
-            error: err,
+            error: { message: 'Error retrieving user', error: err },
             requerequest: request.body,
         });
     });
 };
 exports.getUser = getUser;
 // Update a user's data
-const updateUser = async ({ response, request, params }) => {
-    const allowedUpdates = [
-        'likes',
-        'saved',
-        'recipes',
-        'following',
-        'followers',
-    ];
-    const actualUpdates = Object.keys(request.body.update);
-    const isValidUpdate = actualUpdates.every((update) => allowedUpdates.includes(update));
-    if (!isValidUpdate) {
+const updateUser = async ({ response, request, params }, options = { multiple: false }) => {
+    if (!APIUtils_1.default.isValidUserUpdate(request.body.update)) {
         APIUtils_1.default.setResponse(response, 400, {
             error: { message: 'Update is not permitted' },
             request: request.body,
         });
     }
     else {
-        if (!params.id) {
-            APIUtils_1.default.setResponse(response, 400, {
-                error: { message: 'An id must be provided' },
-                request: request.body,
-            });
-        }
-        else {
-            try {
-                const element = await user_1.User.findByIdAndUpdate(params.id, request.body.update, {
+        try {
+            if (options.multiple) {
+                await user_1.User.updateMany(params, request.body.update, {
                     new: true,
                     runValidators: true,
                 });
-                if (!element) {
-                    APIUtils_1.default.setResponse(response, 404, {
-                        error: { message: 'User not found' },
+            }
+            else {
+                if (!params.id) {
+                    APIUtils_1.default.setResponse(response, 400, {
+                        error: { message: 'An id must be provided' },
                         request: request.body,
                     });
                 }
                 else {
-                    APIUtils_1.default.setResponse(response, 200, element);
+                    const element = await user_1.User.findByIdAndUpdate(params.id, request.body.update, {
+                        new: true,
+                        runValidators: true,
+                    });
+                    if (!element) {
+                        APIUtils_1.default.setResponse(response, 404, {
+                            error: { message: 'User not found' },
+                            request: request.body,
+                        });
+                    }
+                    else {
+                        APIUtils_1.default.setResponse(response, 200, element);
+                    }
                 }
             }
-            catch (err) {
-                APIUtils_1.default.setResponse(response, 500, {
-                    error: { message: JSON.stringify(err), error: err },
-                    request: request.body,
-                });
-            }
+        }
+        catch (err) {
+            APIUtils_1.default.setResponse(response, 500, {
+                error: {
+                    message: 'Error updating the user',
+                    error: err,
+                },
+                request: request.body,
+            });
         }
     }
 };

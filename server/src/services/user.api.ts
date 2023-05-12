@@ -44,7 +44,7 @@ export const register = async ({ response, request }: Context) => {
         });
       } else {
         utils.setResponse(response, 500, {
-          error: { message: err },
+          error: { message: 'Error registering user', error: err },
           request: request.body,
         });
       }
@@ -86,7 +86,7 @@ export const login = async ({ response, request }: Context) => {
     })
     .catch((err) => {
       utils.setResponse(response, 500, {
-        error: err,
+        error: { message: 'Error logging in', error: err },
         request: request.body,
       });
     });
@@ -107,60 +107,62 @@ export const getUser = async ({ response, request }: Context, filter: any) => {
     })
     .catch((err) => {
       utils.setResponse(response, 500, {
-        error: err,
+        error: { message: 'Error retrieving user', error: err },
         requerequest: request.body,
       });
     });
 };
 
 // Update a user's data
-export const updateUser = async ({ response, request, params }: Context) => {
-  const allowedUpdates = [
-    'likes',
-    'saved',
-    'recipes',
-    'following',
-    'followers',
-  ];
-  const actualUpdates = Object.keys(request.body.update);
-  const isValidUpdate = actualUpdates.every((update) =>
-    allowedUpdates.includes(update)
-  );
-  if (!isValidUpdate) {
+export const updateUser = async (
+  { response, request, params }: Context,
+  options: { multiple: boolean } = { multiple: false }
+) => {
+  if (!utils.isValidUserUpdate(request.body.update)) {
     utils.setResponse(response, 400, {
       error: { message: 'Update is not permitted' },
       request: request.body,
     });
   } else {
-    if (!params.id) {
-      utils.setResponse(response, 400, {
-        error: { message: 'An id must be provided' },
-        request: request.body,
-      });
-    } else {
-      try {
-        const element = await User.findByIdAndUpdate(
-          params.id,
-          request.body.update,
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-        if (!element) {
-          utils.setResponse(response, 404, {
-            error: { message: 'User not found' },
+    try {
+      if (options.multiple) {
+        await User.updateMany(params, request.body.update, {
+          new: true,
+          runValidators: true,
+        });
+      } else {
+        if (!params.id) {
+          utils.setResponse(response, 400, {
+            error: { message: 'An id must be provided' },
             request: request.body,
           });
         } else {
-          utils.setResponse(response, 200, element);
+          const element = await User.findByIdAndUpdate(
+            params.id,
+            request.body.update,
+            {
+              new: true,
+              runValidators: true,
+            }
+          );
+          if (!element) {
+            utils.setResponse(response, 404, {
+              error: { message: 'User not found' },
+              request: request.body,
+            });
+          } else {
+            utils.setResponse(response, 200, element);
+          }
         }
-      } catch (err) {
-        utils.setResponse(response, 500, {
-          error: { message: JSON.stringify(err), error: err },
-          request: request.body,
-        });
       }
+    } catch (err) {
+      utils.setResponse(response, 500, {
+        error: {
+          message: 'Error updating the user',
+          error: err,
+        },
+        request: request.body,
+      });
     }
   }
 };
