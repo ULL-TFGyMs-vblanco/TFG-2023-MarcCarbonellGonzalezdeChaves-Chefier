@@ -13,15 +13,20 @@ import { useRouter } from 'next/router';
 
 interface RecipeCardProps {
   recipe: Recipe;
-  onChange: (updatedRecipe: Recipe) => Promise<void>;
+  onChange: (
+    updatedRecipe: Recipe,
+    options?: {
+      remove?: boolean;
+    }
+  ) => Promise<void>;
 }
 
 export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
   const { data: session } = useSession();
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
-  const router = useRouter();
   const { save, removeSave } = useSave(recipe, user);
   const { like, removeLike } = useLike(recipe, user);
+  const router = useRouter();
 
   const saveHandler = async (e: any) => {
     e.stopPropagation();
@@ -31,16 +36,6 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
     };
     await onChange(updatedRecipe);
     await save();
-  };
-
-  const removeSaveHandler = async (e: any) => {
-    e.stopPropagation();
-    const updatedRecipe = {
-      ...recipe,
-      saved: recipe.saved.filter((id) => id !== user._id),
-    };
-    await onChange(updatedRecipe);
-    await removeSave();
   };
 
   const likeHandler = async (e: any) => {
@@ -53,13 +48,31 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
     await like();
   };
 
+  const removeSaveHandler = async (e: any) => {
+    e.stopPropagation();
+    const updatedRecipe = {
+      ...recipe,
+      saved: recipe.saved.filter((id) => id !== user._id),
+    };
+    if (router.query.tab === 'saved') {
+      await onChange(updatedRecipe, { remove: true });
+    } else {
+      await onChange(updatedRecipe);
+    }
+    await removeSave();
+  };
+
   const removeLikeHandler = async (e: any) => {
     e.stopPropagation();
     const updatedRecipe = {
       ...recipe,
       likes: recipe.likes.filter((id) => id !== user._id),
     };
-    await onChange(updatedRecipe);
+    if (router.query.tab === 'likes') {
+      await onChange(updatedRecipe, { remove: true });
+    } else {
+      await onChange(updatedRecipe);
+    }
     await removeLike();
   };
 

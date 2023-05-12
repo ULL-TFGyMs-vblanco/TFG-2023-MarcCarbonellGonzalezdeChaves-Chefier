@@ -17,10 +17,20 @@ export const RecipeList: React.FC<RecipeListProps> = ({ filters }) => {
     filters
   );
 
-  const updateListHandler = async (updatedRecipe: Recipe) => {
-    const updatedList = recipes.list.map((recipe: Recipe) =>
-      recipe._id === updatedRecipe._id ? updatedRecipe : recipe
-    );
+  const updateListHandler = async (
+    updatedRecipe: Recipe,
+    options?: { remove?: boolean }
+  ) => {
+    let updatedList;
+    if (options?.remove) {
+      updatedList = recipes.list.filter(
+        (recipe: Recipe) => recipe._id !== updatedRecipe._id
+      );
+    } else {
+      updatedList = recipes.list.map((recipe: Recipe) =>
+        recipe._id === updatedRecipe._id ? updatedRecipe : recipe
+      );
+    }
     await mutate({ ...recipes, list: updatedList }, false);
   };
 
