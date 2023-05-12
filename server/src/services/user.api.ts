@@ -94,7 +94,7 @@ export const login = async ({ response, request }: Context) => {
 
 // Get a user's data by username
 export const getUser = async ({ response, request }: Context, filter: any) => {
-  await User.findOne(filter, ['-password', '-saved', '-email', '-__v'])
+  await User.findOne(filter, ['-password', '-email', '-__v'])
     .then((user) => {
       if (user) {
         utils.setResponse(response, 200, user);
