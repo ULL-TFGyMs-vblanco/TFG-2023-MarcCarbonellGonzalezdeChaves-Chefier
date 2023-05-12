@@ -13,7 +13,7 @@ import { useRouter } from 'next/router';
 
 interface RecipeCardProps {
   recipe: Recipe;
-  onChange: () => Promise<void>;
+  onChange: (updatedRecipe: Recipe) => Promise<void>;
 }
 
 export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
@@ -25,26 +25,42 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
 
   const saveHandler = async (e: any) => {
     e.stopPropagation();
+    const updatedRecipe = {
+      ...recipe,
+      saved: [...recipe.saved, user._id],
+    };
+    await onChange(updatedRecipe);
     await save();
-    await onChange();
   };
 
   const removeSaveHandler = async (e: any) => {
     e.stopPropagation();
+    const updatedRecipe = {
+      ...recipe,
+      saved: recipe.saved.filter((id) => id !== user._id),
+    };
+    await onChange(updatedRecipe);
     await removeSave();
-    await onChange();
   };
 
   const likeHandler = async (e: any) => {
     e.stopPropagation();
+    const updatedRecipe = {
+      ...recipe,
+      likes: [...recipe.likes, user._id],
+    };
+    await onChange(updatedRecipe);
     await like();
-    await onChange();
   };
 
   const removeLikeHandler = async (e: any) => {
     e.stopPropagation();
+    const updatedRecipe = {
+      ...recipe,
+      likes: recipe.likes.filter((id) => id !== user._id),
+    };
+    await onChange(updatedRecipe);
     await removeLike();
-    await onChange();
   };
 
   const clickHandler = async () => {
@@ -70,7 +86,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
                   size='sm'
                   css={{
                     position: 'absolute',
-                    bottom: '7.5rem',
+                    bottom: '0.35rem',
                     right: '3.25rem',
                     zIndex: '1',
                   }}
@@ -95,7 +111,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
                   size='sm'
                   css={{
                     position: 'absolute',
-                    bottom: '7.5rem',
+                    bottom: '0.35rem',
                     right: '1.25rem',
                     zIndex: '1',
                   }}
