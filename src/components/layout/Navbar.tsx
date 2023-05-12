@@ -103,7 +103,7 @@ export const Navbar: React.FC = () => {
                     ) : (
                       <Avatar
                         source={user.image}
-                        link={'/profile'}
+                        link={`/${user.username}}`}
                         size={40}
                         username='Default'
                         style={styles.avatar}

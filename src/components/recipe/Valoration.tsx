@@ -42,7 +42,7 @@ export const Valoration: React.FC<ValorationProps> = ({
             <Avatar
               source={valoration.user.image}
               username={valoration.user.name}
-              link={`/profile/${valoration.user.name}`}
+              link={`/${valoration.user.name}`}
               size={20}
               style={styles.avatar}
             />

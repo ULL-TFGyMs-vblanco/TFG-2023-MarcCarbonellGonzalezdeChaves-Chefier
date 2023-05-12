@@ -11,7 +11,8 @@ export function useValoration(recipe: Recipe, user: User) {
 
   const valorate = async (title: string, rating: number, comment?: string) => {
     setIsLoading(true);
-    recipe.valorations.push(
+    const updatedValorations = [
+      ...recipe.valorations,
       comment
         ? {
             user: {
@@ -33,23 +34,31 @@ export function useValoration(recipe: Recipe, user: User) {
             title: title as string,
             rating: rating,
             date: new Date().toISOString(),
-          }
+          },
+    ];
+    await mutate(
+      '/recipe/' + recipe._id,
+      { ...recipe, valorations: updatedValorations },
+      false
     );
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       valorations: recipe.valorations,
     });
-    await mutate('/recipe/' + recipe._id);
     setIsLoading(false);
   };
 
   const removeValoration = async () => {
-    recipe.valorations = recipe.valorations.filter(
+    const updatedValorations = recipe.valorations.filter(
       (valoration: any) => valoration.user.id !== user._id
+    );
+    await mutate(
+      '/recipe/' + recipe._id,
+      { ...recipe, valorations: updatedValorations },
+      false
     );
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       valorations: recipe.valorations,
     });
-    await mutate('/recipe/' + recipe._id);
   };
 
   return {

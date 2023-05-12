@@ -7,22 +7,8 @@ import { useSWRConfig } from 'swr';
 // Custom hook to handle the interactions (likes and saves) of a recipe
 export function useSave(recipe: Recipe, user: User) {
   const { mutate } = useSWRConfig();
-  // const [saved, setSaved] = useState<boolean>();
-
-  // useEffect(() => {
-  //   if (recipe && user) {
-  //     if (recipe.saved.includes(user._id)) {
-  //       setSaved(true);
-  //     } else {
-  //       setSaved(false);
-  //     }
-  //   }
-  // }, [recipe, user]);
 
   const save = async () => {
-    // setSaved(true);
-    // recipe.saved.push(user._id);
-    // user.saved.push(recipe._id);
     const updatedRecipeSaved = [...recipe.saved, user._id];
     const updatedUserSaved = [...user.saved, recipe._id];
     await mutate(
@@ -44,9 +30,6 @@ export function useSave(recipe: Recipe, user: User) {
   };
 
   const removeSave = async () => {
-    // setSaved(false);
-    // recipe.saved = recipe.saved.filter((save: string) => save !== user._id);
-    // user.saved = user.saved.filter((save: string) => save !== recipe._id);
     const updatedRecipeSaved = recipe.saved.filter(
       (save: string) => save !== user._id
     );

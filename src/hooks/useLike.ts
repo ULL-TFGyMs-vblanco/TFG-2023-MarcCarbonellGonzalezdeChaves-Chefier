@@ -7,22 +7,8 @@ import { useSWRConfig } from 'swr';
 // Custom hook to handle recipe 'liking'
 export function useLike(recipe: Recipe, user: User) {
   const { mutate } = useSWRConfig();
-  // const [liked, setLiked] = useState<boolean>();
-
-  // useEffect(() => {
-  //   if (recipe && user) {
-  //     if (recipe.likes.includes(user._id)) {
-  //       setLiked(true);
-  //     } else {
-  //       setLiked(false);
-  //     }
-  //   }
-  // }, [recipe, user]);
 
   const like = async () => {
-    // setLiked(true);
-    // recipe.likes.push(user._id);
-    // user.likes.push(recipe._id);
     const updatedRecipeLikes = [...recipe.likes, user._id];
     const updatedUserLikes = [...user.likes, recipe._id];
     await mutate(
@@ -44,9 +30,6 @@ export function useLike(recipe: Recipe, user: User) {
   };
 
   const removeLike = async () => {
-    // setLiked(false);
-    // recipe.likes = recipe.likes.filter((like: string) => like !== user._id);
-    // user.likes = user.likes.filter((like: string) => like !== recipe._id);
     const updatedRecipeLikes = recipe.likes.filter(
       (like: string) => like !== user._id
     );
