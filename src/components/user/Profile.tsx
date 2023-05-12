@@ -42,8 +42,9 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
         <Title>{user.nickname ? user.nickname : user.username}</Title>
         <Title xs style={styles.user__atname}>{`@${user.username}`}</Title>
       </div>
-      {session ? (
-        loggedUser.following.includes(user._id) ? (
+      {session && loggedUser ? (
+        loggedUser._id !== user._id &&
+        (loggedUser.following.includes(user._id) ? (
           <Button style={styles.unfollow__btn} onClick={unfollowHandler}>
             Siguiendo
           </Button>
@@ -51,7 +52,7 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
           <Button style={styles.follow__btn} onClick={followHandler}>
             Seguir
           </Button>
-        )
+        ))
       ) : (
         <Button style={styles.follow__btn} onClick={followHandler}>
           Seguir
