@@ -104,9 +104,12 @@
 }
 
 .tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: min-content;
-  padding: var(--nextui-space-4);
-  border-radius: var(--nextui-radii-sm);
+  padding: var(--nextui-space-2) var(--nextui-space-4);
+  border-radius: var(--nextui-radii-xl);
   background-color: var(--nextui-colors-accent100);
   color: white;
   user-select: none;
