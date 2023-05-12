@@ -2,12 +2,10 @@ import RecipeService from '@/services/RecipeService';
 import { User } from 'user-types';
 import { useEffect, useState } from 'react';
 import { Recipe } from 'recipe-types';
-import { useSWRConfig } from 'swr';
 import UserService from '@/services/UserService';
 
 // Custom hook to handle the interactions (likes and saves) of a recipe
 export function useSave(recipe: Recipe, user: User) {
-  const { mutate } = useSWRConfig();
   const [saved, setSaved] = useState<boolean>();
 
   useEffect(() => {
@@ -23,27 +21,25 @@ export function useSave(recipe: Recipe, user: User) {
   const save = async () => {
     setSaved(true);
     recipe.saved.push(user._id);
+    user.saved.push(recipe._id);
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       saved: recipe.saved,
     });
     await UserService.updateUser(`/user/${user._id}`, {
       saved: [...user.saved, recipe._id],
     });
-    await mutate('/recipe/' + recipe._id);
-    await mutate('/username/' + user.username);
   };
 
   const removeSave = async () => {
     setSaved(false);
     recipe.saved = recipe.saved.filter((save: string) => save !== user._id);
+    user.saved = user.saved.filter((save: string) => save !== recipe._id);
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       saved: recipe.saved,
     });
     await UserService.updateUser(`/user/${user._id}`, {
       saved: user.saved.filter((save: string) => save !== recipe._id),
     });
-    await mutate('/recipe/' + recipe._id);
-    await mutate('/username/' + user.username);
   };
 
   return {
