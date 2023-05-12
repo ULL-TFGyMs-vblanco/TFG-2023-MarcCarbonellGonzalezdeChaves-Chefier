@@ -6,6 +6,8 @@ import { Button } from '../ui/Button';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { RecipeList } from '../recipe/RecipeList';
+import { useFollow } from '@/hooks/useFollow';
+import { useLoggedUser } from '@/hooks/useLoggedUser';
 
 interface ProfileProps {
   user: User;
@@ -14,6 +16,8 @@ interface ProfileProps {
 export const Profile: React.FC<ProfileProps> = ({ user }) => {
   const router = useRouter();
   const { data: session } = useSession();
+  const { user: loggedUser } = useLoggedUser();
+  const { follow, unfollow } = useFollow(loggedUser, user);
 
   const tabHandler = async (tab: string) => {
     router.push(`/${user.username}${tab}`);
@@ -23,8 +27,12 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
     if (!session) {
       await router.push('/auth/login');
     } else {
-      console.log('follow');
+      await follow();
     }
+  };
+
+  const unfollowHandler = async () => {
+    await unfollow();
   };
 
   return (
@@ -34,9 +42,19 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
         <Title>{user.nickname ? user.nickname : user.username}</Title>
         <Title xs style={styles.user__atname}>{`@${user.username}`}</Title>
       </div>
-      {session?.user.name !== user.username && (
-        <Button style={styles.follow__btn} onClick={followHandler}>
-          Seguir
+      {session ? (
+        loggedUser.following.includes(user._id) ? (
+          <Button style={styles.unfollow__btn} onClick={unfollowHandler}>
+            Siguiendo
+          </Button>
+        ) : (
+          <Button style={styles.follow__btn} onClick={followHandler}>
+            Seguir
+          </Button>
+        )
+      ) : (
+        <Button style={styles.unfollow__btn} onClick={unfollowHandler}>
+          Siguiendo
         </Button>
       )}
       <div className={styles.stats}>

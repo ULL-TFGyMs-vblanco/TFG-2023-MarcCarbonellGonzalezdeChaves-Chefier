@@ -21,9 +21,24 @@
 }
 
 .follow__btn {
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: var(--nextui-space-2);
+  padding-bottom: var(--nextui-space-2);
   height: 2.5rem;
+  width: 7rem;
+}
+
+.unfollow__btn {
+  padding-top: var(--nextui-space-2);
+  padding-bottom: var(--nextui-space-2);
+  height: 2.5rem;
+  width: 7rem;
+  border: var(--nextui-borderWeights-bold) solid var(--nextui-colors-accent100);
+  color: var(--nextui-colors-accent100);
+  background-color: var(--nextui-colors-primary100);
+}
+
+.unfollow__btn:hover {
+  background-color: var(--nextui-colors-primary200);
 }
 
 .stats {
