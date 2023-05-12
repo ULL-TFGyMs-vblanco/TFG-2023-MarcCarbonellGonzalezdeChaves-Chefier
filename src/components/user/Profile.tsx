@@ -110,13 +110,13 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
           ))}
         {selectedTab.likes &&
           (user.likes.length > 0 ? (
-            <RecipeList filters={`user.id=${user._id}`} />
+            <RecipeList filters={`likes=${user._id}`} />
           ) : (
             <Title xs>Todavía no has dado me gusta a ninguna receta</Title>
           ))}
         {selectedTab.saved &&
           (user.saved.length > 0 ? (
-            <RecipeList filters={`user.id=${user._id}`} />
+            <RecipeList filters={`saved=${user._id}`} />
           ) : (
             <Title xs>Todavía no has guardado ninguna receta</Title>
           ))}
