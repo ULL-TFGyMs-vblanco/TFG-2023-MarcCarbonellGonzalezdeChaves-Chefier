@@ -114,11 +114,12 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
           ) : (
             <Title xs>Todavía no has dado me gusta a ninguna receta</Title>
           ))}
-        {/* { selectedTab.saved && (user.saved.length > 0 ? (
-        <RecipeList filters={`user.id=${user._id}`} />
-      ) : (
-        <Title xs>Todavía no has guardado ninguna receta</Title>
-      ))} */}
+        {selectedTab.saved &&
+          (user.saved.length > 0 ? (
+            <RecipeList filters={`user.id=${user._id}`} />
+          ) : (
+            <Title xs>Todavía no has guardado ninguna receta</Title>
+          ))}
       </div>
     </div>
   );
