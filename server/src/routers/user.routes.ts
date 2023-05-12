@@ -16,10 +16,10 @@ userRouter.post('/api/auth/register', register);
 
 userRouter.post('/api/auth/login', login);
 
-userRouter.patch('/api/user/:id', verifyToken, (ctx) => {
-  updateUser(ctx);
+userRouter.patch('/api/user/:id', verifyToken, async (ctx) => {
+  await updateUser(ctx);
 });
 
-userRouter.patch('/api/users', verifyToken, (ctx) => {
-  updateUser(ctx, { multiple: true });
+userRouter.patch('/api/users', verifyToken, async (ctx) => {
+  await updateUser(ctx, { multiple: true });
 });
