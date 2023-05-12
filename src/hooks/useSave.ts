@@ -30,6 +30,7 @@ export function useSave(recipe: Recipe, user: User) {
       saved: [...user.saved, recipe._id],
     });
     await mutate('/recipe/' + recipe._id);
+    await mutate('/username/' + user.username);
   };
 
   const removeSave = async () => {
@@ -42,6 +43,7 @@ export function useSave(recipe: Recipe, user: User) {
       saved: user.saved.filter((save: string) => save !== recipe._id),
     });
     await mutate('/recipe/' + recipe._id);
+    await mutate('/username/' + user.username);
   };
 
   return {

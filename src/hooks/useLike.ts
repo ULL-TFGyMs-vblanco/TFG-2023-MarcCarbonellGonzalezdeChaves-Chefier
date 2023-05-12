@@ -30,6 +30,7 @@ export function useLike(recipe: Recipe, user: User) {
       likes: [...user.likes, recipe._id],
     });
     await mutate('/recipe/' + recipe._id);
+    await mutate('/username/' + user.username);
   };
 
   const removeLike = async () => {
@@ -42,6 +43,7 @@ export function useLike(recipe: Recipe, user: User) {
       likes: user.likes.filter((like: string) => like !== recipe._id),
     });
     await mutate('/recipe/' + recipe._id);
+    await mutate('/username/' + user.username);
   };
 
   return {
