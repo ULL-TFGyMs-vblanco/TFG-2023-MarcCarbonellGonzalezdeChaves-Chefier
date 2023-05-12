@@ -42,7 +42,8 @@ const Login: React.FC = () => {
         handler={setVisible}
         onClose={closeModalHandler}
       >
-        {`Error: ${error}`}
+        Oops! Ha ocurrido un error al iniciar sesión. Inténtalo de nuevo más
+        tarde.
       </CustomModal>
     </div>
   );

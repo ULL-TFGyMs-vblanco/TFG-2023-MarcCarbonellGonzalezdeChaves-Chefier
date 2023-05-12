@@ -72,7 +72,8 @@ const NewRecipe: React.FC = () => {
         handler={setErrorModal}
         onClose={closeErrorModalHandler}
       >
-        {`${error}`}
+        Oops! Ha ocurrido un error al publicar tu receta. Inténtalo de nuevo más
+        tarde.
       </CustomModal>
     </div>
   );
