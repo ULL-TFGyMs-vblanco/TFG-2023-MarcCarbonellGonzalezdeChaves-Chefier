@@ -15,16 +15,8 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
   const router = useRouter();
   const { data: session } = useSession();
 
-  const recipesTabHandler = async () => {
-    router.push(`/${user.username}`);
-  };
-
-  const likesTabHandler = async () => {
-    router.push(`/${user.username}/likes`);
-  };
-
-  const savedTabHandler = async () => {
-    router.push(`/${user.username}/saved`);
+  const tabHandler = async (tab: string) => {
+    router.push(`/${user.username}${tab}`);
   };
 
   const followHandler = async () => {
@@ -65,50 +57,48 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
       <div className={styles.tabs__container}>
         <div
           className={
-            !router.query.category
-              ? styles.selected__tab
-              : styles.unselected__tab
+            router.query.tab ? styles.unselected__tab : styles.selected__tab
           }
-          onClick={recipesTabHandler}
+          onClick={() => tabHandler('/')}
         >
           <span>Recetas</span>
         </div>
         <div
           className={
-            router.query.category === 'likes'
+            router.query.tab === 'likes'
               ? styles.selected__tab
               : styles.unselected__tab
           }
-          onClick={likesTabHandler}
+          onClick={() => tabHandler('?tab=likes')}
         >
           <span>Me gustas</span>
         </div>
         <div
           className={
-            router.query.category === 'saved'
+            router.query.tab === 'saved'
               ? styles.selected__tab
               : styles.unselected__tab
           }
-          onClick={savedTabHandler}
+          onClick={() => tabHandler('?tab=saved')}
         >
           <span>Guardados</span>
         </div>
       </div>
       <hr className={styles.divider} />
       <div className={styles.recipe__list}>
-        {!router.query.category &&
+        {!router.query.tab &&
           (user.recipes.length > 0 ? (
             <RecipeList filters={`user.id=${user._id}`} />
           ) : (
             <Title xs>Todavía no has publicado ninguna receta</Title>
           ))}
-        {router.query.category === 'likes' &&
+        {router.query.tab === 'likes' &&
           (user.likes.length > 0 ? (
             <RecipeList filters={`likes=${user._id}`} />
           ) : (
             <Title xs>Todavía no has dado me gusta a ninguna receta</Title>
           ))}
-        {router.query.category === 'saved' &&
+        {router.query.tab === 'saved' &&
           (user.saved.length > 0 ? (
             <RecipeList filters={`saved=${user._id}`} />
           ) : (
