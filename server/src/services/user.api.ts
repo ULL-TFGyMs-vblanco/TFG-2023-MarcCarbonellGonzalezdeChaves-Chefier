@@ -119,18 +119,18 @@ export const updateUser = async (
   options: { multiple: boolean } = { multiple: false }
 ) => {
   if (!utils.isValidUserUpdate(request.body.update)) {
-    const result = utils.setResponse(response, 400, {
+    utils.setResponse(response, 400, {
       error: { message: 'Update is not permitted' },
       request: request.body,
     });
-    utils.setResponse(response, 200, result);
   } else {
     try {
       if (options.multiple) {
-        await User.updateMany(params, request.body.update, {
+        const result = await User.updateMany(params, request.body.update, {
           new: true,
           runValidators: true,
         });
+        utils.setResponse(response, 200, result);
       } else {
         if (!params.id) {
           utils.setResponse(response, 400, {
