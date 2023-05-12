@@ -6,13 +6,11 @@ import { CustomModal } from '../../components/ui/CustomModal';
 import { useRouter } from 'next/router';
 
 const Login: React.FC = () => {
-  const [error, setError] = useState<string | string[]>();
   const router = useRouter();
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     if (router.query.error !== undefined) {
-      setError(router.query.error);
       setVisible(router.query.error !== undefined);
     } else {
       setVisible(false);
@@ -24,7 +22,7 @@ const Login: React.FC = () => {
       await UserService.login(provider, data);
     } catch (error) {
       const errorMessage = (error as Error).toString();
-      setError(errorMessage);
+      console.log(errorMessage);
     }
   };
 
