@@ -18,6 +18,12 @@ export const RecipeList: React.FC<RecipeListProps> = ({ filters = '' }) => {
   );
 
   const updateListHandler = async (updatedRecipe: Recipe) => {
+    console.log(
+      'updatedlist',
+      recipes.list.map((recipe: Recipe) =>
+        recipe._id === updatedRecipe._id ? updatedRecipe : recipe
+      )
+    );
     await mutate(
       recipes.list.map((recipe: Recipe) =>
         recipe._id === updatedRecipe._id ? updatedRecipe : recipe
