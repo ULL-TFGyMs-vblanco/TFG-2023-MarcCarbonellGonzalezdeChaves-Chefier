@@ -124,4 +124,67 @@ export default class APIUtils {
     });
     return actualUpdates.every((update) => allowedUpdates.includes(update));
   };
+
+  public static getAggregateSearch = (searchTerms: string) => {
+    const search = {
+      index: 'default',
+      compound: {
+        filter: [] as object[],
+      },
+    };
+    search.compound.filter.push({
+      text: {
+        query: searchTerms,
+        path: {
+          wildcard: '*',
+        },
+        fuzzy: { maxEdits: 2, prefixLength: 3 },
+      },
+    });
+    return search;
+  };
+
+  public static getAggregateMatch = (filters: any) => {
+    const match = { $and: [] as object[] };
+    Object.keys(filters).forEach((filter) => {
+      if (filter === 'cookTime' || filter === 'averageRating') {
+        const limits = filters[filter].split('-').map((limit: string) => {
+          return parseInt(limit);
+        });
+        const filterObject = {};
+        filterObject[filter] = {
+          $gte: limits[0],
+          $lte: limits[1],
+        };
+        match.$and.push(filterObject);
+      } else if (filter === 'tags') {
+        const tags = {
+          Desayuno: 'breakfast',
+          Almuerzo: 'lunch',
+          Cena: 'dinner',
+          Postre: 'dessert',
+          Picoteo: 'snack',
+          Bebida: 'drink',
+        };
+        Object.keys(tags).forEach((tag) => {
+          if (filters.tags.includes(tag)) {
+            const filterObject = {};
+            filterObject[`tags.${tags[tag]}`] = tag;
+            match.$and.push(filterObject);
+          }
+        });
+      } else if (filter === 'likes' || filter === 'saved') {
+        const filterObject = {};
+        filterObject[filter] = {
+          $in: [filters[filter]],
+        };
+        match.$and.push(filterObject);
+      } else {
+        const filterObject = {};
+        filterObject[filter] = filters[filter];
+        match.$and.push(filterObject);
+      }
+    });
+    return match;
+  };
 }

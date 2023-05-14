@@ -6,4 +6,13 @@ export default class APIUtils {
     static deleteImage: (fileID: string) => Promise<void>;
     static isValidUserUpdate: (update: any) => boolean;
     static isValidRecipeUpdate: (update: any) => boolean;
+    static getAggregateSearch: (searchTerms: string) => {
+        index: string;
+        compound: {
+            filter: object[];
+        };
+    };
+    static getAggregateMatch: (filters: any) => {
+        $and: object[];
+    };
 }

@@ -51,21 +51,36 @@ const getRecipes = async ({ response, request, query }) => {
         });
         return;
     }
-    const { page, ...filters } = query;
+    const { page, search, ...filters } = query;
     const pageIndex = Number(page);
-    await recipe_1.Recipe.find(filters)
-        .then((recipes) => {
+    const aggregate = [];
+    if (typeof search === 'string') {
+        const $search = APIUtils_1.default.getAggregateSearch(search);
+        aggregate.push({ $search });
+    }
+    if (Object.keys(filters).length > 0) {
+        const $match = APIUtils_1.default.getAggregateMatch(filters);
+        aggregate.push({ $match });
+    }
+    try {
+        let recipes = [];
+        if (aggregate.length === 0) {
+            recipes = await recipe_1.Recipe.find().sort({ date: -1 });
+        }
+        else {
+            recipes = await recipe_1.Recipe.aggregate(aggregate);
+        }
         APIUtils_1.default.setResponse(response, 200, {
             list: recipes.slice((pageIndex - 1) * 20, pageIndex * 20),
             totalPages: Math.ceil(recipes.length / 20),
         });
-    })
-        .catch((err) => {
+    }
+    catch (err) {
         APIUtils_1.default.setResponse(response, 500, {
             error: { message: 'Error finding recipes', error: err },
             requerequest: request.body,
         });
-    });
+    }
 };
 exports.getRecipes = getRecipes;
 // Post a recipe

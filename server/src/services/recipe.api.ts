@@ -1,5 +1,5 @@
 import { Context } from 'koa';
-import { Recipe } from '../models/recipe';
+import { Recipe, RecipeDocumentInterface } from '../models/recipe';
 import utils from '../utils/APIUtils';
 
 // Get recipes by id
@@ -44,21 +44,34 @@ export const getRecipes = async ({ response, request, query }: Context) => {
     });
     return;
   }
-  const { page, ...filters } = query;
+  const { page, search, ...filters } = query;
   const pageIndex = Number(page);
-  await Recipe.find(filters)
-    .then((recipes) => {
-      utils.setResponse(response, 200, {
-        list: recipes.slice((pageIndex - 1) * 20, pageIndex * 20),
-        totalPages: Math.ceil(recipes.length / 20),
-      });
-    })
-    .catch((err) => {
-      utils.setResponse(response, 500, {
-        error: { message: 'Error finding recipes', error: err },
-        requerequest: request.body,
-      });
+  const aggregate: object[] = [];
+  if (typeof search === 'string') {
+    const $search = utils.getAggregateSearch(search);
+    aggregate.push({ $search });
+  }
+  if (Object.keys(filters).length > 0) {
+    const $match = utils.getAggregateMatch(filters);
+    aggregate.push({ $match });
+  }
+  try {
+    let recipes: RecipeDocumentInterface[] = [];
+    if (aggregate.length === 0) {
+      recipes = await Recipe.find().sort({ date: -1 });
+    } else {
+      recipes = await Recipe.aggregate(aggregate);
+    }
+    utils.setResponse(response, 200, {
+      list: recipes.slice((pageIndex - 1) * 20, pageIndex * 20),
+      totalPages: Math.ceil(recipes.length / 20),
     });
+  } catch (err) {
+    utils.setResponse(response, 500, {
+      error: { message: 'Error finding recipes', error: err },
+      requerequest: request.body,
+    });
+  }
 };
 
 // Post a recipe
