@@ -11,12 +11,12 @@ declare module 'recipe-types' {
     description: string;
     date: string;
     tags: {
-      breakfast: boolean;
-      lunch: boolean;
-      dinner: boolean;
-      dessert: boolean;
-      snack: boolean;
-      drink: boolean;
+      breakfast: boolean | 'Desayuno';
+      lunch: boolean | 'Almuerzo';
+      dinner: boolean | 'Cena';
+      dessert: boolean | 'Postre';
+      snack: boolean | 'Picoteo';
+      drink: boolean | 'Bebida';
     };
     cookTime: number;
     difficulty: 'Fácil' | 'Media' | 'Difícil';
@@ -25,6 +25,7 @@ declare module 'recipe-types' {
     instructions: Instruction[];
     saved: string[];
     likes: string[];
+    averageRating: number;
     valorations: Valoration[];
   }
 
