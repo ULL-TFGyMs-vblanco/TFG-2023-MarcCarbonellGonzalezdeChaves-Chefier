@@ -7,7 +7,7 @@ import { Loading, Pagination } from '@nextui-org/react';
 import { Title } from '../ui/Title';
 
 interface RecipeListProps {
-  filters: string;
+  filters?: string;
 }
 
 export const RecipeList: React.FC<RecipeListProps> = ({ filters }) => {

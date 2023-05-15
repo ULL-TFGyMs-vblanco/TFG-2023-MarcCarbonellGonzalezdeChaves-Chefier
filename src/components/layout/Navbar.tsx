@@ -10,13 +10,21 @@ import { signOut, useSession } from 'next-auth/react';
 import { Loading, useTheme } from '@nextui-org/react';
 import { useTheme as useNextTheme } from 'next-themes';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
+import { useRouter } from 'next/router';
 
 export const Navbar: React.FC = () => {
-  const { isDark } = useTheme();
-  const { setTheme } = useNextTheme();
   const { firstToggle, toggle, handleToggle } = useToggleMenu();
-  const { data: session } = useSession();
   const { user, isLoading, isError } = useLoggedUser();
+  const { data: session } = useSession();
+  const { setTheme } = useNextTheme();
+  const { isDark } = useTheme();
+  const router = useRouter();
+
+  const searchHandler = async (e: any) => {
+    if (e.key !== 'Enter') return;
+    await router.push(`/?search=${e.target.value}`);
+    e.target.blur();
+  };
 
   const signOutHandler = async () => {
     await signOut();
@@ -59,6 +67,7 @@ export const Navbar: React.FC = () => {
               type='text'
               placeholder='Buscar...'
               data-testid='search'
+              onKeyDown={(e) => searchHandler(e)}
             />
             <div className={styles.theme__button__container}>
               <button
