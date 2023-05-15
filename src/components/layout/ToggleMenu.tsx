@@ -64,6 +64,32 @@ export const ToggleMenu: React.FC<{
               </button>
             </li>
           </ul>
+          <hr className={styles.divider} />
+          <hr className={styles.divider} />
+          <ul className={styles.links}>
+            <li>
+              <Link
+                className={styles.link}
+                href={`/?following${user._id}`}
+                data-testid='toggle-navigation-link'
+                onClick={toggleHandler}
+              >
+                Siguiendo
+              </Link>
+            </li>
+          </ul>
+          <ul className={styles.links}>
+            <li>
+              <Link
+                className={styles.link}
+                href='/recipe/new'
+                data-testid='toggle-navigation-link'
+                onClick={toggleHandler}
+              >
+                Nueva&nbsp;Receta
+              </Link>
+            </li>
+          </ul>
         </>
       ) : (
         <ul className={styles.links}>
@@ -79,19 +105,6 @@ export const ToggleMenu: React.FC<{
           </li>
         </ul>
       )}
-      <hr className={styles.divider} />
-      <ul className={styles.links}>
-        <li>
-          <Link
-            className={styles.link}
-            href='/recipe/new'
-            data-testid='toggle-navigation-link'
-            onClick={toggleHandler}
-          >
-            Nueva&nbsp;Receta
-          </Link>
-        </li>
-      </ul>
       <hr className={styles.divider} />
       <ul className={styles.links}>
         <li>

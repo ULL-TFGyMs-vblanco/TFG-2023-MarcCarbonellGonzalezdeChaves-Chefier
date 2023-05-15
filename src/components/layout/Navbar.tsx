@@ -84,17 +84,26 @@ export const Navbar: React.FC = () => {
               </button>
             </div>
             <ul className={styles.links}>
-              <li className={styles.links__col}>
-                <Link
-                  className={styles.link}
-                  href='/recipe/new'
-                  data-testid='navigation-link'
-                >
-                  Nueva&nbsp;Receta
-                </Link>
-              </li>
               {session ? (
                 <>
+                  <li className={styles.links__col}>
+                    <Link
+                      className={styles.link}
+                      href='/recipe/new'
+                      data-testid='navigation-link'
+                    >
+                      Nueva&nbsp;Receta
+                    </Link>
+                  </li>
+                  <li className={styles.links__col}>
+                    <Link
+                      className={styles.link}
+                      href={`/?following${user._id}`}
+                      data-testid='navigation-link'
+                    >
+                      Siguiendo
+                    </Link>
+                  </li>
                   <li className={styles.links__col}>
                     <button
                       className={styles.logout__button}
