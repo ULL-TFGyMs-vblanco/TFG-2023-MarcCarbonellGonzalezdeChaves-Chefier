@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { RecipeList } from '../recipe/RecipeList';
 import { useFollow } from '@/hooks/useFollow';
 import { useLoggedUser } from '@/hooks/useLoggedUser';
+import { decode } from 'querystring';
 
 interface ProfileProps {
   user: User;
@@ -105,12 +106,14 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
       </div>
       <hr className={styles.divider} />
       <div className={styles.recipe__list}>
-        {!router.query.tab && <RecipeList filters={`user.id=${user._id}`} />}
+        {!router.query.tab && (
+          <RecipeList filters={decode(`user.id=${user._id}`)} />
+        )}
         {router.query.tab === 'likes' && (
-          <RecipeList filters={`likes=${user._id}`} />
+          <RecipeList filters={decode(`likes=${user._id}`)} />
         )}
         {router.query.tab === 'saved' && (
-          <RecipeList filters={`saved=${user._id}`} />
+          <RecipeList filters={decode(`saved=${user._id}`)} />
         )}
       </div>
     </div>

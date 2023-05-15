@@ -60,7 +60,11 @@ export const getRecipes = async ({ response, request, query }: Context) => {
     if (aggregate.length === 0) {
       recipes = await Recipe.find().sort({ date: -1 });
     } else {
-      recipes = await Recipe.aggregate(aggregate);
+      if (typeof search === 'string') {
+        recipes = await Recipe.aggregate(aggregate);
+      } else {
+        recipes = await Recipe.aggregate(aggregate).sort({ date: -1 });
+      }
     }
     utils.setResponse(response, 200, {
       list: recipes.slice((pageIndex - 1) * 20, pageIndex * 20),
