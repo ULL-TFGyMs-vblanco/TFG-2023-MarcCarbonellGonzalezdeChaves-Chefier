@@ -68,7 +68,12 @@ const getRecipes = async ({ response, request, query }) => {
             recipes = await recipe_1.Recipe.find().sort({ date: -1 });
         }
         else {
-            recipes = await recipe_1.Recipe.aggregate(aggregate);
+            if (typeof search === 'string') {
+                recipes = await recipe_1.Recipe.aggregate(aggregate);
+            }
+            else {
+                recipes = await recipe_1.Recipe.aggregate(aggregate).sort({ date: -1 });
+            }
         }
         APIUtils_1.default.setResponse(response, 200, {
             list: recipes.slice((pageIndex - 1) * 20, pageIndex * 20),
