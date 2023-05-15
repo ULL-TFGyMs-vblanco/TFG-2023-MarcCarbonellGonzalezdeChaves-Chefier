@@ -39,7 +39,7 @@ export function useValoration(recipe: Recipe, user: User) {
       false
     );
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
-      valorations: recipe.valorations,
+      valorations: updatedValorations,
     });
   };
 
@@ -53,7 +53,7 @@ export function useValoration(recipe: Recipe, user: User) {
       false
     );
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
-      valorations: recipe.valorations,
+      valorations: updatedValorations,
     });
   };
 
