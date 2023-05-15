@@ -6,6 +6,7 @@ interface CardProps {
   style?: string;
   testid?: string;
   onClick?: () => void;
+  reference?: any;
 }
 
 export const Card: React.FC<CardProps> = ({
@@ -13,12 +14,14 @@ export const Card: React.FC<CardProps> = ({
   style,
   testid,
   onClick,
+  reference,
 }) => {
   return (
     <div
       className={`${styles.card} ${style}`}
       data-testid={testid}
       onClick={onClick}
+      ref={reference}
     >
       {children}
     </div>
