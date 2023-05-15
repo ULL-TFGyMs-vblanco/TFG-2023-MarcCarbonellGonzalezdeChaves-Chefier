@@ -86,6 +86,21 @@ export const Navbar: React.FC = () => {
             <ul className={styles.links}>
               {session ? (
                 <>
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    !isError && (
+                      <li className={styles.links__col}>
+                        <Link
+                          className={styles.link}
+                          href={`/?following${user._id}`}
+                          data-testid='navigation-link'
+                        >
+                          Siguiendo
+                        </Link>
+                      </li>
+                    )
+                  )}
                   <li className={styles.links__col}>
                     <Link
                       className={styles.link}
@@ -93,15 +108,6 @@ export const Navbar: React.FC = () => {
                       data-testid='navigation-link'
                     >
                       Nueva&nbsp;Receta
-                    </Link>
-                  </li>
-                  <li className={styles.links__col}>
-                    <Link
-                      className={styles.link}
-                      href={`/?following${user._id}`}
-                      data-testid='navigation-link'
-                    >
-                      Siguiendo
                     </Link>
                   </li>
                   <li className={styles.links__col}>

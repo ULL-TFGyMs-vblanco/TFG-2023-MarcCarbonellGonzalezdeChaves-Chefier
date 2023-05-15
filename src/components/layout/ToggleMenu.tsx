@@ -67,18 +67,22 @@ export const ToggleMenu: React.FC<{
           <hr className={styles.divider} />
           <hr className={styles.divider} />
           <ul className={styles.links}>
-            <li>
-              <Link
-                className={styles.link}
-                href={`/?following${user._id}`}
-                data-testid='toggle-navigation-link'
-                onClick={toggleHandler}
-              >
-                Siguiendo
-              </Link>
-            </li>
-          </ul>
-          <ul className={styles.links}>
+            {isLoading ? (
+              <Loading />
+            ) : (
+              !isError && (
+                <li>
+                  <Link
+                    className={styles.link}
+                    href={`/?following${user._id}`}
+                    data-testid='toggle-navigation-link'
+                    onClick={toggleHandler}
+                  >
+                    Siguiendo
+                  </Link>
+                </li>
+              )
+            )}
             <li>
               <Link
                 className={styles.link}
