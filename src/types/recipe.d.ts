@@ -109,4 +109,20 @@ declare module 'recipe-types' {
       step: string;
     }[];
   }
+
+  interface FilterBoxFormInputs {
+    tags: {
+      breakfast: boolean;
+      lunch: boolean;
+      dinner: boolean;
+      dessert: boolean;
+      snack: boolean;
+      drink: boolean;
+    };
+    difficulty: {
+      easy: boolean;
+      medium: boolean;
+      hard: boolean;
+    };
+  }
 }
