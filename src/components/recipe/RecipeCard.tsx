@@ -85,7 +85,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
   };
 
   return (
-    <Card style={styles.recipe__container}>
+    <Card className={styles.recipe__container}>
       <div className={styles.recipe__data} onClick={clickHandler}>
         <div className={styles.image__container}>
           <Image

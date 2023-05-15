@@ -3,7 +3,7 @@ import styles from 'src/styles/ui/Card.module.css';
 
 interface CardProps {
   children: ReactNode;
-  style?: string;
+  className?: string;
   testid?: string;
   onClick?: () => void;
   reference?: any;
@@ -11,14 +11,14 @@ interface CardProps {
 
 export const Card: React.FC<CardProps> = ({
   children,
-  style,
+  className,
   testid,
   onClick,
   reference,
 }) => {
   return (
     <div
-      className={`${styles.card} ${style}`}
+      className={`${styles.card} ${className}`}
       data-testid={testid}
       onClick={onClick}
       ref={reference}

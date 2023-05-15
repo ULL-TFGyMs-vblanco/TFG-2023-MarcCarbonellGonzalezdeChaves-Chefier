@@ -59,7 +59,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   };
 
   return (
-    <Card style={styles.form__card} testid='form-card'>
+    <Card className={styles.form__card} testid='form-card'>
       <div className={styles.form__container}>
         <Image
           src={`/images/chefier${isDark ? '-dark' : ''}.png`}
@@ -68,7 +68,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
           height={100}
           priority
         />
-        <Title style={styles.title}>Únete&nbsp;a&nbsp;Chefier</Title>
+        <Title className={styles.title}>Únete&nbsp;a&nbsp;Chefier</Title>
         <form
           autoComplete='off'
           className={styles.form}

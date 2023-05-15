@@ -3,7 +3,7 @@ import styles from 'src/styles/ui/Title.module.css';
 
 interface TitleProps {
   children: ReactNode;
-  style?: string;
+  className?: string;
   testid?: string;
   xs?: boolean;
   sm?: boolean;
@@ -14,7 +14,7 @@ interface TitleProps {
 
 export const Title: React.FC<TitleProps> = ({
   children,
-  style,
+  className,
   testid,
   xs,
   sm,
@@ -25,32 +25,32 @@ export const Title: React.FC<TitleProps> = ({
   return (
     <>
       {xs && (
-        <p className={`${styles.title__xs} ${style}`} data-testid={testid}>
+        <p className={`${styles.title__xs} ${className}`} data-testid={testid}>
           {children}
         </p>
       )}
       {sm && (
-        <p className={`${styles.title__sm} ${style}`} data-testid={testid}>
+        <p className={`${styles.title__sm} ${className}`} data-testid={testid}>
           {children}
         </p>
       )}
       {md && (
-        <p className={`${styles.title__md} ${style}`} data-testid={testid}>
+        <p className={`${styles.title__md} ${className}`} data-testid={testid}>
           {children}
         </p>
       )}
       {lg && (
-        <p className={`${styles.title__lg} ${style}`} data-testid={testid}>
+        <p className={`${styles.title__lg} ${className}`} data-testid={testid}>
           {children}
         </p>
       )}
       {xl && (
-        <p className={`${styles.title__xl} ${style}`} data-testid={testid}>
+        <p className={`${styles.title__xl} ${className}`} data-testid={testid}>
           {children}
         </p>
       )}
       {!xs && !sm && !md && !lg && !xl && (
-        <p className={`${styles.title__md} ${style}`} data-testid={testid}>
+        <p className={`${styles.title__md} ${className}`} data-testid={testid}>
           {children}
         </p>
       )}

@@ -89,7 +89,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
       <div className={styles.container}>
         <div className={styles.top__section}>
           <div className={styles.left__subsection}>
-            <Title style={styles.title}>{recipe.name}</Title>
+            <Title className={styles.title}>{recipe.name}</Title>
             <div className={styles.field} data-testid='form-field'>
               <div className={styles.user__info}>
                 <Avatar

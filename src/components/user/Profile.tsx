@@ -40,7 +40,7 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
       <div className={styles.user__header}>
         <Avatar source={user.image} size={125} username={user.username} />
         <Title>{user.nickname ? user.nickname : user.username}</Title>
-        <Title xs style={styles.user__atname}>{`@${user.username}`}</Title>
+        <Title xs className={styles.user__atname}>{`@${user.username}`}</Title>
       </div>
       {session && loggedUser ? (
         loggedUser._id !== user._id &&

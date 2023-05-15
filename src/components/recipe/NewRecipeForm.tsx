@@ -72,7 +72,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
           data-testid='new-recipe-form'
         >
           <div className={styles.header}>
-            <Title style={styles.title}>Nueva receta</Title>
+            <Title className={styles.title}>Nueva receta</Title>
             <Button className={styles.post__button} testid='post-button' submit>
               {postingRecipe ? <Loading /> : 'Publicar'}
             </Button>

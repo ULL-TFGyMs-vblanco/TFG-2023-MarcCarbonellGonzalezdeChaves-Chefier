@@ -39,7 +39,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   };
 
   return (
-    <Card style={styles.form__card} testid='form-card'>
+    <Card className={styles.form__card} testid='form-card'>
       <div className={styles.form__container}>
         <Image
           src={`/images/chefier${isDark ? '-dark' : ''}.png`}
@@ -48,7 +48,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           height={100}
           priority
         />
-        <Title style={styles.title}>Inicia sesión en Chefier</Title>
+        <Title className={styles.title}>Inicia sesión en Chefier</Title>
         <form
           autoComplete='off'
           className={styles.form}
