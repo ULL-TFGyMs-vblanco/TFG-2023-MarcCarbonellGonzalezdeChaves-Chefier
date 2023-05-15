@@ -5,7 +5,7 @@ interface AvatarProps {
   source: string;
   size: number;
   username: string;
-  style?: string;
+  className?: string;
   testid?: string;
   link?: string;
 }
@@ -14,7 +14,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   source,
   size,
   username,
-  style,
+  className,
   testid,
   link,
 }) => {
@@ -22,7 +22,7 @@ export const Avatar: React.FC<AvatarProps> = ({
     <>
       {link ? (
         <Link
-          className={style}
+          className={className}
           href={link}
           data-testid={testid}
           style={{

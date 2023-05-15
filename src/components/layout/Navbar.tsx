@@ -124,7 +124,7 @@ export const Navbar: React.FC = () => {
                         link={`/${user.username}`}
                         size={40}
                         username='Default'
-                        style={styles.avatar}
+                        className={styles.avatar}
                         testid='avatar'
                       />
                     )}

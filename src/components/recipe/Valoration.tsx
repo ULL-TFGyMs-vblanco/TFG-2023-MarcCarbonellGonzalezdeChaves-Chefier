@@ -44,7 +44,7 @@ export const Valoration: React.FC<ValorationProps> = ({
               username={valoration.user.name}
               link={`/${valoration.user.name}`}
               size={20}
-              style={styles.avatar}
+              className={styles.avatar}
             />
             <Link
               href={`/${valoration.user.name}`}

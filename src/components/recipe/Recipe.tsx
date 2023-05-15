@@ -97,7 +97,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
                   username={recipe.user.name}
                   link={`/${recipe.user.name}`}
                   size={30}
-                  style={styles.avatar}
+                  className={styles.avatar}
                 />
                 <Link
                   href={`/${recipe.user.name}`}
