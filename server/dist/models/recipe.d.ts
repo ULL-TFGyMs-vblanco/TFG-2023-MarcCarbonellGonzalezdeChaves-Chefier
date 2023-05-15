@@ -44,7 +44,6 @@ export interface RecipeDocumentInterface extends Document {
             date: Date;
         }
     ];
-    averageRating: number;
     likes: [string];
     saved: [string];
 }

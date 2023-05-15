@@ -28,8 +28,9 @@ export default class RecipeUtils {
     let min = 5;
     let max = 0;
     recipes.forEach((recipe) => {
-      if (recipe.averageRating < min) min = recipe.averageRating;
-      if (recipe.averageRating > max) max = recipe.averageRating;
+      const averageRating = this.getAverageRating(recipe.valorations);
+      if (averageRating < min) min = averageRating;
+      if (averageRating > max) max = averageRating;
     });
     return [min, max];
   };
