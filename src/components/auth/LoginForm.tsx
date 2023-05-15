@@ -94,7 +94,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
             </span>
           </div>
           <Button
-            style={styles.credentials__button}
+            className={styles.credentials__button}
             testid='submit-button'
             submit
           >

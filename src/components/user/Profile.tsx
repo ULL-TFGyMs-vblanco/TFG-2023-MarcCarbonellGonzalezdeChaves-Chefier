@@ -45,16 +45,16 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
       {session && loggedUser ? (
         loggedUser._id !== user._id &&
         (loggedUser.following.includes(user._id) ? (
-          <Button style={styles.unfollow__btn} onClick={unfollowHandler}>
+          <Button className={styles.unfollow__btn} onClick={unfollowHandler}>
             Siguiendo
           </Button>
         ) : (
-          <Button style={styles.follow__btn} onClick={followHandler}>
+          <Button className={styles.follow__btn} onClick={followHandler}>
             Seguir
           </Button>
         ))
       ) : (
-        <Button style={styles.follow__btn} onClick={followHandler}>
+        <Button className={styles.follow__btn} onClick={followHandler}>
           Seguir
         </Button>
       )}

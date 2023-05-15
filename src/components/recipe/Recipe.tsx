@@ -302,7 +302,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
                 user &&
                 !show &&
                 !utils.isAlreadyValorated(recipe.valorations, user) && (
-                  <Button style={styles.add__button} onClick={toggleShow}>
+                  <Button className={styles.add__button} onClick={toggleShow}>
                     <BiEditAlt />
                     Escribir&nbsp;reseña
                   </Button>
@@ -338,7 +338,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
                   </div>
                   <div className={styles.review__buttons}>
                     <Button
-                      style={styles.send__button}
+                      className={styles.send__button}
                       onClick={valorationHandler}
                       disabled={reviewTitle ? false : true}
                     >
@@ -382,7 +382,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
         </div>
         {session && user && user._id === recipe.user.id && (
           <Button
-            style={styles.delete__button}
+            className={styles.delete__button}
             onClick={() => setRecipeModalVisible(true)}
           >
             {isDeleting ? <Loading /> : 'Eliminar receta'}

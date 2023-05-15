@@ -217,7 +217,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
             </span>
           </div>
           <Button
-            style={styles.credentials__button}
+            className={styles.credentials__button}
             testid='submit-button'
             submit
           >

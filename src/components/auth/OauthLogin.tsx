@@ -31,7 +31,7 @@ export const OauthLogin: React.FC<OauthLoginProps> = ({ onLogin }) => {
   return (
     <div className={styles.oauth}>
       <Button
-        style={styles.google__button}
+        className={styles.google__button}
         onClick={() => loginHandler('google')}
         testid='google-login'
       >
@@ -45,7 +45,7 @@ export const OauthLogin: React.FC<OauthLoginProps> = ({ onLogin }) => {
         )}
       </Button>
       <Button
-        style={styles.github__button}
+        className={styles.github__button}
         onClick={() => loginHandler('github')}
         testid='github-login'
       >

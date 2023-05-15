@@ -75,7 +75,7 @@ export const Valoration: React.FC<ValorationProps> = ({
         {session && user && user._id == valoration.user.id && (
           <div className={styles.delete__button__container}>
             <Button
-              style={styles.delete__button}
+              className={styles.delete__button}
               onClick={() => setValorationModalVisible(true)}
             >
               {isDeleting ? (
