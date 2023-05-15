@@ -171,7 +171,9 @@ APIUtils.getAggregateMatch = (filters) => {
                 }
             });
         }
-        else if (filter === 'likes' || filter === 'saved') {
+        else if (filter === 'likes' ||
+            filter === 'saved' ||
+            filter === 'following') {
             const filterObject = {};
             filterObject[filter] = {
                 $in: [filters[filter]],
