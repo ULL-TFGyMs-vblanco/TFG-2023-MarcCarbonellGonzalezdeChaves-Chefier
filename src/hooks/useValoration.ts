@@ -1,16 +1,13 @@
 import RecipeService from '@/services/RecipeService';
 import { User } from 'user-types';
-import { useState } from 'react';
 import { Recipe } from 'recipe-types';
 import { useSWRConfig } from 'swr';
 
 // Custom hook to handle the user valoration of a recipe
 export function useValoration(recipe: Recipe, user: User) {
   const { mutate } = useSWRConfig();
-  const [isLoading, setIsLoading] = useState(false);
 
   const valorate = async (title: string, rating: number, comment?: string) => {
-    setIsLoading(true);
     const updatedValorations = [
       ...recipe.valorations,
       comment
@@ -44,7 +41,6 @@ export function useValoration(recipe: Recipe, user: User) {
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       valorations: recipe.valorations,
     });
-    setIsLoading(false);
   };
 
   const removeValoration = async () => {
@@ -62,7 +58,6 @@ export function useValoration(recipe: Recipe, user: User) {
   };
 
   return {
-    isLoading,
     valorate,
     removeValoration,
   };

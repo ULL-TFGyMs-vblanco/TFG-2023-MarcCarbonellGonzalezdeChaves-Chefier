@@ -18,14 +18,6 @@ body {
   }
 }
 
-@media screen and (width <= 910px) {
-  .container {
-    width: 90%;
-  }
-}
-
-@media screen and (width > 910px) {
-  .container {
-    width: 70%;
-  }
+.container {
+  width: 90%;
 }

@@ -91,6 +91,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes }) => {
               size='small'
               min={minRating}
               max={maxRating}
+              style={{ color: '#f44336', width: '90%' }}
               onChange={ratingHandler}
               marks={[
                 { value: rating[0], label: rating[0] },
@@ -109,12 +110,12 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes }) => {
               size='small'
               min={minTime}
               max={maxTime}
+              style={{ color: '#f44336', width: '90%' }}
               onChange={timeHandler}
               marks={[
                 { value: time[0], label: time[0] },
                 { value: time[1], label: time[1] },
               ]}
-              className={styles.slider}
             />
           </div>
         </div>

@@ -159,17 +159,30 @@ export default class APIUtils {
         match.$and.push(filterObject);
       } else if (filter === 'tags') {
         const tags = {
-          Desayuno: 'breakfast',
-          Almuerzo: 'lunch',
-          Cena: 'dinner',
-          Postre: 'dessert',
-          Picoteo: 'snack',
-          Bebida: 'drink',
+          breakfast: 'Desayuno',
+          lunch: 'Almuerzo',
+          dinner: 'Cena',
+          dessert: 'Postre',
+          snack: 'Snack',
+          drink: 'Bebida',
         };
         Object.keys(tags).forEach((tag) => {
           if (filters.tags.includes(tag)) {
             const filterObject = {};
-            filterObject[`tags.${tags[tag]}`] = tag;
+            filterObject[`tags.${tag}`] = tags[tag];
+            match.$and.push(filterObject);
+          }
+        });
+      } else if (filter === 'difficulty') {
+        const difficulties = {
+          easy: 'Fácil',
+          medium: 'Media',
+          hard: 'Difícil',
+        };
+        Object.keys(difficulties).forEach((difficulty) => {
+          if (filters.difficulty.includes(difficulty)) {
+            const filterObject = {};
+            filterObject[`difficulty`] = difficulties[difficulty];
             match.$and.push(filterObject);
           }
         });

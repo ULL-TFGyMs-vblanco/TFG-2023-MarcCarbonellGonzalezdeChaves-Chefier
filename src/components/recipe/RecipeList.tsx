@@ -2,7 +2,7 @@ import { Recipe } from 'recipe-types';
 import { RecipeCard } from './RecipeCard';
 import styles from '../../styles/recipe/RecipeList.module.css';
 import { useRecipes } from '@/hooks/useRecipes';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { Loading, Pagination } from '@nextui-org/react';
 import { Title } from '../ui/Title';
 import { FilterBox } from './FilterBox';
@@ -21,8 +21,6 @@ export const RecipeList: React.FC<RecipeListProps> = ({
   title,
 }) => {
   const [pageIndex, setPageIndex] = useState(1);
-  const ref = useRef<HTMLDivElement>(null);
-  const [listHeight, setListHeight] = useState<number>();
   const { recipes, isLoading, isError, mutate } = useRecipes(
     pageIndex,
     typeof filters === 'string' ? filters : encode(filters)
@@ -30,19 +28,11 @@ export const RecipeList: React.FC<RecipeListProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { search, following, ...baseFilters } = filters;
 
-  console.log(encode({ search, following }));
-
   const {
     recipes: baseResults,
     isLoading: isLoadingBase,
     isError: isErrorBase,
   } = useRecipes(pageIndex);
-
-  useEffect(() => {
-    if (!ref.current) return;
-    setListHeight(ref.current.offsetHeight);
-    console.log(ref.current.offsetHeight);
-  }, []);
 
   const updateListHandler = async (
     updatedRecipe: Recipe,
@@ -67,13 +57,14 @@ export const RecipeList: React.FC<RecipeListProps> = ({
         <Loading />
       ) : (
         !isErrorBase &&
-        filterbox && (
-          <Card className={styles.filterbox__container} reference={ref}>
+        filterbox &&
+        baseResults.list.length > 0 && (
+          <Card className={styles.filterbox__container}>
             <FilterBox recipes={baseResults.list} />
           </Card>
         )
       )}
-      <div className={styles.list__container} style={{ minHeight: listHeight }}>
+      <div className={styles.list__container}>
         {title && <Title lg>{title}</Title>}
         <div className={styles.list}>
           {isLoading ? (

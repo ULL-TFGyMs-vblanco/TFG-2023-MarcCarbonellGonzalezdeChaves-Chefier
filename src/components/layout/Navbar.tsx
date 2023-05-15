@@ -22,7 +22,8 @@ export const Navbar: React.FC = () => {
 
   const searchHandler = async (e: any) => {
     if (e.key !== 'Enter') return;
-    await router.push(`/?search=${e.target.value}`);
+    if (e.target.value === '') await router.push('/');
+    else await router.push(`/?search=${e.target.value}`);
     e.target.blur();
   };
 
