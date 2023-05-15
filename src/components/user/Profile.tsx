@@ -105,24 +105,13 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
       </div>
       <hr className={styles.divider} />
       <div className={styles.recipe__list}>
-        {!router.query.tab &&
-          (user.recipes.length > 0 ? (
-            <RecipeList filters={`user.id=${user._id}`} />
-          ) : (
-            <Title xs>Todavía no has publicado ninguna receta</Title>
-          ))}
-        {router.query.tab === 'likes' &&
-          (user.likes.length > 0 ? (
-            <RecipeList filters={`likes=${user._id}`} />
-          ) : (
-            <Title xs>Todavía no has dado me gusta a ninguna receta</Title>
-          ))}
-        {router.query.tab === 'saved' &&
-          (user.saved.length > 0 ? (
-            <RecipeList filters={`saved=${user._id}`} />
-          ) : (
-            <Title xs>Todavía no has guardado ninguna receta</Title>
-          ))}
+        {!router.query.tab && <RecipeList filters={`user.id=${user._id}`} />}
+        {router.query.tab === 'likes' && (
+          <RecipeList filters={`likes=${user._id}`} />
+        )}
+        {router.query.tab === 'saved' && (
+          <RecipeList filters={`saved=${user._id}`} />
+        )}
       </div>
     </div>
   );
