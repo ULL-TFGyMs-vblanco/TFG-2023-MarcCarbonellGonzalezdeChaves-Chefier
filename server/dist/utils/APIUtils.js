@@ -141,7 +141,7 @@ APIUtils.getAggregateSearch = (searchTerms) => {
     return search;
 };
 APIUtils.getAggregateMatch = (filters) => {
-    const match = { $and: [] };
+    const match = { $or: [] };
     Object.keys(filters).forEach((filter) => {
         if (filter === 'cookTime' || filter === 'averageRating') {
             const limits = filters[filter].split('-').map((limit) => {
@@ -152,7 +152,7 @@ APIUtils.getAggregateMatch = (filters) => {
                 $gte: limits[0],
                 $lte: limits[1],
             };
-            match.$and.push(filterObject);
+            match.$or.push(filterObject);
         }
         else if (filter === 'tags') {
             const tags = {
@@ -167,7 +167,7 @@ APIUtils.getAggregateMatch = (filters) => {
                 if (filters.tags.includes(tag)) {
                     const filterObject = {};
                     filterObject[`tags.${tag}`] = tags[tag];
-                    match.$and.push(filterObject);
+                    match.$or.push(filterObject);
                 }
             });
         }
@@ -181,7 +181,7 @@ APIUtils.getAggregateMatch = (filters) => {
                 if (filters.difficulty.includes(difficulty)) {
                     const filterObject = {};
                     filterObject[`difficulty`] = difficulties[difficulty];
-                    match.$and.push(filterObject);
+                    match.$or.push(filterObject);
                 }
             });
         }
@@ -192,12 +192,12 @@ APIUtils.getAggregateMatch = (filters) => {
             filterObject[filter] = {
                 $in: [filters[filter]],
             };
-            match.$and.push(filterObject);
+            match.$or.push(filterObject);
         }
         else {
             const filterObject = {};
             filterObject[filter] = filters[filter];
-            match.$and.push(filterObject);
+            match.$or.push(filterObject);
         }
     });
     return match;

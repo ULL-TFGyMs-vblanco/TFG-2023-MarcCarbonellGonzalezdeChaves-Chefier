@@ -145,7 +145,7 @@ export default class APIUtils {
   };
 
   public static getAggregateMatch = (filters: any) => {
-    const match = { $and: [] as object[] };
+    const match = { $or: [] as object[] };
     Object.keys(filters).forEach((filter) => {
       if (filter === 'cookTime' || filter === 'averageRating') {
         const limits = filters[filter].split('-').map((limit: string) => {
@@ -156,7 +156,7 @@ export default class APIUtils {
           $gte: limits[0],
           $lte: limits[1],
         };
-        match.$and.push(filterObject);
+        match.$or.push(filterObject);
       } else if (filter === 'tags') {
         const tags = {
           breakfast: 'Desayuno',
@@ -170,7 +170,7 @@ export default class APIUtils {
           if (filters.tags.includes(tag)) {
             const filterObject = {};
             filterObject[`tags.${tag}`] = tags[tag];
-            match.$and.push(filterObject);
+            match.$or.push(filterObject);
           }
         });
       } else if (filter === 'difficulty') {
@@ -183,7 +183,7 @@ export default class APIUtils {
           if (filters.difficulty.includes(difficulty)) {
             const filterObject = {};
             filterObject[`difficulty`] = difficulties[difficulty];
-            match.$and.push(filterObject);
+            match.$or.push(filterObject);
           }
         });
       } else if (
@@ -195,11 +195,11 @@ export default class APIUtils {
         filterObject[filter] = {
           $in: [filters[filter]],
         };
-        match.$and.push(filterObject);
+        match.$or.push(filterObject);
       } else {
         const filterObject = {};
         filterObject[filter] = filters[filter];
-        match.$and.push(filterObject);
+        match.$or.push(filterObject);
       }
     });
     return match;

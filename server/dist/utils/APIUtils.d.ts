@@ -13,6 +13,6 @@ export default class APIUtils {
         };
     };
     static getAggregateMatch: (filters: any) => {
-        $and: object[];
+        $or: object[];
     };
 }
