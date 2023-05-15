@@ -175,4 +175,8 @@ exports.RecipeSchema = new mongoose_1.Schema({
         default: [],
     },
 });
+exports.RecipeSchema.virtual('averageRating').get(function () {
+    const average = this.valorations.reduce((acc, valoration) => acc + valoration.rating, 0) / this.valorations.length;
+    return isNaN(average) ? 0 : average;
+});
 exports.Recipe = (0, mongoose_1.model)('Recipe', exports.RecipeSchema);
