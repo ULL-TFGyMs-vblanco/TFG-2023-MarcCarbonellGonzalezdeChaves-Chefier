@@ -6,6 +6,7 @@
   height: 16.875rem;
   width: 11.25rem;
   padding-top: 0;
+  margin: 0;
   position: relative;
   background-color: var(--nextui-colors-primary200);
   overflow: hidden;
