@@ -34,27 +34,18 @@ describe('Footer', (): void => {
 
     screen.getByTestId('logo');
   });
-  it('should render navigation links', (): void => {
-    render(<Footer />);
-
-    screen.getByText('Sitemap');
-    const navLinks = screen.getAllByTestId('sitemap-link');
-    expect(navLinks.length).toBe(2);
-    screen.getByText('Recipes');
-    screen.getByText('New Recipe');
-  });
   it('should render help navigation links', (): void => {
     render(<Footer />);
 
-    screen.getByText('Info');
+    screen.getByText('Información');
     const navLinks = screen.getAllByTestId('info-link');
     expect(navLinks.length).toBe(2);
-    screen.getByText('About');
-    screen.getByText('Contact');
+    screen.getByText('Sobre nosotros');
+    screen.getByText('Contacto');
   });
   it('should render authoring message', (): void => {
     render(<Footer />);
 
-    screen.getByText('Created by Marc Carbonell');
+    screen.getByText('Creado por Marc Carbonell');
   });
 });

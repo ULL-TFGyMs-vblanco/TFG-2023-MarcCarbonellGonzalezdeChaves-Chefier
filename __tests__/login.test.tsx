@@ -38,6 +38,6 @@ describe('Login', (): void => {
   it('should render form', (): void => {
     render(<Login />);
 
-    screen.getByText('Log in to Chefier');
+    screen.getByText('Inicia sesión en Chefier');
   });
 });

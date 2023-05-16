@@ -48,6 +48,6 @@ describe('Register', (): void => {
   it('should render form', (): void => {
     render(<Register />);
 
-    screen.getByText('Register');
+    screen.getByText('Únete a Chefier');
   });
 });

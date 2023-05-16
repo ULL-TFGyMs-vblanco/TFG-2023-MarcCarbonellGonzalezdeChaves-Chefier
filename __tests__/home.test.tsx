@@ -1,5 +1,5 @@
 import { describe, it, afterEach, vi } from 'vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, render, screen } from '@testing-library/react';
 import Home from '../src/pages/index';
 import { MockImageProps } from '../src/types/test';
 
@@ -41,19 +41,23 @@ describe('Home', (): void => {
     };
   });
 
+  vi.mock('next/router', async () => {
+    return {
+      useRouter: () => ({
+        query: {
+          error: 'error',
+        },
+        push: () => [],
+      }),
+    };
+  });
+
   it('should render', (): void => {
     render(<Home />);
   });
   it('should render title', (): void => {
     render(<Home />);
 
-    screen.getByText('Chefier');
-  });
-  it('should render log out button', (): void => {
-    render(<Home />);
-
-    screen.getByTestId('logout-button');
-    screen.getByText('Log out');
-    fireEvent.click(screen.getByTestId('logout-button'));
+    screen.getByText('Explorar recetas');
   });
 });

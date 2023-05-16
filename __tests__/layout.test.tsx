@@ -53,6 +53,17 @@ describe('Layout', (): void => {
     };
   });
 
+  vi.mock('next/router', async () => {
+    return {
+      useRouter: () => ({
+        query: {
+          error: 'error',
+        },
+        push: () => [],
+      }),
+    };
+  });
+
   it('should render', (): void => {
     render(<Layout />);
   });

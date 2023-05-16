@@ -62,13 +62,25 @@ describe('Navbar', (): void => {
     };
   });
 
+  vi.mock('next/router', async () => {
+    return {
+      useRouter: () => ({
+        query: {
+          error: 'error',
+        },
+        push: () => [],
+      }),
+    };
+  });
+
   describe('Bar', (): void => {
     it('should render navigation links', (): void => {
       render(<Navbar />);
 
       const navLinks = screen.getAllByTestId('navigation-link');
-      expect(navLinks.length).toBe(1);
-      screen.getByText('New Recipe');
+      expect(navLinks.length).toBe(2);
+      screen.getByText('Nueva Receta');
+      screen.getByText('Siguiendo');
     });
     it('should render avatar', (): void => {
       render(<Navbar />);
@@ -98,14 +110,15 @@ describe('Navbar', (): void => {
       const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
       const navLinks = screen.getAllByTestId('toggle-navigation-link');
-      expect(navLinks.length).toBe(1);
-      expect(screen.getAllByText('New Recipe').length).toBe(2);
+      expect(navLinks.length).toBe(2);
+      expect(screen.getAllByText('Nueva Receta').length).toBe(2);
+      expect(screen.getAllByText('Siguiendo').length).toBe(2);
     });
     it('should render log out button', (): void => {
       render(<Navbar />);
 
       screen.getByTestId('logout-button');
-      screen.getByText('Log out');
+      screen.getByText('Cerrar sesión');
       fireEvent.click(screen.getByTestId('logout-button'));
     });
   });
