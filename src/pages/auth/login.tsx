@@ -41,7 +41,7 @@ const Login: React.FC = () => {
         handler={setVisible}
         onClose={closeModalHandler}
       >
-        {error === 'Error: Session expired'
+        {error === 'session expired'
           ? `Tu sesión ha expirado. Por favor, inicia sesión de nuevo.`
           : `Oops! Ha ocurrido un error al iniciar sesión. Inténtalo de nuevo más tarde.`}
       </CustomModal>
