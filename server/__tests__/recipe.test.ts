@@ -53,7 +53,7 @@ let id = '';
 describe('Recipe router', (): void => {
   describe('Get recipes', (): void => {
     it('should return all the recipes', async () => {
-      await request(server).get('/api/recipes').expect(200);
+      await request(server).get('/api/recipes?page=1').expect(200);
     });
   });
   describe('Post a recipe', () => {
