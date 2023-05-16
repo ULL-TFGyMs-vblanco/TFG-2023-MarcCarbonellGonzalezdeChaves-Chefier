@@ -40,7 +40,6 @@ export interface RecipeDocumentInterface extends Document {
       date: Date;
     }
   ];
-  averageRating: number;
   likes: [string];
   saved: [string];
 }
@@ -237,6 +236,9 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     default: [],
   },
 });
+
+RecipeSchema.set('toJSON', { virtuals: true });
+RecipeSchema.set('toObject', { virtuals: true });
 
 RecipeSchema.virtual('averageRating').get(function (
   this: RecipeDocumentInterface
