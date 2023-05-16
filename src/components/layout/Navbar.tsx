@@ -114,7 +114,7 @@ export const Navbar: React.FC = () => {
                       <li className={styles.links__col}>
                         <Link
                           className={styles.link}
-                          href={`/?following${user._id}`}
+                          href={`/?following=${user._id}`}
                           data-testid='navigation-link'
                         >
                           Siguiendo
