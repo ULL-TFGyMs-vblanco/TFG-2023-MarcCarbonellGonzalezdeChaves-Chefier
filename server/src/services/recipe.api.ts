@@ -2,6 +2,7 @@ import { Context } from 'koa';
 import { Recipe, RecipeDocumentInterface } from '../models/recipe';
 import APIUtils from '../utils/APIUtils';
 import RecipeUtils from '../utils/RecipeUtils';
+import ImageKitUtils from '../utils/ImageKitUtils';
 import { User } from '../models/user';
 
 // Get recipes by id
@@ -120,7 +121,7 @@ export const postRecipe = async ({ response, request }: Context) => {
       });
       return;
     }
-    const res = await APIUtils.uploadImage(
+    const res = await ImageKitUtils.uploadImage(
       request.file.buffer.toString('base64'),
       recipeData.name,
       `/images/posts/${recipeData.user.name}`
@@ -150,7 +151,7 @@ export const postRecipe = async ({ response, request }: Context) => {
             request: request.body,
           });
         }
-        await APIUtils.deleteImage(fileId);
+        await ImageKitUtils.deleteImage(fileId);
       });
   } catch (err) {
     APIUtils.setResponse(response, 500, {
@@ -206,7 +207,7 @@ export const deleteRecipe = async ({ response, params }: Context) => {
   await Recipe.findByIdAndDelete(params.id)
     .then(async (recipe) => {
       try {
-        await APIUtils.deleteImage(recipe?.image.fileId as string);
+        await ImageKitUtils.deleteImage(recipe?.image.fileId as string);
         APIUtils.setResponse(response, 200, { recipe });
       } catch (err) {
         APIUtils.setResponse(response, 500, {

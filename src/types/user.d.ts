@@ -28,10 +28,10 @@ declare module 'user-types' {
   interface User {
     _id: string;
     username: string;
-    nickname: string;
+    nickname?: string;
     description: string;
     registerDate: Date;
-    birthdate: Date;
+    birthdate?: Date;
     image: string;
     email: string;
     password: string;

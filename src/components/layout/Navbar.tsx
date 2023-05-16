@@ -84,6 +84,7 @@ export const Navbar: React.FC = () => {
             <div className={styles.theme__button__container}>
               <button
                 className={styles.theme__button}
+                data-testid='theme-button'
                 onClick={() => {
                   setTheme(isDark ? 'light' : 'dark');
                 }}

@@ -1,8 +1,8 @@
-import { NewRecipeForm } from '@/components/recipe/NewRecipeForm';
-import { CustomModal } from '@/components/ui/CustomModal';
-import { useLoggedUser } from '@/hooks/useLoggedUser';
-import RecipeService from '@/services/RecipeService';
-import UserService from '@/services/UserService';
+import { NewRecipeForm } from '../../components/recipe/NewRecipeForm';
+import { CustomModal } from '../../components/ui/CustomModal';
+import { useLoggedUser } from '../../hooks/useLoggedUser';
+import RecipeService from '../../services/RecipeService';
+import UserService from '../../services/UserService';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { NewRecipeFormInputs } from 'recipe-types';

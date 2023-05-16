@@ -21,6 +21,8 @@ export default class RecipeUtils {
   };
 
   public static countInteractions = (stat: string[]) => {
-    return stat.length > 1000 ? `${stat.length / 1000}k` : stat.length;
+    return stat.length > 1000
+      ? `${Math.floor(stat.length / 1000)}k`
+      : stat.length;
   };
 }

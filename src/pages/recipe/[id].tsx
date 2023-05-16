@@ -1,14 +1,14 @@
-import { useRecipe } from '@/hooks/useRecipe';
+import { useRecipe } from '../../hooks/useRecipe';
 import { useRouter } from 'next/router';
-import RecipeService from '@/services/RecipeService';
+import RecipeService from '../../services/RecipeService';
 import { useSWRConfig } from 'swr';
-import { Recipe } from '@/components/recipe/Recipe';
-import { Card } from '@/components/ui/Card';
+import { Recipe } from '../../components/recipe/Recipe';
+import { Card } from '../../components/ui/Card';
 import { Loading } from '@nextui-org/react';
-import { Title } from '@/components/ui/Title';
-import { CustomModal } from '@/components/ui/CustomModal';
+import { Title } from '../../components/ui/Title';
+import { CustomModal } from '../../components/ui/CustomModal';
 import { useState } from 'react';
-import UserService from '@/services/UserService';
+import UserService from '../../services/UserService';
 
 const RecipePage = () => {
   const { mutate } = useSWRConfig();

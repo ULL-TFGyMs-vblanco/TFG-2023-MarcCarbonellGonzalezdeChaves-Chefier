@@ -7,6 +7,7 @@ exports.deleteRecipe = exports.updateRecipe = exports.postRecipe = exports.getRe
 const recipe_1 = require("../models/recipe");
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
 const RecipeUtils_1 = __importDefault(require("../utils/RecipeUtils"));
+const ImageKitUtils_1 = __importDefault(require("../utils/ImageKitUtils"));
 const user_1 = require("../models/user");
 // Get recipes by id
 const getRecipe = async ({ response, request, params }) => {
@@ -87,8 +88,8 @@ const getRecipes = async ({ response, request, query }) => {
         const [minRating, maxRating] = RecipeUtils_1.default.getMinAndMaxRating(recipes);
         const [minTime, maxTime] = RecipeUtils_1.default.getMinAndMaxTime(recipes);
         APIUtils_1.default.setResponse(response, 200, {
-            list: recipes.slice((pageIndex - 1) * 1, pageIndex * 1),
-            totalPages: Math.ceil(recipes.length / 1),
+            list: recipes.slice((pageIndex - 1) * 15, pageIndex * 15),
+            totalPages: Math.ceil(recipes.length / 15),
             metadata: {
                 minRating,
                 maxRating,
@@ -125,7 +126,7 @@ const postRecipe = async ({ response, request }) => {
             });
             return;
         }
-        const res = await APIUtils_1.default.uploadImage(request.file.buffer.toString('base64'), recipeData.name, `/images/posts/${recipeData.user.name}`);
+        const res = await ImageKitUtils_1.default.uploadImage(request.file.buffer.toString('base64'), recipeData.name, `/images/posts/${recipeData.user.name}`);
         const fileId = res.fileId;
         recipeData.image = {
             url: res.url,
@@ -152,7 +153,7 @@ const postRecipe = async ({ response, request }) => {
                     request: request.body,
                 });
             }
-            await APIUtils_1.default.deleteImage(fileId);
+            await ImageKitUtils_1.default.deleteImage(fileId);
         });
     }
     catch (err) {
@@ -209,7 +210,7 @@ const deleteRecipe = async ({ response, params }) => {
     await recipe_1.Recipe.findByIdAndDelete(params.id)
         .then(async (recipe) => {
         try {
-            await APIUtils_1.default.deleteImage(recipe?.image.fileId);
+            await ImageKitUtils_1.default.deleteImage(recipe?.image.fileId);
             APIUtils_1.default.setResponse(response, 200, { recipe });
         }
         catch (err) {

@@ -6,8 +6,8 @@ import { Button } from '../ui/Button';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { RecipeList } from '../recipe/RecipeList';
-import { useFollow } from '@/hooks/useFollow';
-import { useLoggedUser } from '@/hooks/useLoggedUser';
+import { useFollow } from '../../hooks/useFollow';
+import { useLoggedUser } from '../../hooks/useLoggedUser';
 import { decode } from 'querystring';
 
 interface ProfileProps {
