@@ -2,7 +2,7 @@ import axios from 'axios';
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import { Context, Next, Request, Response } from 'koa';
-import utils from '../utils/APIUtils';
+import APIUtils from '../utils/APIUtils';
 
 export const verifyToken = async (
   { response, request }: Context,
@@ -13,7 +13,7 @@ export const verifyToken = async (
     request.headers.provider !== 'google' &&
     request.headers.provider !== 'github'
   ) {
-    utils.setResponse(response, 401, {
+    APIUtils.setResponse(response, 401, {
       error: 'Invalid provider',
       request: request.body,
     });
@@ -40,7 +40,7 @@ export const verifyToken = async (
       }
     }
   } else {
-    utils.setResponse(response, 401, {
+    APIUtils.setResponse(response, 401, {
       error: 'An access token must be provided',
       request: request.body,
     });
@@ -56,7 +56,7 @@ function verifyCredentials(
     jwt.verify(token, process.env.JWT_SECRET as string);
     return true;
   } catch (error: any) {
-    utils.setResponse(response, 401, {
+    APIUtils.setResponse(response, 401, {
       error: { message: 'Invalid credentials token', error },
       request: request.body,
     });
@@ -83,7 +83,7 @@ async function verifyGoogle(
       return;
     })
     .catch((error) => {
-      utils.setResponse(response, 401, {
+      APIUtils.setResponse(response, 401, {
         error: { message: 'Invalid google token', error },
         request: request.body,
       });
@@ -118,7 +118,7 @@ async function verifyGithub(
       return;
     })
     .catch((error) => {
-      utils.setResponse(response, 401, {
+      APIUtils.setResponse(response, 401, {
         error: { message: 'Invalid GitHub token', error },
         request: request.body,
       });

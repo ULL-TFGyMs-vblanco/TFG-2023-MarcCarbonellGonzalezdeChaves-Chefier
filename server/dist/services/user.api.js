@@ -31,6 +31,7 @@ const jwt = __importStar(require("jsonwebtoken"));
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
+const UserUtils_1 = __importDefault(require("../utils/UserUtils"));
 // Register a user
 const register = async ({ response, request }) => {
     if (!request.body.username || !request.body.email) {
@@ -40,7 +41,7 @@ const register = async ({ response, request }) => {
         });
         return;
     }
-    const user = await APIUtils_1.default.buildUserDocument(request);
+    const user = await UserUtils_1.default.buildUserDocument(request);
     await user_1.User.create(user)
         .then((user) => {
         APIUtils_1.default.setResponse(response, 200, { user });
@@ -142,7 +143,7 @@ const getUser = async ({ response, request }, filter) => {
 exports.getUser = getUser;
 // Update a user's data
 const updateUser = async ({ response, request, params }, options = { multiple: false }) => {
-    if (!APIUtils_1.default.isValidUserUpdate(request.body.update)) {
+    if (!UserUtils_1.default.isValidUpdate(request.body.update)) {
         APIUtils_1.default.setResponse(response, 400, {
             error: { message: 'Update is not permitted' },
             request: request.body,

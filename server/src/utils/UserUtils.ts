@@ -1,14 +1,7 @@
 import { User } from '../models/user';
 import bcrypt from 'bcrypt';
-import ImageKit from 'imagekit';
-import { UploadResponse } from 'imagekit/dist/libs/interfaces';
 
-export default class APIUtils {
-  public static setResponse = (response: any, status: number, body: any) => {
-    response.status = status;
-    response.body = body;
-  };
-
+export default class UserUtils {
   public static buildUserDocument = async (request: any) => {
     const email = request.body.email;
 
@@ -50,44 +43,23 @@ export default class APIUtils {
     }
   };
 
-  public static uploadImage = async (
-    image: string,
-    name: string,
-    folder: string
-  ) => {
-    const imagekit = new ImageKit({
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,
-      urlEndpoint: process.env.IMAGEKIT_ENDPOINT as string,
-      privateKey: process.env.IMAGEKIT_PRIVATE_KEY as string,
+  public static isValidUpdate = (update: any) => {
+    const allowedUpdates = [
+      'likes',
+      'saved',
+      'recipes',
+      'following',
+      'followers',
+    ];
+    const updateEntries = Object.entries(update);
+    const actualUpdates = updateEntries.map((entry) => {
+      if (entry[0] === '$push' || entry[0] === '$pull') {
+        if (typeof entry[1] === 'object' && entry[1] !== null) {
+          return Object.keys(entry[1])[0];
+        }
+      }
+      return entry[0];
     });
-    return imagekit
-      .upload({
-        file: image,
-        fileName: name.replace(/ /g, '_'),
-        folder: folder,
-        useUniqueFileName: true,
-      })
-      .then((result: UploadResponse) => {
-        return result;
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  };
-
-  public static deleteImage = async (fileID: string) => {
-    const imagekit = new ImageKit({
-      publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,
-      privateKey: process.env.IMAGEKIT_PRIVATE_KEY as string,
-      urlEndpoint: process.env.IMAGEKIT_ENDPOINT as string,
-    });
-    return imagekit
-      .deleteFile(fileID)
-      .then(() => {
-        return;
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
+    return actualUpdates.every((update) => allowedUpdates.includes(update));
   };
 }

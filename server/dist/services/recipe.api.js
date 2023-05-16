@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteRecipe = exports.updateRecipe = exports.postRecipe = exports.getRecipes = exports.getRecipe = void 0;
 const recipe_1 = require("../models/recipe");
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
+const RecipeUtils_1 = __importDefault(require("../utils/RecipeUtils"));
 // Get recipes by id
 const getRecipe = async ({ response, request, params }) => {
     await recipe_1.Recipe.findById(params.id)
@@ -55,11 +56,11 @@ const getRecipes = async ({ response, request, query }) => {
     const pageIndex = Number(page);
     const aggregate = [];
     if (typeof search === 'string') {
-        const $search = APIUtils_1.default.getAggregateSearch(search);
+        const $search = RecipeUtils_1.default.getAggregateSearch(search);
         aggregate.push({ $search });
     }
     if (Object.keys(filters).length > 0) {
-        const $match = APIUtils_1.default.getAggregateMatch(filters);
+        const $match = RecipeUtils_1.default.getAggregateMatch(filters);
         aggregate.push({ $match });
     }
     try {
@@ -75,9 +76,19 @@ const getRecipes = async ({ response, request, query }) => {
                 recipes = await recipe_1.Recipe.aggregate(aggregate).sort({ date: -1 });
             }
         }
+        const [minRating, maxRating] = RecipeUtils_1.default.getMinAndMaxRating(recipes);
+        const [minTime, maxTime] = RecipeUtils_1.default.getMinAndMaxTime(recipes);
         APIUtils_1.default.setResponse(response, 200, {
-            list: recipes.slice((pageIndex - 1) * 1, pageIndex * 1),
-            totalPages: Math.ceil(recipes.length / 1),
+            list: recipes.slice((pageIndex - 1) * 20, pageIndex * 20),
+            totalPages: Math.ceil(recipes.length / 20),
+            metadata: {
+                minRating,
+                maxRating,
+                minTime,
+                maxTime,
+                difficulties: RecipeUtils_1.default.getDifficulties(recipes),
+                tags: RecipeUtils_1.default.getTags(recipes),
+            },
         });
     }
     catch (err) {
@@ -146,7 +157,7 @@ const postRecipe = async ({ response, request }) => {
 exports.postRecipe = postRecipe;
 // Update a recipe
 const updateRecipe = async ({ response, request, params }) => {
-    if (!APIUtils_1.default.isValidRecipeUpdate(request.body.update)) {
+    if (!RecipeUtils_1.default.isValidUpdate(request.body.update)) {
         APIUtils_1.default.setResponse(response, 400, {
             error: { message: 'Update is not permitted' },
             request: request.body,
