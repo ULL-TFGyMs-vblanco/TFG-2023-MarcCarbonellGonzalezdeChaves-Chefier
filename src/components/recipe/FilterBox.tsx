@@ -2,23 +2,36 @@ import { Title } from '../ui/Title';
 import styles from '../../styles/recipe/FilterBox.module.css';
 import { Slider } from '@mui/material';
 import { useState } from 'react';
-import { FilterBoxFormInputs, Recipe } from 'recipe-types';
-import utils from '../../utils/RecipeUtils';
+import { FilterBoxFormInputs } from 'recipe-types';
 import { Button } from '../ui/Button';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { encode } from 'querystring';
 
 interface FilterBoxProps {
-  recipes: Recipe[];
+  recipes: {
+    minRating: number;
+    maxRating: number;
+    minTime: number;
+    maxTime: number;
+    tags: {
+      breakfast: boolean;
+      lunch: boolean;
+      dinner: boolean;
+      dessert: boolean;
+      snack: boolean;
+      drink: boolean;
+    };
+    difficulties: {
+      easy: boolean;
+      medium: boolean;
+      hard: boolean;
+    };
+  };
   title?: boolean;
 }
 
 export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
-  const [minRating, maxRating] = utils.getMinAndMaxRating(recipes);
-  const [minTime, maxTime] = utils.getMinAndMaxTime(recipes);
-  const difficulties = utils.getDifficulties(recipes);
-  const tags = utils.getTags(recipes);
   const router = useRouter();
 
   const [rating, setRating] = useState<number[]>(
@@ -27,7 +40,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
           Number(router.query.rating.split('-')[0]),
           Number(router.query.rating.split('-')[1]),
         ]
-      : [minRating, maxRating]
+      : [recipes.minRating, recipes.maxRating]
   );
 
   const [time, setTime] = useState<number[]>(
@@ -36,7 +49,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
           Number(router.query.cookTime.split('-')[0]),
           Number(router.query.cookTime.split('-')[1]),
         ]
-      : [minTime, maxTime]
+      : [recipes.minTime, recipes.maxTime]
   );
   const { register, handleSubmit } = useForm<FilterBoxFormInputs>();
 
@@ -51,10 +64,10 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
   const submitHandler = (data: FilterBoxFormInputs) => {
     const { tags: tagFilter, difficulty: difficulyFilter } = data;
     const filters: string[] = [];
-    if (rating[0] !== minRating || rating[1] !== maxRating) {
+    if (rating[0] !== recipes.minRating || rating[1] !== recipes.maxRating) {
       filters.push(`averageRating=${rating[0]}-${rating[1]}`);
     }
-    if (time[0] !== minTime || time[1] !== maxTime) {
+    if (time[0] !== recipes.minTime || time[1] !== recipes.maxTime) {
       filters.push(`cookTime=${time[0]}-${time[1]}`);
     }
     Object.entries(tagFilter).forEach(([key, value]) => {
@@ -90,8 +103,8 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
             <Slider
               value={rating}
               size='small'
-              min={minRating}
-              max={maxRating}
+              min={recipes.minRating}
+              max={recipes.maxRating}
               step={0.5}
               style={{ color: '#f44336', width: '90%' }}
               onChange={ratingHandler}
@@ -110,8 +123,8 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
             <Slider
               value={time}
               size='small'
-              min={minTime}
-              max={maxTime}
+              min={recipes.minTime}
+              max={recipes.maxTime}
               style={{
                 color: '#f44336',
                 width: '90%',
@@ -129,7 +142,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
         <div className={styles.section}>
           <p className={styles.section__title}>Etiquetas</p>
           <div className={styles.checkboxes}>
-            {tags.breakfast && (
+            {recipes.tags.breakfast && (
               <div className={styles.checkbox}>
                 <input
                   type='checkbox'
@@ -139,7 +152,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
                 <label>Desayuno</label>
               </div>
             )}
-            {tags.lunch && (
+            {recipes.tags.lunch && (
               <div className={styles.checkbox}>
                 <input
                   type='checkbox'
@@ -149,7 +162,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
                 <label>Almuerzo</label>
               </div>
             )}
-            {tags.dinner && (
+            {recipes.tags.dinner && (
               <div className={styles.checkbox}>
                 <input
                   type='checkbox'
@@ -159,7 +172,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
                 <label>Cena</label>
               </div>
             )}
-            {tags.dessert && (
+            {recipes.tags.dessert && (
               <div className={styles.checkbox}>
                 <input
                   type='checkbox'
@@ -169,7 +182,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
                 <label>Postre</label>
               </div>
             )}
-            {tags.snack && (
+            {recipes.tags.snack && (
               <div className={styles.checkbox}>
                 <input
                   type='checkbox'
@@ -179,7 +192,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
                 <label>Picoteo</label>
               </div>
             )}
-            {tags.drink && (
+            {recipes.tags.drink && (
               <div className={styles.checkbox}>
                 <input
                   type='checkbox'
@@ -195,7 +208,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
         <div className={styles.section}>
           <p className={styles.section__title}>Dificultad</p>
           <div className={styles.checkboxes}>
-            {difficulties.easy && (
+            {recipes.difficulties.easy && (
               <div className={styles.checkbox}>
                 <input
                   type='checkbox'
@@ -205,7 +218,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
                 <label>Fácil</label>
               </div>
             )}
-            {difficulties.medium && (
+            {recipes.difficulties.medium && (
               <div className={styles.checkbox}>
                 <input
                   type='checkbox'
@@ -215,7 +228,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
                 <label>Media</label>
               </div>
             )}
-            {difficulties.hard && (
+            {recipes.difficulties.hard && (
               <div className={styles.checkbox}>
                 <input
                   type='checkbox'

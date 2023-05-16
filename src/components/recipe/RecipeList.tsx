@@ -62,7 +62,7 @@ export const RecipeList: React.FC<RecipeListProps> = ({
         filterbox &&
         baseResults.list.length > 0 && (
           <Card className={styles.filterbox__container}>
-            <FilterBox recipes={baseResults.list} title />
+            <FilterBox recipes={baseResults.metadata} title />
           </Card>
         )
       )}
