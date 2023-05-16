@@ -51,6 +51,10 @@
   gap: var(--nextui-space-5);
 }
 
+.slider__label {
+  color: var(--nextui-colors-secondary600) !important;
+}
+
 .apply__btn {
   display: flex;
   width: 100%;

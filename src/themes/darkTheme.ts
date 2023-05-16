@@ -25,6 +25,8 @@ export const darkTheme = createTheme({
       accent500: '#590C01',
       accent600: '#290501',
 
+      popover: '#16181A',
+
       link: '$secondary600',
     },
     fonts: {},

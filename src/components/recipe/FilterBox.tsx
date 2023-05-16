@@ -11,9 +11,10 @@ import { encode } from 'querystring';
 
 interface FilterBoxProps {
   recipes: Recipe[];
+  title?: boolean;
 }
 
-export const FilterBox: React.FC<FilterBoxProps> = ({ recipes }) => {
+export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
   const [minRating, maxRating] = utils.getMinAndMaxRating(recipes);
   const [minTime, maxTime] = utils.getMinAndMaxTime(recipes);
   const difficulties = utils.getDifficulties(recipes);
@@ -81,7 +82,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes }) => {
 
   return (
     <div className={styles.container}>
-      <Title sm>Filtros</Title>
+      {title && <Title sm>Filtros</Title>}
       <div className={styles.sections}>
         <div className={styles.section}>
           <p className={styles.section__title}>Puntuación</p>
@@ -91,13 +92,14 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes }) => {
               size='small'
               min={minRating}
               max={maxRating}
+              step={0.5}
               style={{ color: '#f44336', width: '90%' }}
               onChange={ratingHandler}
               marks={[
                 { value: rating[0], label: rating[0] },
                 { value: rating[1], label: rating[1] },
               ]}
-              className={styles.slider}
+              classes={{ markLabel: styles.slider__label }}
             />
           </div>
         </div>
@@ -110,12 +112,16 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes }) => {
               size='small'
               min={minTime}
               max={maxTime}
-              style={{ color: '#f44336', width: '90%' }}
+              style={{
+                color: '#f44336',
+                width: '90%',
+              }}
               onChange={timeHandler}
               marks={[
                 { value: time[0], label: time[0] },
                 { value: time[1], label: time[1] },
               ]}
+              classes={{ markLabel: styles.slider__label }}
             />
           </div>
         </div>
