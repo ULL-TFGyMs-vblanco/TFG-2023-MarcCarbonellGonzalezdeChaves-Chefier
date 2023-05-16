@@ -34,7 +34,14 @@ jobs:
       env:
         DATABASE_URL: ${{ secrets.COVERALLS_DATABASE_URL }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        CDN_URL: ${{ secrets.CDN_URL }}
+        IMAGEKIT_ENDPOINT: ${{ secrets.IMAGEKIT_ENDPOINT }}
+        IMAGEKIT_PUBLIC_KEY: ${{ secrets.IMAGEKIT_PUBLIC_KEY }}
+        IMAGEKIT_PRIVATE_KEY: ${{ secrets.IMAGEKIT_PRIVATE_KEY }}
+        GITHUB_CLIENT_ID: ${{ secrets.GH_CLIENT_ID }}
+        GITHUB_CLIENT_SECRET: ${{ secrets.GH_CLIENT_SECRET }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+        GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
 
     - name: Coveralls Scan
       uses: coverallsapp/github-action@master

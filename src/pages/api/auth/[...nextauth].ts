@@ -3,7 +3,7 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
-import AuthService from '@/services/AuthService';
+import UserService from '@/services/UserService';
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -31,15 +31,15 @@ export const authOptions: NextAuthOptions = {
       },
     }),
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID || '',
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
     GitHubProvider({
-      clientId: process.env.GITHUB_CLIENT_ID || '',
-      clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
+      clientId: process.env.GITHUB_CLIENT_ID as string,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET || '',
+  secret: process.env.NEXTAUTH_SECRET as string,
   pages: {
     signIn: '/auth/login',
     error: '/auth/login',
@@ -48,12 +48,10 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account }) {
       if (account?.provider !== 'credentials') {
         try {
-          await AuthService.register('/auth/register', {
-            arg: {
-              email: user.email,
-              username: user.name,
-              image: user.image,
-            },
+          await UserService.register('/auth/register', {
+            email: user.email,
+            username: user.name,
+            image: user.image,
           });
         } catch (err: any) {
           const error = err.toString();
@@ -64,9 +62,26 @@ export const authOptions: NextAuthOptions = {
     },
     async jwt({ token, user, account }) {
       if (account) {
-        token.accessToken = user?.accessToken;
+        if (account.provider === 'credentials') {
+          token.accessToken = user?.accessToken;
+        } else if (account.provider === 'github') {
+          token.accessToken = account.access_token;
+        } else if (account.provider === 'google') {
+          token.accessToken = account.id_token;
+        }
+        token.provider = account.provider;
       }
       return token;
+    },
+    async session({ token, session }) {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      const { accessToken, ...user } = session.user;
+      session.user = {
+        ...user,
+        accessToken: token.accessToken as string,
+        provider: token.provider as string,
+      };
+      return session;
     },
   },
 };

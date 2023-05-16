@@ -1,5 +1,5 @@
 # Chefier
-## TFG 2022/23 - Marc Carbonell
+## TFG 2022/23 - Marc Carbonell González de Chaves
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 

@@ -1,0 +1,207 @@
+.recipe__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 16.875rem;
+  width: 11.25rem;
+  padding-top: 0;
+  margin: 0;
+  position: relative;
+  background-color: var(--nextui-colors-primary200);
+  overflow: hidden;
+}
+
+.recipe__container:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+.image__overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 65%,
+    var(--nextui-colors-primary200)
+  );
+}
+
+.checked__save__button {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  bottom: 0.35rem;
+  right: 3.25rem;
+  color: var(--nextui-colors-yellow600);
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.checked__save__button:hover {
+  cursor: pointer;
+  color: var(--nextui-colors-yellow700);
+}
+
+.unchecked__save__button {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  bottom: 0.35rem;
+  right: 3.25rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.unchecked__save__button:hover {
+  cursor: pointer;
+  color: #dbdbdb;
+}
+
+.disabled__save__button {
+  position: absolute;
+  width: 0.9rem;
+  height: 0.9rem;
+  bottom: 0.35rem;
+  right: 3.25rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.saved__count {
+  position: absolute;
+  bottom: 0;
+  right: 2.5rem;
+  font-size: var(--nextui-fontSizes-sm);
+  font-weight: var(--nextui-fontWeights-bold);
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  text-shadow: 1px 1px 2px var(--nextui-colors-gray600);
+}
+
+.checked__like__button {
+  position: absolute;
+  width: 0.85rem;
+  height: 0.85rem;
+  bottom: 0.35rem;
+  right: 1.25rem;
+  color: var(--nextui-colors-red600);
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.checked__like__button:hover {
+  cursor: pointer;
+  color: var(--nextui-colors-red700);
+}
+
+.unchecked__like__button {
+  position: absolute;
+  width: 0.85rem;
+  height: 0.85rem;
+  bottom: 0.35rem;
+  right: 1.25rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.unchecked__like__button:hover {
+  cursor: pointer;
+  color: #dbdbdb;
+}
+
+.disabled__like__button {
+  position: absolute;
+  width: 0.85rem;
+  height: 0.85rem;
+  bottom: 0.35rem;
+  right: 1.25rem;
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  filter: drop-shadow(1px 1px 2px var(--nextui-colors-gray600));
+}
+
+.likes__count {
+  position: absolute;
+  bottom: 0;
+  right: 0.5rem;
+  font-size: var(--nextui-fontSizes-sm);
+  font-weight: var(--nextui-fontWeights-bold);
+  color: #ecedee;
+  z-index: var(--nextui-zIndices-1);
+  text-shadow: 1px 1px 2px var(--nextui-colors-gray600);
+}
+
+.recipe__data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.image__container {
+  height: 11.25rem;
+  width: 11.25rem;
+  position: relative;
+}
+
+.image {
+  object-fit: cover;
+  border-top-right-radius: var(--nextui-radii-sm);
+  border-top-left-radius: var(--nextui-radii-sm);
+}
+
+.info {
+  padding: var(--nextui-space-5);
+}
+
+.divider {
+  border-left: var(--nextui-borderWeights-light) solid
+    var(--nextui-colors-secondary600);
+  height: 1.25rem;
+}
+
+.name {
+  font-size: var(--nextui-fontSizes-md);
+  font-weight: var(--nextui-fontWeights-medium);
+  color: var(--nextui-colors-secondary600);
+  padding: var(--nextui-space-5);
+  padding-bottom: 0;
+}
+
+.stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--nextui-space-5);
+}
+
+.valoration {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--nextui-space-3);
+  width: 2.25rem;
+  text-align: center;
+}
+
+.star {
+  color: var(--nextui-colors-yellow600);
+  height: 0.938rem;
+}
+
+.time {
+  width: 2.25rem;
+  text-align: center;
+}
+
+.difficulty {
+  width: 2.25rem;
+  text-align: center;
+}

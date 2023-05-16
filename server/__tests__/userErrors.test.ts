@@ -9,20 +9,6 @@ const server = app.listen();
 
 beforeAll(async () => {
   await User.deleteMany();
-  const user = new User({
-    username: 'user',
-    email: 'user@test.com',
-    password: 'Password1',
-  });
-  await user.save();
-});
-
-vi.spyOn(User, 'create').mockImplementation(() => {
-  throw new Error('Error');
-});
-
-vi.spyOn(User, 'findOne').mockImplementation(() => {
-  throw new Error('Error');
 });
 
 const accessToken = jwt.sign({ id: '1234' }, process.env.JWT_SECRET as string, {
@@ -30,6 +16,24 @@ const accessToken = jwt.sign({ id: '1234' }, process.env.JWT_SECRET as string, {
 });
 
 describe('User router server errors', (): void => {
+  vi.spyOn(User, 'create').mockImplementation(() => {
+    throw new Error('Error');
+  });
+
+  vi.spyOn(User, 'findOne').mockImplementation(() => {
+    throw new Error('Error');
+  });
+
+  vi.mock('imagekit', async () => {
+    return {
+      default: vi.fn().mockImplementation(() => ({
+        default: () => ({
+          deleteFile: () => ({}),
+        }),
+      })),
+    };
+  });
+
   describe('Register', (): void => {
     it('should return 500 if an error occurs when triying to register a user', async () => {
       await request(server)

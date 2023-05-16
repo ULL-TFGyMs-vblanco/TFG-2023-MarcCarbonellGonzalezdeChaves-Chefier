@@ -9,10 +9,31 @@ import {
 import Register from '../src/pages/auth/register';
 import axios from '../axios_config';
 import Login from '../src/pages/auth/login';
-import AuthService from '../src/services/AuthService';
+import UserService from '../src/services/UserService';
+import { MockImageProps } from '../src/types/test';
 
 describe('Error modal', (): void => {
   afterEach(cleanup);
+
+  vi.mock('next/image', async () => {
+    return {
+      default: () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        function Image({ src, alt, width, height, style }: MockImageProps) {
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt}
+              width={width}
+              height={height}
+              style={style}
+            />
+          );
+        }
+      },
+    };
+  });
 
   vi.mock('next/router', async () => {
     return {
@@ -29,7 +50,7 @@ describe('Error modal', (): void => {
     throw new Error('error');
   });
 
-  const spy2 = vi.spyOn(AuthService, 'login').mockImplementation(async () => {
+  const spy2 = vi.spyOn(UserService, 'login').mockImplementation(async () => {
     throw new Error('error');
   });
 
@@ -56,14 +77,14 @@ describe('Error modal', (): void => {
       password: 'Password1',
     });
     await waitFor(() => expect(screen.getByTestId('modal')).toBeDefined());
-    screen.getByText('ERROR');
-    const close = screen.getByText('Close');
+    screen.getByText('Error');
+    const close = screen.getByText('Aceptar');
     fireEvent.click(close);
     const button = document.getElementsByClassName('nextui-modal-close-icon');
     expect(button).toHaveLength(1);
     fireEvent.click(button[0]);
     await waitFor(() => expect(screen.queryByTestId('modal')).toBeNull());
-    expect(screen.queryByText('ERROR')).toBeNull();
+    expect(screen.queryByText('Error')).toBeNull();
   });
 
   it('should show the error modal when login gives an error', async (): Promise<void> => {
@@ -83,13 +104,13 @@ describe('Error modal', (): void => {
       password: 'Password1',
     });
     await waitFor(() => expect(screen.getByTestId('modal')).toBeDefined());
-    screen.getByText('ERROR');
-    const close = screen.getByText('Close');
+    screen.getByText('Error');
+    const close = screen.getByText('Aceptar');
     fireEvent.click(close);
     const button = document.getElementsByClassName('nextui-modal-close-icon');
     expect(button).toHaveLength(1);
     fireEvent.click(button[0]);
     await waitFor(() => expect(screen.queryByTestId('modal')).toBeNull());
-    expect(screen.queryByText('ERROR')).toBeNull();
+    expect(screen.queryByText('Error')).toBeNull();
   });
 });

@@ -1,21 +1,19 @@
 import { LoginForm } from '../../components/auth/LoginForm';
-import styles from 'src/styles/auth/Auth.module.css';
-import AuthService from '../../services/AuthService';
+import UserService from '../../services/UserService';
 import { SignInOptions } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { CustomModal } from '../../components/ui/CustomModal';
 import { useRouter } from 'next/router';
 
 const Login: React.FC = () => {
-  const [error, setError] = useState<string | string[]>();
-
   const router = useRouter();
   const [visible, setVisible] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (router.query.error !== undefined) {
-      setError(router.query.error);
-      setVisible(router.query.error !== undefined);
+      setError(router.query.error as string);
+      setVisible(true);
     } else {
       setVisible(false);
     }
@@ -23,7 +21,7 @@ const Login: React.FC = () => {
 
   const loginHandler = async (provider: string, data: SignInOptions) => {
     try {
-      await AuthService.login(provider, data);
+      await UserService.login(provider, data);
     } catch (error) {
       const errorMessage = (error as Error).toString();
       setError(errorMessage);
@@ -31,20 +29,22 @@ const Login: React.FC = () => {
   };
 
   const closeModalHandler = async () => {
-    router.push('/auth/login');
+    await router.push('/auth/login');
   };
 
   return (
-    <div className={styles.container}>
+    <div>
       <LoginForm onLogin={loginHandler} />
       <CustomModal
         type='error'
-        title='ERROR'
+        title='Error'
         visible={visible}
         handler={setVisible}
         onClose={closeModalHandler}
       >
-        {`Error: ${error}`}
+        {error === 'sessionExpired'
+          ? `Tu sesión ha expirado. Por favor, inicia sesión de nuevo.`
+          : `Oops! Ha ocurrido un error al iniciar sesión. Inténtalo de nuevo más tarde.`}
       </CustomModal>
     </div>
   );

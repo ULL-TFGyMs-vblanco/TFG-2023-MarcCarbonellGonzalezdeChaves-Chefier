@@ -1,4 +1,18 @@
 .card {
-  box-shadow: 0 2px 5px gray;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100px;
+  margin: var(--nextui-space-15) auto;
+  box-shadow: var(--nextui-shadows-cardShadow);
+  border-radius: var(--nextui-radii-sm);
+  background-color: var(--nextui-colors-primary100);
+}
+
+@media screen and (width < 650px) {
+  .card {
+    box-shadow: none;
+    background-color: transparent;
+  }
 }

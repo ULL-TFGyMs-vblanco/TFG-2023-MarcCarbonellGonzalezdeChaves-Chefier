@@ -5,33 +5,58 @@ interface AvatarProps {
   source: string;
   size: number;
   username: string;
-  style?: string;
+  className?: string;
   testid?: string;
-  link: string;
+  link?: string;
 }
 
 export const Avatar: React.FC<AvatarProps> = ({
   source,
   size,
   username,
-  style,
+  className,
   testid,
   link,
 }) => {
   return (
-    <Link
-      className={style}
-      href={link}
-      data-testid={testid}
-      style={{ borderRadius: '50%', display: 'block' }}
-    >
-      <Image
-        src={source}
-        alt={`${username} avatar`}
-        width={size}
-        height={size}
-        style={{ borderRadius: '50%', display: 'block' }}
-      />
-    </Link>
+    <>
+      {link ? (
+        <Link
+          className={className}
+          href={link}
+          data-testid={testid}
+          style={{
+            borderRadius: '50%',
+            display: 'block',
+            minWidth: `${size}px`,
+          }}
+        >
+          <Image
+            src={source}
+            alt={`${username} avatar`}
+            width={size}
+            height={size}
+            style={{
+              borderRadius: '50%',
+              display: 'block',
+              objectFit: 'cover',
+            }}
+          />
+        </Link>
+      ) : (
+        <Image
+          src={source}
+          alt={`${username} avatar`}
+          width={size}
+          height={size}
+          style={{
+            borderRadius: '50%',
+            display: 'block',
+            objectFit: 'cover',
+            minWidth: `${size}px`,
+          }}
+        />
+      )}
+    </>
   );
 };

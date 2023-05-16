@@ -1,0 +1,238 @@
+.form__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: var(--nextui-space-15) var(--nextui-space-19);
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-bottom: var(--nextui-space-9);
+}
+
+.post__button {
+  width: 10rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nextui-space-7);
+  width: 100%;
+}
+
+.top__form__section {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: var(--nextui-space-15);
+}
+
+@media screen and (width < 650px) {
+  .top__form__section {
+    flex-wrap: wrap-reverse;
+    flex-direction: column-reverse;
+    gap: var(--nextui-space-7);
+  }
+}
+
+.bottom__form__section {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  width: 100%;
+  gap: var(--nextui-space-15);
+}
+
+@media screen and (width < 650px) {
+  .bottom__form__section {
+    flex-direction: column;
+    gap: var(--nextui-space-7);
+  }
+}
+
+.left__subsection {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nextui-space-7);
+}
+
+.right__subsection {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nextui-space-7);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nextui-space-4);
+  width: 100%;
+}
+
+.input__style {
+  font-size: var(--nextui-fontSizes-sm);
+  box-sizing: border-box;
+  width: 100%;
+  height: 3rem;
+  padding: var(--nextui-space-6);
+  border-radius: var(--nextui-radii-xs);
+  border: var(--nextui-borderWeights-light) solid
+    var(--nextui-colors-primary400);
+  background-color: var(--nextui-colors-primary100);
+}
+
+.tags__container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nextui-space-4);
+}
+
+.tag__checkbox {
+  display: none;
+}
+
+.tag__checked {
+  width: min-content;
+  padding: 0 var(--nextui-space-4);
+  border-radius: var(--nextui-radii-sm);
+  background-color: var(--nextui-colors-accent100);
+  color: white;
+  user-select: none;
+}
+
+.tag__checked:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-gray700);
+}
+
+.tag__not__checked {
+  width: min-content;
+  padding: 0 var(--nextui-space-4);
+  border-radius: var(--nextui-radii-sm);
+  background-color: var(--nextui-colors-gray700);
+  color: white;
+  user-select: none;
+}
+
+.tag__not__checked:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-accent100);
+}
+
+.image__input {
+  display: none;
+}
+
+.image__input:hover {
+  cursor: pointer;
+}
+
+.image__input__button {
+  width: 100%;
+  height: 300px;
+  background-image: url('/images/add_image.jpg');
+  background-size: cover;
+  background-position: center center;
+  border-radius: var(--nextui-radii-sm);
+}
+
+.image__input__button:hover {
+  cursor: pointer;
+}
+
+.image__container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  border-radius: var(--nextui-radii-sm);
+  overflow: hidden;
+}
+
+.remove__image__button {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  bottom: 0.6rem;
+  right: 0.75rem;
+  background-color: var(--nextui-colors-red600);
+  border: none;
+  border-radius: var(--nextui-radii-sm);
+  padding: 0;
+}
+
+.remove__image__button:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-red700);
+}
+
+.stats {
+  display: flex;
+  gap: var(--nextui-space-4);
+  width: 100%;
+}
+
+.ingredients__array {
+  display: flex;
+  gap: var(--nextui-space-4);
+}
+
+.instructions__array {
+  display: flex;
+  gap: var(--nextui-space-4);
+}
+
+.add__button {
+  height: 1.5rem;
+  width: 1.5rem;
+  background-color: var(--nextui-colors-green600);
+  padding: 0;
+}
+
+.add__button:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-green800);
+}
+
+.remove__button {
+  height: 3rem;
+  width: 1.25rem;
+  background-color: var(--nextui-colors-gray700);
+  padding: 0;
+}
+
+.remove__button:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-gray800);
+}
+
+.errors {
+  display: flex;
+  width: 100%;
+  padding-bottom: var(--nextui-space-4);
+}
+
+.error__msg {
+  color: var(--nextui-colors-red600);
+  font-size: var(--nextui-fontSizes-xs);
+  margin: 0;
+}

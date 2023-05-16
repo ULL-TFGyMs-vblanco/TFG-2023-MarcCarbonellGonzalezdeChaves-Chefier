@@ -8,13 +8,35 @@ import {
 } from '@testing-library/react';
 import { LoginForm } from '../src/components/auth/LoginForm';
 import { SignInOptions } from 'next-auth/react';
+import { MockImageProps } from '../src/types/test';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mockLogin = vi.fn((provider: string, data: SignInOptions) => {
-  return Promise.resolve(data);
+  return Promise.resolve();
 });
 
 describe('Login form', (): void => {
   afterEach(cleanup);
+
+  vi.mock('next/image', async () => {
+    return {
+      default: () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        function Image({ src, alt, width, height, style }: MockImageProps) {
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt}
+              width={width}
+              height={height}
+              style={style}
+            />
+          );
+        }
+      },
+    };
+  });
 
   it('should render', (): void => {
     render(<LoginForm onLogin={mockLogin} />);
@@ -27,7 +49,7 @@ describe('Login form', (): void => {
   it('should render title', (): void => {
     render(<LoginForm onLogin={mockLogin} />);
 
-    screen.getByText('Log In');
+    screen.getByText('Inicia sesión en Chefier');
   });
   it('should render form', (): void => {
     render(<LoginForm onLogin={mockLogin} />);
@@ -39,14 +61,14 @@ describe('Login form', (): void => {
 
     const fields = screen.getAllByTestId('form-field');
     expect(fields.length).toBe(2);
-    screen.getByText('Email');
-    screen.getByText('Password');
+    screen.getByText('Correo electrónico');
+    screen.getByText('Contraseña');
   });
   it('should render form checkbox', (): void => {
     render(<LoginForm onLogin={mockLogin} />);
 
     screen.getByTestId('form-checkbox');
-    screen.getByText('show password');
+    screen.getByText('mostrar contraseña');
   });
   it('should show password when clicking checkbox', (): void => {
     render(<LoginForm onLogin={mockLogin} />);
@@ -63,7 +85,7 @@ describe('Login form', (): void => {
     render(<LoginForm onLogin={mockLogin} />);
 
     screen.getByTestId('submit-button');
-    screen.getByText('Log in');
+    screen.getByText('Iniciar sesión');
   });
   it('should call submit handler with field values when clicking submit button', async () => {
     render(<LoginForm onLogin={mockLogin} />);

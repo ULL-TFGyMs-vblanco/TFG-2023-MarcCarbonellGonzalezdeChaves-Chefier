@@ -12,26 +12,35 @@ exports.RecipeSchema = new mongoose_1.Schema({
         required: true,
         trim: true,
         validate: (value) => {
-            if (!validator_1.default.isAlphanumeric(value)) {
-                throw new Error('Name must be alphanumeric');
-            }
-            if (!validator_1.default.isLength(value, { max: 20 })) {
-                throw new Error('Name must have a maximum of 20 characters');
+            if (!validator_1.default.isLength(value, { max: 50 })) {
+                throw new Error('Name must have a maximum of 50 characters');
             }
         },
     },
-    username: {
-        type: String,
+    user: {
+        type: { name: String, image: String, id: String },
+        required: true,
+    },
+    image: {
+        type: {
+            url: String,
+            fileId: String,
+        },
         required: true,
         trim: true,
+        validate: (value) => {
+            if (!validator_1.default.isURL(value.url)) {
+                throw new Error('Image must be a valid URL');
+            }
+        },
     },
     description: {
         type: String,
         required: true,
         trim: true,
         validate: (value) => {
-            if (!validator_1.default.isLength(value, { max: 100 })) {
-                throw new Error('Description have a maximum of 100 characters');
+            if (!validator_1.default.isLength(value, { max: 200 })) {
+                throw new Error('Description have a maximum of 200 characters');
             }
         },
     },
@@ -41,24 +50,27 @@ exports.RecipeSchema = new mongoose_1.Schema({
         default: Date.now,
     },
     tags: {
-        type: [String],
-        trim: true,
-        validate: (value) => {
-            value.forEach((tag) => {
-                const hashtag = RegExp(/^#/);
-                if (!hashtag.test(tag)) {
-                    throw new Error('Tags must begin with #');
-                }
-            });
+        type: {
+            breakfast: Boolean,
+            lunch: Boolean,
+            dinner: Boolean,
+            dessert: Boolean,
+            snack: Boolean,
         },
-        default: [],
+        default: {
+            breakfast: false,
+            lunch: false,
+            dinner: false,
+            dessert: false,
+            snack: false,
+        },
     },
     difficulty: {
         type: String,
         required: true,
         trim: true,
         validate: (value) => {
-            if (!validator_1.default.isIn(value, ['Easy', 'Medium', 'Hard'])) {
+            if (!validator_1.default.isIn(value, ['Fácil', 'Media', 'Difícil'])) {
                 throw new Error('Difficulty must be Easy, Medium or Hard');
             }
         },
@@ -72,27 +84,39 @@ exports.RecipeSchema = new mongoose_1.Schema({
             }
         },
     },
+    rations: {
+        type: Number,
+        required: true,
+        validate: (value) => {
+            if (value <= 0) {
+                throw new Error('Rations must be positive');
+            }
+        },
+    },
     ingredients: {
         type: [{ name: String, quantity: Number, unit: String }],
         required: true,
         validate: (value) => {
             value.forEach((ingredient) => {
-                if (!validator_1.default.isAlphanumeric(ingredient.name)) {
-                    throw new Error('Name must be alphanumeric');
+                if (!validator_1.default.isLength(ingredient.name, { max: 50 })) {
+                    throw new Error('Ingredient name must have a maximum of 50 characters');
                 }
-                if (ingredient.quantity < 0) {
+                if (ingredient.quantity <= 0) {
                     throw new Error('Ingredient quantity must be positive');
+                }
+                if (!validator_1.default.isLength(ingredient.unit, { max: 20 })) {
+                    throw new Error('Ingredient unit must have a maximum of 20 characters');
                 }
             });
         },
     },
     instructions: {
-        type: [String],
+        type: [{ step: String }],
         required: true,
         validate: (value) => {
             value.forEach((instruction) => {
-                if (!validator_1.default.isLength(instruction, { max: 100 })) {
-                    throw new Error('Instruction have a maximum of 100 characters');
+                if (!validator_1.default.isLength(instruction.step, { max: 200 })) {
+                    throw new Error('Instruction have a maximum of 200 characters');
                 }
             });
         },
@@ -100,34 +124,61 @@ exports.RecipeSchema = new mongoose_1.Schema({
     valorations: {
         type: [
             {
-                username: String,
-                comment: String,
-                valoration: Number,
-                date: Date,
-                comments: [{ username: String, comment: String, date: Date }],
+                user: {
+                    id: String,
+                    name: String,
+                    image: String,
+                },
+                comment: {
+                    type: String,
+                    required: false,
+                },
+                title: String,
+                rating: Number,
+                date: {
+                    type: Date,
+                    default: Date.now(),
+                },
             },
         ],
         validate: (value) => {
             value.forEach((valoration) => {
-                if (!validator_1.default.isLength(valoration.comment, { max: 100 })) {
+                if (valoration.comment &&
+                    !validator_1.default.isLength(valoration.comment, { max: 100 })) {
                     throw new Error('Valoration comment have a maximum of 100 characters');
                 }
                 if (!validator_1.default.isIn(valoration.rating.toString(), [
+                    '0',
+                    '0.5',
                     '1',
+                    '1.5',
                     '2',
+                    '2.5',
                     '3',
+                    '3.5',
                     '4',
+                    '4.5',
                     '5',
                 ])) {
                     throw new Error('Valoration must be between 1 and 5');
                 }
-                valoration.comments.forEach((comment) => {
-                    if (!validator_1.default.isLength(comment.comment, { max: 100 })) {
-                        throw new Error('Comment have a maximum of 100 characters');
-                    }
-                });
             });
         },
+        default: [],
+    },
+    averageRating: {
+        type: Number,
+        default: function () {
+            const average = this.valorations.reduce((acc, valoration) => acc + valoration.rating, 0) / this.valorations.length;
+            return isNaN(average) ? 0 : average;
+        },
+    },
+    likes: {
+        type: [String],
+        default: [],
+    },
+    saved: {
+        type: [String],
         default: [],
     },
 });

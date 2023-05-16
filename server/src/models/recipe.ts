@@ -3,29 +3,46 @@ import validator from 'validator';
 
 export interface RecipeDocumentInterface extends Document {
   name: string;
-  username: string;
+  user: {
+    id: string;
+    name: string;
+    image: string;
+  };
+  image: {
+    url: string;
+    fileId: string;
+  };
   description: string;
   date: Date;
-  tags: [string];
-  difficulty: string;
+  tags: {
+    breakfast: boolean;
+    lunch: boolean;
+    dinner: boolean;
+    dessert: boolean;
+    snack: boolean;
+    drink: boolean;
+  };
+  difficulty: 'Fácil' | 'Media' | 'Difícil';
   cookTime: number;
+  rations: number;
   ingredients: [{ name: string; quantity: number; unit: string }];
-  instructions: [string];
+  instructions: [{ step: string }];
   valorations: [
     {
-      username: string;
-      comment: string;
+      user: {
+        id: string;
+        name: string;
+        image: string;
+      };
+      title: string;
+      comment?: string;
       rating: number;
       date: Date;
-      comments: [
-        {
-          username: string;
-          comment: string;
-          date: Date;
-        }
-      ];
     }
   ];
+  averageRating: number;
+  likes: [string];
+  saved: [string];
 }
 
 export const RecipeSchema = new Schema<RecipeDocumentInterface>({
@@ -34,26 +51,35 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     required: true,
     trim: true,
     validate: (value: string) => {
-      if (!validator.isAlphanumeric(value)) {
-        throw new Error('Name must be alphanumeric');
-      }
-      if (!validator.isLength(value, { max: 20 })) {
-        throw new Error('Name must have a maximum of 20 characters');
+      if (!validator.isLength(value, { max: 50 })) {
+        throw new Error('Name must have a maximum of 50 characters');
       }
     },
   },
-  username: {
-    type: String,
+  user: {
+    type: { name: String, image: String, id: String },
+    required: true,
+  },
+  image: {
+    type: {
+      url: String,
+      fileId: String,
+    },
     required: true,
     trim: true,
+    validate: (value: { url: string; fileId: string }) => {
+      if (!validator.isURL(value.url)) {
+        throw new Error('Image must be a valid URL');
+      }
+    },
   },
   description: {
     type: String,
     required: true,
     trim: true,
     validate: (value: string) => {
-      if (!validator.isLength(value, { max: 100 })) {
-        throw new Error('Description have a maximum of 100 characters');
+      if (!validator.isLength(value, { max: 200 })) {
+        throw new Error('Description have a maximum of 200 characters');
       }
     },
   },
@@ -63,24 +89,27 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     default: Date.now,
   },
   tags: {
-    type: [String],
-    trim: true,
-    validate: (value: [string]) => {
-      value.forEach((tag) => {
-        const hashtag = RegExp(/^#/);
-        if (!hashtag.test(tag)) {
-          throw new Error('Tags must begin with #');
-        }
-      });
+    type: {
+      breakfast: Boolean,
+      lunch: Boolean,
+      dinner: Boolean,
+      dessert: Boolean,
+      snack: Boolean,
     },
-    default: [],
+    default: {
+      breakfast: false,
+      lunch: false,
+      dinner: false,
+      dessert: false,
+      snack: false,
+    },
   },
   difficulty: {
     type: String,
     required: true,
     trim: true,
     validate: (value: string) => {
-      if (!validator.isIn(value, ['Easy', 'Medium', 'Hard'])) {
+      if (!validator.isIn(value, ['Fácil', 'Media', 'Difícil'])) {
         throw new Error('Difficulty must be Easy, Medium or Hard');
       }
     },
@@ -94,27 +123,43 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
       }
     },
   },
+  rations: {
+    type: Number,
+    required: true,
+    validate: (value: number) => {
+      if (value <= 0) {
+        throw new Error('Rations must be positive');
+      }
+    },
+  },
   ingredients: {
     type: [{ name: String, quantity: Number, unit: String }],
     required: true,
     validate: (value: [{ name: string; quantity: number; unit: string }]) => {
       value.forEach((ingredient) => {
-        if (!validator.isAlphanumeric(ingredient.name)) {
-          throw new Error('Name must be alphanumeric');
+        if (!validator.isLength(ingredient.name, { max: 50 })) {
+          throw new Error(
+            'Ingredient name must have a maximum of 50 characters'
+          );
         }
-        if (ingredient.quantity < 0) {
+        if (ingredient.quantity <= 0) {
           throw new Error('Ingredient quantity must be positive');
+        }
+        if (!validator.isLength(ingredient.unit, { max: 20 })) {
+          throw new Error(
+            'Ingredient unit must have a maximum of 20 characters'
+          );
         }
       });
     },
   },
   instructions: {
-    type: [String],
+    type: [{ step: String }],
     required: true,
-    validate: (value: [string]) => {
+    validate: (value: [{ step: string }]) => {
       value.forEach((instruction) => {
-        if (!validator.isLength(instruction, { max: 100 })) {
-          throw new Error('Instruction have a maximum of 100 characters');
+        if (!validator.isLength(instruction.step, { max: 200 })) {
+          throw new Error('Instruction have a maximum of 200 characters');
         }
       });
     },
@@ -122,48 +167,84 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
   valorations: {
     type: [
       {
-        username: String,
-        comment: String,
-        valoration: Number,
-        date: Date,
-        comments: [{ username: String, comment: String, date: Date }],
+        user: {
+          id: String,
+          name: String,
+          image: String,
+        },
+        comment: {
+          type: String,
+          required: false,
+        },
+        title: String,
+        rating: Number,
+        date: {
+          type: Date,
+          default: Date.now(),
+        },
       },
     ],
     validate: (
       value: [
         {
-          username: string;
-          comment: string;
+          user: {
+            name: string;
+            image: string;
+          };
+          title: string;
+          comment?: string;
           rating: number;
           date: Date;
-          comments: [{ username: string; comment: string; date: Date }];
         }
       ]
     ) => {
       value.forEach((valoration) => {
-        if (!validator.isLength(valoration.comment, { max: 100 })) {
+        if (
+          valoration.comment &&
+          !validator.isLength(valoration.comment, { max: 100 })
+        ) {
           throw new Error(
             'Valoration comment have a maximum of 100 characters'
           );
         }
         if (
           !validator.isIn(valoration.rating.toString(), [
+            '0',
+            '0.5',
             '1',
+            '1.5',
             '2',
+            '2.5',
             '3',
+            '3.5',
             '4',
+            '4.5',
             '5',
           ])
         ) {
           throw new Error('Valoration must be between 1 and 5');
         }
-        valoration.comments.forEach((comment) => {
-          if (!validator.isLength(comment.comment, { max: 100 })) {
-            throw new Error('Comment have a maximum of 100 characters');
-          }
-        });
       });
     },
+    default: [],
+  },
+  averageRating: {
+    type: Number,
+    default: function (this: RecipeDocumentInterface) {
+      const average =
+        this.valorations.reduce(
+          (acc: number, valoration) => acc + valoration.rating,
+          0
+        ) / this.valorations.length;
+      return isNaN(average) ? 0 : average;
+    },
+  },
+  likes: {
+    type: [String],
+    default: [],
+  },
+  saved: {
+    type: [String],
     default: [],
   },
 });

@@ -1,8 +1,7 @@
 import { describe, it, afterEach, vi } from 'vitest';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { Layout } from '../src/components/layout/Layout';
 import { MockImageProps } from '../src/types/test';
-import useUser from '../src/hooks/useUser';
 
 describe('Layout', (): void => {
   afterEach(cleanup);
@@ -27,9 +26,9 @@ describe('Layout', (): void => {
     };
   });
 
-  vi.mock('../src/hooks/useUser', async () => {
+  vi.mock('../src/hooks/useLoggedUser', async () => {
     return {
-      default: () => ({
+      useLoggedUser: () => ({
         user: {
           name: 'chefier',
           email: 'chefier@chefier.com',
@@ -54,8 +53,23 @@ describe('Layout', (): void => {
     };
   });
 
+  vi.mock('next/router', async () => {
+    return {
+      useRouter: () => ({
+        query: {
+          error: 'error',
+        },
+        push: () => [],
+      }),
+    };
+  });
+
   it('should render', (): void => {
     render(<Layout />);
+  });
+  it('should render in dark theme', (): void => {
+    render(<Layout />);
+    fireEvent.click(screen.getByTestId('theme-button'));
   });
   it('should render children', (): void => {
     render(

@@ -1,0 +1,79 @@
+.valoration {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--nextui-space-4);
+  margin: var(--nextui-space-7) 0;
+}
+
+.valoration__metadata {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.valoration__user {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--nextui-space-3);
+}
+
+.avatar:hover {
+  opacity: 0.8;
+}
+
+.user__name:hover {
+  color: var(--nextui-colors-secondary100);
+}
+
+.valoration__date {
+  font-size: var(--nextui-fontSizes-sm);
+}
+
+.valoration__title {
+  font-size: var(--nextui-fontSizes-md);
+  font-weight: var(--nextui-fontWeights-bold);
+}
+
+.valoration__rating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--nextui-space-1);
+}
+
+.star__active {
+  color: var(--nextui-colors-yellow600);
+}
+
+.star__inactive {
+  color: var(--nextui-colors-gray800);
+}
+
+.delete__button__container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+.delete__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+  width: 8rem;
+  gap: var(--nextui-space-2);
+  background-color: var(--nextui-colors-red600);
+  font-size: var(--nextui-fontSizes-sm);
+  padding: 0;
+}
+
+.delete__button:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-red700);
+}

@@ -47,9 +47,9 @@ describe('Navbar', (): void => {
     };
   });
 
-  vi.mock('../src/hooks/useUser', async () => {
+  vi.mock('../src/hooks/useLoggedUser', async () => {
     return {
-      default: () => ({
+      useLoggedUser: () => ({
         user: {
           name: 'chefier',
           email: 'chefier@chefier.com',
@@ -62,14 +62,25 @@ describe('Navbar', (): void => {
     };
   });
 
+  vi.mock('next/router', async () => {
+    return {
+      useRouter: () => ({
+        query: {
+          error: 'error',
+        },
+        push: () => [],
+      }),
+    };
+  });
+
   describe('Bar', (): void => {
     it('should render navigation links', (): void => {
       render(<Navbar />);
 
       const navLinks = screen.getAllByTestId('navigation-link');
       expect(navLinks.length).toBe(2);
-      screen.getByText('Recipes');
-      screen.getByText('New Recipe');
+      screen.getByText('Nueva Receta');
+      screen.getByText('Siguiendo');
     });
     it('should render avatar', (): void => {
       render(<Navbar />);
@@ -100,14 +111,14 @@ describe('Navbar', (): void => {
       fireEvent.click(toggleButton);
       const navLinks = screen.getAllByTestId('toggle-navigation-link');
       expect(navLinks.length).toBe(2);
-      expect(screen.getAllByText('Recipes').length).toBe(2);
-      expect(screen.getAllByText('New Recipe').length).toBe(2);
+      expect(screen.getAllByText('Nueva Receta').length).toBe(2);
+      expect(screen.getAllByText('Siguiendo').length).toBe(2);
     });
     it('should render log out button', (): void => {
       render(<Navbar />);
 
       screen.getByTestId('logout-button');
-      screen.getByText('Log out');
+      screen.getByText('Cerrar sesión');
       fireEvent.click(screen.getByTestId('logout-button'));
     });
   });

@@ -1,13 +1,5 @@
 .form__card {
-  width: 400px;
-  border-radius: 0;
-  margin: 2rem auto;
-}
-
-@media screen and (width < 650px) {
-  .form__card {
-    box-shadow: none;
-  }
+  max-width: 25rem;
 }
 
 .form__container {
@@ -15,12 +7,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 10% 15%;
+  width: 100%;
+  padding: var(--nextui-space-15) var(--nextui-space-19);
 }
 
 .title {
   margin: 0;
-  margin-bottom: 1rem;
+  margin-bottom: var(--nextui-space-9);
 }
 
 .form {
@@ -28,45 +21,45 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
+  gap: var(--nextui-space-7);
   width: 100%;
 }
 
-.separator {
+.divider {
   position: relative;
   width: 100%;
   display: block;
   text-align: center;
-  margin: 0.75rem auto;
-  border-top: 1px solid lightgray;
+  margin: var(--nextui-space-7) auto;
+  border-top: var(--nextui-borderWeights-light) solid
+    var(--nextui-colors-border);
 }
 
-.separator__text {
+.divider__text {
   position: absolute;
-  top: -0.85rem;
+  top: -0.8rem;
   left: 46.15%;
   right: 46.15%;
-  z-index: 1;
-  background-color: white;
-  padding: 4px;
-  font-size: 0.85rem;
-}
-
-.divider {
-  border-top: 1px solid lightgray;
-  width: 100%;
+  background-color: var(--nextui-colors-primary100);
+  padding: 0 var(--nextui-space-2);
+  font-size: var(--nextui-fontSizes-sm);
 }
 
 .session__msg {
-  font-size: 0.75rem;
+  font-size: var(--nextui-fontSizes-xs);
   margin: 0;
-  margin-top: 1rem;
+  margin-top: var(--nextui-space-9);
   text-align: center;
 }
 
 .session__link {
   text-decoration: none;
-  font-weight: bold;
+  font-weight: var(--nextui-fontWeights-bold);
+  color: var(--nextui-colors-secondary600);
+}
+
+.session__link:hover {
+  color: var(--nextui-colors-secondary100);
 }
 
 /* FIELD */
@@ -75,7 +68,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: var(--nextui-space-4);
   width: 100%;
 }
 
@@ -85,7 +78,7 @@
   bottom: 0;
   left: 0;
   right: 0;
-  border: 3px solid transparent;
+  border: var(--nextui-borderWeights-bold) solid transparent;
   background-color: transparent;
   display: flex;
   align-items: center;
@@ -96,36 +89,50 @@
   transform: translate(0);
   transition: transform 0.15s ease-out, font-size 0.15s ease-out,
     background-color 0.2s ease-out, color 0.15s ease-out;
-  font-size: 0.9rem;
-  margin-left: 0.25rem;
-  padding: 0 0.25rem;
+  font-size: var(--nextui-fontSizes-sm);
+  margin-left: var(--nextui-space-2);
+  padding: 0 var(--nextui-space-2);
   background-color: transparent;
-  color: #5a515a;
+  color: var(--nextui-colors-secondary600);
 }
 
-.text__input {
-  font-size: 0.9rem;
-  font-family: var(--font-family);
+.input__style {
+  font-size: var(--nextui-fontSizes-sm);
   box-sizing: border-box;
   width: 100%;
-  padding: 0.7rem;
-  border-radius: 0.25rem;
-  border: 1px solid #cdcdcd;
+  height: 3rem;
+  padding: var(--nextui-space-6);
+  border-radius: var(--nextui-radii-xs);
+  border: var(--nextui-borderWeights-light) solid
+    var(--nextui-colors-primary400);
+  background-color: var(--nextui-colors-primary100);
 }
 
-.text__input:focus + .field__label .label__text,
-:not(.text__input[value='']) + .field__label .label__text {
-  background-color: white;
-  font-size: 0.75rem;
-  color: black;
-  transform: translate(0, -140%);
+.input__style:focus + .field__label .label__text,
+:not(.input__style[value='']) + .field__label .label__text {
+  background-color: var(--nextui-colors-primary100);
+  font-size: var(--nextui-fontSizes-xs);
+  color: var(--nextui-colors-secondary600);
+  transform: translate(0, -135%);
 }
 
 /* CHECKBOX */
 
-.checkbox__container {
+.show__password {
+  display: flex;
+  align-items: center;
   align-self: flex-start;
-  font-size: 0.75rem;
+  font-size: var(--nextui-fontSizes-xs);
+  gap: var(--nextui-space-2);
+}
+
+.checkbox__text {
+  color: var(--nextui-colors-secondary600);
+}
+
+.checkbox__container {
+  padding-top: 0;
+  padding-bottom: var(--nextui-space-1);
 }
 
 .checkbox {
@@ -135,18 +142,22 @@
 .errors {
   display: flex;
   width: 100%;
-  padding-bottom: 0.5rem;
+  padding-bottom: var(--nextui-space-4);
 }
 
 .error__msg {
-  color: red;
-  font-size: 0.75rem;
+  color: var(--nextui-colors-red600);
+  font-size: var(--nextui-fontSizes-xs);
   margin: 0;
 }
 
 .show__more {
-  color: blue;
+  color: var(--nextui-colors-blue600);
   cursor: pointer;
+}
+
+.show__more:hover {
+  color: var(--nextui-colors-blue500);
 }
 
 /* BUTTONS */

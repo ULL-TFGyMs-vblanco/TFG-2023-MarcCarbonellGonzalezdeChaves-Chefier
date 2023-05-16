@@ -8,17 +8,39 @@ import {
 } from '@testing-library/react';
 import { RegisterForm } from '../src/components/auth/RegisterForm';
 import { SignInOptions } from 'next-auth/react';
+import { MockImageProps } from '../src/types/test';
 
 const mockRegister = vi.fn(() => {
   return Promise.resolve(true);
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mockLogin = vi.fn((provider: string, data: SignInOptions) => {
-  return Promise.resolve(data);
+  return Promise.resolve();
 });
 
 describe('Register form', (): void => {
   afterEach(cleanup);
+
+  vi.mock('next/image', async () => {
+    return {
+      default: () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        function Image({ src, alt, width, height, style }: MockImageProps) {
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt}
+              width={width}
+              height={height}
+              style={style}
+            />
+          );
+        }
+      },
+    };
+  });
 
   it('should render', (): void => {
     render(
@@ -49,7 +71,7 @@ describe('Register form', (): void => {
       />
     );
 
-    screen.getByText('Register');
+    screen.getByText('Únete a Chefier');
   });
   it('should render form', (): void => {
     render(
@@ -73,10 +95,10 @@ describe('Register form', (): void => {
 
     const fields = screen.getAllByTestId('form-field');
     expect(fields.length).toBe(4);
-    screen.getByText('Username');
-    screen.getByText('Email');
-    screen.getByText('Password');
-    screen.getByText('Confirm password');
+    screen.getByText('Nombre de usuario');
+    screen.getByText('Correo electrónico');
+    screen.getByText('Contraseña');
+    screen.getByText('Confirmar contraseña');
   });
   it('should render form checkbox', (): void => {
     render(
@@ -88,7 +110,7 @@ describe('Register form', (): void => {
     );
 
     screen.getByTestId('form-checkbox');
-    screen.getByText('show password');
+    screen.getByText('mostrar contraseña');
   });
   it('should show password when clicking checkbox', (): void => {
     render(
@@ -125,7 +147,7 @@ describe('Register form', (): void => {
     );
 
     screen.getByTestId('submit-button');
-    screen.getByText('register');
+    screen.getByText('Registrarse');
   });
   it('should display an error alert when username is not provided', async () => {
     render(
@@ -143,7 +165,7 @@ describe('Register form', (): void => {
       expect(screen.queryAllByTestId('alert')).toHaveLength(3)
     );
     expect(mockRegister).not.toBeCalled();
-    expect(screen.getByText('Username is required'));
+    expect(screen.getByText('El nombre de usuario es obligatorio'));
   });
   it('should display an error alert when username has more than 20 characters', async () => {
     render(
@@ -163,7 +185,11 @@ describe('Register form', (): void => {
       expect(screen.queryAllByTestId('alert')).toHaveLength(3)
     );
     expect(mockRegister).not.toBeCalled();
-    expect(screen.getByText('Username must have at most 20 characters'));
+    expect(
+      screen.getByText(
+        'El nombre de usuario debe tener como máximo 20 caracteres'
+      )
+    );
   });
   it('should display an error alert when email is not provided/valid', async () => {
     render(
@@ -181,7 +207,7 @@ describe('Register form', (): void => {
       expect(screen.queryAllByTestId('alert')).toHaveLength(3)
     );
     expect(mockRegister).not.toBeCalled();
-    expect(screen.getByText('Email not valid'));
+    expect(screen.getByText('Correo electrónico no válido'));
   });
   it('should display an error alert when email is not provided/valid', async () => {
     render(
@@ -199,7 +225,7 @@ describe('Register form', (): void => {
       expect(screen.queryAllByTestId('alert')).toHaveLength(3)
     );
     expect(mockRegister).not.toBeCalled();
-    expect(screen.getByText('Password must be strong.'));
+    expect(screen.getByText('La contraseña debe ser fuerte.'));
   });
   it('should show more/less error info when clicking a link', async () => {
     render(
@@ -220,11 +246,11 @@ describe('Register form', (): void => {
     fireEvent.click(screen.getByTestId('show-more'));
     expect(
       screen.getByText(
-        'Password must be strong. At least eight characters, one lowercase, one upercase and one number.'
+        'La contraseña debe tener como mínimo 8 caracteres, una mayúscula, una minúscula y un número.'
       )
     );
     fireEvent.click(screen.getByTestId('show-less'));
-    expect(screen.getByText('Password must be strong.'));
+    expect(screen.getByText('La contraseña debe ser fuerte.'));
   });
   it('should display an error alert when confirm password is different than password', async () => {
     render(
@@ -244,7 +270,7 @@ describe('Register form', (): void => {
       expect(screen.queryAllByTestId('alert')).toHaveLength(4)
     );
     expect(mockRegister).not.toBeCalled();
-    expect(screen.getByText('Different passwords'));
+    expect(screen.getByText('Contraseñas diferentes'));
   });
   it('should call submit handler with field values when clicking submit button', async () => {
     render(

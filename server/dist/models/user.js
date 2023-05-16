@@ -53,7 +53,7 @@ exports.UserSchema = new mongoose_1.Schema({
     },
     image: {
         type: String,
-        default: `${process.env.CDN_URL}avatar_default.jpg`,
+        default: `${process.env.IMAGEKIT_ENDPOINT}images/avatar_default.jpg`,
         trim: true,
         validate: (value) => {
             if (!validator_1.default.isURL(value)) {
@@ -87,12 +87,12 @@ exports.UserSchema = new mongoose_1.Schema({
             }
         },
     },
-    following: {
+    likes: {
         type: [String],
         default: [],
         required: false,
     },
-    followers: {
+    saved: {
         type: [String],
         default: [],
         required: false,
@@ -102,12 +102,12 @@ exports.UserSchema = new mongoose_1.Schema({
         default: [],
         required: false,
     },
-    likes: {
+    following: {
         type: [String],
         default: [],
         required: false,
     },
-    saved: {
+    followers: {
         type: [String],
         default: [],
         required: false,

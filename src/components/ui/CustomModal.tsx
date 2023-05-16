@@ -3,15 +3,16 @@ import { Dispatch, SetStateAction } from 'react';
 import {
   IoCheckmarkCircleOutline,
   IoCloseCircleOutline,
+  IoWarningOutline,
 } from 'react-icons/io5';
 
 interface CustomModalProps {
-  type: 'success' | 'error';
+  type: 'success' | 'error' | 'warning';
   title: string;
   children: string;
   visible: boolean;
   handler: Dispatch<SetStateAction<boolean>>;
-  onClose: () => void;
+  onClose: () => void | Promise<void>;
 }
 
 export const CustomModal: React.FC<CustomModalProps> = ({
@@ -29,7 +30,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
       data-testid='modal'
       open={visible}
       onClose={handler.bind(this, false)}
-      style={{ fontFamily: 'var(--font-raleway)' }}
+      width='450px'
     >
       <Modal.Header
         color='success'
@@ -38,11 +39,11 @@ export const CustomModal: React.FC<CustomModalProps> = ({
           flexDirection: 'column',
         }}
       >
-        {type === 'success' ? (
+        {type === 'success' && (
           <IoCheckmarkCircleOutline color='green' size={75} />
-        ) : (
-          <IoCloseCircleOutline color='red' size={75} />
         )}
+        {type === 'error' && <IoCloseCircleOutline color='red' size={75} />}
+        {type === 'warning' && <IoWarningOutline color='orange' size={75} />}
         <h1 style={{ fontSize: '1.25rem' }}>{title}</h1>
       </Modal.Header>
       <Modal.Body
@@ -53,15 +54,38 @@ export const CustomModal: React.FC<CustomModalProps> = ({
         <p>{children}</p>
       </Modal.Body>
       <Modal.Footer>
-        <Button
-          auto
-          flat
-          color={type}
-          onPress={onClose}
-          data-testid='close-modal'
-        >
-          Close
-        </Button>
+        {type === 'warning' ? (
+          <>
+            <Button
+              auto
+              flat
+              color='error'
+              onPress={onClose}
+              data-testid='close-modal'
+            >
+              Si
+            </Button>
+            <Button
+              auto
+              flat
+              color={type}
+              onPress={() => handler(false)}
+              data-testid='close-modal'
+            >
+              No
+            </Button>
+          </>
+        ) : (
+          <Button
+            auto
+            flat
+            color={type}
+            onPress={onClose}
+            data-testid='close-modal'
+          >
+            Aceptar
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

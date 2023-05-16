@@ -2,24 +2,24 @@
   position: fixed;
   width: 100vw;
   height: 4rem;
-  z-index: 1;
+  z-index: var(--nextui-zIndices-2);
 }
 
 .bar {
   display: flex;
   justify-content: center;
-  background-color: #fff;
-  border-bottom: 1px solid #eaeaea;
   height: 4rem;
+  background-color: var(--nextui-colors-primary100);
+  overflow: hidden;
 }
 
 .container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  gap: 2rem;
+  gap: var(--nextui-space-9);
   align-items: center;
-  padding: 0 1rem;
+  padding: 0 var(--nextui-space-9);
 }
 
 /* Left elements */
@@ -27,25 +27,38 @@
 .left__elements {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: var(--nextui-space-9);
   align-items: center;
 }
 
-.logo {
-  font-size: 1.5rem;
-  font-weight: 700;
+.logo__image__big {
+  display: block;
+}
+
+.logo__image__small {
+  display: none;
+}
+
+@media screen and (width < 650px) {
+  .logo__image__big {
+    display: none;
+  }
+  .logo__image__small {
+    display: block;
+  }
 }
 
 .toggle {
   display: flex;
   align-items: center;
   border: 0;
-  background-color: #fff;
+  background-color: var(--nextui-colors-primary100);
+  color: var(--nextui-colors-secondary600);
   cursor: pointer;
 }
 
 .toggle:hover {
-  color: gray;
+  color: var(--nextui-colors-secondary100);
 }
 
 @media screen and (width >= 650px) {
@@ -63,23 +76,75 @@
   flex-direction: row;
   justify-content: flex-end;
   align-items: center;
-  gap: 1rem;
+  gap: var(--nextui-space-9);
+}
+
+@media screen and (width < 460px) {
+  .right__elements {
+    gap: 0;
+  }
+}
+
+.new__recipe__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 3rem;
+  width: 3rem;
+  padding: var(--nextui-space-4);
+  font-weight: var(--nextui-fontWeights-bold);
+  background-color: var(--nextui-colors-accent100);
+  color: white;
+  border: none;
+  border-radius: var(--nextui-radii-rounded);
+  top: 5.4rem;
+  right: 1.75rem;
+}
+
+.new__recipe__btn:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-accent200);
+}
+
+@media screen and (width >= 650px) {
+  .new__recipe__btn {
+    display: none;
+  }
 }
 
 .search {
   height: 2rem;
-  border-radius: 1rem;
+  border-radius: var(--nextui-radii-lg);
   border: none;
-  background-color: lightgrey;
+  background-color: var(--nextui-colors-primary300);
   width: 100%;
-  padding-left: 1rem;
+  padding-left: var(--nextui-space-9);
+  font-size: var(--nextui-fontSizes-sm);
+  line-height: var(--nextui-lineHeights-6xl);
+}
+
+@media screen and (width < 425px) {
+  .search {
+    width: 30vw;
+  }
+}
+
+@media screen and (width < 345px) {
+  .search {
+    width: 25vw;
+  }
+}
+
+.search:hover {
+  background-color: var(--nextui-colors-primary400);
 }
 
 .links {
   display: flex;
   list-style: none;
-  margin-left: 0;
-  padding-left: 0;
+  margin: 0;
+  padding: 0;
   width: 100%;
 }
 
@@ -89,41 +154,71 @@
   }
 }
 
-.links__row {
-  padding: 1rem;
+.links__col {
+  padding: var(--nextui-space-5);
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 0;
+}
+
+.theme__button__container {
+  padding: 0;
+  margin-left: var(--nextui-space-5);
+}
+
+.theme__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2rem;
+  width: 2rem;
+  background-color: var(--nextui-colors-primary300);
+  border: none;
+  border-radius: var(--nextui-radii-rounded);
+  cursor: pointer;
+}
+
+.theme__button:hover {
+  background-color: var(--nextui-colors-primary400);
+}
+
+.sun__theme__icon {
+  color: var(--nextui-colors-secondary600);
+}
+
+.moon__theme__icon {
+  color: var(--nextui-colors-secondary600);
 }
 
 .link {
-  font-size: 0.9rem;
-  color: #000;
+  font-size: var(--nextui-fontSizes-sm);
+  color: var(--nextui-colors-secondary600);
   text-decoration: none;
 }
 
 .link:hover {
-  color: gray;
+  color: var(--nextui-colors-secondary100);
 }
 
 .logout__button {
-  font-size: 0.9rem;
-  color: #000;
+  font-size: var(--nextui-fontSizes-sm);
+  color: var(--nextui-colors-secondary600);
   text-decoration: none;
   border: 0;
   padding: 0;
-  background-color: white;
+  background-color: var(--nextui-colors-primary100);
   cursor: pointer;
 }
 
 .logout__button:hover {
-  color: gray;
+  color: var(--nextui-colors-secondary100);
 }
 
 .avatar {
-  border: 2px solid white;
+  width: max-content;
 }
 
 .avatar:hover {
-  border: 2px solid gray;
+  opacity: 0.75;
 }

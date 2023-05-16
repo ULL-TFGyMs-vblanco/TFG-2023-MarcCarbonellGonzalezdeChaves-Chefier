@@ -8,9 +8,30 @@ import {
 } from '@testing-library/react';
 import Register from '../src/pages/auth/register';
 import axios from '../axios_config';
+import { MockImageProps } from '../src/types/test';
 
 describe('Succes modal', (): void => {
   afterEach(cleanup);
+
+  vi.mock('next/image', async () => {
+    return {
+      default: () => {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        function Image({ src, alt, width, height, style }: MockImageProps) {
+          return (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={src}
+              alt={alt}
+              width={width}
+              height={height}
+              style={style}
+            />
+          );
+        }
+      },
+    };
+  });
 
   vi.mock('next/router', async () => {
     return {
@@ -45,13 +66,13 @@ describe('Succes modal', (): void => {
       password: 'Password1',
     });
     await waitFor(() => expect(screen.getByTestId('modal')).toBeDefined());
-    screen.getByText('SUCCESS');
-    const close = screen.getByText('Close');
+    screen.getByText('¡Listo!');
+    const close = screen.getByText('Aceptar');
     fireEvent.click(close);
     const button = document.getElementsByClassName('nextui-modal-close-icon');
     expect(button).toHaveLength(1);
     fireEvent.click(button[0]);
     await waitFor(() => expect(screen.queryByTestId('modal')).toBeNull());
-    expect(screen.queryByText('SUCCESS')).toBeNull();
+    expect(screen.queryByText('¡Listo!')).toBeNull();
   });
 });

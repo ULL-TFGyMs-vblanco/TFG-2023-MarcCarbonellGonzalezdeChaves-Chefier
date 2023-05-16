@@ -9,86 +9,103 @@ const google_auth_library_1 = require("google-auth-library");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
 const verifyToken = async ({ response, request }, next) => {
-    if (request.body.provider !== 'credentials' &&
-        request.body.provider !== 'google' &&
-        request.body.provider !== 'github') {
+    if (request.headers.provider !== 'credentials' &&
+        request.headers.provider !== 'google' &&
+        request.headers.provider !== 'github') {
         APIUtils_1.default.setResponse(response, 401, {
             error: 'Invalid provider',
             request: request.body,
         });
+        return;
     }
-    else {
-        const bearerHeader = request.headers.authorization;
-        if (bearerHeader) {
-            const token = bearerHeader.split(' ')[1];
-            if (request.body.provider === 'credentials') {
-                verifyCredentials(token, next, request, response);
+    const bearerHeader = request.headers.authorization;
+    if (bearerHeader) {
+        const token = bearerHeader.split(' ')[1];
+        if (request.headers.provider === 'credentials') {
+            if (verifyCredentials(token, request, response))
+                return next();
+        }
+        else if (request.headers.provider === 'google') {
+            try {
+                await verifyGoogle(token, request, response);
+                return next();
             }
-            else if (request.body.provider === 'google') {
-                verifyGoogle(token, next, request, response);
-            }
-            else {
-                verifyGithub(token, next, request, response);
+            catch (error) {
+                return;
             }
         }
         else {
-            APIUtils_1.default.setResponse(response, 401, {
-                error: 'An access token must be provided',
-                request: request.body,
-            });
+            try {
+                await verifyGithub(token, request, response);
+                return next();
+            }
+            catch (error) {
+                return;
+            }
         }
+    }
+    else {
+        APIUtils_1.default.setResponse(response, 401, {
+            error: 'An access token must be provided',
+            request: request.body,
+        });
     }
 };
 exports.verifyToken = verifyToken;
-function verifyCredentials(token, next, request, response) {
+function verifyCredentials(token, request, response) {
     try {
         jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
-        return next();
+        return true;
     }
     catch (error) {
         APIUtils_1.default.setResponse(response, 401, {
-            error,
+            error: { message: 'Invalid credentials token', error },
             request: request.body,
         });
-        return;
+        return false;
     }
 }
-async function verifyGoogle(token, next, request, response) {
-    const client = new google_auth_library_1.OAuth2Client(process.env.CLIENT_ID);
-    await client
+async function verifyGoogle(token, request, response) {
+    const client = new google_auth_library_1.OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, '');
+    return await client
         .verifyIdToken({
         idToken: token,
-        audience: process.env.CLIENT_ID,
+        audience: process.env.GOOGLE_CLIENT_ID,
     })
         .then(() => {
-        return next();
+        return;
     })
         .catch((error) => {
-        APIUtils_1.default.setResponse(response, 401, { error, request: request.body });
+        APIUtils_1.default.setResponse(response, 401, {
+            error: { message: 'Invalid google token', error },
+            request: request.body,
+        });
+        throw new Error();
     });
 }
-async function verifyGithub(token, next, request, response) {
-    await axios_1.default
-        .post(`https://api.github.com/aplications/${process.env.GITHUB_CLIENT_ID}/token`, {
+async function verifyGithub(token, request, response) {
+    return await axios_1.default
+        .post(`https://api.github.com/applications/${process.env.GITHUB_CLIENT_ID}/token`, {
         access_token: token,
     }, {
         headers: {
-            Authorization: `Bearer ${token}`,
+            Accept: 'application/vnd.github+json',
+            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+            'X-GitHub-Api-Version': '2022-11-28',
+        },
+        auth: {
+            username: process.env.GITHUB_CLIENT_ID,
+            password: process.env.GITHUB_CLIENT_SECRET,
         },
     })
-        .then((res) => {
-        if (res.status === 200) {
-            return next();
-        }
-        else {
-            APIUtils_1.default.setResponse(response, 500, {
-                error: res,
-                request: request.body,
-            });
-            return;
-        }
+        .then(() => {
+        return;
     })
         .catch((error) => {
-        APIUtils_1.default.setResponse(response, 401, { error, request: request.body });
+        APIUtils_1.default.setResponse(response, 401, {
+            error: { message: 'Invalid GitHub token', error },
+            request: request.body,
+        });
+        throw new Error();
     });
 }

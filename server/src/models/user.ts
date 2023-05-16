@@ -10,11 +10,11 @@ export interface UserDocumentInterface extends Document {
   image: string;
   email: string;
   password: string;
-  following: [string];
-  followers: [string];
-  recipes: [string];
   likes: [string];
   saved: [string];
+  recipes: [string];
+  following: [string];
+  followers: [string];
 }
 
 export const UserSchema = new Schema<UserDocumentInterface>({
@@ -64,7 +64,7 @@ export const UserSchema = new Schema<UserDocumentInterface>({
   },
   image: {
     type: String,
-    default: `${process.env.CDN_URL}avatar_default.jpg`,
+    default: `${process.env.IMAGEKIT_ENDPOINT}images/avatar_default.jpg`,
     trim: true,
     validate: (value: string) => {
       if (!validator.isURL(value)) {
@@ -100,12 +100,12 @@ export const UserSchema = new Schema<UserDocumentInterface>({
       }
     },
   },
-  following: {
+  likes: {
     type: [String],
     default: [],
     required: false,
   },
-  followers: {
+  saved: {
     type: [String],
     default: [],
     required: false,
@@ -115,12 +115,12 @@ export const UserSchema = new Schema<UserDocumentInterface>({
     default: [],
     required: false,
   },
-  likes: {
+  following: {
     type: [String],
     default: [],
     required: false,
   },
-  saved: {
+  followers: {
     type: [String],
     default: [],
     required: false,

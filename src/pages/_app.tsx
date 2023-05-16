@@ -2,10 +2,14 @@ import '@/styles/globals.css';
 import type { AppProps } from 'next/app';
 import { Layout } from '@/components/layout/Layout';
 import Head from 'next/head';
-import { Raleway } from '@next/font/google';
 import { SessionProvider } from 'next-auth/react';
+import { NextUIProvider } from '@nextui-org/react';
+import { ThemeProvider as NextThemesProvider } from 'next-themes';
+import { lightTheme } from '../themes/lightTheme';
+import { darkTheme } from '../themes/darkTheme';
+import TimeAgo from 'javascript-time-ago';
 
-const raleway = Raleway({ subsets: ['latin'], variable: '--font-raleway' });
+TimeAgo.addDefaultLocale(require('javascript-time-ago/locale/es'));
 
 export default function App({
   Component,
@@ -20,11 +24,22 @@ export default function App({
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <SessionProvider session={session}>
-        <main className={`${raleway.variable} ${raleway.className}`}>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
-        </main>
+        <NextThemesProvider
+          defaultTheme='system'
+          attribute='class'
+          value={{
+            light: lightTheme.className,
+            dark: darkTheme.className,
+          }}
+        >
+          <NextUIProvider>
+            <main>
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            </main>
+          </NextUIProvider>
+        </NextThemesProvider>
       </SessionProvider>
     </>
   );

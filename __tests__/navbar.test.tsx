@@ -36,6 +36,17 @@ describe('Navbar', (): void => {
     };
   });
 
+  vi.mock('next/router', async () => {
+    return {
+      useRouter: () => ({
+        query: {
+          error: 'error',
+        },
+        push: () => [],
+      }),
+    };
+  });
+
   it('should render', (): void => {
     render(<Navbar />);
   });
@@ -49,16 +60,15 @@ describe('Navbar', (): void => {
       render(<Navbar />);
 
       screen.getByTestId('search');
-      screen.getByPlaceholderText('Search...');
+      screen.getByPlaceholderText('Buscar...');
     });
     it('should render navigation links', (): void => {
       render(<Navbar />);
 
       const navLinks = screen.getAllByTestId('navigation-link');
-      expect(navLinks.length).toBe(3);
-      screen.getByText('Log in');
-      screen.getByText('Recipes');
-      screen.getByText('New Recipe');
+      expect(navLinks.length).toBe(2);
+      screen.getByText('Iniciar sesión');
+      screen.getByText('Nueva Receta');
     });
     it('should render toggle button', (): void => {
       render(<Navbar />);
@@ -88,10 +98,8 @@ describe('Navbar', (): void => {
       const toggleButton = screen.getByTestId('toggle-button');
       fireEvent.click(toggleButton);
       const navLinks = screen.getAllByTestId('toggle-navigation-link');
-      expect(navLinks.length).toBe(3);
-      expect(screen.getAllByText('Log in').length).toBe(2);
-      expect(screen.getAllByText('Recipes').length).toBe(2);
-      expect(screen.getAllByText('New Recipe').length).toBe(2);
+      expect(navLinks.length).toBe(1);
+      expect(screen.getAllByText('Iniciar sesión').length).toBe(2);
     });
     it('should render help navigation links', (): void => {
       render(<Navbar />);
@@ -100,8 +108,8 @@ describe('Navbar', (): void => {
       fireEvent.click(toggleButton);
       const navLinks = screen.getAllByTestId('toggle-info-link');
       expect(navLinks.length).toBe(2);
-      screen.getByText('About');
-      screen.getByText('Contact');
+      screen.getByText('Sobre nosotros');
+      screen.getByText('Contacto');
     });
   });
 });

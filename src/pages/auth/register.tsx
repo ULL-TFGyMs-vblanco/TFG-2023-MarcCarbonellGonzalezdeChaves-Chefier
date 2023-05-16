@@ -1,9 +1,7 @@
-import useSWRMutation from 'swr/mutation';
 import { CustomModal } from '../../components/ui/CustomModal';
 import { RegisterForm } from '../../components/auth/RegisterForm';
-import { RegisterData } from 'auth-types';
-import styles from 'src/styles/auth/Auth.module.css';
-import AuthService from '../../services/AuthService';
+import { RegisterData } from 'user-types';
+import UserService from '../../services/UserService';
 import { useEffect, useState } from 'react';
 import { SignInOptions } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -13,7 +11,6 @@ const Register: React.FC = () => {
   const [successModal, setSuccesModal] = useState(false);
   const [errorModal, setErrorModal] = useState(false);
   const router = useRouter();
-  const { trigger } = useSWRMutation('/auth/register', AuthService.register);
 
   useEffect(() => {
     error ? setErrorModal(true) : setErrorModal(false);
@@ -21,7 +18,7 @@ const Register: React.FC = () => {
 
   const registerHandler = async (data: RegisterData) => {
     try {
-      await trigger(data);
+      await UserService.register('/auth/register', data);
       return true;
     } catch (error) {
       const errorMessage = (error as Error).toString();
@@ -32,7 +29,7 @@ const Register: React.FC = () => {
 
   const loginHandler = async (provider: string, data: SignInOptions) => {
     try {
-      await AuthService.login(provider, data);
+      await UserService.login(provider, data);
     } catch (error) {
       const errorMessage = (error as Error).toString();
       setError(errorMessage);
@@ -40,7 +37,7 @@ const Register: React.FC = () => {
   };
 
   const closeSuccessModalHandler = async () => {
-    router.push('/auth/login');
+    await router.push('/auth/login');
   };
 
   const closeErrorModalHandler = async () => {
@@ -48,7 +45,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div>
       <RegisterForm
         onRegister={registerHandler}
         onOauthLogin={loginHandler}
@@ -56,21 +53,22 @@ const Register: React.FC = () => {
       />
       <CustomModal
         type='success'
-        title='SUCCESS'
+        title='¡Listo!'
         visible={successModal}
         handler={setSuccesModal}
         onClose={closeSuccessModalHandler}
       >
-        Congratulations, your account has been successfully created!
+        Felicidades, tu cuenta ha sido creada con éxito!
       </CustomModal>
       <CustomModal
         type='error'
-        title='ERROR'
+        title='Error'
         visible={errorModal}
         handler={setErrorModal}
         onClose={closeErrorModalHandler}
       >
-        {`${error}`}
+        Oops! Ha ocurrido un error al crear tu cuenta. Inténtalo de nuevo más
+        tarde.
       </CustomModal>
     </div>
   );
