@@ -40,6 +40,7 @@ export interface RecipeDocumentInterface extends Document {
       date: Date;
     }
   ];
+  averageRating: number;
   likes: [string];
   saved: [string];
 }
@@ -227,6 +228,17 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     },
     default: [],
   },
+  averageRating: {
+    type: Number,
+    default: function (this: RecipeDocumentInterface) {
+      const average =
+        this.valorations.reduce(
+          (acc: number, valoration) => acc + valoration.rating,
+          0
+        ) / this.valorations.length;
+      return isNaN(average) ? 0 : average;
+    },
+  },
   likes: {
     type: [String],
     default: [],
@@ -235,20 +247,6 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
     type: [String],
     default: [],
   },
-});
-
-RecipeSchema.set('toJSON', { virtuals: true });
-RecipeSchema.set('toObject', { virtuals: true });
-
-RecipeSchema.virtual('averageRating').get(function (
-  this: RecipeDocumentInterface
-) {
-  const average =
-    this.valorations.reduce(
-      (acc: number, valoration) => acc + valoration.rating,
-      0
-    ) / this.valorations.length;
-  return isNaN(average) ? 0 : average;
 });
 
 export const Recipe = model<RecipeDocumentInterface>('Recipe', RecipeSchema);

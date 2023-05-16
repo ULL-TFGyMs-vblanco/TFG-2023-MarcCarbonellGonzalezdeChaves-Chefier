@@ -166,6 +166,13 @@ exports.RecipeSchema = new mongoose_1.Schema({
         },
         default: [],
     },
+    averageRating: {
+        type: Number,
+        default: function () {
+            const average = this.valorations.reduce((acc, valoration) => acc + valoration.rating, 0) / this.valorations.length;
+            return isNaN(average) ? 0 : average;
+        },
+    },
     likes: {
         type: [String],
         default: [],
@@ -174,11 +181,5 @@ exports.RecipeSchema = new mongoose_1.Schema({
         type: [String],
         default: [],
     },
-});
-exports.RecipeSchema.set('toJSON', { virtuals: true });
-exports.RecipeSchema.set('toObject', { virtuals: true });
-exports.RecipeSchema.virtual('averageRating').get(function () {
-    const average = this.valorations.reduce((acc, valoration) => acc + valoration.rating, 0) / this.valorations.length;
-    return isNaN(average) ? 0 : average;
 });
 exports.Recipe = (0, mongoose_1.model)('Recipe', exports.RecipeSchema);
