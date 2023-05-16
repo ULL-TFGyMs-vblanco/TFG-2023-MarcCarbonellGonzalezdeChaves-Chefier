@@ -53,7 +53,7 @@ export default class RecipeUtils {
           lunch: 'Almuerzo',
           dinner: 'Cena',
           dessert: 'Postre',
-          snack: 'Snack',
+          snack: 'Picoteo',
           drink: 'Bebida',
         };
         Object.keys(tags).forEach((tag) => {
