@@ -1,7 +1,7 @@
 import { Recipe } from 'recipe-types';
 import { RecipeCard } from './RecipeCard';
 import styles from '../../styles/recipe/RecipeList.module.css';
-import { useRecipes } from '@/hooks/useRecipes';
+import { useRecipes } from '../../hooks/useRecipes';
 import { useState } from 'react';
 import { Loading, Pagination, Popover } from '@nextui-org/react';
 import { Title } from '../ui/Title';

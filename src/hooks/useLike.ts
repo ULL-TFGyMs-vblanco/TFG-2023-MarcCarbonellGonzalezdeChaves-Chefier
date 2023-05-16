@@ -1,7 +1,7 @@
-import RecipeService from '@/services/RecipeService';
+import RecipeService from '../services/RecipeService';
 import { User } from 'user-types';
 import { Recipe } from 'recipe-types';
-import UserService from '@/services/UserService';
+import UserService from '../services/UserService';
 import { useSWRConfig } from 'swr';
 
 // Custom hook to handle recipe 'liking'

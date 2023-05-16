@@ -22,21 +22,6 @@ export const Footer: React.FC = () => {
             </Link>
             <hr className={styles.divider} />
             <ul>
-              <label className={styles.links__label}>
-                Mapa&nbsp;del&nbsp;sitio
-              </label>
-              <li>
-                <Link
-                  className={styles.link}
-                  href='/new-recipe'
-                  data-testid='sitemap-link'
-                >
-                  Nueva&nbsp;Receta
-                </Link>
-              </li>
-            </ul>
-            <hr className={styles.divider} />
-            <ul>
               <label className={styles.links__label}>Información</label>
               <li>
                 <Link

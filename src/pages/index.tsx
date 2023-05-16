@@ -1,6 +1,6 @@
 import styles from 'src/styles/home/Home.module.css';
 import { RecipeList } from '../components/recipe/RecipeList';
-import { Card } from '@/components/ui/Card';
+import { Card } from '../components/ui/Card';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 

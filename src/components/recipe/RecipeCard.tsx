@@ -7,7 +7,7 @@ import utils from 'src/utils/RecipeUtils';
 import { useSession } from 'next-auth/react';
 import { useSave } from '../../hooks/useSave';
 import { useLike } from '../../hooks/useLike';
-import { useLoggedUser } from '@/hooks/useLoggedUser';
+import { useLoggedUser } from '../../hooks/useLoggedUser';
 import { Loading } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 
