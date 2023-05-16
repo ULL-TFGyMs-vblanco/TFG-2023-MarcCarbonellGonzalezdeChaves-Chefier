@@ -54,14 +54,17 @@ export const getRecipes = async ({ response, request, query }: Context) => {
     const $search = RecipeUtils.getAggregateSearch(search);
     aggregate.push({ $search });
   }
+
   if (Object.keys(filters).length > 0) {
     const $match = RecipeUtils.getAggregateMatch(filters);
+
     if (typeof filters.following === 'string') {
       const user = await User.findById(filters.following);
       let filterObject = {};
       filterObject = RecipeUtils.getAggregateFollowing(user);
       $match.$and.push(filterObject);
     }
+
     if ($match.$and.length > 0) aggregate.push({ $match });
   }
 
@@ -81,8 +84,8 @@ export const getRecipes = async ({ response, request, query }: Context) => {
     const [minRating, maxRating] = RecipeUtils.getMinAndMaxRating(recipes);
     const [minTime, maxTime] = RecipeUtils.getMinAndMaxTime(recipes);
     APIUtils.setResponse(response, 200, {
-      list: recipes.slice((pageIndex - 1) * 1, pageIndex * 1),
-      totalPages: Math.ceil(recipes.length / 1),
+      list: recipes.slice((pageIndex - 1) * 15, pageIndex * 15),
+      totalPages: Math.ceil(recipes.length / 15),
       metadata: {
         minRating,
         maxRating,
