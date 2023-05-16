@@ -149,7 +149,9 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
                 <p className={styles.field__title}>Valoración</p>
                 <div className={styles.stat__data}>
                   <GrStar className={styles.star__icon} size={20} />
-                  <p className={styles.stat__number}>{recipe.averageRating}</p>
+                  <p className={styles.stat__number}>
+                    {utils.getAverageRating(recipe.valorations)}
+                  </p>
                 </div>
               </div>
               <hr className={styles.stats__divider} />
@@ -303,12 +305,14 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
                 )}
             </div>
             <div className={styles.valoration__mean}>
-              <p className={styles.mean}>{recipe.averageRating}</p>
+              <p className={styles.mean}>
+                {utils.getAverageRating(recipe.valorations)}
+              </p>
               <ReactStars
                 count={5}
                 size={30}
                 color2='#F5A524'
-                value={recipe.averageRating}
+                value={utils.getAverageRating(recipe.valorations)}
                 edit={false}
               />
             </div>
