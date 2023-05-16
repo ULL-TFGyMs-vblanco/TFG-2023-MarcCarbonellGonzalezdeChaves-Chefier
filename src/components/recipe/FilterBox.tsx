@@ -65,7 +65,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
     const { tags: tagFilter, difficulty: difficulyFilter } = data;
     const filters: string[] = [];
     if (rating[0] !== recipes.minRating || rating[1] !== recipes.maxRating) {
-      filters.push(`averageRating=${rating[0]}-${rating[1]}`);
+      filters.push(`rating=${rating[0]}-${rating[1]}`);
     }
     if (time[0] !== recipes.minTime || time[1] !== recipes.maxTime) {
       filters.push(`cookTime=${time[0]}-${time[1]}`);
