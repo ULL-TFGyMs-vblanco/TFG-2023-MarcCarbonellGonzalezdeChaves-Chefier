@@ -40,7 +40,7 @@ const UserService = {
       );
     } catch (err: any) {
       if (err.response.status === 401) {
-        await signOut({ callbackUrl: '/auth/login?error=session%20expired' });
+        await signOut({ callbackUrl: '/auth/login?error=sessionExpired' });
       }
       throw new Error(err.response.data.error.message);
     }
