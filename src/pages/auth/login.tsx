@@ -8,10 +8,11 @@ import { useRouter } from 'next/router';
 const Login: React.FC = () => {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     if (router.query.error !== undefined) {
-      setVisible(router.query.error !== undefined);
+      setVisible(true);
     } else {
       setVisible(false);
     }
@@ -22,7 +23,7 @@ const Login: React.FC = () => {
       await UserService.login(provider, data);
     } catch (error) {
       const errorMessage = (error as Error).toString();
-      console.log(errorMessage);
+      setError(errorMessage);
     }
   };
 
@@ -40,8 +41,9 @@ const Login: React.FC = () => {
         handler={setVisible}
         onClose={closeModalHandler}
       >
-        Oops! Ha ocurrido un error al iniciar sesión. Inténtalo de nuevo más
-        tarde.
+        {error === 'Error: Session expired'
+          ? `Tu sesión ha expirado. Por favor, inicia sesión de nuevo.`
+          : `Oops! Ha ocurrido un error al iniciar sesión. Inténtalo de nuevo más tarde.`}
       </CustomModal>
     </div>
   );

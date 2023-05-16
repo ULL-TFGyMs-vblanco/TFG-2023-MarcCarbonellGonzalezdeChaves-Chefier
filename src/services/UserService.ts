@@ -1,6 +1,6 @@
 import { RegisterData, ValidUpdate } from 'user-types';
 import axios from '../../axios_config';
-import { getSession, signIn, SignInOptions } from 'next-auth/react';
+import { getSession, signIn, SignInOptions, signOut } from 'next-auth/react';
 
 const UserService = {
   register: async (url: string, data: RegisterData) => {
@@ -39,7 +39,12 @@ const UserService = {
         }
       );
     } catch (err: any) {
-      throw new Error(err.response.data.error.message);
+      if (err.response.status === 401) {
+        await signOut();
+        throw new Error('Session expired');
+      } else {
+        throw new Error(err.response.data.error.message);
+      }
     }
   },
 };
