@@ -1,9 +1,97 @@
+.container {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  gap: var(--nextui-space-15);
+}
+
+.filterbox__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--nextui-space-12);
+  background-color: var(--nextui-colors-background);
+  margin: 0;
+  flex: 1;
+  min-width: 10rem;
+}
+
 .list__container {
+  display: flex;
+  flex: 4;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: 40rem;
+}
+
+.list {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.list__elements {
   display: grid;
   grid-template-columns: repeat(auto-fill, 11.25rem);
   justify-content: center;
-  grid-gap: var(--nextui-space-13);
   width: 100%;
-  padding-top: var(--nextui-space-15);
-  padding-bottom: var(--nextui-space-21);
+  grid-gap: var(--nextui-space-13);
+  margin: var(--nextui-space-15) 0;
+}
+
+.pagination {
+  z-index: var(--nextui-zIndices-1);
+}
+
+.empty__msg {
+  margin: var(--nextui-space-10) 0;
+}
+
+.filterbox__popover__container {
+  background-color: var(--nextui-colors-popover);
+  padding: var(--nextui-space-12);
+  padding-top: var(--nextui-space-8);
+  width: 20rem;
+}
+
+.popover__btn {
+  background-color: var(--nextui-colors-accent100);
+  color: white;
+  border: none;
+  border-radius: var(--nextui-radii-xs);
+  padding: var(--nextui-space-4) var(--nextui-space-8);
+  padding-left: var(--nextui-space-5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--nextui-fontWeights-bold);
+  margin-top: var(--nextui-space-10);
+}
+
+.popover__btn:hover {
+  cursor: pointer;
+  background-color: var(--nextui-colors-accent200);
+}
+
+@media screen and (width < 400px) {
+  .filterbox__popover__container {
+    width: 15rem;
+  }
+}
+
+@media screen and (width > 650px) {
+  .filterbox__popover {
+    display: none;
+  }
+}
+
+@media screen and (width <= 650px) {
+  .filterbox__container {
+    display: none;
+  }
 }

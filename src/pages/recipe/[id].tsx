@@ -1,15 +1,14 @@
-import { useRecipe } from '@/hooks/useRecipe';
+import { useRecipe } from '../../hooks/useRecipe';
 import { useRouter } from 'next/router';
-import { ValidUpdate } from 'recipe-types';
-import RecipeService from '@/services/RecipeService';
+import RecipeService from '../../services/RecipeService';
 import { useSWRConfig } from 'swr';
-import { Recipe } from '@/components/recipe/Recipe';
-import { Card } from '@/components/ui/Card';
-import styles from '@/styles/recipe/RecipePage.module.css';
+import { Recipe } from '../../components/recipe/Recipe';
+import { Card } from '../../components/ui/Card';
 import { Loading } from '@nextui-org/react';
-import { Title } from '@/components/ui/Title';
-import { CustomModal } from '@/components/ui/CustomModal';
+import { Title } from '../../components/ui/Title';
+import { CustomModal } from '../../components/ui/CustomModal';
 import { useState } from 'react';
+import UserService from '../../services/UserService';
 
 const RecipePage = () => {
   const { mutate } = useSWRConfig();
@@ -17,19 +16,19 @@ const RecipePage = () => {
   const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
   const [errorModal, setErrorModal] = useState(false);
 
-  const updateHandler = async (update: ValidUpdate) => {
+  const deleteHandler = async (recipeId: string) => {
     try {
-      await RecipeService.updateRecipe(`/recipe/${recipe._id}`, update);
-      await mutate('/recipe/' + recipe._id);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const deleteHandler = async () => {
-    try {
-      await RecipeService.deleteRecipe(`/recipe/${recipe._id}`);
-      await mutate('/recipe/' + recipe._id);
+      await RecipeService.deleteRecipe(`/recipe/${recipeId}`);
+      await UserService.updateUser(`/user/${recipe?.user.id}`, {
+        $pull: { recipes: recipeId },
+      });
+      await UserService.updateUser(`/users?likes=${recipeId}`, {
+        $pull: { likes: recipeId },
+      });
+      await UserService.updateUser(`/users?saved=${recipeId}`, {
+        $pull: { saved: recipeId },
+      });
+      await mutate('/recipe/' + recipeId);
       await router.push('/');
     } catch (error) {
       setErrorModal(true);
@@ -38,19 +37,13 @@ const RecipePage = () => {
 
   return (
     <>
-      <Card style={styles.card} testid='form-card'>
+      <Card testid='form-card'>
         {isLoading ? (
           <Loading />
         ) : isError ? (
           <Title>Receta no encontrada</Title>
         ) : (
-          recipe && (
-            <Recipe
-              recipe={recipe}
-              updateHandler={updateHandler}
-              deleteHandler={deleteHandler}
-            />
-          )
+          recipe && <Recipe recipe={recipe} deleteHandler={deleteHandler} />
         )}
       </Card>
       <CustomModal

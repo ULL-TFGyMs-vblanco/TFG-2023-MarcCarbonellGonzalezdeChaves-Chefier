@@ -5,6 +5,7 @@
   border-radius: var(--nextui-radii-xs);
   padding: var(--nextui-space-6) var(--nextui-space-10);
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   font-weight: var(--nextui-fontWeights-bold);

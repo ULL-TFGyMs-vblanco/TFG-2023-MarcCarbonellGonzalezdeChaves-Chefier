@@ -53,7 +53,7 @@
 }
 
 .link {
-  font-size: var(--nextui-fontSizes-lg);
+  font-size: var(--nextui-fontSizes-md);
   color: var(--nextui-colors-secondary600);
 }
 
@@ -73,7 +73,7 @@
 }
 
 .nickname {
-  font-size: var(--nextui-fontSizes-lg);
+  font-size: var(--nextui-fontSizes-xl);
   font-weight: var(--nextui-fontWeights-bold);
   color: var(--nextui-colors-secondary600);
   margin-top: var(--nextui-space-4);
@@ -85,7 +85,7 @@
 }
 
 .username {
-  font-size: var(--nextui-fontSizes-xs);
+  font-size: var(--nextui-fontSizes-sm);
   color: var(--nextui-colors-secondary600);
   margin-top: 0;
   margin-bottom: 0;
@@ -99,4 +99,18 @@
   border-top: var(--nextui-borderWeights-light) solid
     var(--nextui-colors-border);
   width: 100%;
+}
+
+.logout__button {
+  font-size: var(--nextui-fontSizes-lg);
+  color: var(--nextui-colors-secondary600);
+  text-decoration: none;
+  border: 0;
+  padding: 0;
+  background-color: var(--nextui-colors-primary100);
+  cursor: pointer;
+}
+
+.logout__button:hover {
+  color: var(--nextui-colors-secondary100);
 }

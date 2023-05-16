@@ -1,18 +1,7 @@
-.form__card {
-  width: 100%;
-  margin: var(--nextui-space-15) auto;
-}
-
-@media screen and (width < 650px) {
-  .form__card {
-    box-shadow: none;
-    background-color: transparent;
-  }
-}
-
 .form__container {
   display: flex;
   flex-direction: column;
+  width: 100%;
   align-items: center;
   justify-content: center;
   padding: var(--nextui-space-15) var(--nextui-space-19);
@@ -188,7 +177,7 @@
   background-color: var(--nextui-colors-red600);
   border: none;
   border-radius: var(--nextui-radii-sm);
-  padding: var(--nextui-space-9);
+  padding: 0;
 }
 
 .remove__image__button:hover {

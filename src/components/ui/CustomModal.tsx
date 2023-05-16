@@ -30,6 +30,7 @@ export const CustomModal: React.FC<CustomModalProps> = ({
       data-testid='modal'
       open={visible}
       onClose={handler.bind(this, false)}
+      width='450px'
     >
       <Modal.Header
         color='success'

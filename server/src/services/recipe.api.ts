@@ -1,22 +1,25 @@
 import { Context } from 'koa';
-import { Recipe } from '../models/recipe';
-import utils from '../utils/APIUtils';
+import { Recipe, RecipeDocumentInterface } from '../models/recipe';
+import APIUtils from '../utils/APIUtils';
+import RecipeUtils from '../utils/RecipeUtils';
+import ImageKitUtils from '../utils/ImageKitUtils';
+import { User } from '../models/user';
 
 // Get recipes by id
 export const getRecipe = async ({ response, request, params }: Context) => {
   await Recipe.findById(params.id)
     .then((recipe) => {
       if (!recipe) {
-        utils.setResponse(response, 404, {
+        APIUtils.setResponse(response, 404, {
           error: { message: 'Recipe not found' },
           request,
         });
       } else {
-        utils.setResponse(response, 200, recipe);
+        APIUtils.setResponse(response, 200, recipe);
       }
     })
     .catch((err) => {
-      utils.setResponse(response, 500, {
+      APIUtils.setResponse(response, 500, {
         error: { message: 'Error finding the recipe', error: err },
         requerequest: request.body,
       });
@@ -25,16 +28,80 @@ export const getRecipe = async ({ response, request, params }: Context) => {
 
 // Get recipes list
 export const getRecipes = async ({ response, request, query }: Context) => {
-  await Recipe.find(query)
-    .then((recipes) => {
-      utils.setResponse(response, 200, recipes);
-    })
-    .catch((err) => {
-      utils.setResponse(response, 500, {
-        error: { message: 'Error finding recipes', error: err },
-        requerequest: request.body,
-      });
+  if (!query.page) {
+    APIUtils.setResponse(response, 400, {
+      error: { message: 'A page index must be provided' },
+      request: request.body,
     });
+    return;
+  } else if (isNaN(Number(query.page))) {
+    APIUtils.setResponse(response, 400, {
+      error: { message: 'Page index must be a number' },
+      request: request.body,
+    });
+    return;
+  } else if (Number(query.page) < 1) {
+    APIUtils.setResponse(response, 400, {
+      error: { message: 'Page index must be greater than 0' },
+      request: request.body,
+    });
+    return;
+  }
+  const { page, search, ...filters } = query;
+  const pageIndex = Number(page);
+
+  const aggregate: object[] = [];
+  if (typeof search === 'string') {
+    const $search = RecipeUtils.getAggregateSearch(search);
+    aggregate.push({ $search });
+  }
+
+  if (Object.keys(filters).length > 0) {
+    const $match = RecipeUtils.getAggregateMatch(filters);
+
+    if (typeof filters.following === 'string') {
+      const user = await User.findById(filters.following);
+      let filterObject = {};
+      filterObject = RecipeUtils.getAggregateFollowing(user);
+      $match.$and.push(filterObject);
+    }
+
+    if ($match.$and.length > 0) aggregate.push({ $match });
+  }
+
+  try {
+    let recipes: RecipeDocumentInterface[] = [];
+
+    if (aggregate.length === 0) {
+      recipes = await Recipe.find().sort({ date: -1 });
+    } else {
+      if (typeof search === 'string') {
+        recipes = await Recipe.aggregate(aggregate);
+      } else {
+        recipes = await Recipe.aggregate(aggregate).sort({ date: -1 });
+      }
+    }
+
+    const [minRating, maxRating] = RecipeUtils.getMinAndMaxRating(recipes);
+    const [minTime, maxTime] = RecipeUtils.getMinAndMaxTime(recipes);
+    APIUtils.setResponse(response, 200, {
+      list: recipes.slice((pageIndex - 1) * 15, pageIndex * 15),
+      totalPages: Math.ceil(recipes.length / 15),
+      metadata: {
+        minRating,
+        maxRating,
+        minTime,
+        maxTime,
+        difficulties: RecipeUtils.getDifficulties(recipes),
+        tags: RecipeUtils.getTags(recipes),
+      },
+    });
+  } catch (err) {
+    APIUtils.setResponse(response, 500, {
+      error: { message: 'Error finding recipes', error: err },
+      requerequest: request.body,
+    });
+  }
 };
 
 // Post a recipe
@@ -42,19 +109,19 @@ export const postRecipe = async ({ response, request }: Context) => {
   try {
     const recipeData = JSON.parse(request.body.recipe);
     if (!recipeData.name || !recipeData.user) {
-      utils.setResponse(response, 400, {
+      APIUtils.setResponse(response, 400, {
         error: { message: 'Recipe name and user name are required' },
         request: request.body,
       });
       return;
     } else if (recipeData.user && !recipeData.user.name) {
-      utils.setResponse(response, 400, {
+      APIUtils.setResponse(response, 400, {
         error: { message: 'Recipe user name is required' },
         request: request.body,
       });
       return;
     }
-    const res = await utils.uploadImage(
+    const res = await ImageKitUtils.uploadImage(
       request.file.buffer.toString('base64'),
       recipeData.name,
       `/images/posts/${recipeData.user.name}`
@@ -67,27 +134,27 @@ export const postRecipe = async ({ response, request }: Context) => {
     const recipe = new Recipe(recipeData);
     await Recipe.create(recipe)
       .then((recipe) => {
-        utils.setResponse(response, 200, { recipe });
+        APIUtils.setResponse(response, 200, { recipe });
       })
       .catch(async (err) => {
         if (err.name === 'ValidationError') {
           const errors = Object.keys(err.errors).map((key) => {
             return { message: err.errors[key].message, field: key };
           });
-          utils.setResponse(response, 400, {
+          APIUtils.setResponse(response, 400, {
             error: { message: err._message, errors: errors },
             request: request.body,
           });
         } else {
-          utils.setResponse(response, 500, {
+          APIUtils.setResponse(response, 500, {
             error: { message: 'Error creating the new recipe', error: err },
             request: request.body,
           });
         }
-        await utils.deleteImage(fileId);
+        await ImageKitUtils.deleteImage(fileId);
       });
   } catch (err) {
-    utils.setResponse(response, 500, {
+    APIUtils.setResponse(response, 500, {
       error: { message: 'Error uploading recipe image', error: err },
       request: request.body,
     });
@@ -96,19 +163,14 @@ export const postRecipe = async ({ response, request }: Context) => {
 
 // Update a recipe
 export const updateRecipe = async ({ response, request, params }: Context) => {
-  const allowedUpdates = ['likes', 'saved', 'valorations'];
-  const actualUpdates = Object.keys(request.body.update);
-  const isValidUpdate = actualUpdates.every((update) =>
-    allowedUpdates.includes(update)
-  );
-  if (!isValidUpdate) {
-    utils.setResponse(response, 400, {
+  if (!RecipeUtils.isValidUpdate(request.body.update)) {
+    APIUtils.setResponse(response, 400, {
       error: { message: 'Update is not permitted' },
       request: request.body,
     });
   } else {
     if (!params.id) {
-      utils.setResponse(response, 400, {
+      APIUtils.setResponse(response, 400, {
         error: { message: 'An id must be provided' },
         request: request.body,
       });
@@ -123,15 +185,15 @@ export const updateRecipe = async ({ response, request, params }: Context) => {
           }
         );
         if (!element) {
-          utils.setResponse(response, 404, {
+          APIUtils.setResponse(response, 404, {
             error: { message: 'Recipe not found' },
             request: request.body,
           });
         } else {
-          utils.setResponse(response, 200, element);
+          APIUtils.setResponse(response, 200, element);
         }
       } catch (err) {
-        utils.setResponse(response, 500, {
+        APIUtils.setResponse(response, 500, {
           error: { message: JSON.stringify(err), error: err },
           request: request.body,
         });
@@ -145,17 +207,17 @@ export const deleteRecipe = async ({ response, params }: Context) => {
   await Recipe.findByIdAndDelete(params.id)
     .then(async (recipe) => {
       try {
-        await utils.deleteImage(recipe?.image.fileId as string);
-        utils.setResponse(response, 200, { recipe });
+        await ImageKitUtils.deleteImage(recipe?.image.fileId as string);
+        APIUtils.setResponse(response, 200, { recipe });
       } catch (err) {
-        utils.setResponse(response, 500, {
+        APIUtils.setResponse(response, 500, {
           error: { message: err },
           request: params.id,
         });
       }
     })
     .catch((err) => {
-      utils.setResponse(response, 500, {
+      APIUtils.setResponse(response, 500, {
         error: { message: 'Error deleting the recipe', error: err },
         request: params.id,
       });

@@ -11,13 +11,12 @@ import { useShow } from '../../hooks/useShow';
 import ReactStars from 'react-stars';
 import { GrStar } from 'react-icons/gr';
 import { BsBookmarkFill, BsFillPersonFill, BsHeartFill } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IoClose } from 'react-icons/io5';
 import { Loading } from '@nextui-org/react';
 import {
   Ingredient,
   Instruction,
-  ValidUpdate,
   Valoration as ValorationType,
   Recipe as RecipeType,
 } from 'recipe-types';
@@ -25,113 +24,59 @@ import { useLoggedUser } from '../../hooks/useLoggedUser';
 import { useSession } from 'next-auth/react';
 import utils from '../../utils/RecipeUtils';
 import { CustomModal } from '../ui/CustomModal';
+import { useSave } from '../../hooks/useSave';
+import { useValoration } from '../../hooks/useValoration';
+import { useLike } from '../../hooks/useLike';
 
 const timeAgo = new TimeAgo('es-ES');
 
 interface RecipeProps {
   recipe: RecipeType;
-  updateHandler: (update: ValidUpdate) => Promise<void>;
-  deleteHandler: () => Promise<void>;
+  deleteHandler: (recipeId: string) => Promise<void>;
 }
 
-export const Recipe: React.FC<RecipeProps> = ({
-  recipe,
-  updateHandler,
-  deleteHandler,
-}) => {
+export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
   const { show, toggleShow } = useShow();
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState<string>();
   const [reviewTitle, setReviewTitle] = useState<string>();
-  const [saved, setSaved] = useState<boolean>();
-  const [liked, setLiked] = useState<boolean>();
   const [recipeModalVisible, setRecipeModalVisible] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [isPostingValoration, setIsPostingValoration] = useState(false);
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
+  const { save, removeSave } = useSave(recipe, user);
+  const { like, removeLike } = useLike(recipe, user);
   const { data: session } = useSession();
-
-  useEffect(() => {
-    if (recipe && user) {
-      if (recipe.saved.includes(user._id)) {
-        setSaved(true);
-      } else {
-        setSaved(false);
-      }
-      if (recipe.likes.includes(user._id)) {
-        setLiked(true);
-      } else {
-        setLiked(false);
-      }
-    }
-  }, [recipe, user]);
-
-  const likeHandler = async () => {
-    setLiked(true);
-    recipe.likes.push(user._id);
-    await updateHandler({ likes: recipe.likes });
-  };
-
-  const removeLikeHandler = async () => {
-    setLiked(false);
-    recipe.likes = recipe.likes.filter((like: string) => like !== user._id);
-    await updateHandler({ likes: recipe.likes });
-  };
+  const { valorate, removeValoration } = useValoration(recipe, user);
 
   const saveHandler = async () => {
-    setSaved(true);
-    recipe.saved.push(user._id);
-    await updateHandler({ saved: recipe.saved });
+    await save();
   };
 
   const removeSaveHandler = async () => {
-    setSaved(false);
-    recipe.saved = recipe.saved.filter((save: string) => save !== user._id);
-    await updateHandler({ saved: recipe.saved });
+    await removeSave();
+  };
+
+  const likeHandler = async () => {
+    await like();
+  };
+
+  const removeLikeHandler = async () => {
+    await removeLike();
   };
 
   const valorationHandler = async () => {
-    setIsPostingValoration(true);
-    recipe.valorations.push(
-      comment
-        ? {
-            user: {
-              id: user._id,
-              name: user.nickname ? user.nickname : user.username,
-              image: user.image,
-            },
-            title: reviewTitle as string,
-            rating: rating,
-            date: new Date().toISOString(),
-            comment: comment,
-          }
-        : {
-            user: {
-              id: user._id,
-              name: user.nickname ? user.nickname : user.username,
-              image: user.image,
-            },
-            title: reviewTitle as string,
-            rating: rating,
-            date: new Date().toISOString(),
-          }
-    );
-    await updateHandler({ valorations: recipe.valorations });
     toggleShow();
-    setIsPostingValoration(false);
+    await valorate(reviewTitle as string, rating, comment);
   };
 
   const removeValorationHandler = async () => {
-    recipe.valorations = recipe.valorations.filter(
-      (valoration: any) => valoration.user.id !== user._id
-    );
-    await updateHandler({ valorations: recipe.valorations });
+    await removeValoration();
   };
 
   const handleDelete = async () => {
     setIsDeleting(true);
     setRecipeModalVisible(false);
-    await deleteHandler();
+    await deleteHandler(recipe._id);
     setIsDeleting(false);
   };
 
@@ -140,7 +85,7 @@ export const Recipe: React.FC<RecipeProps> = ({
       <div className={styles.container}>
         <div className={styles.top__section}>
           <div className={styles.left__subsection}>
-            <Title style={styles.title}>{recipe.name}</Title>
+            <Title className={styles.title}>{recipe.name}</Title>
             <div className={styles.field} data-testid='form-field'>
               <div className={styles.user__info}>
                 <Avatar
@@ -148,7 +93,7 @@ export const Recipe: React.FC<RecipeProps> = ({
                   username={recipe.user.name}
                   link={`/${recipe.user.name}`}
                   size={30}
-                  style={styles.avatar}
+                  className={styles.avatar}
                 />
                 <Link
                   href={`/${recipe.user.name}`}
@@ -236,15 +181,22 @@ export const Recipe: React.FC<RecipeProps> = ({
                 />
                 {session ? (
                   loggedUserIsLoading ? (
-                    <Loading />
-                  ) : saved ? (
+                    <Loading
+                      css={{
+                        position: 'absolute',
+                        bottom: '0.6rem',
+                        right: '3.75rem',
+                        zIndex: '1',
+                      }}
+                    />
+                  ) : recipe.saved.includes(user._id) ? (
                     <BsBookmarkFill
-                      className={styles.marked__save__button}
+                      className={styles.checked__save__button}
                       onClick={removeSaveHandler}
                     />
                   ) : (
                     <BsBookmarkFill
-                      className={styles.unmarked__save__button}
+                      className={styles.unchecked__save__button}
                       onClick={saveHandler}
                     />
                   )
@@ -252,19 +204,26 @@ export const Recipe: React.FC<RecipeProps> = ({
                   <BsBookmarkFill className={styles.disabled__save__button} />
                 )}
                 <p className={styles.saved__count}>
-                  {utils.countRecipeStat(recipe.saved)}
+                  {utils.countInteractions(recipe.saved)}
                 </p>
                 {session ? (
                   loggedUserIsLoading ? (
-                    <Loading />
-                  ) : liked ? (
+                    <Loading
+                      css={{
+                        position: 'absolute',
+                        bottom: '0.6rem',
+                        right: '1.5rem',
+                        zIndex: '1',
+                      }}
+                    />
+                  ) : recipe.likes.includes(user._id) ? (
                     <BsHeartFill
-                      className={styles.marked__like__button}
+                      className={styles.checked__like__button}
                       onClick={removeLikeHandler}
                     />
                   ) : (
                     <BsHeartFill
-                      className={styles.unmarked__like__button}
+                      className={styles.unchecked__like__button}
                       onClick={likeHandler}
                     />
                   )
@@ -272,7 +231,7 @@ export const Recipe: React.FC<RecipeProps> = ({
                   <BsHeartFill className={styles.disabled__like__button} />
                 )}
                 <p className={styles.likes__count}>
-                  {utils.countRecipeStat(recipe.likes)}
+                  {utils.countInteractions(recipe.likes)}
                 </p>
               </div>
             </div>
@@ -339,7 +298,7 @@ export const Recipe: React.FC<RecipeProps> = ({
                 user &&
                 !show &&
                 !utils.isAlreadyValorated(recipe.valorations, user) && (
-                  <Button style={styles.add__button} onClick={toggleShow}>
+                  <Button className={styles.add__button} onClick={toggleShow}>
                     <BiEditAlt />
                     Escribir&nbsp;reseña
                   </Button>
@@ -375,11 +334,11 @@ export const Recipe: React.FC<RecipeProps> = ({
                   </div>
                   <div className={styles.review__buttons}>
                     <Button
-                      style={styles.send__button}
+                      className={styles.send__button}
                       onClick={valorationHandler}
                       disabled={reviewTitle ? false : true}
                     >
-                      {isPostingValoration ? <Loading /> : 'Enviar'}
+                      Enviar
                     </Button>
                   </div>
                 </div>
@@ -419,7 +378,7 @@ export const Recipe: React.FC<RecipeProps> = ({
         </div>
         {session && user && user._id === recipe.user.id && (
           <Button
-            style={styles.delete__button}
+            className={styles.delete__button}
             onClick={() => setRecipeModalVisible(true)}
           >
             {isDeleting ? <Loading /> : 'Eliminar receta'}

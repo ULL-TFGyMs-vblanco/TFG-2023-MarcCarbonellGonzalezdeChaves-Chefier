@@ -166,6 +166,13 @@ exports.RecipeSchema = new mongoose_1.Schema({
         },
         default: [],
     },
+    averageRating: {
+        type: Number,
+        default: function () {
+            const average = this.valorations.reduce((acc, valoration) => acc + valoration.rating, 0) / this.valorations.length;
+            return isNaN(average) ? 0 : average;
+        },
+    },
     likes: {
         type: [String],
         default: [],

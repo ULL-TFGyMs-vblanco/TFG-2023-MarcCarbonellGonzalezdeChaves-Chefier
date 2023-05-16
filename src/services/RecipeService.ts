@@ -1,6 +1,6 @@
 import { NewRecipeData, ValidUpdate } from 'recipe-types';
 import axios from '../../axios_config';
-import { getSession } from 'next-auth/react';
+import { getSession, signOut } from 'next-auth/react';
 
 const RecipeService = {
   postRecipe: async (url: string, recipe: NewRecipeData) => {
@@ -11,7 +11,7 @@ const RecipeService = {
     const { image, ...recipeData } = recipe;
     formData.append('recipe', JSON.stringify(recipeData));
     try {
-      await axios({
+      const res = await axios({
         method: 'post',
         url: url,
         data: formData,
@@ -21,7 +21,11 @@ const RecipeService = {
           Provider: session?.user.provider as string,
         },
       });
+      return res.data.recipe;
     } catch (err: any) {
+      if (err.response.status === 401) {
+        await signOut({ callbackUrl: '/auth/login?error=sessionExpired' });
+      }
       throw new Error(err.response.data.error.message);
     }
   },
@@ -40,6 +44,9 @@ const RecipeService = {
         }
       );
     } catch (err: any) {
+      if (err.response.status === 401) {
+        await signOut({ callbackUrl: '/auth/login?error=sessionExpired' });
+      }
       throw new Error(err.response.data.error.message);
     }
   },
@@ -54,6 +61,9 @@ const RecipeService = {
         },
       });
     } catch (err: any) {
+      if (err.response.status === 401) {
+        await signOut({ callbackUrl: '/auth/login?error=sessionExpired' });
+      }
       throw new Error(err.response.data.error.message);
     }
   },

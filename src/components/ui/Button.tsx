@@ -4,7 +4,7 @@ import styles from 'src/styles/ui/Button.module.css';
 interface ButtonProps {
   children: ReactNode;
   submit?: boolean;
-  style?: string;
+  className?: string;
   testid?: string;
   onClick?: () => void | Promise<void>;
   disabled?: boolean;
@@ -13,7 +13,7 @@ interface ButtonProps {
 export const Button: React.FC<ButtonProps> = ({
   children,
   submit,
-  style,
+  className,
   testid,
   onClick,
   disabled = false,
@@ -21,7 +21,7 @@ export const Button: React.FC<ButtonProps> = ({
   return (
     <button
       type={submit ? 'submit' : 'button'}
-      className={`${styles.button} ${style}`}
+      className={`${styles.button} ${className}`}
       data-testid={testid}
       onClick={onClick}
       disabled={disabled}

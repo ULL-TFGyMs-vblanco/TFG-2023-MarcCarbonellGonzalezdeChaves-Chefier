@@ -3,7 +3,7 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
-import AuthService from '@/services/AuthService';
+import UserService from '@/services/UserService';
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
     async signIn({ user, account }) {
       if (account?.provider !== 'credentials') {
         try {
-          await AuthService.register('/auth/register', {
+          await UserService.register('/auth/register', {
             email: user.email,
             username: user.name,
             image: user.image,

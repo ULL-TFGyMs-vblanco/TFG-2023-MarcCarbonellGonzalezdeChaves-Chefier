@@ -9,7 +9,7 @@ import {
 import Register from '../src/pages/auth/register';
 import axios from '../axios_config';
 import Login from '../src/pages/auth/login';
-import AuthService from '../src/services/AuthService';
+import UserService from '../src/services/UserService';
 import { MockImageProps } from '../src/types/test';
 
 describe('Error modal', (): void => {
@@ -50,7 +50,7 @@ describe('Error modal', (): void => {
     throw new Error('error');
   });
 
-  const spy2 = vi.spyOn(AuthService, 'login').mockImplementation(async () => {
+  const spy2 = vi.spyOn(UserService, 'login').mockImplementation(async () => {
     throw new Error('error');
   });
 

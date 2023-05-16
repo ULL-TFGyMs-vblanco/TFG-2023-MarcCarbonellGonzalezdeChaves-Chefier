@@ -25,6 +25,8 @@ export const lightTheme = createTheme({
       accent500: '#590C01',
       accent600: '#290501',
 
+      popover: '#EFF0F6',
+
       link: '$secondary600',
     },
     fonts: {},

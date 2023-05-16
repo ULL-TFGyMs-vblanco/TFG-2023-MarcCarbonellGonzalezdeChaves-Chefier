@@ -1,0 +1,111 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: var(--nextui-space-15) var(--nextui-space-19);
+}
+
+.user__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: var(--nextui-space-7);
+}
+
+.user__atname {
+  font-weight: var(--font-weight-light);
+}
+
+.follow__btn {
+  padding-top: var(--nextui-space-2);
+  padding-bottom: var(--nextui-space-2);
+  height: 2.5rem;
+  width: 7rem;
+}
+
+.unfollow__btn {
+  padding-top: var(--nextui-space-2);
+  padding-bottom: var(--nextui-space-2);
+  height: 2.5rem;
+  width: 7rem;
+  border: var(--nextui-borderWeights-bold) solid var(--nextui-colors-accent100);
+  color: var(--nextui-colors-accent100);
+  background-color: var(--nextui-colors-primary100);
+}
+
+.unfollow__btn:hover {
+  background-color: var(--nextui-colors-primary200);
+}
+
+.stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin: var(--nextui-space-5) 0;
+  gap: 15%;
+}
+
+.stats__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: var(--nextui-space-2) 0;
+}
+
+.stat__name {
+  text-align: center;
+  width: 4.5rem;
+}
+
+.divider {
+  width: 100%;
+}
+
+.tabs__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  gap: 15%;
+}
+
+.selected__tab {
+  text-align: center;
+  color: var(--nextui-colors-secondary600);
+  border-bottom: var(--nextui-borderWeights-extrabold) solid
+    var(--nextui-colors-accent100);
+  padding: var(--nextui-space-6) 0;
+  font-weight: var(--nextui-fontWeights-bold);
+  width: 7rem;
+}
+
+.selected__tab:hover {
+  cursor: pointer;
+}
+
+.unselected__tab {
+  text-align: center;
+  color: var(--nextui-colors-secondary600);
+  border-bottom: var(--nextui-borderWeights-extrabold) solid transparent;
+  padding: var(--nextui-space-6) 0;
+  width: 7rem;
+}
+
+.unselected__tab:hover {
+  cursor: pointer;
+  color: var(--nextui-colors-secondary100);
+}
+
+.recipe__list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 10rem;
+}

@@ -53,7 +53,22 @@ let id = '';
 describe('Recipe router', (): void => {
   describe('Get recipes', (): void => {
     it('should return all the recipes', async () => {
-      await request(server).get('/api/recipes').expect(200);
+      await request(server).get('/api/recipes?page=1').expect(200);
+    });
+    it('should return error 400 for invelid page index', async () => {
+      await request(server).get('/api/recipes').expect(400);
+      await request(server).get('/api/recipes?page=x').expect(400);
+      await request(server).get('/api/recipes?page=-1').expect(400);
+    });
+    it('should return search results with filters', async () => {
+      await request(server)
+        .get('/api/recipes?page=1&search=pizza&difficulty=easy')
+        .expect(200);
+    });
+    it('should return following users recipes', async () => {
+      await request(server)
+        .get('/api/recipes?page=1&following=123456789012345678901234')
+        .expect(200);
     });
   });
   describe('Post a recipe', () => {

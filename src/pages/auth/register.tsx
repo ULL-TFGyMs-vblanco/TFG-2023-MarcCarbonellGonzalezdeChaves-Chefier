@@ -1,8 +1,7 @@
 import { CustomModal } from '../../components/ui/CustomModal';
 import { RegisterForm } from '../../components/auth/RegisterForm';
-import { RegisterData } from 'auth-types';
-import styles from 'src/styles/auth/Auth.module.css';
-import AuthService from '../../services/AuthService';
+import { RegisterData } from 'user-types';
+import UserService from '../../services/UserService';
 import { useEffect, useState } from 'react';
 import { SignInOptions } from 'next-auth/react';
 import { useRouter } from 'next/router';
@@ -19,7 +18,7 @@ const Register: React.FC = () => {
 
   const registerHandler = async (data: RegisterData) => {
     try {
-      await AuthService.register('/auth/register', data);
+      await UserService.register('/auth/register', data);
       return true;
     } catch (error) {
       const errorMessage = (error as Error).toString();
@@ -30,7 +29,7 @@ const Register: React.FC = () => {
 
   const loginHandler = async (provider: string, data: SignInOptions) => {
     try {
-      await AuthService.login(provider, data);
+      await UserService.login(provider, data);
     } catch (error) {
       const errorMessage = (error as Error).toString();
       setError(errorMessage);
@@ -46,7 +45,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div>
       <RegisterForm
         onRegister={registerHandler}
         onOauthLogin={loginHandler}

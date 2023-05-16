@@ -83,8 +83,8 @@ describe('Verify token middleware', (): void => {
     };
   });
 
-  vi.mock('../src/utils/APIUtils.ts', async () => {
-    const mod: any = await vi.importActual('../src/utils/APIUtils.ts');
+  vi.mock('../src/utils/ImageKitUtils.ts', async () => {
+    const mod: any = await vi.importActual('../src/utils/ImageKitUtils.ts');
     return {
       default: {
         ...mod.default,

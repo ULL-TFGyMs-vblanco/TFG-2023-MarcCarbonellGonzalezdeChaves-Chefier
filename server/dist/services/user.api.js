@@ -26,11 +26,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUser = exports.login = exports.register = void 0;
+exports.updateUser = exports.getUser = exports.login = exports.register = void 0;
 const jwt = __importStar(require("jsonwebtoken"));
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
+const UserUtils_1 = __importDefault(require("../utils/UserUtils"));
 // Register a user
 const register = async ({ response, request }) => {
     if (!request.body.username || !request.body.email) {
@@ -40,7 +41,7 @@ const register = async ({ response, request }) => {
         });
         return;
     }
-    const user = await APIUtils_1.default.buildUserDocument(request);
+    const user = await UserUtils_1.default.buildUserDocument(request);
     await user_1.User.create(user)
         .then((user) => {
         APIUtils_1.default.setResponse(response, 200, { user });
@@ -71,7 +72,7 @@ const register = async ({ response, request }) => {
         }
         else {
             APIUtils_1.default.setResponse(response, 500, {
-                error: { message: err },
+                error: { message: 'Error registering user', error: err },
                 request: request.body,
             });
         }
@@ -112,7 +113,7 @@ const login = async ({ response, request }) => {
     })
         .catch((err) => {
         APIUtils_1.default.setResponse(response, 500, {
-            error: err,
+            error: { message: 'Error logging in', error: err },
             request: request.body,
         });
     });
@@ -120,7 +121,7 @@ const login = async ({ response, request }) => {
 exports.login = login;
 // Get a user's data by username
 const getUser = async ({ response, request }, filter) => {
-    await user_1.User.findOne(filter, ['-password', '-saved', '-email', '-__v'])
+    await user_1.User.findOne(filter, ['-password', '-email', '-__v'])
         .then((user) => {
         if (user) {
             APIUtils_1.default.setResponse(response, 200, user);
@@ -134,14 +135,68 @@ const getUser = async ({ response, request }, filter) => {
     })
         .catch((err) => {
         APIUtils_1.default.setResponse(response, 500, {
-            error: err,
+            error: { message: 'Error retrieving user', error: err },
             requerequest: request.body,
         });
     });
 };
 exports.getUser = getUser;
+// Update a user's data
+const updateUser = async ({ response, request, params }, options = { multiple: false }) => {
+    if (!UserUtils_1.default.isValidUpdate(request.body.update)) {
+        APIUtils_1.default.setResponse(response, 400, {
+            error: { message: 'Update is not permitted' },
+            request: request.body,
+        });
+    }
+    else {
+        try {
+            if (options.multiple) {
+                const result = await user_1.User.updateMany(params, request.body.update, {
+                    new: true,
+                    runValidators: true,
+                });
+                APIUtils_1.default.setResponse(response, 200, result);
+            }
+            else {
+                if (!params.id) {
+                    APIUtils_1.default.setResponse(response, 400, {
+                        error: { message: 'An id must be provided' },
+                        request: request.body,
+                    });
+                }
+                else {
+                    const element = await user_1.User.findByIdAndUpdate(params.id, request.body.update, {
+                        new: true,
+                        runValidators: true,
+                    });
+                    if (!element) {
+                        APIUtils_1.default.setResponse(response, 404, {
+                            error: { message: 'User not found' },
+                            request: request.body,
+                        });
+                    }
+                    else {
+                        APIUtils_1.default.setResponse(response, 200, element);
+                    }
+                }
+            }
+        }
+        catch (err) {
+            APIUtils_1.default.setResponse(response, 500, {
+                error: {
+                    message: 'Error updating the user',
+                    error: err,
+                },
+                request: request.body,
+            });
+        }
+    }
+};
+exports.updateUser = updateUser;
 module.exports = {
     register: exports.register,
     login: exports.login,
     getUser: exports.getUser,
+    updateUser: exports.updateUser,
 };

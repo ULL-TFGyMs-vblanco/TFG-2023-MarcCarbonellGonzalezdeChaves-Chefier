@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { RxHamburgerMenu } from 'react-icons/rx';
+import { RxHamburgerMenu, RxPlus } from 'react-icons/rx';
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
 import { useToggleMenu } from 'src/hooks/useToggleMenu';
 import styles from 'src/styles/layout/Navbar.module.css';
@@ -10,13 +10,26 @@ import { signOut, useSession } from 'next-auth/react';
 import { Loading, useTheme } from '@nextui-org/react';
 import { useTheme as useNextTheme } from 'next-themes';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
+import { useRouter } from 'next/router';
 
 export const Navbar: React.FC = () => {
-  const { isDark } = useTheme();
-  const { setTheme } = useNextTheme();
-  const [firstToggle, toggle, handleToggle] = useToggleMenu();
-  const { data: session } = useSession();
+  const { firstToggle, toggle, handleToggle } = useToggleMenu();
   const { user, isLoading, isError } = useLoggedUser();
+  const { data: session } = useSession();
+  const { setTheme } = useNextTheme();
+  const { isDark } = useTheme();
+  const router = useRouter();
+
+  const searchHandler = async (e: any) => {
+    if (e.key !== 'Enter') return;
+    if (e.target.value === '') await router.push('/');
+    else await router.push(`/?search=${e.target.value}`);
+    e.target.blur();
+  };
+
+  const newRecipeHandler = async () => {
+    await router.push('/recipe/new');
+  };
 
   const signOutHandler = async () => {
     await signOut();
@@ -54,15 +67,24 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
           <div className={styles.right__elements}>
+            <button
+              className={styles.new__recipe__btn}
+              onClick={newRecipeHandler}
+              data-testid='new__recipe__btn'
+            >
+              <RxPlus size={25} />
+            </button>
             <input
               className={styles.search}
               type='text'
-              placeholder='Search...'
+              placeholder='Buscar...'
               data-testid='search'
+              onKeyDown={(e) => searchHandler(e)}
             />
             <div className={styles.theme__button__container}>
               <button
                 className={styles.theme__button}
+                data-testid='theme-button'
                 onClick={() => {
                   setTheme(isDark ? 'light' : 'dark');
                 }}
@@ -81,18 +103,33 @@ export const Navbar: React.FC = () => {
                   href='/recipe/new'
                   data-testid='navigation-link'
                 >
-                  New&nbsp;Recipe
+                  Nueva&nbsp;Receta
                 </Link>
               </li>
               {session ? (
                 <>
+                  {isLoading ? (
+                    <Loading />
+                  ) : (
+                    !isError && (
+                      <li className={styles.links__col}>
+                        <Link
+                          className={styles.link}
+                          href={`/?following=${user._id}`}
+                          data-testid='navigation-link'
+                        >
+                          Siguiendo
+                        </Link>
+                      </li>
+                    )
+                  )}
                   <li className={styles.links__col}>
                     <button
                       className={styles.logout__button}
                       data-testid='logout-button'
                       onClick={signOutHandler}
                     >
-                      Log&nbsp;out
+                      Cerrar&nbsp;sesión
                     </button>
                   </li>
                   <li className={styles.links__col}>
@@ -103,10 +140,10 @@ export const Navbar: React.FC = () => {
                     ) : (
                       <Avatar
                         source={user.image}
-                        link={'/profile'}
+                        link={`/${user.username}`}
                         size={40}
                         username='Default'
-                        style={styles.avatar}
+                        className={styles.avatar}
                         testid='avatar'
                       />
                     )}
@@ -119,7 +156,7 @@ export const Navbar: React.FC = () => {
                     href='/auth/login'
                     data-testid='navigation-link'
                   >
-                    Log&nbsp;in
+                    Iniciar&nbsp;sesión
                   </Link>
                 </li>
               )}

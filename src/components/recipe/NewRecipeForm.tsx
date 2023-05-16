@@ -63,7 +63,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
   };
 
   return (
-    <Card style={styles.form__card} testid='form-card'>
+    <Card testid='form-card'>
       <div className={styles.form__container}>
         <form
           autoComplete='off'
@@ -72,8 +72,8 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
           data-testid='new-recipe-form'
         >
           <div className={styles.header}>
-            <Title style={styles.title}>Nueva receta</Title>
-            <Button style={styles.post__button} testid='post-button' submit>
+            <Title className={styles.title}>Nueva receta</Title>
+            <Button className={styles.post__button} testid='post-button' submit>
               {postingRecipe ? <Loading /> : 'Publicar'}
             </Button>
           </div>
@@ -348,7 +348,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                       priority
                     />
                     <Button
-                      style={styles.remove__image__button}
+                      className={styles.remove__image__button}
                       onClick={() => setImage(null)}
                     >
                       <div
@@ -372,7 +372,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                 <div style={{ display: 'flex', gap: '1rem' }}>
                   <p>Ingredientes</p>
                   <Button
-                    style={styles.add__button}
+                    className={styles.add__button}
                     onClick={() =>
                       ingAppend({ name: '', quantity: undefined, unit: '' })
                     }
@@ -474,7 +474,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                     <div>
                       {ingredients.length > 1 && (
                         <Button
-                          style={styles.remove__button}
+                          className={styles.remove__button}
                           onClick={() => ingRemove(index)}
                         >
                           <AiOutlineMinus size={15} />
@@ -490,7 +490,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                 <div style={{ display: 'flex', gap: '1rem' }}>
                   <p>Pasos</p>
                   <Button
-                    style={styles.add__button}
+                    className={styles.add__button}
                     onClick={() => insAppend({ step: '' })}
                   >
                     <BsPlus size={30} />
@@ -531,7 +531,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                     <div>
                       {instructions.length > 1 && (
                         <Button
-                          style={styles.remove__button}
+                          className={styles.remove__button}
                           onClick={() => insRemove(index)}
                         >
                           <AiOutlineMinus size={15} />

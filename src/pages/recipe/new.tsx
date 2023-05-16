@@ -1,11 +1,11 @@
-import { NewRecipeForm } from '@/components/recipe/NewRecipeForm';
-import { CustomModal } from '@/components/ui/CustomModal';
-import { useLoggedUser } from '@/hooks/useLoggedUser';
-import RecipeService from '@/services/RecipeService';
+import { NewRecipeForm } from '../../components/recipe/NewRecipeForm';
+import { CustomModal } from '../../components/ui/CustomModal';
+import { useLoggedUser } from '../../hooks/useLoggedUser';
+import RecipeService from '../../services/RecipeService';
+import UserService from '../../services/UserService';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { NewRecipeFormInputs } from 'recipe-types';
-import styles from 'src/styles/recipe/NewRecipe.module.css';
 
 const NewRecipe: React.FC = () => {
   const [error, setError] = useState<string | string[]>();
@@ -38,7 +38,10 @@ const NewRecipe: React.FC = () => {
       image: image,
     };
     try {
-      await RecipeService.postRecipe('/recipe', recipe);
+      const { _id } = await RecipeService.postRecipe('/recipe', recipe);
+      await UserService.updateUser(`/user/${user._id}`, {
+        $push: { recipes: _id },
+      });
       return true;
     } catch (error) {
       const errorMessage = (error as Error).toString();
@@ -48,7 +51,7 @@ const NewRecipe: React.FC = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div>
       <NewRecipeForm
         onPostRecipe={postRecipeHandler}
         toggleModal={setSuccesModal}
@@ -69,7 +72,8 @@ const NewRecipe: React.FC = () => {
         handler={setErrorModal}
         onClose={closeErrorModalHandler}
       >
-        {`${error}`}
+        Oops! Ha ocurrido un error al publicar tu receta. Inténtalo de nuevo más
+        tarde.
       </CustomModal>
     </div>
   );
