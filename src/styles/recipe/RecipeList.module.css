@@ -54,6 +54,7 @@
 .filterbox__popover__container {
   background-color: var(--nextui-colors-popover);
   padding: var(--nextui-space-12);
+  padding-top: var(--nextui-space-8);
   width: 20rem;
 }
 
