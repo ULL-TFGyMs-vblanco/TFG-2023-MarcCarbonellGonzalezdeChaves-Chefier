@@ -169,6 +169,7 @@ const updateUser = async ({ response, request, params }, options = { multiple: f
                     const element = await user_1.User.findByIdAndUpdate(params.id, request.body.update, {
                         new: true,
                         runValidators: true,
+                        upsert: true,
                     });
                     if (!element) {
                         APIUtils_1.default.setResponse(response, 404, {

@@ -175,6 +175,7 @@ const updateRecipe = async ({ response, request, params }) => {
                 const element = await recipe_1.Recipe.findByIdAndUpdate(params.id, request.body.update, {
                     new: true,
                     runValidators: true,
+                    upsert: true,
                 });
                 if (!element) {
                     APIUtils_1.default.setResponse(response, 404, {

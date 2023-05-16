@@ -145,6 +145,7 @@ export const updateUser = async (
             {
               new: true,
               runValidators: true,
+              upsert: true,
             }
           );
           if (!element) {
