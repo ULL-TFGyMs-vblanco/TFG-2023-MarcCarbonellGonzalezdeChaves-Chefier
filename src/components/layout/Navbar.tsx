@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { RxHamburgerMenu } from 'react-icons/rx';
+import { RxHamburgerMenu, RxPlus } from 'react-icons/rx';
 import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
 import { useToggleMenu } from 'src/hooks/useToggleMenu';
 import styles from 'src/styles/layout/Navbar.module.css';
@@ -25,6 +25,10 @@ export const Navbar: React.FC = () => {
     if (e.target.value === '') await router.push('/');
     else await router.push(`/?search=${e.target.value}`);
     e.target.blur();
+  };
+
+  const newRecipeHandler = async () => {
+    await router.push('/recipe/new');
   };
 
   const signOutHandler = async () => {
@@ -63,6 +67,13 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
           <div className={styles.right__elements}>
+            <button
+              className={styles.new__recipe__btn}
+              onClick={newRecipeHandler}
+              data-testid='new__recipe__btn'
+            >
+              <RxPlus size={25} />
+            </button>
             <input
               className={styles.search}
               type='text'
@@ -85,6 +96,15 @@ export const Navbar: React.FC = () => {
               </button>
             </div>
             <ul className={styles.links}>
+              <li className={styles.links__col}>
+                <Link
+                  className={styles.link}
+                  href='/recipe/new'
+                  data-testid='navigation-link'
+                >
+                  Nueva&nbsp;Receta
+                </Link>
+              </li>
               {session ? (
                 <>
                   {isLoading ? (
@@ -102,15 +122,6 @@ export const Navbar: React.FC = () => {
                       </li>
                     )
                   )}
-                  <li className={styles.links__col}>
-                    <Link
-                      className={styles.link}
-                      href='/recipe/new'
-                      data-testid='navigation-link'
-                    >
-                      Nueva&nbsp;Receta
-                    </Link>
-                  </li>
                   <li className={styles.links__col}>
                     <button
                       className={styles.logout__button}
