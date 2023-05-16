@@ -39,7 +39,7 @@ export default class RecipeUtils {
     Object.keys(filters).forEach((filter) => {
       if (filter === 'cookTime' || filter === 'averageRating') {
         const limits = filters[filter].split('-').map((limit: string) => {
-          return parseInt(limit);
+          return Number(limit);
         });
         const filterObject = {};
         filterObject[filter] = {
