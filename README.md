@@ -1,6 +1,8 @@
 # Chefier
 ## TFG 2022/23 - Marc Carbonell González de Chaves
 
+[![Tests](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/tests.yml/badge.svg)](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/tests.yml) [![Coverage Status](https://coveralls.io/repos/github/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/badge.svg?branch=main)](https://coveralls.io/github/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier?branch=main) [![SonarCloud](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/sonarcloud.yml)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
