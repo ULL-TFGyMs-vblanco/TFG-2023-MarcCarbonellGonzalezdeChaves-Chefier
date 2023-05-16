@@ -81,7 +81,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
       }
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { averageRating, cookTime, tags, difficulty, ...rest } = router.query;
+    const { rating: rtng, cookTime, tags, difficulty, ...rest } = router.query;
     if (filters.length > 0) {
       if (rest.search || rest.following) {
         router.push(`/${encode(rest)}&${filters.join('&')}`);

@@ -79,8 +79,8 @@ const getRecipes = async ({ response, request, query }) => {
         const [minRating, maxRating] = RecipeUtils_1.default.getMinAndMaxRating(recipes);
         const [minTime, maxTime] = RecipeUtils_1.default.getMinAndMaxTime(recipes);
         APIUtils_1.default.setResponse(response, 200, {
-            list: recipes.slice((pageIndex - 1) * 20, pageIndex * 20),
-            totalPages: Math.ceil(recipes.length / 20),
+            list: recipes.slice((pageIndex - 1) * 1, pageIndex * 1),
+            totalPages: Math.ceil(recipes.length / 1),
             metadata: {
                 minRating,
                 maxRating,

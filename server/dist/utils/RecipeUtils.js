@@ -56,7 +56,7 @@ RecipeUtils.getAggregateMatch = (filters) => {
                 lunch: 'Almuerzo',
                 dinner: 'Cena',
                 dessert: 'Postre',
-                snack: 'Snack',
+                snack: 'Picoteo',
                 drink: 'Bebida',
             };
             Object.keys(tags).forEach((tag) => {
