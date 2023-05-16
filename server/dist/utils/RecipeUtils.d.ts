@@ -1,4 +1,5 @@
 import { RecipeDocumentInterface } from 'src/models/recipe';
+import { UserDocumentInterface } from '../models/user';
 export default class RecipeUtils {
     static isValidUpdate: (update: any) => boolean;
     static getAggregateSearch: (searchTerms: string) => {
@@ -7,6 +8,7 @@ export default class RecipeUtils {
             filter: object[];
         };
     };
+    static getAggregateFollowing: (user: UserDocumentInterface | null) => {};
     static getAggregateMatch: (filters: any) => {
         $and: object[];
     };

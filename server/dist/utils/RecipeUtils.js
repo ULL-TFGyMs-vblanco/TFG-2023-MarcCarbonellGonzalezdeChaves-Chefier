@@ -36,9 +36,24 @@ RecipeUtils.getAggregateSearch = (searchTerms) => {
     });
     return search;
 };
+RecipeUtils.getAggregateFollowing = (user) => {
+    const filterObject = {};
+    if (user && user.following.length > 0) {
+        filterObject['user.id'] = {
+            $in: user.following,
+        };
+        return filterObject;
+    }
+    else {
+        filterObject['user.id'] = {
+            $in: ['0'],
+        };
+    }
+    return filterObject;
+};
 RecipeUtils.getAggregateMatch = (filters) => {
     const match = { $and: [] };
-    Object.keys(filters).forEach((filter) => {
+    Object.keys(filters).forEach(async (filter) => {
         if (filter === 'cookTime' || filter === 'averageRating') {
             const limits = filters[filter].split('-').map((limit) => {
                 return Number(limit);
@@ -85,18 +100,11 @@ RecipeUtils.getAggregateMatch = (filters) => {
             });
             match.$and.push({ $or });
         }
-        else if (filter === 'likes' ||
-            filter === 'saved' ||
-            filter === 'following') {
+        else if (filter === 'likes' || filter === 'saved') {
             const filterObject = {};
             filterObject[filter] = {
                 $in: [filters[filter]],
             };
-            match.$and.push(filterObject);
-        }
-        else {
-            const filterObject = {};
-            filterObject[filter] = filters[filter];
             match.$and.push(filterObject);
         }
     });

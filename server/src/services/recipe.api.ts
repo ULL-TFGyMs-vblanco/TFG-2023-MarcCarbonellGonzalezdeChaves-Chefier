@@ -2,6 +2,7 @@ import { Context } from 'koa';
 import { Recipe, RecipeDocumentInterface } from '../models/recipe';
 import APIUtils from '../utils/APIUtils';
 import RecipeUtils from '../utils/RecipeUtils';
+import { User } from '../models/user';
 
 // Get recipes by id
 export const getRecipe = async ({ response, request, params }: Context) => {
@@ -47,6 +48,7 @@ export const getRecipes = async ({ response, request, query }: Context) => {
   }
   const { page, search, ...filters } = query;
   const pageIndex = Number(page);
+
   const aggregate: object[] = [];
   if (typeof search === 'string') {
     const $search = RecipeUtils.getAggregateSearch(search);
@@ -54,10 +56,18 @@ export const getRecipes = async ({ response, request, query }: Context) => {
   }
   if (Object.keys(filters).length > 0) {
     const $match = RecipeUtils.getAggregateMatch(filters);
-    aggregate.push({ $match });
+    if (typeof filters.following === 'string') {
+      const user = await User.findById(filters.following);
+      let filterObject = {};
+      filterObject = RecipeUtils.getAggregateFollowing(user);
+      $match.$and.push(filterObject);
+    }
+    if ($match.$and.length > 0) aggregate.push({ $match });
   }
+
   try {
     let recipes: RecipeDocumentInterface[] = [];
+
     if (aggregate.length === 0) {
       recipes = await Recipe.find().sort({ date: -1 });
     } else {
@@ -67,6 +77,7 @@ export const getRecipes = async ({ response, request, query }: Context) => {
         recipes = await Recipe.aggregate(aggregate).sort({ date: -1 });
       }
     }
+
     const [minRating, maxRating] = RecipeUtils.getMinAndMaxRating(recipes);
     const [minTime, maxTime] = RecipeUtils.getMinAndMaxTime(recipes);
     APIUtils.setResponse(response, 200, {

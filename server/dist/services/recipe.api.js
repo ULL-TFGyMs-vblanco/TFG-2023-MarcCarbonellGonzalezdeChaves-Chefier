@@ -7,6 +7,7 @@ exports.deleteRecipe = exports.updateRecipe = exports.postRecipe = exports.getRe
 const recipe_1 = require("../models/recipe");
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
 const RecipeUtils_1 = __importDefault(require("../utils/RecipeUtils"));
+const user_1 = require("../models/user");
 // Get recipes by id
 const getRecipe = async ({ response, request, params }) => {
     await recipe_1.Recipe.findById(params.id)
@@ -61,7 +62,14 @@ const getRecipes = async ({ response, request, query }) => {
     }
     if (Object.keys(filters).length > 0) {
         const $match = RecipeUtils_1.default.getAggregateMatch(filters);
-        aggregate.push({ $match });
+        if (typeof filters.following === 'string') {
+            const user = await user_1.User.findById(filters.following);
+            let filterObject = {};
+            filterObject = RecipeUtils_1.default.getAggregateFollowing(user);
+            $match.$and.push(filterObject);
+        }
+        if ($match.$and.length > 0)
+            aggregate.push({ $match });
     }
     try {
         let recipes = [];
