@@ -8,7 +8,7 @@ export default class RecipeUtils {
         };
     };
     static getAggregateMatch: (filters: any) => {
-        $or: object[];
+        $and: object[];
     };
     static getAverageRating: (recipe: RecipeDocumentInterface) => number;
     static getMinAndMaxRating: (recipes: RecipeDocumentInterface[]) => number[];

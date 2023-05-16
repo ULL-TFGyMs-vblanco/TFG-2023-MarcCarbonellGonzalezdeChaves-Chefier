@@ -35,7 +35,7 @@ export default class RecipeUtils {
   };
 
   public static getAggregateMatch = (filters: any) => {
-    const match = { $or: [] as object[] };
+    const match = { $and: [] as object[] };
     Object.keys(filters).forEach((filter) => {
       if (filter === 'cookTime' || filter === 'averageRating') {
         const limits = filters[filter].split('-').map((limit: string) => {
@@ -46,7 +46,7 @@ export default class RecipeUtils {
           $gte: limits[0],
           $lte: limits[1],
         };
-        match.$or.push(filterObject);
+        match.$and.push(filterObject);
       } else if (filter === 'tags') {
         const tags = {
           breakfast: 'Desayuno',
@@ -56,26 +56,30 @@ export default class RecipeUtils {
           snack: 'Picoteo',
           drink: 'Bebida',
         };
+        const $or: object[] = [];
         Object.keys(tags).forEach((tag) => {
           if (filters.tags.includes(tag)) {
             const filterObject = {};
             filterObject[`tags.${tag}`] = tags[tag];
-            match.$or.push(filterObject);
+            $or.push(filterObject);
           }
         });
+        match.$and.push({ $or });
       } else if (filter === 'difficulty') {
         const difficulties = {
           easy: 'Fácil',
           medium: 'Media',
           hard: 'Difícil',
         };
+        const $or: object[] = [];
         Object.keys(difficulties).forEach((difficulty) => {
           if (filters.difficulty.includes(difficulty)) {
             const filterObject = {};
             filterObject[`difficulty`] = difficulties[difficulty];
-            match.$or.push(filterObject);
+            $or.push(filterObject);
           }
         });
+        match.$and.push({ $or });
       } else if (
         filter === 'likes' ||
         filter === 'saved' ||
@@ -85,11 +89,11 @@ export default class RecipeUtils {
         filterObject[filter] = {
           $in: [filters[filter]],
         };
-        match.$or.push(filterObject);
+        match.$and.push(filterObject);
       } else {
         const filterObject = {};
         filterObject[filter] = filters[filter];
-        match.$or.push(filterObject);
+        match.$and.push(filterObject);
       }
     });
     return match;

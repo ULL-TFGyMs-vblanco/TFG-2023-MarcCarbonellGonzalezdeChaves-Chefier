@@ -37,7 +37,7 @@ RecipeUtils.getAggregateSearch = (searchTerms) => {
     return search;
 };
 RecipeUtils.getAggregateMatch = (filters) => {
-    const match = { $or: [] };
+    const match = { $and: [] };
     Object.keys(filters).forEach((filter) => {
         if (filter === 'cookTime' || filter === 'averageRating') {
             const limits = filters[filter].split('-').map((limit) => {
@@ -48,7 +48,7 @@ RecipeUtils.getAggregateMatch = (filters) => {
                 $gte: limits[0],
                 $lte: limits[1],
             };
-            match.$or.push(filterObject);
+            match.$and.push(filterObject);
         }
         else if (filter === 'tags') {
             const tags = {
@@ -59,13 +59,15 @@ RecipeUtils.getAggregateMatch = (filters) => {
                 snack: 'Picoteo',
                 drink: 'Bebida',
             };
+            const $or = [];
             Object.keys(tags).forEach((tag) => {
                 if (filters.tags.includes(tag)) {
                     const filterObject = {};
                     filterObject[`tags.${tag}`] = tags[tag];
-                    match.$or.push(filterObject);
+                    $or.push(filterObject);
                 }
             });
+            match.$and.push({ $or });
         }
         else if (filter === 'difficulty') {
             const difficulties = {
@@ -73,13 +75,15 @@ RecipeUtils.getAggregateMatch = (filters) => {
                 medium: 'Media',
                 hard: 'Difícil',
             };
+            const $or = [];
             Object.keys(difficulties).forEach((difficulty) => {
                 if (filters.difficulty.includes(difficulty)) {
                     const filterObject = {};
                     filterObject[`difficulty`] = difficulties[difficulty];
-                    match.$or.push(filterObject);
+                    $or.push(filterObject);
                 }
             });
+            match.$and.push({ $or });
         }
         else if (filter === 'likes' ||
             filter === 'saved' ||
@@ -88,12 +92,12 @@ RecipeUtils.getAggregateMatch = (filters) => {
             filterObject[filter] = {
                 $in: [filters[filter]],
             };
-            match.$or.push(filterObject);
+            match.$and.push(filterObject);
         }
         else {
             const filterObject = {};
             filterObject[filter] = filters[filter];
-            match.$or.push(filterObject);
+            match.$and.push(filterObject);
         }
     });
     return match;

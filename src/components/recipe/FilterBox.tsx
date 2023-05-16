@@ -35,10 +35,10 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
   const router = useRouter();
 
   const [rating, setRating] = useState<number[]>(
-    typeof router.query.rating === 'string'
+    typeof router.query.averageRating === 'string'
       ? [
-          Number(router.query.rating.split('-')[0]),
-          Number(router.query.rating.split('-')[1]),
+          Number(router.query.averageRating.split('-')[0]),
+          Number(router.query.averageRating.split('-')[1]),
         ]
       : [recipes.minRating, recipes.maxRating]
   );
@@ -65,7 +65,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
     const { tags: tagFilter, difficulty: difficulyFilter } = data;
     const filters: string[] = [];
     if (rating[0] !== recipes.minRating || rating[1] !== recipes.maxRating) {
-      filters.push(`rating=${rating[0]}-${rating[1]}`);
+      filters.push(`averageRating=${rating[0]}-${rating[1]}`);
     }
     if (time[0] !== recipes.minTime || time[1] !== recipes.maxTime) {
       filters.push(`cookTime=${time[0]}-${time[1]}`);
@@ -81,7 +81,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
       }
     });
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { rating: rtng, cookTime, tags, difficulty, ...rest } = router.query;
+    const { averageRating, cookTime, tags, difficulty, ...rest } = router.query;
     if (filters.length > 0) {
       if (rest.search || rest.following) {
         router.push(`/${encode(rest)}&${filters.join('&')}`);
