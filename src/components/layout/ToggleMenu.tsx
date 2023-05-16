@@ -74,7 +74,7 @@ export const ToggleMenu: React.FC<{
                 <li>
                   <Link
                     className={styles.link}
-                    href={`/?following${user._id}`}
+                    href={`/?following=${user._id}`}
                     data-testid='toggle-navigation-link'
                     onClick={toggleHandler}
                   >
