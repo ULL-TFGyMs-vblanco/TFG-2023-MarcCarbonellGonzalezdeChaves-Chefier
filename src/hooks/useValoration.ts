@@ -2,6 +2,7 @@ import RecipeService from '@/services/RecipeService';
 import { User } from 'user-types';
 import { Recipe } from 'recipe-types';
 import { useSWRConfig } from 'swr';
+import RecipeUtils from '@/utils/RecipeUtils';
 
 // Custom hook to handle the user valoration of a recipe
 export function useValoration(recipe: Recipe, user: User) {
@@ -33,13 +34,19 @@ export function useValoration(recipe: Recipe, user: User) {
             date: new Date().toISOString(),
           },
     ];
+    const uptdatedRating = RecipeUtils.getAverageRating(updatedValorations);
     await mutate(
       '/recipe/' + recipe._id,
-      { ...recipe, valorations: updatedValorations },
+      {
+        ...recipe,
+        valorations: updatedValorations,
+        averageRating: uptdatedRating,
+      },
       false
     );
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       valorations: updatedValorations,
+      averageRating: uptdatedRating,
     });
   };
 
@@ -47,13 +54,19 @@ export function useValoration(recipe: Recipe, user: User) {
     const updatedValorations = recipe.valorations.filter(
       (valoration: any) => valoration.user.id !== user._id
     );
+    const uptdatedRating = RecipeUtils.getAverageRating(updatedValorations);
     await mutate(
       '/recipe/' + recipe._id,
-      { ...recipe, valorations: updatedValorations },
+      {
+        ...recipe,
+        valorations: updatedValorations,
+        averageRating: uptdatedRating,
+      },
       false
     );
     await RecipeService.updateRecipe(`/recipe/${recipe._id}`, {
       valorations: updatedValorations,
+      averageRating: uptdatedRating,
     });
   };
 

@@ -12,6 +12,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (router.query.error !== undefined) {
+      setError(router.query.error as string);
       setVisible(true);
     } else {
       setVisible(false);

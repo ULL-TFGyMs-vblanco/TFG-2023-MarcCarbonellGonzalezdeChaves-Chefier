@@ -55,6 +55,7 @@ declare module 'recipe-types' {
     likes?: string[];
     saved?: string[];
     valorations?: Valoration[];
+    averageRating?: number;
   }
 
   interface NewRecipeFormInputs {

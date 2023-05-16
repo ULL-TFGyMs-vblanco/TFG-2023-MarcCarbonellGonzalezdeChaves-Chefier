@@ -6,7 +6,7 @@ class RecipeUtils {
 exports.default = RecipeUtils;
 _a = RecipeUtils;
 RecipeUtils.isValidUpdate = (update) => {
-    const allowedUpdates = ['likes', 'saved', 'valorations'];
+    const allowedUpdates = ['likes', 'saved', 'valorations', 'averageRating'];
     const updateEntries = Object.entries(update);
     const actualUpdates = updateEntries.map((entry) => {
         if (entry[0] === '$push' || entry[0] === '$pull') {

@@ -167,7 +167,6 @@ export const updateRecipe = async ({ response, request, params }: Context) => {
           {
             new: true,
             runValidators: true,
-            upsert: true,
           }
         );
         if (!element) {
