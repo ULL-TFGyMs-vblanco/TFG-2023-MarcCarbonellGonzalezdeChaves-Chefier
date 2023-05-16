@@ -140,6 +140,42 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
         </div>
         <hr />
         <div className={styles.section}>
+          <p className={styles.section__title}>Dificultad</p>
+          <div className={styles.checkboxes}>
+            {recipes.difficulties.easy && (
+              <div className={styles.checkbox}>
+                <input
+                  type='checkbox'
+                  defaultChecked={router.query.tags?.includes('Fácil')}
+                  {...register('difficulty.easy')}
+                />
+                <label>Fácil</label>
+              </div>
+            )}
+            {recipes.difficulties.medium && (
+              <div className={styles.checkbox}>
+                <input
+                  type='checkbox'
+                  defaultChecked={router.query.tags?.includes('Media')}
+                  {...register('difficulty.medium')}
+                />
+                <label>Media</label>
+              </div>
+            )}
+            {recipes.difficulties.hard && (
+              <div className={styles.checkbox}>
+                <input
+                  type='checkbox'
+                  defaultChecked={router.query.tags?.includes('Difícil')}
+                  {...register('difficulty.hard')}
+                />
+                <label>Difícil</label>
+              </div>
+            )}
+          </div>
+        </div>
+        <hr />
+        <div className={styles.section}>
           <p className={styles.section__title}>Etiquetas</p>
           <div className={styles.checkboxes}>
             {recipes.tags.breakfast && (
@@ -200,42 +236,6 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
                   {...register('tags.drink')}
                 />
                 <label>Bebida</label>
-              </div>
-            )}
-          </div>
-        </div>
-        <hr />
-        <div className={styles.section}>
-          <p className={styles.section__title}>Dificultad</p>
-          <div className={styles.checkboxes}>
-            {recipes.difficulties.easy && (
-              <div className={styles.checkbox}>
-                <input
-                  type='checkbox'
-                  defaultChecked={router.query.tags?.includes('Fácil')}
-                  {...register('difficulty.easy')}
-                />
-                <label>Fácil</label>
-              </div>
-            )}
-            {recipes.difficulties.medium && (
-              <div className={styles.checkbox}>
-                <input
-                  type='checkbox'
-                  defaultChecked={router.query.tags?.includes('Media')}
-                  {...register('difficulty.medium')}
-                />
-                <label>Media</label>
-              </div>
-            )}
-            {recipes.difficulties.hard && (
-              <div className={styles.checkbox}>
-                <input
-                  type='checkbox'
-                  defaultChecked={router.query.tags?.includes('Difícil')}
-                  {...register('difficulty.hard')}
-                />
-                <label>Difícil</label>
               </div>
             )}
           </div>

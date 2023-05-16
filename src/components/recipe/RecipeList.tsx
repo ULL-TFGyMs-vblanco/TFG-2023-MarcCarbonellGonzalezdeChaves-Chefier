@@ -84,7 +84,7 @@ export const RecipeList: React.FC<RecipeListProps> = ({
                 </Popover.Trigger>
                 <Popover.Content>
                   <div className={styles.filterbox__popover__container}>
-                    <FilterBox recipes={baseResults.list} />
+                    <FilterBox recipes={baseResults.metadata} />
                   </div>
                 </Popover.Content>
               </Popover>
