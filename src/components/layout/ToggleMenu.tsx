@@ -35,7 +35,7 @@ export const ToggleMenu: React.FC<{
                 <Avatar
                   source={user.image}
                   link={`/${user.username}`}
-                  size={55}
+                  size={75}
                   username='Default'
                   className={styles.avatar}
                   testid='toggle_avatar'
