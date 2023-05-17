@@ -14,7 +14,7 @@ export default function Home() {
     } else if (router.query.search) {
       setTitle(`Resultados de búsqueda para "${router.query.search}"`);
     } else {
-      setTitle('Explorar recetas');
+      setTitle('Explorar');
     }
   }, [router.query]);
 

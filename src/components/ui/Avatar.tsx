@@ -8,6 +8,7 @@ interface AvatarProps {
   className?: string;
   testid?: string;
   link?: string;
+  onClick?: () => void;
 }
 
 export const Avatar: React.FC<AvatarProps> = ({
@@ -17,6 +18,7 @@ export const Avatar: React.FC<AvatarProps> = ({
   className,
   testid,
   link,
+  onClick,
 }) => {
   return (
     <>
@@ -30,6 +32,7 @@ export const Avatar: React.FC<AvatarProps> = ({
             display: 'block',
             minWidth: `${size}px`,
           }}
+          onClick={onClick}
         >
           <Image
             src={source}

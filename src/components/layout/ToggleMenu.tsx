@@ -13,6 +13,7 @@ export const ToggleMenu: React.FC<{
   const { user, isLoading, isError } = useLoggedUser();
 
   const signOutHandler = async () => {
+    toggleHandler();
     await signOut();
   };
 
@@ -39,13 +40,22 @@ export const ToggleMenu: React.FC<{
                   username='Default'
                   className={styles.avatar}
                   testid='toggle_avatar'
+                  onClick={toggleHandler}
                 />
-                <Link href={`/${user.username}`} data-testid='toggle-avatar'>
+                <Link
+                  href={`/${user.username}`}
+                  data-testid='toggle-avatar'
+                  onClick={toggleHandler}
+                >
                   <p className={styles.nickname} data-testid='user-name'>
                     {user.nickname ? user.nickname : user.username}
                   </p>
                 </Link>
-                <Link href={`/${user.username}`} data-testid='toggle-avatar'>
+                <Link
+                  href={`/${user.username}`}
+                  data-testid='toggle-avatar'
+                  onClick={toggleHandler}
+                >
                   <p className={styles.username} data-testid='user-atname'>
                     @{user.username}
                   </p>
