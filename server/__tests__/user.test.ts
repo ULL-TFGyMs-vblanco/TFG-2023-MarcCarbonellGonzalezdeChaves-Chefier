@@ -135,7 +135,7 @@ describe('User router', (): void => {
           email: 'incorrectEmail@test.com',
           password: 'incorrectPassword',
         })
-        .expect(404);
+        .expect(400);
     });
   });
   describe('Get user', (): void => {

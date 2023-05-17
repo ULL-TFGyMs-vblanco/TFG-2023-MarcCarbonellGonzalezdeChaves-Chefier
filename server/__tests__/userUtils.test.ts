@@ -30,7 +30,7 @@ describe('User utils', (): void => {
     expect(user.image).toEqual(
       'https://ik.imagekit.io/czvxqgafa/images/avatar_default.jpg'
     );
-    expect(user.username).toEqual('username1234567891234');
+    expect(user.username).toEqual('username12');
   });
   it('should return true as update is valid', async () => {
     const update = {
