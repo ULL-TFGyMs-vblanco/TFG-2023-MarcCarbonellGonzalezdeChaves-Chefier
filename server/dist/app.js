@@ -10,6 +10,7 @@ require("./db/mongoose");
 const default_routes_1 = require("./routers/default.routes");
 const user_routes_1 = require("./routers/user.routes");
 const recipe_routes_1 = require("./routers/recipe.routes");
+const koa2_swagger_ui_1 = require("koa2-swagger-ui");
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const cors = require('@koa/cors');
 exports.app = new koa_1.default();
@@ -20,4 +21,11 @@ exports.app
     .use(user_routes_1.userRouter.allowedMethods())
     .use(recipe_routes_1.recipeRouter.routes())
     .use(recipe_routes_1.recipeRouter.allowedMethods())
-    .use(default_routes_1.defaultRouter.routes());
+    .use((0, koa2_swagger_ui_1.koaSwagger)({
+    routePrefix: '/docs',
+    swaggerOptions: {
+        url: '/swagger.json',
+    },
+}))
+    .use(default_routes_1.defaultRouter.routes())
+    .use(default_routes_1.defaultRouter.allowedMethods());

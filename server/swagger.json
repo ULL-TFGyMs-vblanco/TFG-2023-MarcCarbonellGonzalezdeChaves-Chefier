@@ -1,0 +1,1518 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "API Chefier.",
+    "description": "Esta API se ancarga de manejar los datos de la de aplicación web de recetas Chefier.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://chefier-backend.vercel.app/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "usuarios",
+      "description": "Maneja los datos de los usuarios de la aplicación"
+    },
+    {
+      "name": "recetas",
+      "description": "Maneja los datos de las recetas de la aplicación"
+    }
+  ],
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["usuarios"],
+        "summary": "Registra los datos de un nuevo usuario en la base de datos",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserRegister"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) Los datos del cliente han sido registrados con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccesRegister"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(Bad Request) Los datos enviados son incorrectos o faltan datos requeridos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["usuarios"],
+        "summary": "Inicia sesión",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) Inicio de sesión realizado con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccesLogin"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(Bad Request) Los datos enviados son incorrectos o faltan datos requeridos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/username/{username}": {
+      "get": {
+        "tags": ["usuarios"],
+        "summary": "Obtener datos de un usuario a través de su nombre de usuario",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "description": "Nombre de usuario del usuario a obtener",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) Datos del usuario obtenidos con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "(NotFound) No se han encontrado los datos que estaba buscando",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/email/{email}": {
+      "get": {
+        "tags": ["usuarios"],
+        "summary": "Obtener datos de un usuario a través de su correo electrónico",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "description": "Correo electrónico del usuario a obtener",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) Datos del usuario obtenidos con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "(NotFound) No se han encontrado los datos que estaba buscando",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{id}": {
+      "patch": {
+        "tags": ["usuarios"],
+        "summary": "Modificar los datos de un usuario",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "header",
+            "description": "Nombre del proveedor con el que se ha iniciado sesión (credentials, google o github)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador del usuario a actualizar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) Datos del usuario actualizados con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(Bad Request) Los datos enviados son incorrectos o faltan datos requeridos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "(NotFound) No se han encontrado los datos que estaba buscando",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/users": {
+      "patch": {
+        "tags": ["usuarios"],
+        "summary": "Modificar los datos de múltiples usuarios.",
+        "description": "Es posible aplicar filtros al conjunto de usuarios a actualizar a través de la cadena de consulta. Los filtros que no sean válidos serán ignorados.",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "header",
+            "description": "Nombre del proveedor con el que se ha iniciado sesión (credentials, google o github)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "registerDate",
+            "in": "query",
+            "description": "Identificador de una receta. Filtra por los usuarios que le han dado me gusta a dicha receta.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "birthdate",
+            "in": "query",
+            "description": "Identificador de una receta. Filtra por los usuarios que le han dado me gusta a dicha receta.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "recipes",
+            "in": "query",
+            "description": "Identificador de una receta. Filtra por los usuarios que le han dado me gusta a dicha receta.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "following",
+            "in": "query",
+            "description": "Identificador de una receta. Filtra por los usuarios que le han dado me gusta a dicha receta.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "followers",
+            "in": "query",
+            "description": "Identificador de una receta. Filtra por los usuarios que le han dado me gusta a dicha receta.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "likes",
+            "in": "query",
+            "description": "Identificador de una receta. Filtra por los usuarios que le han dado me gusta a dicha receta.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "saved",
+            "in": "query",
+            "description": "Identificador de una receta. Filtra por los usuarios que le han guardado dicha receta.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) Datos del usuario actualizados con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(Bad Request) Los datos enviados son incorrectos o faltan datos requeridos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "(NotFound) No se han encontrado los datos que estaba buscando",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/recipe/{id}": {
+      "get": {
+        "tags": ["recetas"],
+        "summary": "Obtener datos de una receta a través de su identificador",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador de la receta a obtener",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) Datos de la receta obtenidos con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recipe"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "(NotFound) No se han encontrado los datos que estaba buscando",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["recetas"],
+        "summary": "Eliminar una receta",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "header",
+            "description": "Nombre del proveedor con el que se ha iniciado sesión (credentials, google o github)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador de la receta a actualizar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) Receta eliminada con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recipe"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "(NotFound) No se han encontrado los datos que estaba buscando",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ]
+      },
+      "patch": {
+        "tags": ["recetas"],
+        "summary": "Modificar los datos de una receta",
+        "parameters": [
+          {
+            "name": "provider",
+            "in": "header",
+            "description": "Nombre del proveedor con el que se ha iniciado sesión (credentials, google o github)",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identificador de la receta a actualizar",
+            "required": true,
+            "style": "simple",
+            "explode": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipeUpdate"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) Datos de la receta actualizados con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recipe"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(Bad Request) Los datos enviados son incorrectos o faltan datos requeridos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "(NotFound) No se han encontrado los datos que estaba buscando",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ]
+      }
+    },
+    "/recipes": {
+      "get": {
+        "tags": ["recetas"],
+        "summary": "Obtener lista de recetas",
+        "description": "Es posible aplicar filtros al conjunto de recetas a obtener a través de la cadena de consulta. Los filtros que no sean válidos serán ignorados.",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Índice de paginación. Cada página de resultados tiene un tamaño máximo de 15 recetas.",
+            "required": true,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Términos de búsqueda.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "following",
+            "in": "query",
+            "description": "Identificador del usuario del que se quieren obtener las recetas publicadas por los usuarios a los que sigue.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "cookTime",
+            "in": "query",
+            "description": "Tiempo mínimo y máximo de preparación de la receta. Debe dividirse cada valor por un '-'. Ejemplo: '5-10'",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "averageRating",
+            "in": "query",
+            "description": "Puntuación máxima y mínima de la receta. Debe dividirse cada valor por un '-'. Ejemplo: '2.5-5'",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "Etiqueta de la recta (breakfast, lunch, dinner, dessert, snack o drink)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "dificulty",
+            "in": "query",
+            "description": "Dificultad de la recta (easy, medium o hard)",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "likes",
+            "in": "query",
+            "description": "Identificador de un usuario. Filtra por las recetas a las que dicho usuario ha dado me gusta.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "saved",
+            "in": "query",
+            "description": "Identificador de un usuario. Filtra por las recetas que dicho usuario ha guardado.",
+            "required": false,
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "(OK) Recetas obtenidas con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Recipe"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(Bad Request) Los datos enviados son incorrectos o faltan datos requeridos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/recipe": {
+      "post": {
+        "tags": ["recetas"],
+        "summary": "Registrar receta en la base de datos",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RecipePost"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "(OK) Los datos de la receta han sido registrados con éxito.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccesRecipePost"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "(Bad Request) Los datos enviados son incorrectos o faltan datos requeridos.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error en el servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "AccessToken": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "required": [
+          "_id",
+          "email",
+          "followers",
+          "following",
+          "likes",
+          "recipes",
+          "registerDate",
+          "saved",
+          "username"
+        ],
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Identificador"
+          },
+          "username": {
+            "type": "string",
+            "description": "Nombre de usuario"
+          },
+          "email": {
+            "type": "string",
+            "description": "Correo electrónico"
+          },
+          "password": {
+            "type": "string",
+            "description": "Contraseña"
+          },
+          "image": {
+            "type": "string",
+            "description": "Url de la foto de perfil"
+          },
+          "nickname": {
+            "type": "string",
+            "description": "Apodo"
+          },
+          "description": {
+            "type": "string",
+            "description": "Descripción"
+          },
+          "registerDate": {
+            "type": "string",
+            "description": "Fecha de registro"
+          },
+          "birthdate": {
+            "type": "string",
+            "description": "Fecha de nacimiento"
+          },
+          "likes": {
+            "type": "array",
+            "description": "Identificadores de las recetas a las que el usuario a dado me gusta",
+            "items": {
+              "type": "string"
+            }
+          },
+          "saved": {
+            "type": "array",
+            "description": "Identificadores de las recetas que el usuario ha guardado",
+            "items": {
+              "type": "string"
+            }
+          },
+          "recipes": {
+            "type": "array",
+            "description": "Identificadores de las recetas que el usuario ha publicado",
+            "items": {
+              "type": "string"
+            }
+          },
+          "following": {
+            "type": "array",
+            "description": "Identificadores de los usuarios a los que el usuario sigue",
+            "items": {
+              "type": "string"
+            }
+          },
+          "followers": {
+            "type": "array",
+            "description": "Identificadores de los usuarios que siguen al usuario",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "SessionData": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nombre de usuario"
+          },
+          "email": {
+            "type": "string",
+            "description": "Correo electrónico"
+          },
+          "image": {
+            "type": "string",
+            "description": "Url de la foto de perfil"
+          },
+          "accessToken": {
+            "type": "string",
+            "description": "Token de acceso a las rutas protegidas de la API"
+          }
+        }
+      },
+      "UserUpdate": {
+        "required": ["update"],
+        "type": "object",
+        "properties": {
+          "update": {
+            "$ref": "#/components/schemas/UserUpdate_update"
+          }
+        }
+      },
+      "UserRegister": {
+        "required": ["email", "username"],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "description": "Nombre de usuario"
+          },
+          "email": {
+            "type": "string",
+            "description": "Correo electrónico"
+          },
+          "password": {
+            "type": "string",
+            "description": "Contraseña"
+          },
+          "image": {
+            "type": "string",
+            "description": "Url de la foto de perfil"
+          }
+        }
+      },
+      "UserLogin": {
+        "required": ["email", "password"],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Correo electrónico"
+          },
+          "password": {
+            "type": "string",
+            "description": "Contraseña"
+          }
+        }
+      },
+      "SuccesRegister": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/User"
+          }
+        }
+      },
+      "SuccesLogin": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/SessionData"
+          }
+        }
+      },
+      "Recipe": {
+        "required": [
+          "averageRating",
+          "cookTime",
+          "date",
+          "description",
+          "difficulty",
+          "image",
+          "ingredients",
+          "instructions",
+          "likes",
+          "name",
+          "rations",
+          "saved",
+          "tags",
+          "user",
+          "valorations"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nombre"
+          },
+          "user": {
+            "$ref": "#/components/schemas/Recipe_user"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Recipe_image"
+          },
+          "description": {
+            "type": "string",
+            "description": "Descripción"
+          },
+          "date": {
+            "type": "string",
+            "description": "Fecha de publicación"
+          },
+          "tags": {
+            "$ref": "#/components/schemas/Recipe_tags"
+          },
+          "difficutly": {
+            "type": "string",
+            "description": "Dificultad, puede ser fácil, media o difícil"
+          },
+          "cookTime": {
+            "type": "number",
+            "description": "Tiempo de preparación"
+          },
+          "rations": {
+            "type": "number",
+            "description": "Número de raciones"
+          },
+          "ingredients": {
+            "type": "array",
+            "description": "Ingredientes",
+            "items": {
+              "$ref": "#/components/schemas/Recipe_ingredients"
+            }
+          },
+          "instructions": {
+            "type": "array",
+            "description": "Instrucciones",
+            "items": {
+              "$ref": "#/components/schemas/Recipe_instructions"
+            }
+          },
+          "valorations": {
+            "type": "array",
+            "description": "Valoraciones y reseñas",
+            "items": {
+              "$ref": "#/components/schemas/Recipe_valorations"
+            }
+          }
+        }
+      },
+      "RecipeUpdate": {
+        "required": ["update"],
+        "type": "object",
+        "properties": {
+          "update": {
+            "$ref": "#/components/schemas/RecipeUpdate_update"
+          }
+        }
+      },
+      "RecipePost": {
+        "required": [
+          "cookTime",
+          "description",
+          "difficulty",
+          "image",
+          "ingredients",
+          "instructions",
+          "name",
+          "rations",
+          "user"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nombre"
+          },
+          "user": {
+            "$ref": "#/components/schemas/Recipe_user"
+          },
+          "image": {
+            "$ref": "#/components/schemas/Recipe_image"
+          },
+          "description": {
+            "type": "string",
+            "description": "Descripción"
+          },
+          "difficutly": {
+            "type": "string",
+            "description": "Dificultad, puede ser fácil, media o difícil"
+          },
+          "cookTime": {
+            "type": "number",
+            "description": "Tiempo de preparación"
+          },
+          "rations": {
+            "type": "number",
+            "description": "Número de raciones"
+          },
+          "ingredients": {
+            "type": "array",
+            "description": "Ingredientes",
+            "items": {
+              "$ref": "#/components/schemas/Recipe_ingredients"
+            }
+          },
+          "instructions": {
+            "type": "array",
+            "description": "Instrucciones",
+            "items": {
+              "$ref": "#/components/schemas/Recipe_instructions"
+            }
+          }
+        }
+      },
+      "SuccesRecipePost": {
+        "type": "object",
+        "properties": {
+          "recipe": {
+            "$ref": "#/components/schemas/Recipe"
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "oneOf": [
+              {
+                "type": "string",
+                "description": "Mensaje de error"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "Mensaje de error"
+                  },
+                  "error": {
+                    "type": "object",
+                    "description": "Cuerpo del error"
+                  },
+                  "request": {
+                    "type": "object",
+                    "description": "Cuerpo de la petición que ha producido el error"
+                  }
+                }
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "message": {
+                    "type": "string",
+                    "description": "Mensaje de error"
+                  },
+                  "errors": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "message": {
+                          "type": "string",
+                          "description": "Mensaje de error"
+                        },
+                        "field": {
+                          "type": "string",
+                          "description": "Campo en el que se encuentra el error"
+                        }
+                      }
+                    }
+                  },
+                  "request": {
+                    "type": "object",
+                    "description": "Cuerpo de la petición que ha producido el error"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "description": "Error"
+      },
+      "UserUpdate_update": {
+        "type": "object",
+        "properties": {
+          "likes": {
+            "type": "array",
+            "description": "Identificadores de las recetas a las que el usuario a dado me gusta",
+            "items": {
+              "type": "string"
+            }
+          },
+          "saved": {
+            "type": "array",
+            "description": "Identificadores de las recetas que el usuario ha guardado",
+            "items": {
+              "type": "string"
+            }
+          },
+          "recipes": {
+            "type": "array",
+            "description": "Identificadores de las recetas que el usuario ha publicado",
+            "items": {
+              "type": "string"
+            }
+          },
+          "following": {
+            "type": "array",
+            "description": "Identificadores de los usuarios a los que el usuario sigue",
+            "items": {
+              "type": "string"
+            }
+          },
+          "followers": {
+            "type": "array",
+            "description": "Identificadores de los usuarios que siguen al usuario",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "Recipe_user": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identificador del usuario"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nombre de usuario o apodo en caso de tenerlo"
+          },
+          "image": {
+            "type": "string",
+            "description": "Url de la foto de perfil"
+          }
+        },
+        "description": "Datos del usuario creador"
+      },
+      "Recipe_image": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "description": "Url"
+          },
+          "fileId": {
+            "type": "string",
+            "description": "Identificador de la imagen en el CDN"
+          }
+        },
+        "description": "Foto de la receta"
+      },
+      "Recipe_tags": {
+        "type": "object",
+        "properties": {
+          "breakfast": {
+            "type": "boolean",
+            "description": "Desayuno"
+          },
+          "lunch": {
+            "type": "boolean",
+            "description": "Almuerzo"
+          },
+          "dinner": {
+            "type": "boolean",
+            "description": "Cena"
+          },
+          "dessert": {
+            "type": "boolean",
+            "description": "Postre"
+          },
+          "snack": {
+            "type": "boolean",
+            "description": "Picote"
+          },
+          "drink": {
+            "type": "boolean",
+            "description": "Bebida"
+          }
+        },
+        "description": "Etiquetas"
+      },
+      "Recipe_ingredients": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Nombre"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "Cantidad"
+          },
+          "unit": {
+            "type": "number",
+            "description": "Unidad"
+          }
+        }
+      },
+      "Recipe_instructions": {
+        "type": "object",
+        "properties": {
+          "step": {
+            "type": "string",
+            "description": "Paso"
+          }
+        }
+      },
+      "Recipe_user_1_user": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Identificador del usuario"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nombre de usuario o apodo en caso de tenerlo"
+          },
+          "image": {
+            "type": "string",
+            "description": "Url de la foto de perfil"
+          }
+        },
+        "description": "Usuario creador de la valoración"
+      },
+      "Recipe_user_1": {
+        "required": ["date", "rating", "title", "user"],
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/Recipe_user_1_user"
+          },
+          "title": {
+            "type": "string",
+            "description": "Título"
+          },
+          "comment": {
+            "type": "string",
+            "description": "Comentario"
+          },
+          "rating": {
+            "type": "number",
+            "description": "Puntuación"
+          },
+          "date": {
+            "type": "string",
+            "description": "Fecha de publicación"
+          }
+        },
+        "description": "Usuario creador de la valoración"
+      },
+      "Recipe_valorations": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "$ref": "#/components/schemas/Recipe_user_1"
+          },
+          "averageRating": {
+            "type": "number",
+            "description": "Puntuación media entre todas las valoraciones"
+          },
+          "likes": {
+            "type": "array",
+            "description": "Identificadores de los usuarios que le han dado me gusta a la receta",
+            "items": {
+              "type": "string"
+            }
+          },
+          "saved": {
+            "type": "array",
+            "description": "Identificadores de los usuarios que han guardado a la receta",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "RecipeUpdate_update": {
+        "type": "object",
+        "properties": {
+          "likes": {
+            "type": "array",
+            "description": "Identificadores de los usuarios que han dado me gusta a la receta",
+            "items": {
+              "type": "string"
+            }
+          },
+          "saved": {
+            "type": "array",
+            "description": "Identificadores de los usuarios que han guardado la receta",
+            "items": {
+              "type": "string"
+            }
+          },
+          "valorations": {
+            "type": "array",
+            "description": "Valoraciones y reseñas",
+            "items": {
+              "type": "string"
+            }
+          },
+          "averageRating": {
+            "type": "number",
+            "description": "Puntuación media entre todas las valoraciones"
+          }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "(Unauthorized) No autorizado",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "(NotFound) No se han encontrado los datos que estaba buscando",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "(Bad Request) Los datos enviados son incorrectos o faltan datos requeridos.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "Error en el servidor",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "AccessToken": {
+        "type": "apiKey",
+        "description": "Token de acceso a las rutas protegidas de la API. Debe tener el prefijo 'Bearer'. Ejemplo: 'Bearer 12345'",
+        "name": "Authorization",
+        "in": "header"
+      }
+    }
+  }
+}
