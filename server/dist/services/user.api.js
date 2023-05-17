@@ -27,6 +27,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updateUser = exports.getUser = exports.login = exports.register = void 0;
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const jwt = __importStar(require("jsonwebtoken"));
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -105,7 +106,7 @@ const login = async ({ response, request }) => {
             });
         }
         else {
-            APIUtils_1.default.setResponse(response, 404, {
+            APIUtils_1.default.setResponse(response, 400, {
                 error: 'Incorrect email or password',
                 request: request.body,
             });
@@ -136,7 +137,7 @@ const getUser = async ({ response, request }, filter) => {
         .catch((err) => {
         APIUtils_1.default.setResponse(response, 500, {
             error: { message: 'Error retrieving user', error: err },
-            requerequest: request.body,
+            request: request.body,
         });
     });
 };
@@ -145,14 +146,15 @@ exports.getUser = getUser;
 const updateUser = async ({ response, request, params }, options = { multiple: false }) => {
     if (!UserUtils_1.default.isValidUpdate(request.body.update)) {
         APIUtils_1.default.setResponse(response, 400, {
-            error: { message: 'Update is not permitted' },
+            error: 'Update is not permitted',
             request: request.body,
         });
     }
     else {
         try {
             if (options.multiple) {
-                const result = await user_1.User.updateMany(params, request.body.update, {
+                const { _id, username, email, image, password, nickname, description, ...filters } = params;
+                const result = await user_1.User.updateMany(filters, request.body.update, {
                     new: true,
                     runValidators: true,
                 });
@@ -172,7 +174,7 @@ const updateUser = async ({ response, request, params }, options = { multiple: f
                     });
                     if (!element) {
                         APIUtils_1.default.setResponse(response, 404, {
-                            error: { message: 'User not found' },
+                            error: 'User not found',
                             request: request.body,
                         });
                     }
@@ -183,13 +185,21 @@ const updateUser = async ({ response, request, params }, options = { multiple: f
             }
         }
         catch (err) {
-            APIUtils_1.default.setResponse(response, 500, {
-                error: {
-                    message: 'Error updating the user',
-                    error: err,
-                },
-                request: request.body,
-            });
+            if (err.name === 'ValidationError') {
+                const errors = Object.keys(err.errors).map((key) => {
+                    return { message: err.errors[key].message, field: key };
+                });
+                APIUtils_1.default.setResponse(response, 400, {
+                    error: { message: err._message, errors: errors },
+                    request: request.body,
+                });
+            }
+            else {
+                APIUtils_1.default.setResponse(response, 500, {
+                    error: { message: 'Error updating user', error: err },
+                    request: request.body,
+                });
+            }
         }
     }
 };

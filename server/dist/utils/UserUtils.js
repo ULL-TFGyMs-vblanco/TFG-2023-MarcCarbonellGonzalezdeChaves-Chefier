@@ -11,44 +11,36 @@ class UserUtils {
 exports.default = UserUtils;
 _a = UserUtils;
 UserUtils.buildUserDocument = async (request) => {
-    const email = request.body.email;
-    // Google and Github users have image but don't have passwords
-    if (request.body.image) {
-        if (request.body.username.length > 20) {
-            request.body.username = request.body.username.substring(0, 10).trim();
-        }
-        let username = request.body.username
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase()
-            .replace(/ /g, '_');
-        let existingUser = await user_1.User.findOne({
-            username: username,
+    if (request.body.username.length > 20) {
+        request.body.username = request.body.username.substring(0, 10).trim();
+    }
+    let username = request.body.username
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/ /g, '_');
+    let existingUser = await user_1.User.findOne({
+        username: username,
+    });
+    let suffix = 1;
+    while (existingUser) {
+        existingUser = await user_1.User.findOne({
+            username: username + suffix,
         });
-        let suffix = 1;
-        while (existingUser) {
-            existingUser = await user_1.User.findOne({
-                username: username + suffix,
-            });
-            suffix++;
-            if (!existingUser)
-                username += suffix - 1;
-        }
-        const image = request.body.image;
-        const user = new user_1.User({ username, email, image });
-        return user;
-        // Credential users have password but don't have image
+        suffix++;
+        if (!existingUser)
+            username += suffix - 1;
     }
-    else {
-        const username = request.body.username
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .toLowerCase()
-            .replace(/ /g, '_');
+    const email = request.body.email;
+    const userData = { username, email };
+    if (request.body.image)
+        userData['image'] = request.body.image;
+    if (request.body.password) {
         const password = await bcrypt_1.default.hash(request.body.password, 10);
-        const user = new user_1.User({ username, email, password });
-        return user;
+        userData['password'] = password;
     }
+    const user = new user_1.User(userData);
+    return user;
 };
 UserUtils.isValidUpdate = (update) => {
     const allowedUpdates = [

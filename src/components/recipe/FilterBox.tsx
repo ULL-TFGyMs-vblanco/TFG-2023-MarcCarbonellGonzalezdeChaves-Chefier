@@ -105,7 +105,7 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
               size='small'
               min={recipes.minRating}
               max={recipes.maxRating}
-              step={0.5}
+              step={0.1}
               style={{ color: '#f44336', width: '90%' }}
               onChange={ratingHandler}
               marks={[

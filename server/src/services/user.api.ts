@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import * as jwt from 'jsonwebtoken';
 import { Context } from 'koa';
 import { User } from '../models/user';
@@ -79,7 +80,7 @@ export const login = async ({ response, request }: Context) => {
           accessToken: token,
         });
       } else {
-        APIUtils.setResponse(response, 404, {
+        APIUtils.setResponse(response, 400, {
           error: 'Incorrect email or password',
           request: request.body,
         });
@@ -109,7 +110,7 @@ export const getUser = async ({ response, request }: Context, filter: any) => {
     .catch((err) => {
       APIUtils.setResponse(response, 500, {
         error: { message: 'Error retrieving user', error: err },
-        requerequest: request.body,
+        request: request.body,
       });
     });
 };
@@ -121,13 +122,23 @@ export const updateUser = async (
 ) => {
   if (!UserUtils.isValidUpdate(request.body.update)) {
     APIUtils.setResponse(response, 400, {
-      error: { message: 'Update is not permitted' },
+      error: 'Update is not permitted',
       request: request.body,
     });
   } else {
     try {
       if (options.multiple) {
-        const result = await User.updateMany(params, request.body.update, {
+        const {
+          _id,
+          username,
+          email,
+          image,
+          password,
+          nickname,
+          description,
+          ...filters
+        } = params;
+        const result = await User.updateMany(filters, request.body.update, {
           new: true,
           runValidators: true,
         });
@@ -149,7 +160,7 @@ export const updateUser = async (
           );
           if (!element) {
             APIUtils.setResponse(response, 404, {
-              error: { message: 'User not found' },
+              error: 'User not found',
               request: request.body,
             });
           } else {
@@ -157,14 +168,21 @@ export const updateUser = async (
           }
         }
       }
-    } catch (err) {
-      APIUtils.setResponse(response, 500, {
-        error: {
-          message: 'Error updating the user',
-          error: err,
-        },
-        request: request.body,
-      });
+    } catch (err: any) {
+      if (err.name === 'ValidationError') {
+        const errors = Object.keys(err.errors).map((key) => {
+          return { message: err.errors[key].message, field: key };
+        });
+        APIUtils.setResponse(response, 400, {
+          error: { message: err._message, errors: errors },
+          request: request.body,
+        });
+      } else {
+        APIUtils.setResponse(response, 500, {
+          error: { message: 'Error updating user', error: err },
+          request: request.body,
+        });
+      }
     }
   }
 };

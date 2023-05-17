@@ -11,7 +11,7 @@ export const getRecipe = async ({ response, request, params }: Context) => {
     .then((recipe) => {
       if (!recipe) {
         APIUtils.setResponse(response, 404, {
-          error: { message: 'Recipe not found' },
+          error: 'Recipe not found',
           request,
         });
       } else {
@@ -30,19 +30,19 @@ export const getRecipe = async ({ response, request, params }: Context) => {
 export const getRecipes = async ({ response, request, query }: Context) => {
   if (!query.page) {
     APIUtils.setResponse(response, 400, {
-      error: { message: 'A page index must be provided' },
+      error: 'A page index must be provided',
       request: request.body,
     });
     return;
   } else if (isNaN(Number(query.page))) {
     APIUtils.setResponse(response, 400, {
-      error: { message: 'Page index must be a number' },
+      error: 'Page index must be a number',
       request: request.body,
     });
     return;
   } else if (Number(query.page) < 1) {
     APIUtils.setResponse(response, 400, {
-      error: { message: 'Page index must be greater than 0' },
+      error: 'Page index must be greater than 0',
       request: request.body,
     });
     return;
@@ -110,13 +110,13 @@ export const postRecipe = async ({ response, request }: Context) => {
     const recipeData = JSON.parse(request.body.recipe);
     if (!recipeData.name || !recipeData.user) {
       APIUtils.setResponse(response, 400, {
-        error: { message: 'Recipe name and user name are required' },
+        error: 'Recipe name and user name are required',
         request: request.body,
       });
       return;
     } else if (recipeData.user && !recipeData.user.name) {
       APIUtils.setResponse(response, 400, {
-        error: { message: 'Recipe user name is required' },
+        error: 'Recipe user name is required',
         request: request.body,
       });
       return;
@@ -165,13 +165,13 @@ export const postRecipe = async ({ response, request }: Context) => {
 export const updateRecipe = async ({ response, request, params }: Context) => {
   if (!RecipeUtils.isValidUpdate(request.body.update)) {
     APIUtils.setResponse(response, 400, {
-      error: { message: 'Update is not permitted' },
+      error: 'Update is not permitted',
       request: request.body,
     });
   } else {
     if (!params.id) {
       APIUtils.setResponse(response, 400, {
-        error: { message: 'An id must be provided' },
+        error: 'An id must be provided',
         request: request.body,
       });
     } else {
@@ -186,7 +186,7 @@ export const updateRecipe = async ({ response, request, params }: Context) => {
         );
         if (!element) {
           APIUtils.setResponse(response, 404, {
-            error: { message: 'Recipe not found' },
+            error: 'Recipe not found',
             request: request.body,
           });
         } else {
@@ -206,12 +206,19 @@ export const updateRecipe = async ({ response, request, params }: Context) => {
 export const deleteRecipe = async ({ response, params }: Context) => {
   await Recipe.findByIdAndDelete(params.id)
     .then(async (recipe) => {
+      if (!recipe) {
+        APIUtils.setResponse(response, 404, {
+          error: 'Recipe not found',
+          request: params.id,
+        });
+        return;
+      }
       try {
         await ImageKitUtils.deleteImage(recipe?.image.fileId as string);
         APIUtils.setResponse(response, 200, { recipe });
       } catch (err) {
         APIUtils.setResponse(response, 500, {
-          error: { message: err },
+          error: { message: 'Error deleting the recipe', error: err },
           request: params.id,
         });
       }

@@ -15,7 +15,7 @@ const getRecipe = async ({ response, request, params }) => {
         .then((recipe) => {
         if (!recipe) {
             APIUtils_1.default.setResponse(response, 404, {
-                error: { message: 'Recipe not found' },
+                error: 'Recipe not found',
                 request,
             });
         }
@@ -35,21 +35,21 @@ exports.getRecipe = getRecipe;
 const getRecipes = async ({ response, request, query }) => {
     if (!query.page) {
         APIUtils_1.default.setResponse(response, 400, {
-            error: { message: 'A page index must be provided' },
+            error: 'A page index must be provided',
             request: request.body,
         });
         return;
     }
     else if (isNaN(Number(query.page))) {
         APIUtils_1.default.setResponse(response, 400, {
-            error: { message: 'Page index must be a number' },
+            error: 'Page index must be a number',
             request: request.body,
         });
         return;
     }
     else if (Number(query.page) < 1) {
         APIUtils_1.default.setResponse(response, 400, {
-            error: { message: 'Page index must be greater than 0' },
+            error: 'Page index must be greater than 0',
             request: request.body,
         });
         return;
@@ -114,14 +114,14 @@ const postRecipe = async ({ response, request }) => {
         const recipeData = JSON.parse(request.body.recipe);
         if (!recipeData.name || !recipeData.user) {
             APIUtils_1.default.setResponse(response, 400, {
-                error: { message: 'Recipe name and user name are required' },
+                error: 'Recipe name and user name are required',
                 request: request.body,
             });
             return;
         }
         else if (recipeData.user && !recipeData.user.name) {
             APIUtils_1.default.setResponse(response, 400, {
-                error: { message: 'Recipe user name is required' },
+                error: 'Recipe user name is required',
                 request: request.body,
             });
             return;
@@ -168,14 +168,14 @@ exports.postRecipe = postRecipe;
 const updateRecipe = async ({ response, request, params }) => {
     if (!RecipeUtils_1.default.isValidUpdate(request.body.update)) {
         APIUtils_1.default.setResponse(response, 400, {
-            error: { message: 'Update is not permitted' },
+            error: 'Update is not permitted',
             request: request.body,
         });
     }
     else {
         if (!params.id) {
             APIUtils_1.default.setResponse(response, 400, {
-                error: { message: 'An id must be provided' },
+                error: 'An id must be provided',
                 request: request.body,
             });
         }
@@ -187,7 +187,7 @@ const updateRecipe = async ({ response, request, params }) => {
                 });
                 if (!element) {
                     APIUtils_1.default.setResponse(response, 404, {
-                        error: { message: 'Recipe not found' },
+                        error: 'Recipe not found',
                         request: request.body,
                     });
                 }
@@ -209,13 +209,20 @@ exports.updateRecipe = updateRecipe;
 const deleteRecipe = async ({ response, params }) => {
     await recipe_1.Recipe.findByIdAndDelete(params.id)
         .then(async (recipe) => {
+        if (!recipe) {
+            APIUtils_1.default.setResponse(response, 404, {
+                error: 'Recipe not found',
+                request: params.id,
+            });
+            return;
+        }
         try {
             await ImageKitUtils_1.default.deleteImage(recipe?.image.fileId);
             APIUtils_1.default.setResponse(response, 200, { recipe });
         }
         catch (err) {
             APIUtils_1.default.setResponse(response, 500, {
-                error: { message: err },
+                error: { message: 'Error deleting the recipe', error: err },
                 request: params.id,
             });
         }
