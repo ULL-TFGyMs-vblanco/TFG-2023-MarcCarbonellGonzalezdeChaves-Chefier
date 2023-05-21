@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verifyToken = void 0;
 const axios_1 = __importDefault(require("axios"));
-const google_auth_library_1 = require("google-auth-library");
+// import { OAuth2Client } from 'google-auth-library';
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
 const verifyToken = async ({ response, request }, next) => {
@@ -24,15 +24,13 @@ const verifyToken = async ({ response, request }, next) => {
         if (request.headers.provider === 'credentials') {
             if (verifyCredentials(token, request, response))
                 return next();
-        }
-        else if (request.headers.provider === 'google') {
-            try {
-                await verifyGoogle(token, request, response);
-                return next();
-            }
-            catch (error) {
-                return;
-            }
+            // } else if (request.headers.provider === 'google') {
+            //   try {
+            //     await verifyGoogle(token, request, response);
+            //     return next();
+            //   } catch (error: any) {
+            //     return;
+            //   }
         }
         else {
             try {
@@ -65,24 +63,32 @@ function verifyCredentials(token, request, response) {
         return false;
     }
 }
-async function verifyGoogle(token, request, response) {
-    const client = new google_auth_library_1.OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, '');
-    return await client
-        .verifyIdToken({
-        idToken: token,
-        audience: process.env.GOOGLE_CLIENT_ID,
-    })
-        .then(() => {
-        return;
-    })
-        .catch((error) => {
-        APIUtils_1.default.setResponse(response, 401, {
-            error: { message: 'Invalid google token', error },
-            request: request.body,
-        });
-        throw new Error();
-    });
-}
+// async function verifyGoogle(
+//   token: string,
+//   request: Request,
+//   response: Response
+// ) {
+//   const client = new OAuth2Client(
+//     process.env.GOOGLE_CLIENT_ID,
+//     process.env.GOOGLE_CLIENT_SECRET,
+//     ''
+//   );
+//   return await client
+//     .verifyIdToken({
+//       idToken: token,
+//       audience: process.env.GOOGLE_CLIENT_ID,
+//     })
+//     .then(() => {
+//       return;
+//     })
+//     .catch((error) => {
+//       APIUtils.setResponse(response, 401, {
+//         error: { message: 'Invalid google token', error },
+//         request: request.body,
+//       });
+//       throw new Error();
+//     });
+// }
 async function verifyGithub(token, request, response) {
     return await axios_1.default
         .post(`https://api.github.com/applications/${process.env.GITHUB_CLIENT_ID}/token`, {
