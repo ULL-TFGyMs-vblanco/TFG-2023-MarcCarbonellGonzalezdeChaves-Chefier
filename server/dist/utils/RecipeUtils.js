@@ -107,6 +107,9 @@ RecipeUtils.getAggregateMatch = (filters) => {
             };
             match.$and.push(filterObject);
         }
+        else if (filter === 'user.id') {
+            match.$and.push({ 'user.id': filters[filter] });
+        }
     });
     return match;
 };

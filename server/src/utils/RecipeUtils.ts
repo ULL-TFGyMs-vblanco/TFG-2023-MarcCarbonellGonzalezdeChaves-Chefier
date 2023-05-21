@@ -105,6 +105,8 @@ export default class RecipeUtils {
           $in: [filters[filter]],
         };
         match.$and.push(filterObject);
+      } else if (filter === 'user.id') {
+        match.$and.push({ 'user.id': filters[filter] });
       }
     });
     return match;
