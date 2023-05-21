@@ -377,7 +377,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                       ingAppend({ name: '', quantity: undefined, unit: '' })
                     }
                   >
-                    <BsPlus size={30} />
+                    <BsPlus size={20} />
                   </Button>
                 </div>
                 {ingredients.map((ingredient, index) => (
@@ -493,7 +493,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                     className={styles.add__button}
                     onClick={() => insAppend({ step: '' })}
                   >
-                    <BsPlus size={30} />
+                    <BsPlus size={20} />
                   </Button>
                 </div>
                 {instructions.map((instruction, index) => (

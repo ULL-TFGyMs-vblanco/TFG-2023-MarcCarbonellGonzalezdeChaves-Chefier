@@ -202,6 +202,9 @@
 }
 
 .add__button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 1.5rem;
   width: 1.5rem;
   background-color: var(--nextui-colors-green600);
