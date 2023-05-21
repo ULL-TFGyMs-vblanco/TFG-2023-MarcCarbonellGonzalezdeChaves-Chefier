@@ -103,7 +103,7 @@ export const Navbar: React.FC = () => {
                   href='/recipe/new'
                   data-testid='navigation-link'
                 >
-                  Nueva&nbsp;Receta
+                  Nueva&nbsp;receta
                 </Link>
               </li>
               {session ? (

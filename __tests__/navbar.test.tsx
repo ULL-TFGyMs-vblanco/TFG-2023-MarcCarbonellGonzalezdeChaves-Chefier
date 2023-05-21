@@ -68,7 +68,7 @@ describe('Navbar', (): void => {
       const navLinks = screen.getAllByTestId('navigation-link');
       expect(navLinks.length).toBe(2);
       screen.getByText('Iniciar sesión');
-      screen.getByText('Nueva Receta');
+      screen.getByText('Nueva receta');
     });
     it('should render toggle button', (): void => {
       render(<Navbar />);

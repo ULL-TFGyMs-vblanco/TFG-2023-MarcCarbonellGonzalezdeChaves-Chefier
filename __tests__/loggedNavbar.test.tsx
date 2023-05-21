@@ -79,7 +79,7 @@ describe('Navbar', (): void => {
 
       const navLinks = screen.getAllByTestId('navigation-link');
       expect(navLinks.length).toBe(2);
-      screen.getByText('Nueva Receta');
+      screen.getByText('Nueva receta');
       screen.getByText('Siguiendo');
     });
     it('should render avatar', (): void => {
@@ -111,7 +111,7 @@ describe('Navbar', (): void => {
       fireEvent.click(toggleButton);
       const navLinks = screen.getAllByTestId('toggle-navigation-link');
       expect(navLinks.length).toBe(2);
-      expect(screen.getAllByText('Nueva Receta').length).toBe(2);
+      expect(screen.getAllByText('Nueva receta').length).toBe(2);
       expect(screen.getAllByText('Siguiendo').length).toBe(2);
     });
     it('should render log out button', (): void => {

@@ -100,7 +100,7 @@ export const ToggleMenu: React.FC<{
                 data-testid='toggle-navigation-link'
                 onClick={toggleHandler}
               >
-                Nueva&nbsp;Receta
+                Nueva&nbsp;receta
               </Link>
             </li>
           </ul>
