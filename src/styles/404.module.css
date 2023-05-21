@@ -1,0 +1,17 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: var(--nextui-space-15);
+  gap: 0;
+}
+
+.text {
+  text-align: center;
+}
+
+.status {
+  font-size: var(--nextui-fontSizes-6xl);
+  font-weight: 700;
+}
