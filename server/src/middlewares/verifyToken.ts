@@ -1,5 +1,5 @@
 import axios from 'axios';
-// import { OAuth2Client } from 'google-auth-library';
+import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import { Context, Next, Request, Response } from 'koa';
 import APIUtils from '../utils/APIUtils';
@@ -24,13 +24,13 @@ export const verifyToken = async (
     const token = bearerHeader.split(' ')[1];
     if (request.headers.provider === 'credentials') {
       if (verifyCredentials(token, request, response)) return next();
-      // } else if (request.headers.provider === 'google') {
-      //   try {
-      //     await verifyGoogle(token, request, response);
-      //     return next();
-      //   } catch (error: any) {
-      //     return;
-      //   }
+    } else if (request.headers.provider === 'google') {
+      try {
+        await verifyGoogle(token, request, response);
+        return next();
+      } catch (error: any) {
+        return;
+      }
     } else {
       try {
         await verifyGithub(token, request, response);
@@ -64,32 +64,32 @@ function verifyCredentials(
   }
 }
 
-// async function verifyGoogle(
-//   token: string,
-//   request: Request,
-//   response: Response
-// ) {
-//   const client = new OAuth2Client(
-//     process.env.GOOGLE_CLIENT_ID,
-//     process.env.GOOGLE_CLIENT_SECRET,
-//     ''
-//   );
-//   return await client
-//     .verifyIdToken({
-//       idToken: token,
-//       audience: process.env.GOOGLE_CLIENT_ID,
-//     })
-//     .then(() => {
-//       return;
-//     })
-//     .catch((error) => {
-//       APIUtils.setResponse(response, 401, {
-//         error: { message: 'Invalid google token', error },
-//         request: request.body,
-//       });
-//       throw new Error();
-//     });
-// }
+async function verifyGoogle(
+  token: string,
+  request: Request,
+  response: Response
+) {
+  const client = new OAuth2Client(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    ''
+  );
+  return await client
+    .verifyIdToken({
+      idToken: token,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    })
+    .then(() => {
+      return;
+    })
+    .catch((error) => {
+      APIUtils.setResponse(response, 401, {
+        error: { message: 'Invalid google token', error },
+        request: request.body,
+      });
+      throw new Error();
+    });
+}
 
 async function verifyGithub(
   token: string,
