@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "env-cmd -f ./config/test.env next dev",
     "build": "next build",
-    "start": "env-cmd -f ./config/.env next start",
+    "start": "next start",
     "lint": "next lint",
     "localtest": "env-cmd -f ./config/test.env vitest",
     "testui": "env-cmd -f ./config/test.env vitest --ui",
