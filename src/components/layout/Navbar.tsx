@@ -44,13 +44,14 @@ export const Navbar: React.FC = () => {
               className={styles.toggle}
               onClick={handleToggle}
               data-testid='toggle-button'
+              id='toggle-button'
             >
               <RxHamburgerMenu size={25} />
             </button>
             <Link className={styles.logo} href='/' data-testid='logo'>
               <Image
                 src={`/images/chefier-banner${isDark ? '-dark' : ''}.png`}
-                alt='logo'
+                alt='Navbar Chefier isotype'
                 width={155}
                 height={100}
                 priority
@@ -58,7 +59,7 @@ export const Navbar: React.FC = () => {
               />
               <Image
                 src={`/images/chefier${isDark ? '-dark' : ''}.png`}
-                alt='logo'
+                alt='Navbar Chefier logotype'
                 width={60}
                 height={60}
                 priority
@@ -71,6 +72,7 @@ export const Navbar: React.FC = () => {
               className={styles.new__recipe__btn}
               onClick={newRecipeHandler}
               data-testid='new__recipe__btn'
+              id='new-recipe-btn'
             >
               <RxPlus size={25} />
             </button>
@@ -79,6 +81,7 @@ export const Navbar: React.FC = () => {
               type='text'
               placeholder='Buscar...'
               data-testid='search'
+              id='searchbar'
               onKeyDown={(e) => searchHandler(e)}
             />
             <div className={styles.theme__button__container}>
@@ -90,9 +93,12 @@ export const Navbar: React.FC = () => {
                 }}
               >
                 {isDark ? (
-                  <BsFillSunFill className={styles.sun__theme__icon} />
+                  <BsFillSunFill className={styles.sun__theme__icon} id='sun' />
                 ) : (
-                  <BsFillMoonFill className={styles.moon__theme__icon} />
+                  <BsFillMoonFill
+                    className={styles.moon__theme__icon}
+                    id='moon'
+                  />
                 )}
               </button>
             </div>

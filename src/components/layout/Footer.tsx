@@ -14,7 +14,7 @@ export const Footer: React.FC = () => {
             <Link className={styles.logo} href='/' data-testid='logo'>
               <Image
                 src={`/images/chefier-letters${isDark ? '-dark' : ''}.png`}
-                alt='logo'
+                alt='Footer Chefier logotype'
                 width={155}
                 height={90}
                 style={{ display: 'block' }}

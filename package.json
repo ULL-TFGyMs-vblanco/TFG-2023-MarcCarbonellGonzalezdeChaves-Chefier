@@ -11,7 +11,9 @@
     "testui": "env-cmd -f ./config/test.env vitest --ui",
     "localcoverage": "env-cmd -f ./config/test.env vitest --coverage",
     "test": "vitest",
-    "coverage": "vitest --coverage"
+    "coverage": "vitest --coverage",
+    "cypress-ui": "cypress open",
+    "cypress": "cypress run"
   },
   "dependencies": {
     "@emotion/react": "^11.11.0",
@@ -55,6 +57,7 @@
     "@vitest/coverage-c8": "^0.28.5",
     "@vitest/coverage-istanbul": "^0.28.5",
     "@vitest/ui": "^0.29.2",
+    "cypress": "^12.12.0",
     "env-cmd": "^10.1.0",
     "eslint": "^8.34.0",
     "eslint-config-prettier": "^8.6.0",
