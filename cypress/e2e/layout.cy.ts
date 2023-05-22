@@ -20,11 +20,11 @@ describe('Layout', () => {
 
     cy.get('p').contains('Explorar');
 
-    cy.get('#sun');
+    cy.get('#moon');
 
     cy.get('[data-testid="theme-button"]').click();
 
-    cy.get('#moon');
+    cy.get('#sun');
 
     cy.get('#searchbar').type('pollo{enter}');
 
@@ -48,11 +48,11 @@ describe('Layout', () => {
 
     cy.get('p').contains('Explorar');
 
-    cy.get('#sun');
+    cy.get('#moon');
 
     cy.get('[data-testid="theme-button"]').click();
 
-    cy.get('#moon');
+    cy.get('#sun');
 
     cy.get('#searchbar').type('pollo{enter}');
 
