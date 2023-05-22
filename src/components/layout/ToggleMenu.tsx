@@ -124,7 +124,7 @@ export const ToggleMenu: React.FC<{
         <li>
           <Link
             className={styles.link}
-            href='/about'
+            href='/'
             data-testid='toggle-info-link'
             onClick={toggleHandler}
           >
@@ -134,7 +134,7 @@ export const ToggleMenu: React.FC<{
         <li>
           <Link
             className={styles.link}
-            href='/contact'
+            href='/'
             data-testid='toggle-info-link'
             onClick={toggleHandler}
           >

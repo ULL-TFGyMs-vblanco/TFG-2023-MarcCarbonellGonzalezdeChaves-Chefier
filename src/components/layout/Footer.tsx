@@ -24,20 +24,12 @@ export const Footer: React.FC = () => {
             <ul>
               <label className={styles.links__label}>Información</label>
               <li>
-                <Link
-                  className={styles.link}
-                  href='/about'
-                  data-testid='info-link'
-                >
+                <Link className={styles.link} href='/' data-testid='info-link'>
                   Sobre&nbsp;nosotros
                 </Link>
               </li>
               <li>
-                <Link
-                  className={styles.link}
-                  href='/contact'
-                  data-testid='info-link'
-                >
+                <Link className={styles.link} href='/' data-testid='info-link'>
                   Contacto
                 </Link>
               </li>
