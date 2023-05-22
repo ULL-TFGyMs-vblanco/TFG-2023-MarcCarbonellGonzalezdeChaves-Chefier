@@ -10,12 +10,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Building
-        run: npm run build
       - name: Cypress run
         uses: cypress-io/github-action@v4
         with:
-          start: npm run start
+          start: npm run dev
           wait-on: 'http://localhost:3000'
           record: true
           parallel: true
