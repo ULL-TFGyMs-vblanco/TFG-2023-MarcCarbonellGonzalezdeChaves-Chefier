@@ -1,43 +1,40 @@
-# Chefier
+<img src="https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/assets/116951558/2da94cd6-cc99-472d-8c0d-dd64159dc2d8" alt="Chefier logotype" width="400" height="125" />
+
 ## TFG 2022/23 - Marc Carbonell González de Chaves
 
-[![Tests](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/tests.yml/badge.svg)](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/tests.yml) [![Coverage Status](https://coveralls.io/repos/github/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/badge.svg?branch=main)](https://coveralls.io/github/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier?branch=main) [![SonarCloud](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/sonarcloud.yml)
+[![Tests](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/tests.yml/badge.svg)](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/tests.yml) [![Cypress Tests](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/cypress.yml/badge.svg)](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/cypress.yml) [![Coverage Status](https://coveralls.io/repos/github/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/badge.svg?branch=main)](https://coveralls.io/github/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier?branch=main) [![SonarCloud](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/sonarcloud.yml/badge.svg)](https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/actions/workflows/sonarcloud.yml)
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+[Chefier](https://chefier.vercel.app) es aplicación web orientada al ámbito culinario que, a modo de red social, permite al usuario compartir recetas de cocina propias, así como consultar y dar valoraciones o reseñas a las compartidas por la comunidad. Entre las funcionalidades principales se encuentran registro, visualización y publicación de recetas, búsqueda y filtrado de resultados, e interacción con el contenido.
 
-## Getting Started
+### Funcionalidades
 
-First, run the development server:
+En Chefier los usuarios podrán:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- Iniciar sesión o registrarse a través de credenciales o mediante los proveedores de Google o GitHub. 
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  <img src="https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/assets/116951558/bc5595ea-8faf-4a21-9487-3d2e598795b4" width="600" height="400" />
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+- Explorar recetas realizando búsquedas y filtrando resultados.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+  <img src="https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/assets/116951558/861e625f-4b4d-4832-b720-e61b8c1fb465" width="600" height="400" />
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Crear nuevas recetas.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+  <img src="https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/assets/116951558/666492e7-5d8d-4642-8dd8-048d262ff67a" width="600" height="375" />
 
-## Learn More
+- Descubrir recetas de otros usuarios, darles me gusta, guardarlas o incluso hacer valoraciones y reseñas.
 
-To learn more about Next.js, take a look at the following resources:
+  <img src="https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/assets/116951558/33d9cdac-7555-4456-be3f-b6a0addf20e5" width="600" height="375" />
+   <img src="https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/assets/116951558/46b4ae88-b2a6-447f-9a26-f361e8ab966d" width="600" height="375" />
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Consultar su perfil o el de otros usuarios.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+  <img src="https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/assets/116951558/3d954e88-9096-4dcb-b42c-cf9d65f8c3ab" width="600" height="375" />
 
-## Deploy on Vercel
+- Seguir a otros usuarios para estar al tanto de las recetas que publiquen.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+  <img src="https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/assets/116951558/1c6b04d7-2ae1-48a0-85e3-24216b4d62eb" width="600" height="375" />
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Personalizar el aspecto de la interfaz pudiendo elegir entre los temas claro y oscuro.
+
+  <img src="https://github.com/ULL-TFGyMs-vblanco/TFG-2023-MarcCarbonellGonzalezdeChaves-Chefier/assets/116951558/9f9f7e01-3a5d-47fc-abdf-c5591401841a" width="600" height="375" />
