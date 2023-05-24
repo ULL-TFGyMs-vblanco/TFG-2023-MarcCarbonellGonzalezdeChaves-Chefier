@@ -26,7 +26,7 @@ export const getRecipe = async ({ response, request, params }: Context) => {
     });
 };
 
-// Get recipes list
+// Get multiple recipes
 export const getRecipes = async ({ response, request, query }: Context) => {
   if (!query.page) {
     APIUtils.setResponse(response, 400, {

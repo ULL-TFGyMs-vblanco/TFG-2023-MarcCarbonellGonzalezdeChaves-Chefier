@@ -4,10 +4,11 @@ import { Recipe } from 'recipe-types';
 import UserService from '../services/UserService';
 import { useSWRConfig } from 'swr';
 
-// Custom hook to handle the interactions (likes and saves) of a recipe
+// Custom hook to handle recipe saving
 export function useSave(recipe: Recipe, user: User) {
   const { mutate } = useSWRConfig();
 
+  // Function to save a recipe
   const save = async () => {
     const updatedRecipeSaved = [...recipe.saved, user._id];
     const updatedUserSaved = [...user.saved, recipe._id];
@@ -29,6 +30,7 @@ export function useSave(recipe: Recipe, user: User) {
     });
   };
 
+  // Function to remove recipe from saved
   const removeSave = async () => {
     const updatedRecipeSaved = recipe.saved.filter(
       (save: string) => save !== user._id

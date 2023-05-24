@@ -11,7 +11,7 @@ import { useLoggedUser } from '../../hooks/useLoggedUser';
 import { Loading } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 
-// Interface for RecipeCard component
+// Props for RecipeCard component
 interface RecipeCardProps {
   // Recipe to be displayed
   recipe: Recipe;
@@ -24,7 +24,7 @@ interface RecipeCardProps {
   ) => Promise<void>;
 }
 
-// RecipeCard component
+// Recipe card component
 export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
   const { data: session } = useSession();
   const { user, isLoading: loggedUserIsLoading } = useLoggedUser();
@@ -32,6 +32,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
   const { like, removeLike } = useLike(recipe, user);
   const router = useRouter();
 
+  // Function to handle saving
   const saveHandler = async (e: any) => {
     e.stopPropagation();
     const updatedRecipe = {
@@ -42,6 +43,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
     await save();
   };
 
+  // Function to handle liking
   const likeHandler = async (e: any) => {
     e.stopPropagation();
     const updatedRecipe = {
@@ -52,6 +54,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
     await like();
   };
 
+  // Function to handle save removing
   const removeSaveHandler = async (e: any) => {
     e.stopPropagation();
     const updatedRecipe = {
@@ -66,6 +69,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
     await removeSave();
   };
 
+  // Function to handle like removing
   const removeLikeHandler = async (e: any) => {
     e.stopPropagation();
     const updatedRecipe = {
@@ -80,6 +84,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
     await removeLike();
   };
 
+  // Function to handle clicking on the recipe card
   const clickHandler = async () => {
     await router.push(`/recipe/${recipe._id}`);
   };

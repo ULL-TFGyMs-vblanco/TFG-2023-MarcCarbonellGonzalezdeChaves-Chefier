@@ -1,7 +1,9 @@
 import { User } from '../models/user';
 import bcrypt from 'bcrypt';
 
+// Utils for user routes
 export default class UserUtils {
+  // Function to build user document from register request
   public static buildUserDocument = async (request: any) => {
     if (request.body.username.length > 20) {
       request.body.username = request.body.username.substring(0, 10).trim();
@@ -33,6 +35,7 @@ export default class UserUtils {
     return user;
   };
 
+  // Function to check if an update is valid
   public static isValidUpdate = (update: any) => {
     const allowedUpdates = [
       'likes',

@@ -13,15 +13,20 @@ import { useShow } from 'src/hooks/useShow';
 import OauthLogin from './OauthLogin';
 import { useState } from 'react';
 
+// Props for the RegisterForm component
 interface RegisterFormProps {
+  // Function to handle the register
   onRegister: (data: RegisterData) => Promise<boolean>;
+  // Function to handle the login with oauth
   onOauthLogin: (
     provider: string,
     options: SignInOptions
   ) => void | Promise<void>;
+  // Function to toggle the modal
   toggleModal: (visible: boolean) => void;
 }
 
+// Register form component
 export const RegisterForm: React.FC<RegisterFormProps> = ({
   onRegister,
   onOauthLogin,
@@ -38,10 +43,12 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
   const { show: showPassword, toggleShow: toggleShowPassword } = useShow();
   const [isRegistering, setIsRegistering] = useState(false);
 
+  // Function to handle login with oauth
   const loginHandler = async (provider: string) => {
     await onOauthLogin(provider, { callbackUrl: '/' });
   };
 
+  // Function to handle registration
   const registerHandler = async (credentials: RegisterData) => {
     setIsRegistering(true);
     await onRegister(credentials).then((res) => {
@@ -52,6 +59,7 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
     });
   };
 
+  // Function to handle form submit
   const submitHandler = async (data: any) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { confirmPassword, passwordVisibility, ...credentials } = data;

@@ -1,15 +1,19 @@
+// User types
 declare module 'user-types' {
+  // Login form inputs
   export interface LoginFormInputs {
     email: string;
     password: string;
     passwordVisibility: boolean;
   }
 
+  // Login data to send to the API
   export interface LoginData {
     email: string;
     password: string;
   }
 
+  // Register form inputs
   interface RegisterFormInputs {
     username: string;
     email: string;
@@ -18,6 +22,7 @@ declare module 'user-types' {
     passwordVisibility: boolean;
   }
 
+  // Register data to send to the API
   interface RegisterData {
     username: string;
     email: string;
@@ -25,6 +30,7 @@ declare module 'user-types' {
     image?: string;
   }
 
+  // User data returned by the API
   interface User {
     _id: string;
     username: string;
@@ -42,6 +48,7 @@ declare module 'user-types' {
     followers: string[];
   }
 
+  // Valid user fields to updated
   interface ValidUpdate {
     $push?: {
       saved?: string;

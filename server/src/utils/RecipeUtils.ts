@@ -1,7 +1,9 @@
 import { RecipeDocumentInterface } from 'src/models/recipe';
 import { UserDocumentInterface } from '../models/user';
 
+// Utils for recipe routes
 export default class RecipeUtils {
+  // Function to check if an update is valid
   public static isValidUpdate = (update: any) => {
     const allowedUpdates = ['likes', 'saved', 'valorations', 'averageRating'];
     const updateEntries = Object.entries(update);
@@ -16,6 +18,7 @@ export default class RecipeUtils {
     return actualUpdates.every((update) => allowedUpdates.includes(update));
   };
 
+  // Function to get aggregation search object
   public static getAggregateSearch = (searchTerms: string) => {
     const search = {
       index: 'default',
@@ -35,6 +38,7 @@ export default class RecipeUtils {
     return search;
   };
 
+  // Function to get aggregation following filter object
   public static getAggregateFollowing = (
     user: UserDocumentInterface | null
   ) => {
@@ -52,6 +56,7 @@ export default class RecipeUtils {
     return filterObject;
   };
 
+  // Function to get aggregation match object
   public static getAggregateMatch = (filters: any) => {
     const match = { $and: [] as object[] };
 
@@ -112,6 +117,7 @@ export default class RecipeUtils {
     return match;
   };
 
+  // Function to get recipe average rating
   public static getAverageRating = (recipe: RecipeDocumentInterface) => {
     const average =
       recipe.valorations.reduce(
@@ -121,6 +127,7 @@ export default class RecipeUtils {
     return isNaN(average) ? 0 : average;
   };
 
+  // Function to get min and max rating from a recipe list
   public static getMinAndMaxRating = (recipes: RecipeDocumentInterface[]) => {
     let min = 5;
     let max = 0;
@@ -132,6 +139,7 @@ export default class RecipeUtils {
     return [min, max];
   };
 
+  // Function to get min and max cook time from a recipe list
   public static getMinAndMaxTime = (recipes: RecipeDocumentInterface[]) => {
     let min = 1500;
     let max = 0;
@@ -142,6 +150,7 @@ export default class RecipeUtils {
     return [min, max];
   };
 
+  // Function to get difficulties from a recipe list
   public static getDifficulties = (recipes: RecipeDocumentInterface[]) => {
     const difficulties = { easy: false, medium: false, hard: false };
     recipes.forEach((recipe) => {
@@ -152,6 +161,7 @@ export default class RecipeUtils {
     return difficulties;
   };
 
+  // Function to get tags from a recipe list
   public static getTags = (recipes: RecipeDocumentInterface[]) => {
     const tags = {
       breakfast: false,

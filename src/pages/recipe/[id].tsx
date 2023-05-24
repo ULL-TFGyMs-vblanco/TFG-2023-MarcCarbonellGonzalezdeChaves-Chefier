@@ -10,12 +10,14 @@ import { CustomModal } from '../../components/ui/CustomModal';
 import { useState } from 'react';
 import UserService from '../../services/UserService';
 
+// Recipe page
 const RecipePage = () => {
   const { mutate } = useSWRConfig();
   const router = useRouter();
   const { recipe, isLoading, isError } = useRecipe(router.query.id as string);
   const [errorModal, setErrorModal] = useState(false);
 
+  // Function to handle recipe deleting
   const deleteHandler = async (recipeId: string) => {
     try {
       await RecipeService.deleteRecipe(`/recipe/${recipeId}`);

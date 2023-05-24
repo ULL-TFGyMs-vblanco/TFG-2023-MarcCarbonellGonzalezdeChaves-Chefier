@@ -1,17 +1,27 @@
 import { ReactNode } from 'react';
 import styles from 'src/styles/ui/Title.module.css';
 
+// Props for Title component
 interface TitleProps {
+  // Content to be displayed
   children: ReactNode;
+  // Component class name
   className?: string;
+  // Test id for testing purposes
   testid?: string;
+  // Whether the title is extra small
   xs?: boolean;
+  // Whether the title is small
   sm?: boolean;
+  // Whether the title is medium
   md?: boolean;
+  // Whether the title is large
   lg?: boolean;
+  // Whether the title is extra large
   xl?: boolean;
 }
 
+// Title component
 export const Title: React.FC<TitleProps> = ({
   children,
   className,

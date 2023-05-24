@@ -14,11 +14,13 @@ import ReactStars from 'react-stars';
 
 const timeAgo = new TimeAgo('es-ES');
 
+// Props for Valoration component
 interface ValorationProps {
   valoration: ValorationType;
   deleteHandler: () => Promise<void>;
 }
 
+// Valoration component
 export const Valoration: React.FC<ValorationProps> = ({
   valoration,
   deleteHandler,
@@ -28,6 +30,7 @@ export const Valoration: React.FC<ValorationProps> = ({
   const { data: session } = useSession();
   const { user } = useLoggedUser();
 
+  // Function to handle valoration deleting
   const handleDelete = async () => {
     setIsDeleting(true);
     setValorationModalVisible(false);

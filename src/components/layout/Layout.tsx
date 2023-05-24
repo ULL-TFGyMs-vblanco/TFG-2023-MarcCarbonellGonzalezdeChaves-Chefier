@@ -3,6 +3,7 @@ import { Footer } from './Footer';
 import { Navbar } from './Navbar';
 import styles from 'src/styles/layout/Layout.module.css';
 
+// Layout component
 export const Layout: React.FC<PropsWithChildren> = ({ children }) => {
   return (
     <div className={styles.layout}>

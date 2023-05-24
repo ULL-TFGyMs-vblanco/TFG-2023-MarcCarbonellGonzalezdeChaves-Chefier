@@ -5,6 +5,7 @@ import { useUser } from '../hooks/useUser';
 import { Loading } from '@nextui-org/react';
 import { useRouter } from 'next/router';
 
+// Profile page
 const ProfilePage = () => {
   const router = useRouter();
   const { user, isLoading, isError } = useUser(

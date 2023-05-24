@@ -12,16 +12,20 @@ import { useShow } from 'src/hooks/useShow';
 import OauthLogin from './OauthLogin';
 import { useState } from 'react';
 
+// Props for the LoginForm component
 interface LoginFormProps {
+  // Function to handle login
   onLogin: (provider: string, options: SignInOptions) => void | Promise<void>;
 }
 
+// Login form component
 export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
   const { isDark } = useTheme();
   const { register, watch, handleSubmit } = useForm<LoginFormInputs>();
   const { show: showPassword, toggleShow: toggleShowPassword } = useShow();
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
+  // Function to handle login
   const loginHandler = async (provider: string, credentials?: LoginData) => {
     if (credentials) {
       await onLogin(provider, { ...credentials, callbackUrl: '/' });
@@ -30,6 +34,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     }
   };
 
+  // Function to handle form submit
   const submitHandler = async (data: any) => {
     setIsLoggingIn(true);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

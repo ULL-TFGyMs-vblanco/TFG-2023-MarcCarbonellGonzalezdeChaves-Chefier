@@ -3,6 +3,7 @@ import Image from 'next/image';
 import styles from 'src/styles/layout/Footer.module.css';
 import { useTheme } from '@nextui-org/react';
 
+// Footer component
 export const Footer: React.FC = () => {
   const { isDark } = useTheme();
 

@@ -5,6 +5,7 @@ import { Avatar } from '../ui/Avatar';
 import { Loading } from '@nextui-org/react';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
 
+// Toggle menu component
 export const ToggleMenu: React.FC<{
   toggleAnimation: boolean;
   toggleHandler: () => void;
@@ -12,6 +13,7 @@ export const ToggleMenu: React.FC<{
   const { data: session } = useSession();
   const { user, isLoading, isError } = useLoggedUser();
 
+  // Function to handle sign out
   const signOutHandler = async () => {
     toggleHandler();
     await signOut();

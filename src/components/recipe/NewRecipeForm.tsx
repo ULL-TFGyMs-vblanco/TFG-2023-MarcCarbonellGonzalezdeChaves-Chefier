@@ -12,11 +12,15 @@ import { useImage } from '../../hooks/useImage';
 import { Loading } from '@nextui-org/react';
 import { useState } from 'react';
 
+// Props for the NewRecipeForm component
 interface NewRecipeFormProps {
+  // Function to handle recipe post
   onPostRecipe: (data: NewRecipeFormInputs, image: File) => Promise<boolean>;
+  // Function to toggle the modal
   toggleModal: (visible: boolean) => void;
 }
 
+// New recipe form component
 export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
   onPostRecipe,
   toggleModal,
@@ -52,6 +56,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
   const { image, imageUrl, onImageChange, setImage } = useImage();
   const [postingRecipe, setPostingRecipe] = useState(false);
 
+  // Function to handle recipe post
   const postHandler = async (data: NewRecipeFormInputs) => {
     setPostingRecipe(true);
     await onPostRecipe(data, image as File).then((res) => {

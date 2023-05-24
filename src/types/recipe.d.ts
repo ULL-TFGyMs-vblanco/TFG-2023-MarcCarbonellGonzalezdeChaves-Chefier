@@ -1,4 +1,6 @@
+// Recipe types
 declare module 'recipe-types' {
+  // Recipe object returned by the API
   interface Recipe {
     _id: string;
     name: string;
@@ -29,16 +31,19 @@ declare module 'recipe-types' {
     valorations: Valoration[];
   }
 
+  // Recipe ingredient
   interface Ingredient {
     name: string;
     quantity: number;
     unit: string;
   }
 
+  // Recipe instruction
   interface Instruction {
     step: string;
   }
 
+  // Recipe valoration
   interface Valoration {
     user: {
       id: string;
@@ -51,6 +56,7 @@ declare module 'recipe-types' {
     date: string;
   }
 
+  // Valid recipe fields to updated
   interface ValidUpdate {
     likes?: string[];
     saved?: string[];
@@ -58,6 +64,7 @@ declare module 'recipe-types' {
     averageRating?: number;
   }
 
+  // New recipe form inputs
   interface NewRecipeFormInputs {
     name: string;
     description: string;
@@ -83,6 +90,7 @@ declare module 'recipe-types' {
     }[];
   }
 
+  // New recipe data to send to the API
   interface NewRecipeData {
     name: string;
     user: {
@@ -111,6 +119,7 @@ declare module 'recipe-types' {
     }[];
   }
 
+  // Filter box form inputs
   interface FilterBoxFormInputs {
     tags: {
       breakfast: boolean;

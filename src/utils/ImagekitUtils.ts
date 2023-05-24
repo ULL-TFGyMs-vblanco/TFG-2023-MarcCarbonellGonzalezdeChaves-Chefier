@@ -1,6 +1,8 @@
 import axios from 'axios';
 
+// Utils for uploading and deleting images from Imagekit
 export default class ImagekitUtils {
+  // Upload an image to Imagekit
   public static uploadImage = async (image: any) => {
     const formData = new FormData();
     formData.append('file', image);
@@ -19,6 +21,7 @@ export default class ImagekitUtils {
     }
   };
 
+  // Delete an image from Imagekit
   public static deleteImage = async (publicID: string) => {
     try {
       await axios.post(

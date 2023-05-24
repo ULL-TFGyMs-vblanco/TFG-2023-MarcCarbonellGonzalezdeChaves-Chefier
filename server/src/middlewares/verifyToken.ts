@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import { Context, Next, Request, Response } from 'koa';
 import APIUtils from '../utils/APIUtils';
 
+// Function to verify token
 export const verifyToken = async (
   { response, request }: Context,
   next: Next
@@ -47,6 +48,7 @@ export const verifyToken = async (
   }
 };
 
+// Function to verify credentials token
 function verifyCredentials(
   token: string,
   request: Request,
@@ -64,6 +66,7 @@ function verifyCredentials(
   }
 }
 
+// Function to verify google token
 async function verifyGoogle(
   token: string,
   request: Request,
@@ -91,6 +94,7 @@ async function verifyGoogle(
     });
 }
 
+// Function to verify github token
 async function verifyGithub(
   token: string,
   request: Request,

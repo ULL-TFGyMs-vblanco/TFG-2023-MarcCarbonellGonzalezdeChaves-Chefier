@@ -10,12 +10,17 @@ import { Card } from '../ui/Card';
 import { ParsedUrlQuery, encode } from 'querystring';
 import { BiFilter } from 'react-icons/bi';
 
+// Props for RecipeList component
 interface RecipeListProps {
+  // Filters to be applied
   filters: ParsedUrlQuery;
+  // Whether to show the filter box
   filterbox?: boolean;
+  // Title to be displayed
   title?: string;
 }
 
+// Recipe list component
 export const RecipeList: React.FC<RecipeListProps> = ({
   filters,
   filterbox,
@@ -36,6 +41,7 @@ export const RecipeList: React.FC<RecipeListProps> = ({
     isError: isErrorBase,
   } = useRecipes(pageIndex);
 
+  // Function to handle recipe list update
   const updateListHandler = async (
     updatedRecipe: Recipe,
     options?: { remove?: boolean }

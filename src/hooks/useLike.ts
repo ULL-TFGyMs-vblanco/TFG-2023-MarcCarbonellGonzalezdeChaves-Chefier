@@ -8,6 +8,7 @@ import { useSWRConfig } from 'swr';
 export function useLike(recipe: Recipe, user: User) {
   const { mutate } = useSWRConfig();
 
+  // Function to like a recipe
   const like = async () => {
     const updatedRecipeLikes = [...recipe.likes, user._id];
     const updatedUserLikes = [...user.likes, recipe._id];
@@ -29,6 +30,7 @@ export function useLike(recipe: Recipe, user: User) {
     });
   };
 
+  // Function to remove like from a recipe
   const removeLike = async () => {
     const updatedRecipeLikes = recipe.likes.filter(
       (like: string) => like !== user._id

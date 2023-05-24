@@ -30,11 +30,15 @@ import { useLike } from '../../hooks/useLike';
 
 const timeAgo = new TimeAgo('es-ES');
 
+// Component for the recipe page
 interface RecipeProps {
+  // Recipe to be displayed
   recipe: RecipeType;
+  // Function to handle recipe deleting
   deleteHandler: (recipeId: string) => Promise<void>;
 }
 
+// Recipe component
 export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
   const { show, toggleShow } = useShow();
   const [rating, setRating] = useState(0);
@@ -48,31 +52,38 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
   const { data: session } = useSession();
   const { valorate, removeValoration } = useValoration(recipe, user);
 
+  // Function to handle saving
   const saveHandler = async () => {
     await save();
   };
 
+  // Function to handle save removing
   const removeSaveHandler = async () => {
     await removeSave();
   };
 
+  // Function to handle liking
   const likeHandler = async () => {
     await like();
   };
 
+  // Function to handle like removing
   const removeLikeHandler = async () => {
     await removeLike();
   };
 
+  // Function to handle valoration
   const valorationHandler = async () => {
     toggleShow();
     await valorate(reviewTitle as string, rating, comment);
   };
 
+  // Function to handle valoration removing
   const removeValorationHandler = async () => {
     await removeValoration();
   };
 
+  // Function to handle recipe deleting
   const handleDelete = async () => {
     setIsDeleting(true);
     setRecipeModalVisible(false);

@@ -1,7 +1,9 @@
 import ImageKit from 'imagekit';
 import { UploadResponse } from 'imagekit/dist/libs/interfaces';
 
+// Utils for ImageKit
 export default class ImageKitUtils {
+  // Function to upload image to ImageKit
   public static uploadImage = async (
     image: string,
     name: string,
@@ -27,6 +29,7 @@ export default class ImageKitUtils {
       });
   };
 
+  // Function to delete image from ImageKit
   public static deleteImage = async (fileID: string) => {
     const imagekit = new ImageKit({
       publicKey: process.env.IMAGEKIT_PUBLIC_KEY as string,

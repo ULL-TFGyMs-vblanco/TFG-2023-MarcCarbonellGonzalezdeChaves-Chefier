@@ -2,7 +2,9 @@ import { RegisterData, ValidUpdate } from 'user-types';
 import axios from '../../axios_config';
 import { getSession, signIn, SignInOptions, signOut } from 'next-auth/react';
 
+// Service to handle user requests
 const UserService = {
+  // Function to register a new user
   register: async (url: string, data: RegisterData) => {
     try {
       await axios.post(url, data);
@@ -17,6 +19,8 @@ const UserService = {
       throw new Error(errorMessage);
     }
   },
+
+  // Function to login a user
   login: async (provider: string, options: SignInOptions) => {
     await signIn(provider, { ...options }).then((res) => {
       if (res?.error) {
@@ -25,6 +29,7 @@ const UserService = {
     });
   },
 
+  // Function to update a user
   updateUser: async (url: string, update: ValidUpdate) => {
     const session = await getSession();
     try {

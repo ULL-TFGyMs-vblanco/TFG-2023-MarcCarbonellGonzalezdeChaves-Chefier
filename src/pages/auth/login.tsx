@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { CustomModal } from '../../components/ui/CustomModal';
 import { useRouter } from 'next/router';
 
+// Login page
 const Login: React.FC = () => {
   const router = useRouter();
   const [visible, setVisible] = useState(false);
@@ -19,6 +20,7 @@ const Login: React.FC = () => {
     }
   }, [router.query.error]);
 
+  // Function to handle the login
   const loginHandler = async (provider: string, data: SignInOptions) => {
     try {
       await UserService.login(provider, data);
@@ -28,6 +30,7 @@ const Login: React.FC = () => {
     }
   };
 
+  // Function to handle modal cloing
   const closeModalHandler = async () => {
     await router.push('/auth/login');
   };

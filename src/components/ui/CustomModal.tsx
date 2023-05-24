@@ -6,15 +6,23 @@ import {
   IoWarningOutline,
 } from 'react-icons/io5';
 
+// Props for CustomModal component
 interface CustomModalProps {
+  // Type
   type: 'success' | 'error' | 'warning';
+  // Title
   title: string;
+  // Content to be displayed
   children: string;
+  // Whether the modal is visible
   visible: boolean;
+  // Function to handle modal visibility
   handler: Dispatch<SetStateAction<boolean>>;
+  // Function to be executed on close
   onClose: () => void | Promise<void>;
 }
 
+// Modal component
 export const CustomModal: React.FC<CustomModalProps> = ({
   children,
   title,

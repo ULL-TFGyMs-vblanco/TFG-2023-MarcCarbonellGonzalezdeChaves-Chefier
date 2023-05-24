@@ -8,6 +8,7 @@ import RecipeUtils from '@/utils/RecipeUtils';
 export function useValoration(recipe: Recipe, user: User) {
   const { mutate } = useSWRConfig();
 
+  // Function to valorate a recipe
   const valorate = async (title: string, rating: number, comment?: string) => {
     const updatedValorations = [
       ...recipe.valorations,
@@ -50,6 +51,7 @@ export function useValoration(recipe: Recipe, user: User) {
     });
   };
 
+  // Function to remove valoration from a recipe
   const removeValoration = async () => {
     const updatedValorations = recipe.valorations.filter(
       (valoration: any) => valoration.user.id !== user._id

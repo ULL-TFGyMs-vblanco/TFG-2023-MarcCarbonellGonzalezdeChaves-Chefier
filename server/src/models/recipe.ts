@@ -1,6 +1,7 @@
 import { Document, Schema, model } from 'mongoose';
 import validator from 'validator';
 
+// Recipe interface
 export interface RecipeDocumentInterface extends Document {
   name: string;
   user: {
@@ -45,6 +46,7 @@ export interface RecipeDocumentInterface extends Document {
   saved: [string];
 }
 
+// Recipe schema
 export const RecipeSchema = new Schema<RecipeDocumentInterface>({
   name: {
     type: String,
@@ -249,4 +251,5 @@ export const RecipeSchema = new Schema<RecipeDocumentInterface>({
   },
 });
 
+// Recipe data model
 export const Recipe = model<RecipeDocumentInterface>('Recipe', RecipeSchema);

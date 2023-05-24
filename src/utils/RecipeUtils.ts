@@ -1,7 +1,9 @@
 import { User } from 'user-types';
 import { Valoration } from 'recipe-types';
 
+// Utils for recipes
 export default class RecipeUtils {
+  // Get the average rating of a recipe
   public static getAverageRating = (valorations: Valoration[]) => {
     const average =
       valorations.reduce(
@@ -11,6 +13,7 @@ export default class RecipeUtils {
     return isNaN(average) ? 0 : average;
   };
 
+  // Check if a user has already valorated a recipe
   public static isAlreadyValorated = (
     valorations: Valoration[],
     user: User
@@ -20,6 +23,7 @@ export default class RecipeUtils {
     );
   };
 
+  // Format a recipe's number of interactions (likes or saves)
   public static countInteractions = (stat: string[]) => {
     return stat.length > 1000
       ? `${Math.floor(stat.length / 1000)}k`

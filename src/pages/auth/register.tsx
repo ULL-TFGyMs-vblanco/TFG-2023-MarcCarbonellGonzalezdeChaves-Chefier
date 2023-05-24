@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { SignInOptions } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
+// Register page
 const Register: React.FC = () => {
   const [error, setError] = useState<string | string[]>();
   const [successModal, setSuccesModal] = useState(false);
@@ -16,6 +17,7 @@ const Register: React.FC = () => {
     error ? setErrorModal(true) : setErrorModal(false);
   }, [error]);
 
+  // Function to handle registration
   const registerHandler = async (data: RegisterData) => {
     try {
       await UserService.register('/auth/register', data);
@@ -27,6 +29,7 @@ const Register: React.FC = () => {
     }
   };
 
+  // Function to handle login
   const loginHandler = async (provider: string, data: SignInOptions) => {
     try {
       await UserService.login(provider, data);
@@ -36,10 +39,12 @@ const Register: React.FC = () => {
     }
   };
 
+  // Function to handle success modal closing
   const closeSuccessModalHandler = async () => {
     await router.push('/auth/login');
   };
 
+  // Function to handle error modal closing
   const closeErrorModalHandler = async () => {
     setError(undefined);
   };

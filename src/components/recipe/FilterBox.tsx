@@ -8,7 +8,9 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { encode } from 'querystring';
 
+// Props for the FilterBox component
 interface FilterBoxProps {
+  // Object with the recipe list metadata
   recipes: {
     minRating: number;
     maxRating: number;
@@ -28,9 +30,11 @@ interface FilterBoxProps {
       hard: boolean;
     };
   };
+  // Boolean to show the title
   title?: boolean;
 }
 
+// Filter box component
 export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
   const router = useRouter();
 
@@ -53,14 +57,17 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
   );
   const { register, handleSubmit } = useForm<FilterBoxFormInputs>();
 
+  // Function to handle rating slider
   const ratingHandler = (event: Event, newValue: number | number[]) => {
     setRating(newValue as number[]);
   };
 
+  // Function to handle time slider
   const timeHandler = (event: Event, newValue: number | number[]) => {
     setTime(newValue as number[]);
   };
 
+  // Function to handle submit
   const submitHandler = (data: FilterBoxFormInputs) => {
     const { tags: tagFilter, difficulty: difficulyFilter } = data;
     const filters: string[] = [];

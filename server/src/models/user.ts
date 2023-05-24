@@ -1,6 +1,7 @@
 import { Document, Schema, model } from 'mongoose';
 import validator from 'validator';
 
+// User interface
 export interface UserDocumentInterface extends Document {
   username: string;
   nickname: string;
@@ -17,6 +18,7 @@ export interface UserDocumentInterface extends Document {
   followers: [string];
 }
 
+// User schema
 export const UserSchema = new Schema<UserDocumentInterface>({
   username: {
     type: String,
@@ -127,4 +129,5 @@ export const UserSchema = new Schema<UserDocumentInterface>({
   },
 });
 
+// User model
 export const User = model<UserDocumentInterface>('User', UserSchema);

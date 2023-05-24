@@ -4,6 +4,7 @@ import { Card } from '../components/ui/Card';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+// Home page
 export default function Home() {
   const router = useRouter();
   const [title, setTitle] = useState<string>('Explorar recetas');

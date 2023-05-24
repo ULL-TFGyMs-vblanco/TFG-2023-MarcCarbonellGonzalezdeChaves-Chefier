@@ -10,20 +10,25 @@ import { useFollow } from '../../hooks/useFollow';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
 import { decode } from 'querystring';
 
+// Props for Profile component
 interface ProfileProps {
+  // User to be displayed
   user: User;
 }
 
+// Profile component
 export const Profile: React.FC<ProfileProps> = ({ user }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const { user: loggedUser } = useLoggedUser();
   const { follow, unfollow } = useFollow(user);
 
+  // Function to handle tab changes
   const tabHandler = async (tab: string) => {
     router.push(`/${user.username}${tab}`);
   };
 
+  // Function to handle follow
   const followHandler = async () => {
     if (!session) {
       await router.push('/auth/login');
@@ -32,6 +37,7 @@ export const Profile: React.FC<ProfileProps> = ({ user }) => {
     }
   };
 
+  // Function to handle unfollow
   const unfollowHandler = async () => {
     await unfollow();
   };

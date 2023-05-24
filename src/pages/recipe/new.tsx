@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { NewRecipeFormInputs } from 'recipe-types';
 
+// New recipe page
 const NewRecipe: React.FC = () => {
   const [error, setError] = useState<string | string[]>();
   const [successModal, setSuccesModal] = useState(false);
@@ -18,10 +19,12 @@ const NewRecipe: React.FC = () => {
     error ? setErrorModal(true) : setErrorModal(false);
   }, [error]);
 
+  // Function to handle success modal closing
   const closeSuccessModalHandler = async () => {
     await router.push('/');
   };
 
+  // Function to handle error modal closing
   const closeErrorModalHandler = async () => {
     setError(undefined);
   };

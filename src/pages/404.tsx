@@ -4,6 +4,7 @@ import { Card } from '../components/ui/Card';
 import Link from 'next/link';
 import { useTheme } from '@nextui-org/react';
 
+// 404 page
 export default function Custom404() {
   const { isDark } = useTheme();
 

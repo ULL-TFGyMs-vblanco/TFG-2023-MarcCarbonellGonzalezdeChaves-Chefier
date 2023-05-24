@@ -12,6 +12,7 @@ import { useTheme as useNextTheme } from 'next-themes';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
 import { useRouter } from 'next/router';
 
+// Navigation bar component
 export const Navbar: React.FC = () => {
   const { firstToggle, toggle, handleToggle } = useToggleMenu();
   const { user, isLoading, isError } = useLoggedUser();
@@ -20,6 +21,7 @@ export const Navbar: React.FC = () => {
   const { isDark } = useTheme();
   const router = useRouter();
 
+  // Function to handle search
   const searchHandler = async (e: any) => {
     if (e.key !== 'Enter') return;
     if (e.target.value === '') await router.push('/');
@@ -27,10 +29,7 @@ export const Navbar: React.FC = () => {
     e.target.blur();
   };
 
-  const newRecipeHandler = async () => {
-    await router.push('/recipe/new');
-  };
-
+  // Function to handle sign out
   const signOutHandler = async () => {
     await signOut();
   };
@@ -70,7 +69,7 @@ export const Navbar: React.FC = () => {
           <div className={styles.right__elements}>
             <button
               className={styles.new__recipe__btn}
-              onClick={newRecipeHandler}
+              onClick={() => router.push('/recipe/new')}
               data-testid='new__recipe__btn'
               id='new-recipe-btn'
             >

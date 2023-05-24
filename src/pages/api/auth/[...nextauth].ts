@@ -5,6 +5,7 @@ import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
 import UserService from '@/services/UserService';
 
+// NextAuth configuration
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt',
