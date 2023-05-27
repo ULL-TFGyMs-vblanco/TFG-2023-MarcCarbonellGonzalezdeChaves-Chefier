@@ -247,6 +247,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                     placeholder='15'
                     className={styles.input__style}
                     type='number'
+                    min={1}
                     data-testid='input__style'
                     {...register('cookTime', {
                       required: true,
@@ -295,6 +296,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                     placeholder='2'
                     className={styles.input__style}
                     type='number'
+                    min={1}
                     data-testid='rations-input'
                     {...register('rations', {
                       required: true,
@@ -424,6 +426,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                         placeholder='200'
                         className={styles.input__style}
                         type='number'
+                        min={0.25}
                         step={0.25}
                         data-testid='quantity-input'
                         {...register(`ingredients.${index}.quantity`, {
