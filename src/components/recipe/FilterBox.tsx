@@ -116,8 +116,14 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
               style={{ color: '#f44336', width: '90%' }}
               onChange={ratingHandler}
               marks={[
-                { value: rating[0], label: rating[0] },
-                { value: rating[1], label: rating[1] },
+                {
+                  value: rating[0],
+                  label: rating[0] === rating[1] ? '' : rating[0],
+                },
+                {
+                  value: rating[1],
+                  label: rating[0] === rating[1] ? '' : rating[1],
+                },
               ]}
               classes={{ markLabel: styles.slider__label }}
             />
@@ -138,8 +144,8 @@ export const FilterBox: React.FC<FilterBoxProps> = ({ recipes, title }) => {
               }}
               onChange={timeHandler}
               marks={[
-                { value: time[0], label: time[0] },
-                { value: time[1], label: time[1] },
+                { value: time[0], label: time[0] === time[1] ? '' : time[0] },
+                { value: time[1], label: time[0] === time[1] ? '' : time[1] },
               ]}
               classes={{ markLabel: styles.slider__label }}
             />
