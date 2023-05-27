@@ -9,7 +9,7 @@ body {
   background-position: center center;
 }
 
-@media screen and (width <= 650px) {
+@media screen and (width <= 765px) {
   html,
   body {
     margin: 0;

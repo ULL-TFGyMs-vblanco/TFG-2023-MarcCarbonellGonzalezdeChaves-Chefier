@@ -10,7 +10,7 @@
   background-color: var(--nextui-colors-primary100);
 }
 
-@media screen and (width < 650px) {
+@media screen and (width < 765px) {
   .card {
     box-shadow: none;
     background-color: transparent;

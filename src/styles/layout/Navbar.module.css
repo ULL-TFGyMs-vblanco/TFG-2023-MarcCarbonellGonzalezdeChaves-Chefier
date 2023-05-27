@@ -39,7 +39,7 @@
   display: none;
 }
 
-@media screen and (width < 650px) {
+@media screen and (width < 765px) {
   .logo__image__big {
     display: none;
   }
@@ -61,7 +61,7 @@
   color: var(--nextui-colors-secondary100);
 }
 
-@media screen and (width >= 650px) {
+@media screen and (width >= 765px) {
   .toggle {
     display: none;
   }
@@ -107,7 +107,7 @@
   background-color: var(--nextui-colors-accent200);
 }
 
-@media screen and (width >= 650px) {
+@media screen and (width >= 765px) {
   .new__recipe__btn {
     display: none;
   }
@@ -148,7 +148,7 @@
   width: 100%;
 }
 
-@media screen and (width <= 650px) {
+@media screen and (width <= 765px) {
   .links {
     display: none;
   }

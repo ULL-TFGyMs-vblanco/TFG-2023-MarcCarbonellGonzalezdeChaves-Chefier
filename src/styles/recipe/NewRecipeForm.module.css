@@ -37,7 +37,7 @@
   gap: var(--nextui-space-15);
 }
 
-@media screen and (width < 650px) {
+@media screen and (width < 765px) {
   .top__form__section {
     flex-wrap: wrap-reverse;
     flex-direction: column-reverse;
@@ -55,7 +55,7 @@
   gap: var(--nextui-space-15);
 }
 
-@media screen and (width < 650px) {
+@media screen and (width < 765px) {
   .bottom__form__section {
     flex-direction: column;
     gap: var(--nextui-space-7);

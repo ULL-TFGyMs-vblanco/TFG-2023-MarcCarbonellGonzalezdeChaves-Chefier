@@ -8,7 +8,7 @@
   position: fixed;
 }
 
-@media screen and (width >= 650px) {
+@media screen and (width >= 765px) {
   .toggle__menu {
     visibility: hidden;
   }

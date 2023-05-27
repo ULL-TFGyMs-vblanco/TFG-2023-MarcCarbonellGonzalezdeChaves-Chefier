@@ -17,7 +17,7 @@
   align-items: center;
 }
 
-@media screen and (width < 650px) {
+@media screen and (width < 765px) {
   .footer {
     display: none;
   }

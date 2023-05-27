@@ -84,13 +84,13 @@
   }
 }
 
-@media screen and (width > 650px) {
+@media screen and (width > 765px) {
   .filterbox__popover {
     display: none;
   }
 }
 
-@media screen and (width <= 650px) {
+@media screen and (width <= 765px) {
   .filterbox__container {
     display: none;
   }

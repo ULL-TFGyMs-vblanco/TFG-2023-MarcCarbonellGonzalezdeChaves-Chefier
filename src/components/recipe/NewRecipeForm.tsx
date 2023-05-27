@@ -428,7 +428,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                         data-testid='quantity-input'
                         {...register(`ingredients.${index}.quantity`, {
                           required: true,
-                          min: 1,
+                          min: 0.25,
                         })}
                       />
                       {errors?.ingredients?.[index]?.quantity?.type ===
