@@ -161,7 +161,9 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
                 <div className={styles.stat__data}>
                   <GrStar className={styles.star__icon} size={20} />
                   <p className={styles.stat__number}>
-                    {utils.getAverageRating(recipe.valorations)}
+                    {Math.round(
+                      utils.getAverageRating(recipe.valorations) * 2
+                    ) / 2}
                   </p>
                 </div>
               </div>
