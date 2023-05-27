@@ -124,7 +124,7 @@ export default class RecipeUtils {
         (acc: number, valoration) => acc + valoration.rating,
         0
       ) / recipe.valorations.length;
-    return isNaN(average) ? 0 : average;
+    return isNaN(average) ? 0 : Math.round(average * 2) / 2;
   };
 
   // Function to get min and max rating from a recipe list

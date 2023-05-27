@@ -165,9 +165,7 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe, onChange }) => {
           <div className={styles.stats}>
             <div className={styles.valoration}>
               <BsFillStarFill className={styles.star} />
-              <p>
-                {Math.round(utils.getAverageRating(recipe.valorations) * 2) / 2}
-              </p>
+              <p>{utils.getAverageRating(recipe.valorations)}</p>
             </div>
             <hr className={styles.divider} />
             <p className={styles.time}>{recipe.cookTime}m</p>

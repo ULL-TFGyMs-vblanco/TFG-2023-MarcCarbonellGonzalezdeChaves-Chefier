@@ -10,7 +10,7 @@ export default class RecipeUtils {
         (acc: number, valoration: Valoration) => acc + valoration.rating,
         0
       ) / valorations.length;
-    return isNaN(average) ? 0 : average;
+    return isNaN(average) ? 0 : Math.round(average * 2) / 2;
   };
 
   // Check if a user has already valorated a recipe
