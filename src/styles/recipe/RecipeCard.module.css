@@ -12,6 +12,13 @@
   overflow: hidden;
 }
 
+@media screen and (width < 765px) {
+  .recipe__container {
+    box-shadow: var(--nextui-shadows-cardShadow);
+    background-color: var(--nextui-colors-primary100);
+  }
+}
+
 .recipe__container:hover {
   opacity: 0.9;
   cursor: pointer;
