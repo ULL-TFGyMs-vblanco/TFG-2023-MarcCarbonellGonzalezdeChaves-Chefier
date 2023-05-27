@@ -8,6 +8,7 @@ const axios_1 = __importDefault(require("axios"));
 const google_auth_library_1 = require("google-auth-library");
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const APIUtils_1 = __importDefault(require("../utils/APIUtils"));
+// Function to verify token
 const verifyToken = async ({ response, request }, next) => {
     if (request.headers.provider !== 'credentials' &&
         request.headers.provider !== 'google' &&
@@ -52,6 +53,7 @@ const verifyToken = async ({ response, request }, next) => {
     }
 };
 exports.verifyToken = verifyToken;
+// Function to verify credentials token
 function verifyCredentials(token, request, response) {
     try {
         jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
@@ -65,6 +67,7 @@ function verifyCredentials(token, request, response) {
         return false;
     }
 }
+// Function to verify google token
 async function verifyGoogle(token, request, response) {
     const client = new google_auth_library_1.OAuth2Client(process.env.GOOGLE_CLIENT_ID, process.env.GOOGLE_CLIENT_SECRET, '');
     return await client
@@ -83,6 +86,7 @@ async function verifyGoogle(token, request, response) {
         throw new Error();
     });
 }
+// Function to verify github token
 async function verifyGithub(token, request, response) {
     return await axios_1.default
         .post(`https://api.github.com/applications/${process.env.GITHUB_CLIENT_ID}/token`, {

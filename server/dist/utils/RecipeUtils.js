@@ -1,10 +1,12 @@
 "use strict";
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
+// Utils for recipe routes
 class RecipeUtils {
 }
 exports.default = RecipeUtils;
 _a = RecipeUtils;
+// Function to check if an update is valid
 RecipeUtils.isValidUpdate = (update) => {
     const allowedUpdates = ['likes', 'saved', 'valorations', 'averageRating'];
     const updateEntries = Object.entries(update);
@@ -18,6 +20,7 @@ RecipeUtils.isValidUpdate = (update) => {
     });
     return actualUpdates.every((update) => allowedUpdates.includes(update));
 };
+// Function to get aggregation search object
 RecipeUtils.getAggregateSearch = (searchTerms) => {
     const search = {
         index: 'default',
@@ -36,6 +39,7 @@ RecipeUtils.getAggregateSearch = (searchTerms) => {
     });
     return search;
 };
+// Function to get aggregation following filter object
 RecipeUtils.getAggregateFollowing = (user) => {
     const filterObject = {};
     if (user && user.following.length > 0) {
@@ -51,6 +55,7 @@ RecipeUtils.getAggregateFollowing = (user) => {
     }
     return filterObject;
 };
+// Function to get aggregation match object
 RecipeUtils.getAggregateMatch = (filters) => {
     const match = { $and: [] };
     Object.keys(filters).forEach(async (filter) => {
@@ -113,10 +118,12 @@ RecipeUtils.getAggregateMatch = (filters) => {
     });
     return match;
 };
+// Function to get recipe average rating
 RecipeUtils.getAverageRating = (recipe) => {
     const average = recipe.valorations.reduce((acc, valoration) => acc + valoration.rating, 0) / recipe.valorations.length;
     return isNaN(average) ? 0 : average;
 };
+// Function to get min and max rating from a recipe list
 RecipeUtils.getMinAndMaxRating = (recipes) => {
     let min = 5;
     let max = 0;
@@ -129,6 +136,7 @@ RecipeUtils.getMinAndMaxRating = (recipes) => {
     });
     return [min, max];
 };
+// Function to get min and max cook time from a recipe list
 RecipeUtils.getMinAndMaxTime = (recipes) => {
     let min = 1500;
     let max = 0;
@@ -140,6 +148,7 @@ RecipeUtils.getMinAndMaxTime = (recipes) => {
     });
     return [min, max];
 };
+// Function to get difficulties from a recipe list
 RecipeUtils.getDifficulties = (recipes) => {
     const difficulties = { easy: false, medium: false, hard: false };
     recipes.forEach((recipe) => {
@@ -152,6 +161,7 @@ RecipeUtils.getDifficulties = (recipes) => {
     });
     return difficulties;
 };
+// Function to get tags from a recipe list
 RecipeUtils.getTags = (recipes) => {
     const tags = {
         breakfast: false,

@@ -31,7 +31,7 @@ const getRecipe = async ({ response, request, params }) => {
     });
 };
 exports.getRecipe = getRecipe;
-// Get recipes list
+// Get multiple recipes
 const getRecipes = async ({ response, request, query }) => {
     if (!query.page) {
         APIUtils_1.default.setResponse(response, 400, {
@@ -88,8 +88,8 @@ const getRecipes = async ({ response, request, query }) => {
         const [minRating, maxRating] = RecipeUtils_1.default.getMinAndMaxRating(recipes);
         const [minTime, maxTime] = RecipeUtils_1.default.getMinAndMaxTime(recipes);
         APIUtils_1.default.setResponse(response, 200, {
-            list: recipes.slice((pageIndex - 1) * 15, pageIndex * 15),
-            totalPages: Math.ceil(recipes.length / 15),
+            list: recipes.slice((pageIndex - 1) * 12, pageIndex * 12),
+            totalPages: Math.ceil(recipes.length / 12),
             metadata: {
                 minRating,
                 maxRating,

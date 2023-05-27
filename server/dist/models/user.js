@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = exports.UserSchema = void 0;
 const mongoose_1 = require("mongoose");
 const validator_1 = __importDefault(require("validator"));
+// User schema
 exports.UserSchema = new mongoose_1.Schema({
     username: {
         type: String,
@@ -113,4 +114,5 @@ exports.UserSchema = new mongoose_1.Schema({
         required: false,
     },
 });
+// User model
 exports.User = (0, mongoose_1.model)('User', exports.UserSchema);

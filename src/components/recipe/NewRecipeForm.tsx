@@ -424,6 +424,7 @@ export const NewRecipeForm: React.FC<NewRecipeFormProps> = ({
                         placeholder='200'
                         className={styles.input__style}
                         type='number'
+                        step={0.25}
                         data-testid='quantity-input'
                         {...register(`ingredients.${index}.quantity`, {
                           required: true,

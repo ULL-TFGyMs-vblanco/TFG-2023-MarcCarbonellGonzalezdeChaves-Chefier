@@ -6,10 +6,12 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const user_1 = require("../models/user");
 const bcrypt_1 = __importDefault(require("bcrypt"));
+// Utils for user routes
 class UserUtils {
 }
 exports.default = UserUtils;
 _a = UserUtils;
+// Function to build user document from register request
 UserUtils.buildUserDocument = async (request) => {
     if (request.body.username.length > 20) {
         request.body.username = request.body.username.substring(0, 10).trim();
@@ -42,6 +44,7 @@ UserUtils.buildUserDocument = async (request) => {
     const user = new user_1.User(userData);
     return user;
 };
+// Function to check if an update is valid
 UserUtils.isValidUpdate = (update) => {
     const allowedUpdates = [
         'likes',

@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Recipe = exports.RecipeSchema = void 0;
 const mongoose_1 = require("mongoose");
 const validator_1 = __importDefault(require("validator"));
+// Recipe schema
 exports.RecipeSchema = new mongoose_1.Schema({
     name: {
         type: String,
@@ -182,4 +183,5 @@ exports.RecipeSchema = new mongoose_1.Schema({
         default: [],
     },
 });
+// Recipe data model
 exports.Recipe = (0, mongoose_1.model)('Recipe', exports.RecipeSchema);
