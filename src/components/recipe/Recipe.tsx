@@ -317,13 +317,15 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
             </div>
             <div className={styles.valoration__mean}>
               <p className={styles.mean}>
-                {utils.getAverageRating(recipe.valorations)}
+                {Math.round(utils.getAverageRating(recipe.valorations) * 2) / 2}
               </p>
               <ReactStars
                 count={5}
                 size={30}
                 color2='#F5A524'
-                value={utils.getAverageRating(recipe.valorations)}
+                value={
+                  Math.round(utils.getAverageRating(recipe.valorations) * 2) / 2
+                }
                 edit={false}
               />
             </div>
@@ -368,6 +370,7 @@ export const Recipe: React.FC<RecipeProps> = ({ recipe, deleteHandler }) => {
                   onChange={(e) => setComment(e.target.value)}
                   rows={2}
                   style={{ resize: 'none', height: 'auto' }}
+                  maxLength={100}
                 />
               </div>
             )}
