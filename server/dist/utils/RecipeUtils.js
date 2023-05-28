@@ -121,7 +121,7 @@ RecipeUtils.getAggregateMatch = (filters) => {
 // Function to get recipe average rating
 RecipeUtils.getAverageRating = (recipe) => {
     const average = recipe.valorations.reduce((acc, valoration) => acc + valoration.rating, 0) / recipe.valorations.length;
-    return isNaN(average) ? 0 : average;
+    return isNaN(average) ? 0 : Math.round(average * 2) / 2;
 };
 // Function to get min and max rating from a recipe list
 RecipeUtils.getMinAndMaxRating = (recipes) => {
