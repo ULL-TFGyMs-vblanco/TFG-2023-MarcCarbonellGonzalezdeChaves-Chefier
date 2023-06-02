@@ -7,6 +7,12 @@
   padding: var(--nextui-space-15) var(--nextui-space-19);
 }
 
+@media screen and (width < 765px) {
+  .form__container {
+    padding: 0;
+  }
+}
+
 .header {
   display: flex;
   flex-wrap: wrap;
