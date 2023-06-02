@@ -121,7 +121,6 @@
   width: 100%;
   padding-left: var(--nextui-space-9);
   font-size: var(--nextui-fontSizes-sm);
-  line-height: var(--nextui-lineHeights-6xl);
 }
 
 @media screen and (width < 425px) {
