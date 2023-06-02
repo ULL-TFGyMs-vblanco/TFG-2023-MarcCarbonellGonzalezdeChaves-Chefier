@@ -66,7 +66,6 @@
   background-color: var(--nextui-colors-popover);
   padding: var(--nextui-space-12);
   padding-top: var(--nextui-space-8);
-  width: 20rem;
 }
 
 .filterbox__popover {
@@ -87,7 +86,7 @@
   justify-content: center;
   align-items: center;
   font-weight: var(--nextui-fontWeights-bold);
-  width: 5rem;
+  width: 5.5rem;
   height: 2rem;
   font-size: var(--nextui-fontSizes-xs);
   gap: var(--nextui-space-2);
@@ -100,7 +99,7 @@
 
 @media screen and (width < 400px) {
   .filterbox__popover__container {
-    width: 15rem;
+    width: 15.5rem;
   }
 }
 
