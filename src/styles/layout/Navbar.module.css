@@ -170,6 +170,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   height: 2rem;
   width: 2rem;
   background-color: var(--nextui-colors-primary300);
@@ -183,10 +184,12 @@
 }
 
 .sun__theme__icon {
+  position: absolute;
   color: var(--nextui-colors-secondary600);
 }
 
 .moon__theme__icon {
+  position: absolute;
   color: var(--nextui-colors-secondary600);
 }
 
