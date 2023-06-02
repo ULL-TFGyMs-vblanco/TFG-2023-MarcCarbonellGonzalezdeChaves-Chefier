@@ -19,6 +19,13 @@
   }
 }
 
+@media screen and (width < 455px) {
+  .recipe__container {
+    height: 13.875rem;
+    width: 8.5rem;
+  }
+}
+
 .recipe__container:hover {
   opacity: 0.9;
   cursor: pointer;
@@ -158,6 +165,13 @@
   position: relative;
 }
 
+@media screen and (width < 455px) {
+  .image__container {
+    height: 8.5rem;
+    width: 8.5rem;
+  }
+}
+
 .image {
   object-fit: cover;
   border-top-right-radius: var(--nextui-radii-sm);
@@ -182,11 +196,23 @@
   padding-bottom: 0;
 }
 
+@media screen and (width < 455px) {
+  .name {
+    font-size: var(--nextui-fontSizes-sm);
+  }
+}
+
 .stats {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: var(--nextui-space-5);
+}
+
+@media screen and (width < 455px) {
+  .stats {
+    gap: var(--nextui-space-1);
+  }
 }
 
 .valoration {
@@ -203,12 +229,36 @@
   height: 0.938rem;
 }
 
+@media screen and (width < 455px) {
+  .star {
+    font-size: 0.5rem;
+  }
+}
+
+@media screen and (width < 455px) {
+  .averageRating {
+    font-size: var(--nextui-fontSizes-xs);
+  }
+}
+
 .time {
   width: 2.25rem;
   text-align: center;
 }
 
+@media screen and (width < 455px) {
+  .time {
+    font-size: var(--nextui-fontSizes-xs);
+  }
+}
+
 .difficulty {
   width: 2.25rem;
   text-align: center;
+}
+
+@media screen and (width < 455px) {
+  .difficulty {
+    font-size: var(--nextui-fontSizes-xs);
+  }
 }

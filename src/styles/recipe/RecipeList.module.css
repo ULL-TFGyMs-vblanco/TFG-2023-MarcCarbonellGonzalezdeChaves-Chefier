@@ -43,6 +43,12 @@
   margin: var(--nextui-space-15) 0;
 }
 
+@media screen and (width < 455px) {
+  .list__elements {
+    grid-template-columns: repeat(auto-fill, 8.5rem);
+  }
+}
+
 .pagination {
   z-index: var(--nextui-zIndices-1);
 }
