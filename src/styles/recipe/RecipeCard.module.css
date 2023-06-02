@@ -194,6 +194,7 @@
   color: var(--nextui-colors-secondary600);
   padding: var(--nextui-space-5);
   padding-bottom: 0;
+  text-align: center;
 }
 
 @media screen and (width < 455px) {

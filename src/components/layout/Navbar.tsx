@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { RxHamburgerMenu, RxPlus } from 'react-icons/rx';
-import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
+import { HiMoon, HiSun } from 'react-icons/hi';
 import { useToggleMenu } from 'src/hooks/useToggleMenu';
 import styles from 'src/styles/layout/Navbar.module.css';
 import { ToggleMenu } from './ToggleMenu';
@@ -92,16 +92,16 @@ export const Navbar: React.FC = () => {
                 }}
               >
                 {isDark ? (
-                  <BsFillSunFill
+                  <HiSun
                     className={styles.sun__theme__icon}
+                    size={18}
                     id='sun'
-                    size={16}
                   />
                 ) : (
-                  <BsFillMoonFill
+                  <HiMoon
                     className={styles.moon__theme__icon}
+                    size={18}
                     id='moon'
-                    size={16}
                   />
                 )}
               </button>

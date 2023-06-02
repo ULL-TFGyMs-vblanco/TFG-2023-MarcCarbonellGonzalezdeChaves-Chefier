@@ -9,13 +9,22 @@
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   justify-content: space-between;
   margin-bottom: var(--nextui-space-9);
+  gap: var(--nextui-space-5);
 }
 
 .post__button {
   width: 10rem;
+}
+
+@media screen and (width < 765px) {
+  .post__button {
+    width: 5rem;
+    font-size: var(--nextui-fontSizes-sm);
+  }
 }
 
 .form {
