@@ -183,14 +183,6 @@
   background-color: var(--nextui-colors-primary400);
 }
 
-.sun__theme__icon {
-  color: var(--nextui-colors-secondary600);
-}
-
-.moon__theme__icon {
-  color: var(--nextui-colors-secondary600);
-}
-
 .link {
   font-size: var(--nextui-fontSizes-sm);
   color: var(--nextui-colors-secondary600);
