@@ -33,7 +33,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 5rem;
+  width: 5.5rem;
   gap: var(--nextui-space-3);
   font-size: var(--nextui-fontSizes-sm);
 }
