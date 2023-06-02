@@ -119,7 +119,6 @@
   border: none;
   background-color: var(--nextui-colors-primary300);
   width: 100%;
-  padding: 0;
   padding-left: var(--nextui-space-9);
   font-size: var(--nextui-fontSizes-sm);
   line-height: var(--nextui-lineHeights-6xl);
