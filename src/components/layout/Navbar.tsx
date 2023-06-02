@@ -92,9 +92,15 @@ export const Navbar: React.FC = () => {
                 }}
               >
                 {isDark ? (
-                  <BsFillSunFill size={16} id='sun' />
+                  <BsFillSunFill
+                    className={styles.sun__theme__icon}
+                    size={16}
+                  />
                 ) : (
-                  <BsFillMoonFill size={16} id='moon' />
+                  <BsFillMoonFill
+                    className={styles.moon__theme__icon}
+                    size={16}
+                  />
                 )}
               </button>
             </div>
