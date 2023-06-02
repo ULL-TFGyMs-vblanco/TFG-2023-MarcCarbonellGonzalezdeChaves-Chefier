@@ -114,13 +114,14 @@
 }
 
 .search {
-  line-height: 2rem;
+  height: 2rem;
   border-radius: var(--nextui-radii-lg);
   border: none;
   background-color: var(--nextui-colors-primary300);
   width: 100%;
   padding-left: var(--nextui-space-9);
   font-size: var(--nextui-fontSizes-sm);
+  line-height: 2rem;
 }
 
 @media screen and (width < 425px) {
