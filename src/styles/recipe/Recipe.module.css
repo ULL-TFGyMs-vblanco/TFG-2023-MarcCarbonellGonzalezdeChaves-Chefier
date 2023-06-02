@@ -307,8 +307,7 @@
 .instruction__number {
   display: flex;
   justify-content: center;
-  position: absolute;
-  top: 0.25rem;
+  position: center;
   width: 1.25rem;
   height: 1.25rem;
   line-height: var(--nextui-lineHeights-sm);

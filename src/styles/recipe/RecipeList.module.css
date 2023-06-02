@@ -7,7 +7,9 @@
 
 .header {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--nextui-space-10);
+  padding: 0 var(--nextui-space-12);
 }
 
 .filterbox__container {
