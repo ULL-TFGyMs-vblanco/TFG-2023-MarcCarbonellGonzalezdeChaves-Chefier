@@ -5,6 +5,11 @@
   gap: var(--nextui-space-15);
 }
 
+.header {
+  display: flex;
+  gap: var(--nextui-space-10);
+}
+
 .filterbox__container {
   display: flex;
   justify-content: center;
@@ -64,6 +69,12 @@
   width: 20rem;
 }
 
+.filterbox__popover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .popover__btn {
   background-color: var(--nextui-colors-accent100);
   color: white;
@@ -76,7 +87,10 @@
   justify-content: center;
   align-items: center;
   font-weight: var(--nextui-fontWeights-bold);
-  margin-top: var(--nextui-space-10);
+  width: 5rem;
+  height: 2rem;
+  font-size: var(--nextui-fontSizes-xs);
+  gap: var(--nextui-space-2);
 }
 
 .popover__btn:hover {

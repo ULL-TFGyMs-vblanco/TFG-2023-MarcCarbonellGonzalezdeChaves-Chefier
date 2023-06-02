@@ -184,12 +184,10 @@
 
 .sun__theme__icon {
   color: var(--nextui-colors-secondary600);
-  z-index: 99;
 }
 
 .moon__theme__icon {
   color: var(--nextui-colors-secondary600);
-  z-index: 99;
 }
 
 .link {

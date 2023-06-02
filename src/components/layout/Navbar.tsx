@@ -97,13 +97,13 @@ export const Navbar: React.FC = () => {
                   <BsFillSunFill
                     className={styles.sun__theme__icon}
                     id='sun'
-                    size={14}
+                    size={5}
                   />
                 ) : (
                   <BsFillMoonFill
                     className={styles.moon__theme__icon}
                     id='moon'
-                    size={12}
+                    size={5}
                   />
                 )}
               </button>

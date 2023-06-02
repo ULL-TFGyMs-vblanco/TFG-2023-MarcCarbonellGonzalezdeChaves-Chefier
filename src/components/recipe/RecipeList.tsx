@@ -73,30 +73,32 @@ export const RecipeList: React.FC<RecipeListProps> = ({
         )
       )}
       <div className={styles.list__container}>
-        {title && <Title lg>{title}</Title>}
-        {isLoadingBase ? (
-          <Loading />
-        ) : (
-          !isErrorBase &&
-          filterbox &&
-          baseResults.list.length > 0 && (
-            <div className={styles.filterbox__popover}>
-              <Popover isOpen={isOpen} onOpenChange={setIsOpen}>
-                <Popover.Trigger>
-                  <button className={styles.popover__btn}>
-                    <BiFilter size={20} />
-                    Filtros
-                  </button>
-                </Popover.Trigger>
-                <Popover.Content>
-                  <div className={styles.filterbox__popover__container}>
-                    <FilterBox recipes={baseResults.metadata} />
-                  </div>
-                </Popover.Content>
-              </Popover>
-            </div>
-          )
-        )}
+        <div className={styles.header}>
+          {title && <Title lg>{title}</Title>}
+          {isLoadingBase ? (
+            <Loading />
+          ) : (
+            !isErrorBase &&
+            filterbox &&
+            baseResults.list.length > 0 && (
+              <div className={styles.filterbox__popover}>
+                <Popover isOpen={isOpen} onOpenChange={setIsOpen}>
+                  <Popover.Trigger>
+                    <button className={styles.popover__btn}>
+                      <BiFilter size={16} />
+                      Filtros
+                    </button>
+                  </Popover.Trigger>
+                  <Popover.Content>
+                    <div className={styles.filterbox__popover__container}>
+                      <FilterBox recipes={baseResults.metadata} />
+                    </div>
+                  </Popover.Content>
+                </Popover>
+              </div>
+            )
+          )}
+        </div>
         <div className={styles.list}>
           {isLoading ? (
             <Loading />
