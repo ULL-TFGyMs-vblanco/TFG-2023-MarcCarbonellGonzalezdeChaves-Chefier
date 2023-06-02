@@ -67,14 +67,16 @@ export const Navbar: React.FC = () => {
             </Link>
           </div>
           <div className={styles.right__elements}>
-            <button
-              className={styles.new__recipe__btn}
-              onClick={() => router.push('/recipe/new')}
-              data-testid='new__recipe__btn'
-              id='new-recipe-btn'
-            >
-              <RxPlus size={25} />
-            </button>
+            {router.pathname !== '/recipe/new' && (
+              <button
+                className={styles.new__recipe__btn}
+                onClick={() => router.push('/recipe/new')}
+                data-testid='new__recipe__btn'
+                id='new-recipe-btn'
+              >
+                <RxPlus size={25} />
+              </button>
+            )}
             <input
               className={styles.search}
               type='text'
