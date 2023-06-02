@@ -8,6 +8,12 @@
   width: 100%;
 }
 
+@media screen and (width < 765px) {
+  .container {
+    padding: 0;
+  }
+}
+
 .top__section {
   display: flex;
   flex-wrap: wrap;
